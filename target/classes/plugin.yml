@@ -1,0 +1,8 @@
+name: SpigotServer
+version: 1.0
+main: org.example.SpigotServer.SpigotServer
+commands:
+  rank:
+    description: Your description
+    usage: /<command>
+    permission: yourplugin.yourcommandpermission

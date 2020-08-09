@@ -1,0 +1,8 @@
+org\example\SpigotServer\enums\DefaultFontInfo.class
+org\example\SpigotServer\utils\SendCenteredMessages.class
+org\example\SpigotServer\system\Ranks.class
+org\example\SpigotServer\utils\sendColor.class
+org\example\SpigotServer\test\Test.class
+org\example\SpigotServer\system\RankCommand.class
+org\example\SpigotServer\SpigotServer.class
+org\example\SpigotServer\system\RankManager.class
