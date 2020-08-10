@@ -3,11 +3,14 @@ package org.example.SpigotServer;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.example.SpigotServer.system.RankCommand;
+import org.example.SpigotServer.commands.time.DayCommand;
+import org.example.SpigotServer.commands.time.NightCommand;
+import org.example.SpigotServer.commands.time.ResetCommand;
+import org.example.SpigotServer.commands.time.SunsetCommand;
 import org.example.SpigotServer.system.Ranks;
-import org.example.SpigotServer.test.Test;
+import org.example.SpigotServer.test.BuildStuff;
+import org.example.SpigotServer.test.Login;
 
 public class SpigotServer extends JavaPlugin {
 
@@ -15,8 +18,11 @@ public class SpigotServer extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        registerEvents(this, new Test(), new Ranks());
-        this.getCommand("rank").setExecutor(new RankCommand());
+        registerEvents(this, new Login(), new Ranks(), new BuildStuff());
+        this.getCommand("day").setExecutor(new DayCommand());
+        this.getCommand("night").setExecutor(new NightCommand());
+        this.getCommand("sunset").setExecutor(new SunsetCommand());
+        this.getCommand("resettime").setExecutor(new ResetCommand());
         getLogger().info("onEnable is called!");
     }
 

@@ -23,7 +23,7 @@ public class RankCommand implements CommandExecutor
                 return false;
             }
 
-            return false;
+            return true;
         }
     }
 }

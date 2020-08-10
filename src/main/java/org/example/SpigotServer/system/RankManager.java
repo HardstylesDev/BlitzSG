@@ -16,11 +16,11 @@ public class RankManager
     }
 
     public static boolean hasRank(OfflinePlayer p){
-        if(!ranks.containsKey(p.getUniqueId().toString()))
-            return false;
-        if(ranks.get(p.getUniqueId().toString()) != null){
-            return true;
-        }
+       // if(!ranks.containsKey(p.getUniqueId().toString()))
+       //     return false;
+       // if(ranks.get(p.getUniqueId().toString()) != null){
+       //     return true;
+       // }
         return false;
     }
     public static void setRank(OfflinePlayer p, String rank){

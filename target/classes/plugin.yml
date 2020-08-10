@@ -6,3 +6,19 @@ commands:
     description: Your description
     usage: /<command>
     permission: yourplugin.yourcommandpermission
+  day:
+    description: Set time to day (client side)
+    usage: /<command>
+    permission: noctas.commands.time
+  sunset:
+    description: Set time to sunset (client side)
+    usage: /<command>
+    permission: noctas.commands.time
+  night:
+    description: Set time to night (client side)
+    usage: /<command>
+    permission: noctas.commands.time
+  resettime:
+    description: Use server time
+    usage: /<command>
+    permission: noctas.commands.time
