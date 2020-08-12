@@ -1,41 +1,39 @@
 package org.example.SpigotServer.utils;
 
-import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardTeam;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import java.lang.reflect.Field;
-import java.util.Collection;
-
 public class NametagEdit {
 
     @SuppressWarnings("deprecation")
     public static void setScoreboard() {
-        for(Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
             Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
             Objective obj = board.registerNewObjective("TabPrefix", "dummy");
 
-            Team owner = board.registerNewTeam("010Owner");
-            Team spieler = board.registerNewTeam("011Spieler");
+            Team owner = board.registerNewTeam("08Owner");
+            Team builder = board.registerNewTeam("010Builder");
+            Team police = board.registerNewTeam("09Police");
+            Team guest = board.registerNewTeam("011Spieler");
 
             owner.setPrefix("§4Owner §8> §4");
+            builder.setPrefix("§3Builder §8> §3");
+            police.setPrefix("§9Police §8> §9");
 
 
-            spieler.setPrefix("§7");
+            guest.setPrefix("§7Guest §8> §7");
 
 
             Bukkit.getOnlinePlayers().forEach(p -> {
-
-                if(p.hasPermission("owner.prefix")) {
+                if (p.getName().equalsIgnoreCase("hardstyles"))
+                    police.addEntry(p.getName());
+                if (p.getName().equalsIgnoreCase("itscon") || p.getName().equalsIgnoreCase("typae"))
                     owner.addEntry(p.getName());
-                } else {
-                    spieler.addEntry(p.getName());
-                }
-
+                else
+                    builder.addEntry(p.getName());
             });
 
             player.setScoreboard(board);

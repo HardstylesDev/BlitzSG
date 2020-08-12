@@ -1,4 +1,4 @@
-name: SpigotServer
+name: NoctasBuild
 version: 1.0
 main: org.example.SpigotServer.SpigotServer
 commands:
@@ -22,3 +22,28 @@ commands:
     description: Use server time
     usage: /<command>
     permission: noctas.commands.time
+  tp:
+    description: Use server time
+    usage: /<command>
+    aliases: [teleport, goto]
+    permission: noctas.commands.staff
+  gmc:
+    description: Change gamemode
+    usage: /<command>
+    permission: noctas.commands.gamemode
+  gms:
+    description: Change gamemode
+    usage: /<command>
+    permission: noctas.commands.gamemode
+  gmsp:
+    description: Change gamemode
+    usage: /<command>
+    permission: noctas.commands.gamemode
+  gma:
+    description: Change gamemode
+    usage: /<command>
+    permission: noctas.commands.gamemode
+  ping:
+    description: ping
+    usage: /<command>
+    permission: noctas.commands.ping

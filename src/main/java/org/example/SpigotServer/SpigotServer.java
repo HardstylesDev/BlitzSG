@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.example.SpigotServer.commands.informative.PingCommand;
+import org.example.SpigotServer.commands.staff.*;
 import org.example.SpigotServer.commands.time.DayCommand;
 import org.example.SpigotServer.commands.time.NightCommand;
 import org.example.SpigotServer.commands.time.ResetCommand;
@@ -23,6 +25,14 @@ public class SpigotServer extends JavaPlugin {
         this.getCommand("night").setExecutor(new NightCommand());
         this.getCommand("sunset").setExecutor(new SunsetCommand());
         this.getCommand("resettime").setExecutor(new ResetCommand());
+        this.getCommand("tp").setExecutor(new TeleportCommand());
+
+        this.getCommand("gmc").setExecutor(new GamemodeCreativeCommand());
+        this.getCommand("gms").setExecutor(new GamemodeSurvivalCommand());
+        this.getCommand("gmsp").setExecutor(new GamemodeSpectatorCommand());
+        this.getCommand("gma").setExecutor(new GamemodeAdventureCommand());
+
+        this.getCommand("ping").setExecutor(new PingCommand());
         getLogger().info("onEnable is called!");
     }
 

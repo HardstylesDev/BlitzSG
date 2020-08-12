@@ -9,9 +9,16 @@ import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.weather.WeatherChangeEvent;
 import org.example.SpigotServer.system.RankManager;
 
 public class BuildStuff implements Listener {
+
+    @EventHandler
+
+    public void onWeather(WeatherChangeEvent e){
+        e.setCancelled(true);
+    }
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
         if(event.getPlayer() != null){

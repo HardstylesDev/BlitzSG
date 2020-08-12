@@ -21,7 +21,7 @@ public class RankManager
        // if(ranks.get(p.getUniqueId().toString()) != null){
        //     return true;
        // }
-        return false;
+        return true;
     }
     public static void setRank(OfflinePlayer p, String rank){
         if(rank != null)
