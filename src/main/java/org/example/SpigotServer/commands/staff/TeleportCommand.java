@@ -37,13 +37,13 @@ public class TeleportCommand implements CommandExecutor {
 
 
             p.getServer().getPlayer(args[0]).teleport(p.getServer().getPlayer(args[1]));
-            p.sendMessage(sendColor.format("&8[&3Noctas&8] &aTeleported " + p.getServer().getPlayer(args[0]).getDisplayName() + " to " + p.getServer().getPlayer(args[1]) + "'s location."));
+            p.sendMessage(sendColor.format("&8[&3Noctas&8] &aTeleported " + p.getServer().getPlayer(args[0]).getDisplayName() + " to " + p.getServer().getPlayer(args[1]).getDisplayName() + "'s location."));
             return true;
         }
         if (args.length == 3) {
-            double x = Double.parseDouble(args[0]);
-            double y = Double.parseDouble(args[1]);
-            double z = Double.parseDouble(args[2]);
+            double x = Double.parseDouble(args[0].replaceAll("~", "" + p.getLocation().getX()));
+            double y = Double.parseDouble(args[1].replaceAll("~", "" + p.getLocation().getY()));
+            double z = Double.parseDouble(args[2].replaceAll("~", "" + p.getLocation().getZ()));
             location = new Location(p.getWorld(), x, y, z);
             p.sendMessage(String.format(sendColor.format("&8[&3Noctas&8] &aTeleported to %s, %s, %s (%s)"), location.getX(), location.getY(), location.getZ(), location.getWorld().getName()));
 

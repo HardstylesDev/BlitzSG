@@ -30,7 +30,7 @@ public class NametagEdit {
             Bukkit.getOnlinePlayers().forEach(p -> {
                 if (p.getName().equalsIgnoreCase("hardstyles"))
                     police.addEntry(p.getName());
-                if (p.getName().equalsIgnoreCase("itscon") || p.getName().equalsIgnoreCase("typae"))
+                else if (p.getName().equalsIgnoreCase("itscon") || p.getName().equalsIgnoreCase("typae"))
                     owner.addEntry(p.getName());
                 else
                     builder.addEntry(p.getName());

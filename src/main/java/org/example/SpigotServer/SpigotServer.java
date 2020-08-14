@@ -5,14 +5,18 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.example.SpigotServer.commands.informative.PingCommand;
+import org.example.SpigotServer.commands.informative.PlaytimeCommand;
 import org.example.SpigotServer.commands.staff.*;
 import org.example.SpigotServer.commands.time.DayCommand;
 import org.example.SpigotServer.commands.time.NightCommand;
 import org.example.SpigotServer.commands.time.ResetCommand;
 import org.example.SpigotServer.commands.time.SunsetCommand;
+import org.example.SpigotServer.commands.utils.FlySpeedCommand;
+import org.example.SpigotServer.system.RankCommand;
 import org.example.SpigotServer.system.Ranks;
 import org.example.SpigotServer.test.BuildStuff;
 import org.example.SpigotServer.test.Login;
+import org.example.SpigotServer.test.WorldEvent;
 
 public class SpigotServer extends JavaPlugin {
 
@@ -20,7 +24,7 @@ public class SpigotServer extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        registerEvents(this, new Login(), new Ranks(), new BuildStuff());
+        registerEvents(this, new Login(), new Ranks(), new BuildStuff(), new WorldEvent());
         this.getCommand("day").setExecutor(new DayCommand());
         this.getCommand("night").setExecutor(new NightCommand());
         this.getCommand("sunset").setExecutor(new SunsetCommand());
@@ -31,8 +35,11 @@ public class SpigotServer extends JavaPlugin {
         this.getCommand("gms").setExecutor(new GamemodeSurvivalCommand());
         this.getCommand("gmsp").setExecutor(new GamemodeSpectatorCommand());
         this.getCommand("gma").setExecutor(new GamemodeAdventureCommand());
+        this.getCommand("flyspeed").setExecutor(new FlySpeedCommand());
 
         this.getCommand("ping").setExecutor(new PingCommand());
+        this.getCommand("rank").setExecutor(new RankCommand());
+        this.getCommand("playtime").setExecutor(new PlaytimeCommand());
         getLogger().info("onEnable is called!");
     }
 

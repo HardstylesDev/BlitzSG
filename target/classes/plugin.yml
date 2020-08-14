@@ -47,3 +47,12 @@ commands:
     description: ping
     usage: /<command>
     permission: noctas.commands.ping
+  playtime:
+    description: playtime
+    usage: /<command>
+    permission: noctas.commands.info
+  flyspeed:
+    description: change flyspeed
+    usage: /<command>
+    permission: noctas.commands.flyspeed
+    aliases: [fs]

@@ -1,6 +1,8 @@
 package org.example.SpigotServer.test;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -23,6 +25,8 @@ public class Login implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
+
+
         event.setJoinMessage("");
         event.getPlayer().sendMessage(sendColor.format("&7&m----------------------------------------"));
         event.getPlayer().sendMessage("");
@@ -35,10 +39,10 @@ public class Login implements Listener {
     }
 
     public static void join(Player p) {
-        Entity e = (Entity) p;
-        if (!e.isOnGround())
-            p.setAllowFlight(true);
-            p.setFlying(true);
+        p.setGameMode(GameMode.CREATIVE);
+        p.setAllowFlight(true);
+        p.setFlying(true);
+
         //p.getInventory().clear();
         //ItemStack compass = new ItemStack(Material.COMPASS, 1);
         //ItemMeta im = compass.getItemMeta();
