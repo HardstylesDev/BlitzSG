@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.example.SpigotServer.commands.building.BuildToolsCommand;
 import org.example.SpigotServer.commands.informative.PingCommand;
 import org.example.SpigotServer.commands.informative.PlaytimeCommand;
 import org.example.SpigotServer.commands.staff.*;
@@ -19,12 +20,17 @@ import org.example.SpigotServer.test.Login;
 import org.example.SpigotServer.test.WorldEvent;
 
 public class SpigotServer extends JavaPlugin {
+    private JavaPlugin parent;
 
-    private static Plugin plugin;
+
+
+    public static Plugin plugin;
+
+
     @Override
     public void onEnable() {
         plugin = this;
-        registerEvents(this, new Login(), new Ranks(), new BuildStuff(), new WorldEvent());
+        registerEvents(this, new Login(), new Ranks(), new BuildStuff(), new WorldEvent(), new BuildToolsCommand());
         this.getCommand("day").setExecutor(new DayCommand());
         this.getCommand("night").setExecutor(new NightCommand());
         this.getCommand("sunset").setExecutor(new SunsetCommand());
@@ -36,6 +42,7 @@ public class SpigotServer extends JavaPlugin {
         this.getCommand("gmsp").setExecutor(new GamemodeSpectatorCommand());
         this.getCommand("gma").setExecutor(new GamemodeAdventureCommand());
         this.getCommand("flyspeed").setExecutor(new FlySpeedCommand());
+        this.getCommand("buildtools").setExecutor(new BuildToolsCommand());
 
         this.getCommand("ping").setExecutor(new PingCommand());
         this.getCommand("rank").setExecutor(new RankCommand());

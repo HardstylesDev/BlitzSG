@@ -1,5 +1,5 @@
 name: NoctasBuild
-version: 1.0
+version: 1.1
 main: org.example.SpigotServer.SpigotServer
 commands:
   rank:
@@ -56,3 +56,8 @@ commands:
     usage: /<command>
     permission: noctas.commands.flyspeed
     aliases: [fs]
+  buildtools:
+    description: change flyspeed
+    usage: /<command>
+    permission: noctas.commands.flyspeed
+    aliases: [tools, bt, btools]
