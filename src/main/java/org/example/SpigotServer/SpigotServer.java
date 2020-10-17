@@ -5,19 +5,28 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.example.SpigotServer.commands.building.BuildToolsCommand;
+import org.example.SpigotServer.commands.building.RenameCommand;
+import org.example.SpigotServer.commands.informative.BackCommand;
 import org.example.SpigotServer.commands.informative.PingCommand;
 import org.example.SpigotServer.commands.informative.PlaytimeCommand;
 import org.example.SpigotServer.commands.staff.*;
 import org.example.SpigotServer.commands.time.DayCommand;
 import org.example.SpigotServer.commands.time.NightCommand;
-import org.example.SpigotServer.commands.time.ResetCommand;
+import org.example.SpigotServer.games.kitpvp.ClassGUI;
+import org.example.SpigotServer.games.kitpvp.Damage;
+import org.example.SpigotServer.games.kitpvp.KitPVP;
+import org.example.SpigotServer.games.kitpvp.classes.Warrior;
+import org.example.SpigotServer.hub.HubGUI;
+import org.example.SpigotServer.worldgeneration.WorldCommand;
 import org.example.SpigotServer.commands.time.SunsetCommand;
 import org.example.SpigotServer.commands.utils.FlySpeedCommand;
-import org.example.SpigotServer.system.RankCommand;
+import org.example.SpigotServer.hub.Hub;
+import org.example.SpigotServer.hub.Launchpad;
 import org.example.SpigotServer.system.Ranks;
+import org.example.SpigotServer.hub.JoinHandler;
 import org.example.SpigotServer.test.BuildStuff;
-import org.example.SpigotServer.test.Login;
-import org.example.SpigotServer.test.WorldEvent;
+import org.example.SpigotServer.system.Login;
+import org.example.SpigotServer.worldgeneration.Worlds;
 
 public class SpigotServer extends JavaPlugin {
     private JavaPlugin parent;
@@ -30,12 +39,16 @@ public class SpigotServer extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
-        registerEvents(this, new Login(), new Ranks(), new BuildStuff(), new WorldEvent(), new BuildToolsCommand());
+
+        Worlds.loadWorlds();
+        registerEvents(this, new Hub(), new HubGUI(), new KitPVP(), new Warrior(), new ClassGUI(), new Damage(), new Launchpad(), new Login(), new Ranks(), new BuildStuff(), new BuildToolsCommand(), new BackCommand(), new JoinHandler());
         this.getCommand("day").setExecutor(new DayCommand());
         this.getCommand("night").setExecutor(new NightCommand());
         this.getCommand("sunset").setExecutor(new SunsetCommand());
-        this.getCommand("resettime").setExecutor(new ResetCommand());
         this.getCommand("tp").setExecutor(new TeleportCommand());
+
+        this.getCommand("world").setExecutor(new WorldCommand());
+        this.getCommand("class").setExecutor(new ClassGUI());
 
         this.getCommand("gmc").setExecutor(new GamemodeCreativeCommand());
         this.getCommand("gms").setExecutor(new GamemodeSurvivalCommand());
@@ -43,9 +56,11 @@ public class SpigotServer extends JavaPlugin {
         this.getCommand("gma").setExecutor(new GamemodeAdventureCommand());
         this.getCommand("flyspeed").setExecutor(new FlySpeedCommand());
         this.getCommand("buildtools").setExecutor(new BuildToolsCommand());
+        this.getCommand("back").setExecutor(new BackCommand());
 
+        //this.getCommand("s").setExecutor(new SCommand());
+        this.getCommand("rename").setExecutor(new RenameCommand());
         this.getCommand("ping").setExecutor(new PingCommand());
-        this.getCommand("rank").setExecutor(new RankCommand());
         this.getCommand("playtime").setExecutor(new PlaytimeCommand());
         getLogger().info("onEnable is called!");
     }
@@ -57,7 +72,9 @@ public class SpigotServer extends JavaPlugin {
     public static void registerEvents(org.bukkit.plugin.Plugin plugin, Listener... listeners) {
         for (Listener listener : listeners) {
             Bukkit.getServer().getPluginManager().registerEvents(listener, plugin);
+
         }
+
     }
 
 }

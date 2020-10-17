@@ -1,25 +1,36 @@
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\test\Login.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\commands\informative\PingCommand.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\commands\informative\PlaytimeCommand.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\commands\staff\GamemodeAdventureCommand.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\commands\time\SunsetCommand.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\system\RankCommand.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\utils\NametagEdit.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\utils\SendCenteredMessages.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\commands\time\NightCommand.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\commands\time\ResetCommand.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\utils\sendColor.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\commands\time\DayCommand.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\commands\staff\GamemodeSurvivalCommand.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\system\Ranks.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\system\RankListener.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\commands\staff\GamemodeSpectatorCommand.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\commands\staff\TeleportCommand.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\SpigotServer.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\test\BuildStuff.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\system\RankManager.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\commands\utils\FlySpeedCommand.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\enums\DefaultFontInfo.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\commands\staff\GamemodeCreativeCommand.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\commands\staff\SCommand.java
-D:\gebruiker\Desktop\SpigotServer\src\main\java\org\example\SpigotServer\test\WorldEvent.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\system\Login.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\utils\FlySpeedCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\hub\HubGUI.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\worldgeneration\WorldCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\staff\GamemodeCreativeCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\worldgeneration\Worlds.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\utils\SkullNBT.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\hub\Hub.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\building\RenameCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\games\kitpvp\ClassGUI.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\staff\GamemodeAdventureCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\games\kitpvp\KitPVP.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\utils\Armor.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\staff\TeleportCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\SpigotServer.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\utils\NametagEdit.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\hub\JoinHandler.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\test\BuildStuff.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\informative\BackCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\staff\SCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\time\DayCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\building\BuildToolsCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\worldgeneration\VoidGenerator.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\informative\PingCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\hub\Launchpad.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\utils\sendColor.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\time\SunsetCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\utils\SendCenteredMessages.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\time\NightCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\games\kitpvp\classes\Warrior.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\enums\DefaultFontInfo.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\system\Ranks.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\staff\GamemodeSpectatorCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\staff\GamemodeSurvivalCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\informative\PlaytimeCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\games\kitpvp\Damage.java

@@ -1,4 +1,4 @@
-package org.example.SpigotServer.test;
+package org.example.SpigotServer.system;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -32,25 +32,22 @@ public class Login implements Listener {
         event.setJoinMessage("");
         event.getPlayer().sendMessage(sendColor.format("&7&m----------------------------------------"));
         event.getPlayer().sendMessage("");
-        SendCenteredMessages.sendCenteredMessage(event.getPlayer(), sendColor.format("&3&lWelcome to Noctas"));
-        SendCenteredMessages.sendCenteredMessage(event.getPlayer(), "This is the build server");
+        SendCenteredMessages.sendCenteredMessage(event.getPlayer(), sendColor.format("&a&lWelcome to the test server"));
         event.getPlayer().sendMessage("");
         event.getPlayer().sendMessage(sendColor.format("&7&m----------------------------------------"));
-        join(event.getPlayer());
+
 
         Bukkit.getScheduler().runTaskLater(SpigotServer.plugin, new Runnable() {
             @Override
             public void run() {
-                event.getPlayer().setGameMode(GameMode.CREATIVE);
-                event.getPlayer().setAllowFlight(true);
-                event.getPlayer().setFlying(true);
+                join(event.getPlayer());
             }
         }, 1);
 
     }
 
     public static void join(Player p) {
-        p.setGameMode(GameMode.CREATIVE);
+        p.setGameMode(GameMode.SURVIVAL);
         p.setAllowFlight(true);
         p.setFlying(true);
 

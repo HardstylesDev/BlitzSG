@@ -17,11 +17,8 @@ import org.example.SpigotServer.utils.SkullNBT;
 import java.util.Arrays;
 
 public class BuildToolsCommand
-        implements CommandExecutor, Listener
-
-{
-    public boolean onCommand(CommandSender sender, Command command, String alias, String[] args)
-    {
+        implements CommandExecutor, Listener {
+    public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
         Player p = (Player) sender;
         String redoItem = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTYzMzlmZjJlNTM0MmJhMThiZGM0OGE5OWNjYTY1ZDEyM2NlNzgxZDg3ODI3MmY5ZDk2NGVhZDNiOGFkMzcwIn19fQ==";
         String undoItem = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjg0ZjU5NzEzMWJiZTI1ZGMwNThhZjg4OGNiMjk4MzFmNzk1OTliYzY3Yzk1YzgwMjkyNWNlNGFmYmEzMzJmYyJ9fX0=";
@@ -72,36 +69,30 @@ public class BuildToolsCommand
     }
 
     @EventHandler
-    public void onPlayerUse(PlayerInteractEvent event)
-    {
-        if(!(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_BLOCK)){
+    public void onPlayerUse(PlayerInteractEvent event) {
+        if (!(event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_BLOCK)) {
             return;
         }
         Player p = event.getPlayer();
-        if (p.getItemInHand().getType() == Material.BARRIER && p.getItemInHand().getItemMeta().getDisplayName().contains("Voxel Undo Tool"))
-        {
+        if (p.getItemInHand().getType() == Material.BARRIER && p.getItemInHand().getItemMeta().getDisplayName().contains("Voxel Undo Tool")) {
             event.setCancelled(true);
-            if(p.isSneaking()){
+            if (p.isSneaking()) {
                 p.chat("/u 10");
-            }else{
+            } else {
                 p.chat("/u");
             }
-        }
-        else if (p.getItemInHand().getType() == Material.SKULL_ITEM && p.getItemInHand().getItemMeta().getDisplayName().contains("Redo Last Operation"))
-        {
+        } else if (p.getItemInHand().getType() == Material.SKULL_ITEM && p.getItemInHand().getItemMeta().getDisplayName().contains("Redo Last Operation")) {
             event.setCancelled(true);
-            if(p.isSneaking()){
+            if (p.isSneaking()) {
                 p.chat("//redo 10");
-            }else{
+            } else {
                 p.chat("//redo");
             }
-        }
-        else if (p.getItemInHand().getType() == Material.SKULL_ITEM && p.getItemInHand().getItemMeta().getDisplayName().contains("Undo Last Operation"))
-        {
+        } else if (p.getItemInHand().getType() == Material.SKULL_ITEM && p.getItemInHand().getItemMeta().getDisplayName().contains("Undo Last Operation")) {
             event.setCancelled(true);
-            if(p.isSneaking()){
+            if (p.isSneaking()) {
                 p.chat("//undo 10");
-            }else{
+            } else {
                 p.chat("//undo");
             }
         }

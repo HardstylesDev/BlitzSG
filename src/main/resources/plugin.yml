@@ -1,4 +1,4 @@
-name: NoctasBuild
+name: Hardstyles
 version: 1.1
 main: org.example.SpigotServer.SpigotServer
 commands:
@@ -18,10 +18,13 @@ commands:
     description: Set time to night (client side)
     usage: /<command>
     permission: noctas.commands.time
-  resettime:
-    description: Use server time
+  world:
+    description: the default world command
     usage: /<command>
     permission: noctas.commands.time
+  class:
+    description: the default world command
+    usage: /<command>
   tp:
     description: Use server time
     usage: /<command>
@@ -61,3 +64,11 @@ commands:
     usage: /<command>
     permission: noctas.commands.flyspeed
     aliases: [tools, bt, btools]
+  rename:
+    description: rename
+    usage: /<command>
+    permission: noctas.commands.rename
+  back:
+    description: back to prev loc
+    usage: /<command>
+    permission: noctas.commands.back

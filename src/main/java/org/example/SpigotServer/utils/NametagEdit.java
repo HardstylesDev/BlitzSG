@@ -15,25 +15,21 @@ public class NametagEdit {
             Objective obj = board.registerNewObjective("TabPrefix", "dummy");
 
             Team owner = board.registerNewTeam("08Owner");
-            Team builder = board.registerNewTeam("010Builder");
-            Team police = board.registerNewTeam("09Police");
-            Team guest = board.registerNewTeam("011Spieler");
+            Team guest = board.registerNewTeam("011Player");
 
-            owner.setPrefix("§4Owner §8> §4");
-            builder.setPrefix("§3Builder §8> §3");
-            police.setPrefix("§9Police §8> §9");
+            owner.setPrefix("§cADMIN §8> §c");
 
 
-            guest.setPrefix("§7Guest §8> §7");
+
+            guest.setPrefix("§7");
 
 
             Bukkit.getOnlinePlayers().forEach(p -> {
                 if (p.getName().equalsIgnoreCase("hardstyles"))
-                    police.addEntry(p.getName());
-                else if (p.getName().equalsIgnoreCase("itscon") || p.getName().equalsIgnoreCase("typae"))
                     owner.addEntry(p.getName());
+
                 else
-                    builder.addEntry(p.getName());
+                    guest.addEntry(p.getName());
             });
 
             player.setScoreboard(board);

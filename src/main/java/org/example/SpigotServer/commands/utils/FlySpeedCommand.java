@@ -19,6 +19,7 @@ public class FlySpeedCommand implements CommandExecutor {
             return true;
         }
         p.setFlySpeed(Float.parseFloat(args[0]) / 10);
+
         p.sendMessage(sendColor.format("&8[&3Noctas&8] &aFly speed set to " + Float.parseFloat(args[0]) + "!"));
 
         return true;
