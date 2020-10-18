@@ -64,7 +64,7 @@ public class Login implements Listener {
 //
         //p.getInventory().setItem(0, compass);
 
-        NametagEdit.setScoreboard();
+        //NametagEdit.setScoreboard();
     }
 
 }

@@ -9,6 +9,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.util.Vector;
+import org.example.SpigotServer.utils.NametagEdit;
 
 public class JoinHandler implements Listener {
     @EventHandler
@@ -30,6 +31,9 @@ public class JoinHandler implements Listener {
         compass.setItemMeta(compassMeta);
 
         e.getPlayer().getInventory().setItem(4, compass);
+        NametagEdit nametagEdit = new NametagEdit("Test", "Hardstyles", "eeee");
+        nametagEdit.sendToPlayer(e.getPlayer());
+        nametagEdit.updateAll();
 
 
     }

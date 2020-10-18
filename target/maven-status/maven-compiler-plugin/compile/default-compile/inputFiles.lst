@@ -5,6 +5,7 @@ D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\worl
 D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\staff\GamemodeCreativeCommand.java
 D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\worldgeneration\Worlds.java
 D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\utils\SkullNBT.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\scoreboard\ScoreboardHelper.java
 D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\hub\Hub.java
 D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\building\RenameCommand.java
 D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\games\kitpvp\ClassGUI.java
@@ -32,5 +33,8 @@ D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\enum
 D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\system\Ranks.java
 D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\staff\GamemodeSpectatorCommand.java
 D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\staff\GamemodeSurvivalCommand.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\scoreboard\ScoreboardHandler.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\scoreboard\ScoreboardManager.java
 D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\commands\informative\PlaytimeCommand.java
 D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\games\kitpvp\Damage.java
+D:\Java Projects\Spigot 1.8.8\KitPVP\src\main\java\org\example\SpigotServer\utils\NameChange.java

@@ -17,6 +17,7 @@ import org.example.SpigotServer.games.kitpvp.Damage;
 import org.example.SpigotServer.games.kitpvp.KitPVP;
 import org.example.SpigotServer.games.kitpvp.classes.Warrior;
 import org.example.SpigotServer.hub.HubGUI;
+import org.example.SpigotServer.scoreboard.ScoreboardManager;
 import org.example.SpigotServer.worldgeneration.WorldCommand;
 import org.example.SpigotServer.commands.time.SunsetCommand;
 import org.example.SpigotServer.commands.utils.FlySpeedCommand;
@@ -34,13 +35,16 @@ public class SpigotServer extends JavaPlugin {
 
 
     public static Plugin plugin;
+    public ScoreboardManager scoreboardManager;
 
 
     @Override
     public void onEnable() {
         plugin = this;
-
+        this.scoreboardManager = new ScoreboardManager();
         Worlds.loadWorlds();
+        getServer().getPluginManager().registerEvents(scoreboardManager.getScoreboardHandler(), this);
+
         registerEvents(this, new Hub(), new HubGUI(), new KitPVP(), new Warrior(), new ClassGUI(), new Damage(), new Launchpad(), new Login(), new Ranks(), new BuildStuff(), new BuildToolsCommand(), new BackCommand(), new JoinHandler());
         this.getCommand("day").setExecutor(new DayCommand());
         this.getCommand("night").setExecutor(new NightCommand());
@@ -63,6 +67,9 @@ public class SpigotServer extends JavaPlugin {
         this.getCommand("ping").setExecutor(new PingCommand());
         this.getCommand("playtime").setExecutor(new PlaytimeCommand());
         getLogger().info("onEnable is called!");
+
+        scoreboardManager.runTaskTimer(this, 2, 2);
+
     }
 
     @Override
