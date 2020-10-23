@@ -18,6 +18,10 @@ commands:
     description: Set time to night (client side)
     usage: /<command>
     permission: noctas.commands.time
+  kitpvp:
+    description: Set time to night (client side)
+    usage: /<command>
+    permission: noctas.commands.time
   world:
     description: the default world command
     usage: /<command>

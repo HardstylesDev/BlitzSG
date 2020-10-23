@@ -25,6 +25,7 @@ public class ScoreboardManager extends BukkitRunnable
             board.clear();
             Date now = new Date();
             if(true) {
+
                 board.add(lines);
                 //board.add("&7" + now.getDate() + "/" + (now.getMonth()+1) + " &8Mini01");
                 board.add("&fOnline: &e" + Bukkit.getOnlinePlayers().size());

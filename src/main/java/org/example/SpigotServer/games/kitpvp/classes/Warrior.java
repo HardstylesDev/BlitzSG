@@ -1,9 +1,6 @@
 package org.example.SpigotServer.games.kitpvp.classes;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -13,6 +10,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
@@ -29,6 +27,13 @@ public class Warrior implements Listener {
         p.getInventory().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
         p.getInventory().setBoots(new ItemStack(Material.IRON_BOOTS));
         p.getInventory().setItem(0, new ItemStack(Material.IRON_SWORD));
+
+        ItemStack compass = new ItemStack(Material.DIAMOND_AXE, 1);
+        ItemMeta compassMeta = compass.getItemMeta();
+        compassMeta.setDisplayName(ChatColor.YELLOW + "§aAxe of Perun");
+        compass.setItemMeta(compassMeta);
+
+        p.getInventory().addItem(compass);
 
     }
     @EventHandler

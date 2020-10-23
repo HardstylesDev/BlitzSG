@@ -101,7 +101,7 @@ public class ScoreboardHandler implements Listener
     private void handleScoreboard(Player player) {
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
         player.setScoreboard(board);
-        ScoreboardHelper helper = new ScoreboardHelper(board, "&9&lHunters");
+        ScoreboardHelper helper = new ScoreboardHelper(board, "&a&lKit&2&lPVP");
         this.boardHelper.put(player, helper);
     }
 

@@ -1,6 +1,7 @@
 package org.example.SpigotServer;
 
 import org.bukkit.Bukkit;
+import org.bukkit.WorldCreator;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,6 +19,7 @@ import org.example.SpigotServer.games.kitpvp.KitPVP;
 import org.example.SpigotServer.games.kitpvp.classes.Warrior;
 import org.example.SpigotServer.hub.HubGUI;
 import org.example.SpigotServer.scoreboard.ScoreboardManager;
+import org.example.SpigotServer.worldgeneration.VoidGenerator;
 import org.example.SpigotServer.worldgeneration.WorldCommand;
 import org.example.SpigotServer.commands.time.SunsetCommand;
 import org.example.SpigotServer.commands.utils.FlySpeedCommand;
@@ -64,12 +66,13 @@ public class SpigotServer extends JavaPlugin {
 
         //this.getCommand("s").setExecutor(new SCommand());
         this.getCommand("rename").setExecutor(new RenameCommand());
+        this.getCommand("kitpvp").setExecutor(new KitPVP());
         this.getCommand("ping").setExecutor(new PingCommand());
         this.getCommand("playtime").setExecutor(new PlaytimeCommand());
         getLogger().info("onEnable is called!");
 
         scoreboardManager.runTaskTimer(this, 2, 2);
-
+        new WorldCreator("kitpvp").generator(new VoidGenerator()).createWorld();
     }
 
     @Override
