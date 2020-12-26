@@ -1,89 +1,9 @@
-name: Server
-version: 1.1
-main: org.example.SpigotServer.SpigotServer
+name: BlitzSG
+version: 1.0
+main: me.syesstyles.blitz.BlitzSG
+author: Syes
+description: BlitzSG Plugin
 commands:
-  rank:
-    description: Your description
-    usage: /<command>
-    permission: yourplugin.yourcommandpermission
-  day:
-    description: Set time to day (client side)
-    usage: /<command>
-    permission: noctas.commands.time
-  dm:
-    description: Set time to sunset (client side)
-    usage: /<command>
-    permission: noctas.commands.time
-  kit:
-    description: Set time to sunset (client side)
-    usage: /<command>
-    permission: noctas.commands.time
-  fw:
-    description: Set time to sunset (client side)
-    usage: /<command>
-  sunset:
-    description: Set time to sunset (client side)
-    usage: /<command>
-    permission: noctas.commands.time
-  night:
-    description: Set time to night (client side)
-    usage: /<command>
-    permission: noctas.commands.time
-  kitpvp:
-    description: Set time to night (client side)
-    usage: /<command>
-    permission: noctas.commands.time
-  world:
-    description: the default world command
-    usage: /<command>
-    permission: noctas.commands.time
-  class:
-    description: the default world command
-    usage: /<command>
-  tp:
-    description: Use server time
-    usage: /<command>
-    aliases: [teleport, goto]
-    permission: noctas.commands.staff
-  gmc:
-    description: Change gamemode
-    usage: /<command>
-    permission: noctas.commands.gamemode
-  gms:
-    description: Change gamemode
-    usage: /<command>
-    permission: noctas.commands.gamemode
-  gmsp:
-    description: Change gamemode
-    usage: /<command>
-    permission: noctas.commands.gamemode
-  gma:
-    description: Change gamemode
-    usage: /<command>
-    permission: noctas.commands.gamemode
-  ping:
-    description: ping
-    usage: /<command>
-    permission: noctas.commands.ping
-  playtime:
-    description: playtime
-    usage: /<command>
-    permission: noctas.commands.info
-  flyspeed:
-    description: change flyspeed
-    usage: /<command>
-    permission: noctas.commands.flyspeed
-    aliases: [fs]
-  buildtools:
-    description: change flyspeed
-    usage: /<command>
-    permission: noctas.commands.flyspeed
-    aliases: [tools, bt, btools]
-  rename:
-    description: rename
-    usage: /<command>
-    permission: noctas.commands.rename
-  back:
-    description: back to prev loc
-    usage: /<command>
-    permission: noctas.commands.back
+  suhc:
+    description: main plugin command
+    aliases: [speeduhc]

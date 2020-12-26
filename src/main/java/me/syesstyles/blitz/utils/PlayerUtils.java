@@ -51,6 +51,7 @@ public class PlayerUtils {
 	}
 	
 	public static void loadPlayerData() {
+		try{
 		new File(BlitzSG.getInstance().getDataFolder() + "/players").mkdir();
 		for(File f : new File(BlitzSG.getInstance().getDataFolder() + "/players").listFiles()) {
 			FileConfiguration fc = new YamlConfiguration();
@@ -63,6 +64,7 @@ public class PlayerUtils {
 			uhcPlayer.loadStats(fc);
 			//KitPlayer kp = new KitPlayer(UUID.fromString(f.getName().replace(".yml", "")), fc.getInt("Kills"), fc.getInt("Deaths"), fc.getBoolean("inArena"));
 		}
+	}catch (Exception e){}
 	}
 
 }
