@@ -51,9 +51,8 @@ public class BlitzSG extends JavaPlugin {
 		guiManager = new GUIManager();
 		perkManager = new PerkManager();
 		
-		//Register Commands:
+		//Register Commands::
 		getCommand("speeduhc").setExecutor(new CommandHandler());
-		
 		
 		//Register Handlers:
 		getServer().getPluginManager().registerEvents(new ArenaHandler(), this);
