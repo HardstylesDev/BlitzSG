@@ -10,6 +10,7 @@
         <module name="Blitz" />
         <module name="KitPVP" />
         <module name="BlitzRemake" />
+        <module name="BlitzSG" />
       </profile>
     </annotationProcessing>
   </component>
