@@ -7,7 +7,9 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="SpigotServer" />
+        <module name="Blitz" />
         <module name="KitPVP" />
+        <module name="BlitzRemake" />
       </profile>
     </annotationProcessing>
   </component>
