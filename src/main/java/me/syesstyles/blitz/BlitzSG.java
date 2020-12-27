@@ -1,5 +1,6 @@
 package me.syesstyles.blitz;
 
+import me.syesstyles.blitz.utils.WorldCommand;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -53,7 +54,8 @@ public class BlitzSG extends JavaPlugin {
 		
 		//Register Commands::
 		getCommand("speeduhc").setExecutor(new CommandHandler());
-		
+		getCommand("world").setExecutor(new WorldCommand());
+
 		//Register Handlers:
 		getServer().getPluginManager().registerEvents(new ArenaHandler(), this);
 		getServer().getPluginManager().registerEvents(new GameHandler(), this);

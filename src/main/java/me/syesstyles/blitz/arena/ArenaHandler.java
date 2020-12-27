@@ -12,7 +12,7 @@ public class ArenaHandler implements Listener{
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
-		if(!p.hasPermission("speeduhc.admin"))
+		if(!p.hasPermission("bsg.admin"))
 			return;
 		if(e.getAction() != Action.RIGHT_CLICK_BLOCK && e.getAction() != Action.LEFT_CLICK_BLOCK)
 			return;

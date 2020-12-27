@@ -7,3 +7,5 @@ commands:
   suhc:
     description: main plugin command
     aliases: [speeduhc]
+  world:
+    description: world command lol

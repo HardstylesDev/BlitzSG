@@ -44,7 +44,7 @@ public class ScoreboardHelper
         (this.objective = this.getOrCreateObjective(this.tag, "dummy")).setDisplaySlot(DisplaySlot.SIDEBAR);
         (this.healthName = this.getOrCreateObjective("healthName", "health")).setDisplaySlot(DisplaySlot.BELOW_NAME);
         this.healthName.setDisplayName("�c\u2764");
-        this.getOrCreateObjective("healthTab", "health").setDisplaySlot(DisplaySlot.PLAYER_LIST);
+      //  this.getOrCreateObjective("healthTab", "health").setDisplaySlot(DisplaySlot.PLAYER_LIST);
     }
     
     public void add(String paramString) {

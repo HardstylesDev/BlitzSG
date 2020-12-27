@@ -8,6 +8,7 @@ me\syesstyles\blitz\commands\subcommands\AddSpawnCommand.class
 me\syesstyles\blitz\commands\subcommands\SetLobbyCommand.class
 me\syesstyles\blitz\gui\KitsGUI.class
 me\syesstyles\blitz\game\Game$GameMode.class
+me\syesstyles\blitz\utils\WorldCommand.class
 me\syesstyles\blitz\game\Game.class
 me\syesstyles\blitz\utils\PrepareItemEnchant.class
 me\syesstyles\blitz\commands\subcommands\JoinCommand.class
@@ -35,6 +36,7 @@ me\syesstyles\blitz\arena\Arena.class
 me\syesstyles\blitz\elo\EloManager.class
 me\syesstyles\blitz\game\Game$4.class
 me\syesstyles\blitz\game\GameManager$1.class
+me\syesstyles\blitz\utils\VoidGenerator.class
 me\syesstyles\blitz\scoreboard\ScoreboardManager.class
 me\syesstyles\blitz\arena\ArenaHandler.class
 me\syesstyles\blitz\utils\PlayerUtils.class

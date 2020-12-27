@@ -29,18 +29,20 @@ public class ScoreboardManager extends BukkitRunnable
             board.clear();
     		Date now = new Date();
             if(!uhcPlayer.isInGame()) {
-                board.add("&7" + now.getDate() + "/" + (now.getMonth()+1) + " &8Mini01");
                 board.add(separator);
-                board.add("&fKills: &a" + uhcPlayer.getKills());
-                board.add("&fDeaths: &a" + uhcPlayer.getDeaths());
+                board.add("Kills: &a" + uhcPlayer.getKills());
+                board.add("Wins: &a" + uhcPlayer.getWins());
+                board.add("Blitz Score: &cN/A");
+                board.add("Blitz Rank: &cN/A");
+
+
                 board.add(separator);
-                board.add("&fSolo Normal Wins: &a" + uhcPlayer.getWins());
+
+                board.add("Coins: &a" + uhcPlayer.getCoins());
+                board.add("Unlocks: &cN/A");
+
                 board.add(separator);
-                board.add("&fELO-Rating: &a" + uhcPlayer.getElo());
-                board.add(separator);
-                board.add("&fCoins: &a" + uhcPlayer.getCoins());
-                board.add(separator);
-                board.add("&erelium.eu");
+                board.add("&ewww.hypixel.net");
             }else if(uhcPlayer.isInGame()) {
             	if(uhcPlayer.getGame().getGameMode() == GameMode.WAITING) {
                     board.add("&7" + now.getDate() + "/" + (now.getMonth()+1) + " &8Mini01");
