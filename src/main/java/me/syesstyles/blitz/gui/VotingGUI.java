@@ -15,7 +15,7 @@ import me.syesstyles.blitz.utils.ItemUtils;
 public class VotingGUI {
 	
 	public static void openGUI(Player p) {
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		
 		//Create GUI
 		Inventory inv = Bukkit.createInventory(null, 27, "�7Voting Menu");

@@ -16,7 +16,7 @@ import me.syesstyles.blitz.utils.ItemUtils;
 public class ShopGUI {
 	
 	public static void openGUI(Player p) {
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		
 		//Create GUI
 		Inventory inv = Bukkit.createInventory(null, (int)(((BlitzSG.getInstance().getPerkManager().getPerks().size()+1)/9)+3) * 9 + 9, "�8SpeedUHC Shop");

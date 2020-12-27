@@ -1,8 +1,11 @@
 package me.syesstyles.blitz;
 
 import me.syesstyles.blitz.utils.WorldCommand;
+import net.minecraft.server.v1_8_R3.EnumChatFormat;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,6 +28,9 @@ import me.syesstyles.blitz.utils.EnchantListener;
 import me.syesstyles.blitz.utils.PlayerUtils;
 
 public class BlitzSG extends JavaPlugin {
+
+	public static String CORE_NAME = EnumChatFormat.GRAY + "[" + EnumChatFormat.RED + "B-SG" + EnumChatFormat.GRAY + "] " + EnumChatFormat.WHITE;
+
 
 	public static BlitzSG instance;
 	
@@ -103,7 +109,7 @@ public class BlitzSG extends JavaPlugin {
 		return arenaManager;
 	}
 	
-	public BlitzSGPlayerManager getSpeedUHCPlayerManager() {
+	public BlitzSGPlayerManager getBlitzSGPlayerManager() {
 		return blitzSGPlayerManager;
 	}
 	
@@ -131,4 +137,19 @@ public class BlitzSG extends JavaPlugin {
 		return instance;
 	}
 
+
+	public static void broadcast(String message, World world) {
+		if (world == null)
+			Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', message));
+		else
+			world.getPlayers().forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', message)));
+	}
+
+	public static void broadcast(String message) {
+		broadcast(message, null);
+	}
+
+	public static void send(Player p, String message) {
+		p.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+	}
 }

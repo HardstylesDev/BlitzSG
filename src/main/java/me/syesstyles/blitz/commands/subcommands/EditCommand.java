@@ -16,7 +16,7 @@ public class EditCommand extends SubCommand{
 			return;
 		}
 		
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		for(Arena a : BlitzSG.getInstance().getArenaManager().getArenas()) {
 			if(a.getName().equalsIgnoreCase(args[1])) {
 				uhcPlayer.setEditedArena(a);

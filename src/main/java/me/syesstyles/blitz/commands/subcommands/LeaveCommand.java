@@ -9,7 +9,7 @@ public class LeaveCommand extends SubCommand{
 
 	@Override
 	public void runCommand(Player p, String[] args) {
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(uhcPlayer.isInGame())
 			uhcPlayer.getGame().removePlayer(p);
 	}

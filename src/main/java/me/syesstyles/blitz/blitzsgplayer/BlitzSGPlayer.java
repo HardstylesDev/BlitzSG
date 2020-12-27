@@ -39,7 +39,7 @@ public class BlitzSGPlayer {
 			this.perkLevels.put(p, 0);
 		
 		this.gameKills = 0;
-		BlitzSG.getInstance().getSpeedUHCPlayerManager().addUhcPlayer(this.uuid, this);
+		BlitzSG.getInstance().getBlitzSGPlayerManager().addUhcPlayer(this.uuid, this);
 	}
 
 	public void loadStats(FileConfiguration statsFile) {
@@ -143,18 +143,18 @@ public class BlitzSGPlayer {
 	
 	//Game Handling Methods
 	public boolean isInGame() {
-		if(BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayerGame(this) == null)
+		if(BlitzSG.getInstance().getBlitzSGPlayerManager().getUhcPlayerGame(this) == null)
 			return false;
 		else 
 			return true;
 	}
 
 	public Game getGame() {
-		return BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayerGame(this);
+		return BlitzSG.getInstance().getBlitzSGPlayerManager().getUhcPlayerGame(this);
 	}
 
 	public void setGame(Game g) {
-		BlitzSG.getInstance().getSpeedUHCPlayerManager().setUhcPlayerGame(this, g);
+		BlitzSG.getInstance().getBlitzSGPlayerManager().setUhcPlayerGame(this, g);
 	}
 
 	public boolean isEditingArena() {

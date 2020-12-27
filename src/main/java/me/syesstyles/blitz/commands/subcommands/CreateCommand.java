@@ -1,5 +1,6 @@
 package me.syesstyles.blitz.commands.subcommands;
 
+import me.syesstyles.blitz.utils.VoidGenerator;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -24,7 +25,7 @@ public class CreateCommand extends SubCommand {
 			return;
 		}*/
 		
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		for(Arena a : BlitzSG.getInstance().getArenaManager().getArenas()) {
 			if(a.getName().equalsIgnoreCase(args[1])) {
 				uhcPlayer.setEditedArena(a);
@@ -34,22 +35,24 @@ public class CreateCommand extends SubCommand {
 			}
 		}
 		
-		WorldCreator wc = new WorldCreator(BlitzSG.getInstance().getDataFolder() + "/worlds/" + args[1]);
-
-		wc.type(WorldType.FLAT);
-		wc.generatorSettings("2;0;1;");
-
-		wc.createWorld();
-		
+		//WorldCreator wc = new WorldCreator(BlitzSG.getInstance().getDataFolder() + "/worlds/" + args[1]);
+//
+		//wc.type(WorldType.FLAT);
+		//wc.generatorSettings("2;0;1;");
+//
+		//wc.createWorld();
+		//
+		//
+		new WorldCreator(BlitzSG.getInstance().getDataFolder() + "/worlds/" + args[1]).generator(new VoidGenerator()).createWorld();
 		World w = Bukkit.getWorld(BlitzSG.getInstance().getDataFolder() + "/worlds/" + args[1]);
-		
-		w.setAutoSave(false);
-        w.setTicksPerAnimalSpawns(1);
-        w.setTicksPerMonsterSpawns(1);
-        w.setGameRuleValue("doMobSpawning", "false");
-        w.setGameRuleValue("mobGriefing", "false");
-        w.setGameRuleValue("doFireTick", "false");
-        w.setGameRuleValue("showDeathMessages", "false");
+
+		//w.setAutoSave(false);
+        //w.setTicksPerAnimalSpawns(1);
+        //w.setTicksPerMonsterSpawns(1);
+        //w.setGameRuleValue("doMobSpawning", "false");
+        //w.setGameRuleValue("mobGriefing", "false");
+        //w.setGameRuleValue("doFireTick", "false");
+        //w.setGameRuleValue("showDeathMessages", "false");
 		
 		p.teleport(new Location(w, 0, 100, 0));
 		uhcPlayer.setEditedArena(new Arena(p.getWorld(), args[1]));

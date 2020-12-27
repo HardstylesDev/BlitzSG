@@ -22,20 +22,20 @@ public class BlitzSGPlayerHandler implements Listener{
 	public void onJoin(PlayerJoinEvent e) {
 		Player p = e.getPlayer();
 		BlitzSGPlayer uhcPlayer;
-		if(BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId()) == null)
+		if(BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId()) == null)
 			uhcPlayer = new BlitzSGPlayer(e.getPlayer().getUniqueId());
-		uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		p.setGameMode(GameMode.SURVIVAL);
 		p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0)); //todo change back
 		p.setPlayerListName(BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix()
 				+ "[" + uhcPlayer.getElo() + "] " + p.getName());
-		BlitzSG.getInstance().getSpeedUHCPlayerManager().setLobbyInventory(p);
+		BlitzSG.getInstance().getBlitzSGPlayerManager().setLobbyInventory(p);
 	}
 	
 	@EventHandler
 	public void onRespawn(PlayerRespawnEvent e) {
 		Player p = e.getPlayer();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		//if(!uhcPlayer.isInGame())
 			//e.setRespawnLocation(SpeedUHC.lobbySpawn);
 	}
@@ -43,7 +43,7 @@ public class BlitzSGPlayerHandler implements Listener{
 	@EventHandler
 	public void onAsyncChat(AsyncPlayerChatEvent e) {
 		Player p = e.getPlayer();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		e.setFormat(BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix() + "[" + uhcPlayer.getElo() + "] "
 				+ e.getPlayer().getName() + ": �f" + e.getMessage());
 	}
@@ -51,7 +51,7 @@ public class BlitzSGPlayerHandler implements Listener{
 	@EventHandler
 	public void playerLobbyInteractEvent(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(uhcPlayer.isInGame())
 			return;
 		if(e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK)

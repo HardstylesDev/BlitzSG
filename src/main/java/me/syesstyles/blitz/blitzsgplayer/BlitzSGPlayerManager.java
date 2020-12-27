@@ -26,7 +26,7 @@ public class BlitzSGPlayerManager {
 		return uhcPlayers;
 	}
 
-	public BlitzSGPlayer getUhcPlayer(UUID uuid) {
+	public BlitzSGPlayer getBsgPlayer(UUID uuid) {
 		return uhcPlayers.get(uuid);
 	}
 
@@ -87,8 +87,8 @@ public class BlitzSGPlayerManager {
 	}
 	
 	public void handleKillElo(Player victim, Player killer) {
-		BlitzSGPlayer victimUhc = this.getUhcPlayer(victim.getUniqueId());
-		BlitzSGPlayer killerUhc = this.getUhcPlayer(killer.getUniqueId());
+		BlitzSGPlayer victimUhc = this.getBsgPlayer(victim.getUniqueId());
+		BlitzSGPlayer killerUhc = this.getBsgPlayer(killer.getUniqueId());
 		
 		double eloChange = 0;
 		if(killerUhc.getElo() > 0)
@@ -103,13 +103,13 @@ public class BlitzSGPlayerManager {
 	}
 	
 	public void handleDeathElo(Player victim) {
-		BlitzSGPlayer victimUhc = this.getUhcPlayer(victim.getUniqueId());
+		BlitzSGPlayer victimUhc = this.getBsgPlayer(victim.getUniqueId());
 		Game g = victimUhc.getGame();
 		
 		double allPlayerElo = 0;
 		for(Player pl : g.getAllPlayers())
 			if(pl.getUniqueId() != victim.getUniqueId())
-				allPlayerElo += BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(pl.getUniqueId()).getElo();
+				allPlayerElo += BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(pl.getUniqueId()).getElo();
 		double eloChange = 0;
 		if(allPlayerElo > 0)
 			eloChange = ((victimUhc.getElo() * 0.1)/((allPlayerElo/(g.getAllPlayers().size()-1)))) * 4 + 1;
@@ -134,13 +134,13 @@ public class BlitzSGPlayerManager {
 	
 	public void handleWinElo(Game g) {
 		//Get Player
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(g.getWinner().getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(g.getWinner().getUniqueId());
 		
 		//Calculate ELO
 		double allPlayerElo = 0;
 		for(Player pl : g.getAllPlayers())
 			if(pl.getUniqueId() != g.getWinner().getUniqueId())
-				allPlayerElo += BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(pl.getUniqueId()).getElo();
+				allPlayerElo += BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(pl.getUniqueId()).getElo();
 		double eloChange = (((allPlayerElo * 0.5)/(g.getAllPlayers().size()-1))/uhcPlayer.getElo()) * 4 + 1;
 		if(uhcPlayer.getElo() == 0)
 			eloChange = 1;

@@ -47,7 +47,7 @@ public class GameHandler implements Listener {
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e) {
 		Player p = e.getPlayer();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(uhcPlayer.isInGame()) {
 			if(uhcPlayer.getGame().getGameMode() == GameMode.INGAME) {
 				uhcPlayer.getGame().killPlayer(p);
@@ -71,7 +71,7 @@ public class GameHandler implements Listener {
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent e) {
 		Player victim = e.getEntity();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(victim.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(victim.getUniqueId());
 		if(!uhcPlayer.isInGame())
 			return;
 		e.setDeathMessage("�c" + e.getDeathMessage());
@@ -84,22 +84,22 @@ public class GameHandler implements Listener {
 		uhcPlayer.addDeath();
 		if(victim.getKiller() != null) {
 			//p.getKiller().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 50, 2));
-			BlitzSGPlayer uhcPlayerKiller = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(victim.getKiller().getUniqueId());
+			BlitzSGPlayer uhcPlayerKiller = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(victim.getKiller().getUniqueId());
 			uhcPlayerKiller.addGameKill();
 			uhcPlayerKiller.addCoins(50);
 			victim.getKiller().sendMessage("�6+50 Coins (Kill)");
-			BlitzSG.getInstance().getSpeedUHCPlayerManager().handleKillElo(victim, victim.getKiller());
+			BlitzSG.getInstance().getBlitzSGPlayerManager().handleKillElo(victim, victim.getKiller());
 			for(Perk perk : BlitzSG.getInstance().getPerkManager().getKillPerks())
 				perk.givePerk(victim.getKiller(), uhcPlayerKiller.getPerkLevel(perk));
 			return;
 		}
-		BlitzSG.getInstance().getSpeedUHCPlayerManager().handleDeathElo(victim);
+		BlitzSG.getInstance().getBlitzSGPlayerManager().handleDeathElo(victim);
 	}
 	
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent e) {
 		Player p = e.getPlayer();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isInGame())
 			return;
 		if(!uhcPlayer.getGame().isDead(p))
@@ -130,7 +130,7 @@ public class GameHandler implements Listener {
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
 		Player p = e.getPlayer();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isInGame()) {
 			if(!p.hasPermission("speeduhc.admin"))
 					e.setCancelled(true);
@@ -314,7 +314,7 @@ public class GameHandler implements Listener {
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent e) {
 		Player p = e.getPlayer();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isInGame()) {
 			if(!p.hasPermission("speeduhc.admin"))
 				e.setCancelled(true);
@@ -338,7 +338,7 @@ public class GameHandler implements Listener {
 	@EventHandler
 	public void onItemDrop(PlayerDropItemEvent e) {
 		Player p = e.getPlayer();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isInGame()) {
 			if(!p.hasPermission("speeduhc.admin"))
 				e.setCancelled(true);
@@ -355,7 +355,7 @@ public class GameHandler implements Listener {
 		if(!(e.getEntity() instanceof Player))
 			return;
 		Player p = (Player) e.getEntity();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isInGame()) {
 			e.setCancelled(true);
 			return;
@@ -368,7 +368,7 @@ public class GameHandler implements Listener {
 	@EventHandler
 	public void playerPortalEvent(PlayerPortalEvent e) {
 		Player p = (Player) e.getPlayer();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isInGame()) {
 			p.sendMessage("�cThe Nether is disabled.");
 			return;
@@ -381,7 +381,7 @@ public class GameHandler implements Listener {
 		if(!(e.getEntity() instanceof Player))
 			return;
 		Player p = (Player) e.getEntity();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isInGame())
 			return;
 		if(e.getDamager() instanceof Player)
@@ -467,7 +467,7 @@ public class GameHandler implements Listener {
 	@EventHandler
 	public void playerOpenVotingMenu(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isInGame())
 			return;
 		if(uhcPlayer.getGame().getGameMode() != GameMode.WAITING && uhcPlayer.getGame().getGameMode() != GameMode.STARTING)

@@ -60,7 +60,7 @@ public class GameManager {
     	HashMap<Integer, BlitzSGPlayer> map = new HashMap<Integer, BlitzSGPlayer>();
     	ArrayList<BlitzSGPlayer> kitPlayers = new ArrayList<BlitzSGPlayer>();
     	for(Player kp : g.getAllPlayers()) {
-    		kitPlayers.add(BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(kp.getUniqueId()));
+    		kitPlayers.add(BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(kp.getUniqueId()));
     	}
     	kitPlayers.sort(killSorter);
     	for(BlitzSGPlayer kp : kitPlayers) {

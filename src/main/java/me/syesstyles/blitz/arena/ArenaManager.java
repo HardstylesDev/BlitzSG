@@ -31,6 +31,8 @@ public class ArenaManager {
 	}
 	
 	public Arena getRandomArena() {
+		if(arenas.size() == 0)
+			return null;
 		Arena a = arenas.get(new Random().nextInt(arenas.size()));
 		if(!a.isInUse() && a.isUsable())
 			return a;

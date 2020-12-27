@@ -25,7 +25,7 @@ public class ScoreboardManager extends BukkitRunnable
     public void run() {
         for(Player p : Bukkit.getServer().getOnlinePlayers()) {
             ScoreboardHelper board = this.scoreboardHandler.getScoreboard(p);
-            BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+            BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
             board.clear();
     		Date now = new Date();
             if(!uhcPlayer.isInGame()) {

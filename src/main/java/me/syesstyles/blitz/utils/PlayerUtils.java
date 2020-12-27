@@ -15,7 +15,7 @@ import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 public class PlayerUtils {
 	
 	public static void savePlayerData() {
-		for(BlitzSGPlayer uhcPlayer : BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayers().values()) {
+		for(BlitzSGPlayer uhcPlayer : BlitzSG.getInstance().getBlitzSGPlayerManager().getUhcPlayers().values()) {
 			//new File(Kits.getInstance().getDataFolder() + "/players").mkdir();
 			File f = new File(BlitzSG.getInstance().getDataFolder() + "/players/" + uhcPlayer.getUuid() + ".yml");
 			

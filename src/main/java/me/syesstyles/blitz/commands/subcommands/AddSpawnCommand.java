@@ -9,7 +9,7 @@ public class AddSpawnCommand extends SubCommand{
 
 	@Override
 	public void runCommand(Player p, String[] args) {
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
+		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isEditingArena()) {
 			p.sendMessage("�cYou are currently not editing an arena.");
 			return;
