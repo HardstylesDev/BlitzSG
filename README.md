@@ -1,1 +1,1 @@
-# SpigotServer, first proper development structure for build servers
+# BlitzSG, zo. weet je dat ook weer. Ben je weer helemaal op de hoogte.
