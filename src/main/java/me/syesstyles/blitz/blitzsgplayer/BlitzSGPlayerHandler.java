@@ -1,6 +1,8 @@
 package me.syesstyles.blitz.blitzsgplayer;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,7 +26,7 @@ public class BlitzSGPlayerHandler implements Listener{
 			uhcPlayer = new BlitzSGPlayer(e.getPlayer().getUniqueId());
 		uhcPlayer = BlitzSG.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
 		p.setGameMode(GameMode.SURVIVAL);
-		p.teleport(BlitzSG.lobbySpawn);
+		p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0)); //todo change back
 		p.setPlayerListName(BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix()
 				+ "[" + uhcPlayer.getElo() + "] " + p.getName());
 		BlitzSG.getInstance().getSpeedUHCPlayerManager().setLobbyInventory(p);

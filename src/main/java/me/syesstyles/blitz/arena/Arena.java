@@ -57,7 +57,7 @@ public class Arena {
 	public void resetArena() {
 		for(Player p : this.getArenaWorld().getPlayers()) {
 			p.teleport(BlitzSG.lobbySpawn);
-			if(p.getWorld() != BlitzSG.lobbySpawn.getWorld())
+			if(p.getWorld() != new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0)) // todo change back
 				p.kickPlayer("�6>> �e�lArena Resetting �6<<");
 		}
 		new BukkitRunnable() {

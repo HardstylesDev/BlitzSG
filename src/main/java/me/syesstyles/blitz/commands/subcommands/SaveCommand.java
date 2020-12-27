@@ -43,7 +43,7 @@ public class SaveCommand extends SubCommand{
 			uhcPlayer.getEditedArena().setArenaMaxCorner(arenaMaxCorner);
 		}
 		p.sendMessage("�eSuccessfully saved arena �6" + uhcPlayer.getEditedArena().getName() + "�e!");
-		p.teleport(BlitzSG.lobbySpawn);
+		p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0));  //todo change back
 		
 		Bukkit.unloadWorld(p.getWorld(), true);
 		uhcPlayer.setEditedArena(null);
