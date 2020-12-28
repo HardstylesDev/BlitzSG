@@ -27,8 +27,8 @@ import java.util.UUID;
 public class Nickname {
     public void setNick(Player p, String s) {
 
-        setPlayerSkin(p, s);
-        refresh(p);
+        boolean test = setPlayerSkin(p, s);
+        if (test) refresh(p);
 
         setPlayerNameTag(p, s);
         BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
@@ -54,6 +54,9 @@ public class Nickname {
             } catch (ClassNotFoundException ignored) {
 
             }
+            for (Player p : Bukkit.getOnlinePlayers())
+                if (!p.equals(player))
+                    p.hidePlayer(player);
             if (!gameProfileExists) {
                 Field nameField = entityPlayer.getClass().getSuperclass().getDeclaredField("name");
                 nameField.setAccessible(true);
@@ -101,19 +104,24 @@ public class Nickname {
         }
     }
 
-    public void setPlayerSkin(Player p, String arg) {
+    public boolean setPlayerSkin(Player p, String arg) {
         OfflinePlayer op = Bukkit.getServer().getOfflinePlayer(arg);
+        if (!op.getName().equalsIgnoreCase(arg)) {
+            return false;
+        }
         p.sendMessage("Setting your nick to " + arg);
         try {
             HttpsURLConnection connection = (HttpsURLConnection) new URL("https://api.mineskin.org/generate/user/" + op.getUniqueId()).openConnection();
             if (connection.getResponseCode() == HttpsURLConnection.HTTP_OK) {
                 String reply = new BufferedReader(new InputStreamReader(connection.getInputStream())).readLine();
+                if(reply.contains("\"error\""))
+                    return false;
                 String value = reply.split("\"value\":\"")[1].split("\"")[0];
                 String signature = reply.split("\"signature\":\"")[1].split("\"")[0];
 
                 Bukkit.getOnlinePlayers().forEach(player -> {
                     if (!player.equals(p))
-                        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, ((CraftPlayer) player).getHandle()));
+                        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, ((CraftPlayer) p).getHandle()));
                     CraftPlayer cp = (CraftPlayer) p;
                     GameProfile gameProfile = cp.getHandle().getProfile();
 
@@ -127,11 +135,14 @@ public class Nickname {
                     if (player.equals(p)) ;
 
                 });
+                return true;
             }
         } catch (IOException exception) {
-            BlitzSG.send(p, "&cCouldn't change your skin!");
+
             exception.printStackTrace();
+            return false;
         }
+        return false;
     }
 
     public void refresh(Player p) {

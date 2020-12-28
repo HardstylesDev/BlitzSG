@@ -16,6 +16,7 @@ D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\game\Gam
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\blitzsgplayer\BlitzSGPlayerManager.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\commands\subcommands\SubCommand.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\rank\ranks\Default.java
+D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\rank\ranks\Moderator.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\commands\subcommands\DebugCommand.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\blitzsgplayer\BlitzSGPlayer.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\commands\subcommands\CreateCommand.java
@@ -35,6 +36,7 @@ D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\commands
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\arena\ArenaManager.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\arena\ArenaHandler.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\utils\nickname\Nickname.java
+D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\rank\ranks\Helper.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\elo\EloManager.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\scoreboard\ScoreboardManager.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\arena\ArenaUtils.java
