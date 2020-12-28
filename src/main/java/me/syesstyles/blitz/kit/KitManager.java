@@ -18,9 +18,9 @@ public class KitManager {
 	private void loadKits() {
 		this.kits.add(new Kit("Bomberman", Material.TNT
 				, Arrays.asList(350, 650, 950)
-				, Arrays.asList(Arrays.asList("ง7Start the game with 3x TNT.")
-						, Arrays.asList("ง7Start the game with 5x TNT.")
-						, Arrays.asList("ง7Start the game with 8x TNT."))
+				, Arrays.asList(Arrays.asList("ยง7Start the game with 3x TNT.")
+						, Arrays.asList("ยง7Start the game with 5x TNT.")
+						, Arrays.asList("ยง7Start the game with 8x TNT."))
 				, Arrays.asList(Arrays.asList(new ItemStack(Material.TNT, 3))
 						, Arrays.asList(new ItemStack(Material.TNT, 5))
 						, Arrays.asList(new ItemStack(Material.TNT, 8)))));

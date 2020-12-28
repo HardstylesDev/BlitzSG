@@ -33,7 +33,7 @@ public class InventoryHandler implements Listener {
 				e.setCancelled(true);
 		if(BlitzSG.getInstance().getGuiManager().isInGUI(p))
 			e.setCancelled(true);
-		//if(e.getInventory().getName() != "§7Kit Selector")
+		//if(e.getInventory().getName() != "Â§7Kit Selector")
 			//return;
 		if(e.getRawSlot() >= e.getInventory().getSize() || e.getRawSlot() <= -1)
 			return;
@@ -46,28 +46,28 @@ public class InventoryHandler implements Listener {
 				uhcPlayer.getGame().setVote(p, true);
 			else if(e.isRightClick())
 				uhcPlayer.getGame().setVote(p, false);
-			p.getOpenInventory().setItem(13, ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM, 1, (short) 3), "§eEnable Player Heads?"
-					, Arrays.asList("§7Left-Click to vote §aTrue", "§7Right-Click to vote §cFalse"
-					, "§7", "§7Status:", "§a" + uhcPlayer.getGame().getTrueVotes()
-					+ " §7/ §c" + uhcPlayer.getGame().getFalseVotes() + " §8("
+			p.getOpenInventory().setItem(13, ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM, 1, (short) 3), "Â§eEnable Player Heads?"
+					, Arrays.asList("Â§7Left-Click to vote Â§aTrue", "Â§7Right-Click to vote Â§cFalse"
+					, "Â§7", "Â§7Status:", "Â§a" + uhcPlayer.getGame().getTrueVotes()
+					+ " Â§7/ Â§c" + uhcPlayer.getGame().getFalseVotes() + " Â§8("
 							+ uhcPlayer.getGame().getVotingPercentage() + "%)")));
 			//p.closeInventory();
 		}
-		if(e.getInventory().getName() == "§8SpeedUHC Shop") {
+		if(e.getInventory().getName() == "Â§8SpeedUHC Shop") {
 			if(uhcPlayer.isInGame())
 				return;
 			if(BlitzSG.getInstance().getKitManager().getKit(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName()) == null)
 				return;
 			Kit kit = BlitzSG.getInstance().getKitManager().getKit(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName());
 			if(kit.getPrice(uhcPlayer.getKitLevel(kit)) == -1) {
-				p.sendMessage("§cYou already have this kit at max level!!");
+				p.sendMessage("Â§cYou already have this kit at max level!!");
 				return;
 			}
 			if(uhcPlayer.getCoins() < kit.getPrice(uhcPlayer.getKitLevel(kit))) {
-				p.sendMessage("§cYou don't have enough coins to purchase this upgrade!");
+				p.sendMessage("Â§cYou don't have enough coins to purchase this upgrade!");
 				return;
 			}
-			p.sendMessage("§aSuccessfully purchased " + kit.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(kit)+1) + "!");
+			p.sendMessage("Â§aSuccessfully purchased " + kit.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(kit)+1) + "!");
 			uhcPlayer.removeCoins(kit.getPrice(uhcPlayer.getKitLevel(kit)));
 			uhcPlayer.setKitLevel(kit, uhcPlayer.getKitLevel(kit)+1);
 			p.closeInventory();

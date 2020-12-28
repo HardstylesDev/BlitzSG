@@ -19,7 +19,7 @@ public class ShopGUI {
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		
 		//Create GUI
-		Inventory inv = Bukkit.createInventory(null, (int)(((BlitzSG.getInstance().getKitManager().getKits().size()+1)/9)+3) * 9 + 9, "§8SpeedUHC Shop");
+		Inventory inv = Bukkit.createInventory(null, (int)(((BlitzSG.getInstance().getKitManager().getKits().size()+1)/9)+3) * 9 + 9, "Â§8SpeedUHC Shop");
 		
 		//Add Items
 		int firstItem = 10;
@@ -41,11 +41,11 @@ public class ShopGUI {
 	
 	public static String getName(BlitzSGPlayer uhcPlayer, Kit p) {
 		if(p.getPrice(uhcPlayer.getKitLevel(p)) == -1)
-			return "§a" + p.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(p));
+			return "Â§a" + p.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(p));
 		else if(p.getPrice(uhcPlayer.getKitLevel(p)) <= uhcPlayer.getCoins())
-			return "§e" + p.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(p)+1);
+			return "Â§e" + p.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(p)+1);
 		else
-			return "§c" + p.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(p)+1);
+			return "Â§c" + p.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(p)+1);
 	}
 	
 	public static ArrayList<String> getFullDescription(BlitzSGPlayer uhcPlayer, Kit p) {
@@ -54,15 +54,15 @@ public class ShopGUI {
 			desc.add(str);
 		desc.add("");
 		if(p.getPrice(uhcPlayer.getKitLevel(p)) == -1) {
-			desc.add("§aMAX LEVEL!");
+			desc.add("Â§aMAX LEVEL!");
 			return desc;
 		}
-		desc.add("§7Price: §6" + p.getPrice(uhcPlayer.getKitLevel(p)));
+		desc.add("Â§7Price: Â§6" + p.getPrice(uhcPlayer.getKitLevel(p)));
 		desc.add("");
 		if(p.getPrice(uhcPlayer.getKitLevel(p)) <= uhcPlayer.getCoins())
-			desc.add("§eClick to unlock!");
+			desc.add("Â§eClick to unlock!");
 		else
-			desc.add("§cNot enough coins!");
+			desc.add("Â§cNot enough coins!");
 		return desc;
 	}
 }

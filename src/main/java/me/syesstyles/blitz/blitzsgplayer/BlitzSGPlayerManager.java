@@ -59,31 +59,31 @@ public class BlitzSGPlayerManager {
 		if(killerUhc.getElo() > 0) {
 			double eloChange = (victimUhc.getElo()/killerUhc.getElo())*0.1 + 1;
 			victimUhc.removeElo((int) eloChange);
-			victim.sendMessage("งc-" + (int)eloChange + " ง7ELO งc(\u25bc" + victimUhc.getElo() + ")");
+			victim.sendMessage("ยงc-" + (int)eloChange + " ยง7ELO ยงc(\u25bc" + victimUhc.getElo() + ")");
 			killerUhc.addElo((int) eloChange);
-			killer.sendMessage("งa+" + (int)eloChange + " ง7ELO งa(\u25b2" + killerUhc.getElo() + ")");
+			killer.sendMessage("ยงa+" + (int)eloChange + " ยง7ELO ยงa(\u25b2" + killerUhc.getElo() + ")");
 			return;
 		}
 		double eloChange = victimUhc.getElo()*0.1 + 1;
 		victimUhc.removeElo((int) eloChange);
-		victim.sendMessage("งc-" + (int)eloChange + " ง7ELO งc(\u25bc" + victimUhc.getElo() + ")");
+		victim.sendMessage("ยงc-" + (int)eloChange + " ยง7ELO ยงc(\u25bc" + victimUhc.getElo() + ")");
 		killerUhc.addElo((int) eloChange);
-		killer.sendMessage("งa+" + (int)eloChange + " ง7ELO งa(\u25b2" + killerUhc.getElo() + ")");
+		killer.sendMessage("ยงa+" + (int)eloChange + " ยง7ELO ยงa(\u25b2" + killerUhc.getElo() + ")");
 	}
 	
 	public void handleDeathElo(Player victim) {
 		SpeedUHCPlayer victimUhc = this.getUhcPlayer(victim.getUniqueId());
 		double eloToRemove = victimUhc.getElo()*0.1 + 1;
 		victimUhc.removeElo((int)eloToRemove);
-		victim.sendMessage("งc-" + (int)eloToRemove + " ง7ELO งc(\u25bc" + victimUhc.getElo() + ")");
+		victim.sendMessage("ยงc-" + (int)eloToRemove + " ยง7ELO ยงc(\u25bc" + victimUhc.getElo() + ")");
 	}*/
 	
 	public void setLobbyInventory(Player p) {
 		p.getInventory().clear();
-		p.getInventory().setItem(1, ItemUtils.buildItem(new ItemStack(Material.IRON_SWORD), "&b&lJoin a Game &7(Right-Click)", Arrays.asList("ง7Right-Click to join a SpeedUHC game")));
-		p.getInventory().setItem(3, ItemUtils.buildItem(new ItemStack(Material.EMERALD), "&a&lOpen the Shop &7(Right-Click)", Arrays.asList("ง7Right-Click to open the shop")));
-		p.getInventory().setItem(5, ItemUtils.buildItem(new ItemStack(Material.PAINTING), "&e&lYour Stats &7(Right-Click)", Arrays.asList("ง7Right-Click to view your stats")));
-		p.getInventory().setItem(7, ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM), "&c???", Arrays.asList("ง7Coming soon...")));
+		p.getInventory().setItem(1, ItemUtils.buildItem(new ItemStack(Material.IRON_SWORD), "&b&lJoin a Game &7(Right-Click)", Arrays.asList("ยง7Right-Click to join a SpeedUHC game")));
+		p.getInventory().setItem(3, ItemUtils.buildItem(new ItemStack(Material.EMERALD), "&a&lOpen the Shop &7(Right-Click)", Arrays.asList("ยง7Right-Click to open the shop")));
+		p.getInventory().setItem(5, ItemUtils.buildItem(new ItemStack(Material.PAINTING), "&e&lYour Stats &7(Right-Click)", Arrays.asList("ยง7Right-Click to view your stats")));
+		p.getInventory().setItem(7, ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM), "&c???", Arrays.asList("ยง7Coming soon...")));
 	}
 	
 	public void handleKillElo(Player victim, Player killer) {
@@ -97,9 +97,9 @@ public class BlitzSGPlayerManager {
 			eloChange = Math.sqrt(victimUhc.getElo()/1) + 1;
 		
 		victimUhc.removeElo((int) eloChange);
-		victim.sendMessage("งc-" + (int)eloChange + " ง7ELO งc(\u25bc" + victimUhc.getElo() + ")");
+		victim.sendMessage("ยงc-" + (int)eloChange + " ยง7ELO ยงc(\u25bc" + victimUhc.getElo() + ")");
 		killerUhc.addElo((int) eloChange);
-		killer.sendMessage("งa+" + (int)eloChange + " ง7ELO งa(\u25b2" + killerUhc.getElo() + ")");
+		killer.sendMessage("ยงa+" + (int)eloChange + " ยง7ELO ยงa(\u25b2" + killerUhc.getElo() + ")");
 	}
 	
 	public void handleDeathElo(Player victim) {
@@ -117,7 +117,7 @@ public class BlitzSGPlayerManager {
 			eloChange = (victimUhc.getElo() * 0.1) * 4 + 1;
 		
 		victimUhc.removeElo((int) eloChange);
-		victim.sendMessage("งc-" + (int)eloChange + " ง7ELO งc(\u25bc" + victimUhc.getElo() + ")");
+		victim.sendMessage("ยงc-" + (int)eloChange + " ยง7ELO ยงc(\u25bc" + victimUhc.getElo() + ")");
 	}
 	
 	/*public void handleWinElo(Game g) {
@@ -129,7 +129,7 @@ public class BlitzSGPlayerManager {
 		if(uhcPlayer.getElo() == 0)
 			eloToAdd = (allPlayerElo/g.getAllPlayers().size()) * 10 + 1;
 		uhcPlayer.addElo((int) eloToAdd);
-		g.getWinner().sendMessage("งa+" + (int)eloToAdd + " ง7ELO งa(\u25b2" + uhcPlayer.getElo() + ")");
+		g.getWinner().sendMessage("ยงa+" + (int)eloToAdd + " ยง7ELO ยงa(\u25b2" + uhcPlayer.getElo() + ")");
 	}*/
 	
 	public void handleWinElo(Game g) {
@@ -147,7 +147,7 @@ public class BlitzSGPlayerManager {
 		
 		//Apply ELO + Message Player
 		uhcPlayer.addElo((int) eloChange);
-		g.getWinner().sendMessage("งa+" + (int)eloChange + " ง7ELO งa(\u25b2" + uhcPlayer.getElo() + ")");
+		g.getWinner().sendMessage("ยงa+" + (int)eloChange + " ยง7ELO ยงa(\u25b2" + uhcPlayer.getElo() + ")");
 	}
 	
 }

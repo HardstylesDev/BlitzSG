@@ -16,7 +16,7 @@ public class LeaveCommand extends SubCommand{
 
 	@Override
 	public String getHelp() {
-		return "ง8\u2022 งf/speeduhc leave";
+		return "ยง8\u2022 ยงf/speeduhc leave";
 	}
 
 	@Override

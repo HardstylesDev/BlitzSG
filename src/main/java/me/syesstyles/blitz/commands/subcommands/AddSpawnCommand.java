@@ -11,16 +11,16 @@ public class AddSpawnCommand extends SubCommand{
 	public void runCommand(Player p, String[] args) {
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isEditingArena()) {
-			p.sendMessage("§cYou are currently not editing an arena.");
+			p.sendMessage("Â§cYou are currently not editing an arena.");
 			return;
 		}
 		uhcPlayer.getEditedArena().addSpawn(p.getLocation());
-		p.sendMessage("§eAdded spawn §6" + uhcPlayer.getEditedArena().getSpawns().size() + "§e!");
+		p.sendMessage("Â§eAdded spawn Â§6" + uhcPlayer.getEditedArena().getSpawns().size() + "Â§e!");
 	}
 
 	@Override
 	public String getHelp() {
-		return "§8\u2022 §f/speeduhc addspawn";
+		return "Â§8\u2022 Â§f/speeduhc addspawn";
 	}
 
 	@Override

@@ -45,7 +45,7 @@ public class BlitzSGPlayerHandler implements Listener{
 		Player p = e.getPlayer();
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		e.setFormat(BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix() + "[" + uhcPlayer.getElo() + "] "
-				+ e.getPlayer().getName() + ": §f" + e.getMessage());
+				+ e.getPlayer().getName() + ": Â§f" + e.getMessage());
 	}
 	
 	@EventHandler
@@ -63,7 +63,7 @@ public class BlitzSGPlayerHandler implements Listener{
 			ShopGUI.openGUI(p);
 		else if(e.getItem().getType() == Material.IRON_SWORD) {
 			if(BlitzSG.getInstance().getGameManager().getAvailableGame() == null) {
-				p.sendMessage("§cCouldn't find any available games");
+				p.sendMessage("Â§cCouldn't find any available games");
 				return;
 			}
 			BlitzSG.getInstance().getGameManager().getAvailableGame().addPlayer(p);

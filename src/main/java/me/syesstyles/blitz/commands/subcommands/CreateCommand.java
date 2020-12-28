@@ -17,11 +17,11 @@ public class CreateCommand extends SubCommand {
 	@Override
 	public void runCommand(Player p, String[] args) {
 		if(args.length < 2) {
-			p.sendMessage("§cUsage: /suhc create <name>");
+			p.sendMessage("Â§cUsage: /suhc create <name>");
 			return;
 		}
 		/*if(ArenaUtils.getCornerLoc1(p) == null || ArenaUtils.getCornerLoc2(p) == null) {
-			p.sendMessage("§cPlease set both corners before creating an arena");
+			p.sendMessage("Â§cPlease set both corners before creating an arena");
 			return;
 		}*/
 		
@@ -30,7 +30,7 @@ public class CreateCommand extends SubCommand {
 			if(a.getName().equalsIgnoreCase(args[1])) {
 				uhcPlayer.setEditedArena(a);
 				p.teleport(new Location(a.getArenaWorld(), 0, 100, 0));
-				p.sendMessage("§eYou are now editing the arena §6\"" + args[1] + "\"§e.");
+				p.sendMessage("Â§eYou are now editing the arena Â§6\"" + args[1] + "\"Â§e.");
 				return;
 			}
 		}
@@ -56,11 +56,11 @@ public class CreateCommand extends SubCommand {
 		
 		p.teleport(new Location(w, 0, 100, 0));
 		uhcPlayer.setEditedArena(new Arena(p.getWorld(), args[1]));
-		p.sendMessage("§eSuccessfully created the world for arena §6\"" + args[1] + "\"§e.");
-		p.sendMessage("§eUse §6/speeduhc save §eto save the arena.");
+		p.sendMessage("Â§eSuccessfully created the world for arena Â§6\"" + args[1] + "\"Â§e.");
+		p.sendMessage("Â§eUse Â§6/speeduhc save Â§eto save the arena.");
 		
 		//new Arena(ArenaUtils.getCornerLoc1(p), ArenaUtils.getCornerLoc2(p), args[1]);
-		//p.sendMessage("§eSuccessfully created the arena §6\"" + args[1] + "\"");
+		//p.sendMessage("Â§eSuccessfully created the arena Â§6\"" + args[1] + "\"");
 		
 		//TODO - SkywarsReloaded arena creation system
 		//Create world and let player setup arena in said world
@@ -70,7 +70,7 @@ public class CreateCommand extends SubCommand {
 
 	@Override
 	public String getHelp() {
-		return "§8\u2022 §f/speeduhc create <arena>";
+		return "Â§8\u2022 Â§f/speeduhc create <arena>";
 	}
 
 	@Override

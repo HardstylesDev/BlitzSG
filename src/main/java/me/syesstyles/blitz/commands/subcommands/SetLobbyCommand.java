@@ -13,12 +13,12 @@ public class SetLobbyCommand extends SubCommand{
 		BlitzSG.getInstance().getConfig().set("Lobby.Y", p.getLocation().getBlockY());
 		BlitzSG.getInstance().getConfig().set("Lobby.Z", p.getLocation().getBlockZ());
 		BlitzSG.getInstance().saveConfig();
-		p.sendMessage("§eSuccesfully set the new lobby location!");
+		p.sendMessage("Â§eSuccesfully set the new lobby location!");
 	}
 
 	@Override
 	public String getHelp() {
-		return "§8\u2022 §f/speeduhc setlobby";
+		return "Â§8\u2022 Â§f/speeduhc setlobby";
 	}
 
 	@Override

@@ -14,16 +14,16 @@ public class SaveCommand extends SubCommand{
 	public void runCommand(Player p, String[] args) {
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isEditingArena()) {
-			p.sendMessage("§cYou are currently not editing an arena.");
+			p.sendMessage("Â§cYou are currently not editing an arena.");
 			return;
 		}
 		if(uhcPlayer.getEditedArena().getSpawns().size() < 2) {
-			p.sendMessage("§cYou must add at least 2 spawns in order to save the arena.");
+			p.sendMessage("Â§cYou must add at least 2 spawns in order to save the arena.");
 			return;
 		}
 		if(ArenaUtils.getCornerLoc1(p) == null || ArenaUtils.getCornerLoc2(p) == null) {
 			if(uhcPlayer.getEditedArena().getArenaMinCorner() == null && uhcPlayer.getEditedArena().getArenaMaxCorner() == null) {
-				p.sendMessage("§cPlease set both corners before saving the arena");
+				p.sendMessage("Â§cPlease set both corners before saving the arena");
 				return;
 			}
 		}
@@ -42,7 +42,7 @@ public class SaveCommand extends SubCommand{
 			uhcPlayer.getEditedArena().setArenaMinCorner(arenaMinCorner);
 			uhcPlayer.getEditedArena().setArenaMaxCorner(arenaMaxCorner);
 		}
-		p.sendMessage("§eSuccessfully saved arena §6" + uhcPlayer.getEditedArena().getName() + "§e!");
+		p.sendMessage("Â§eSuccessfully saved arena Â§6" + uhcPlayer.getEditedArena().getName() + "Â§e!");
 		p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0));  //todo change back
 		
 		Bukkit.unloadWorld(p.getWorld(), true);
@@ -51,7 +51,7 @@ public class SaveCommand extends SubCommand{
 
 	@Override
 	public String getHelp() {
-		return "§8\u2022 §f/speeduhc save";
+		return "Â§8\u2022 Â§f/speeduhc save";
 	}
 
 	@Override

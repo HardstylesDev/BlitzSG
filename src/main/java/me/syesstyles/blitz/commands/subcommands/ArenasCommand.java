@@ -10,13 +10,13 @@ public class ArenasCommand extends SubCommand {
 	@Override
 	public void runCommand(Player p, String[] args) {
 		for(Arena a : BlitzSG.getInstance().getArenaManager().getArenas()) {
-			p.sendMessage("§eArena: §6" + a.getName());
+			p.sendMessage("Â§eArena: Â§6" + a.getName());
 		}
 	}
 
 	@Override
 	public String getHelp() {
-		return "§8\u2022 §f/speeduhc arenas";
+		return "Â§8\u2022 Â§f/speeduhc arenas";
 	}
 
 	@Override

@@ -171,8 +171,6 @@ public class Game {
 				p.sendMessage("&ePlayer heads are &cDisabled&e!");
 			p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60 * 20, 0));
 			p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 60 * 20, 0));
-			p.getInventory().addItem(ItemUtils.getGracefulItem(Material.DIAMOND_PICKAXE, "Graceful Pickaxe"));
-			p.getInventory().addItem(ItemUtils.getGracefulItem(Material.DIAMOND_AXE, "Graceful Axe"));
 			for(Kit kit : BlitzSG.getInstance().getKitManager().getKits())
 				kit.giveKit(p, BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId()).getKitLevel(kit));
 		}

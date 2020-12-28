@@ -12,21 +12,10 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class ItemUtils {
-	
-	public static ItemStack getGracefulItem(Material mat, String name) {
-		ItemStack pick = new ItemStack(mat);
-		ItemMeta pickmeta = pick.getItemMeta();
-		pickmeta.setDisplayName("งa" + name);
-		pickmeta.setLore(Arrays.asList("ง7", "ง7This Tool deals 0 damage to players."));
-		pickmeta.addEnchant(Enchantment.DIG_SPEED, 3, true);
-		pickmeta.addEnchant(Enchantment.DURABILITY, 10, true);
-		pick.setItemMeta(pickmeta);
-		return pick;
-	}
 
 	public static ItemStack buildItem(ItemStack i, String name, List<String> lore) {
 		ItemMeta im = i.getItemMeta();
-		im.setDisplayName(name.replace("&", "ง"));
+		im.setDisplayName(name.replace("&", "ยง"));
 		im.setLore(lore);
 		i.setItemMeta(im);
 		return i;
