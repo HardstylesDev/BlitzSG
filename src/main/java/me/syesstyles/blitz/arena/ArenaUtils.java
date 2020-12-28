@@ -44,6 +44,7 @@ public class ArenaUtils {
 			File f = new File(BlitzSG.getInstance().getDataFolder() + "/arenas/" + a.getName() + ".yml");
 			if(!f.exists()) {
 				try {
+		    		f.getParentFile().mkdirs();
 					f.createNewFile();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -58,7 +59,7 @@ public class ArenaUtils {
 			}
 			
 			if(fc.get("World") == null)
-				fc.set("World", a.getArenaWorld().getName().replace("plugins\\SpeedUHC/worlds/", ""));
+				fc.set("World", a.getArenaWorld().getName().replace("plugins\\BlitzSG/worlds/", ""));
 			fc.set("Name", a.getName());
 			fc.set("Bounds.Min.X", a.getArenaMinCorner().getBlockX());
 			fc.set("Bounds.Min.Y", a.getArenaMinCorner().getBlockY());

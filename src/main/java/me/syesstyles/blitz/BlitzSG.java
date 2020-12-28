@@ -96,13 +96,13 @@ public class BlitzSG extends JavaPlugin {
 	}
 	
 	public void onDisable() {
-		//Reset Running Games:
-		for(Game g : gameManager.getRunningGames())
-			g.resetGame();
-		
 		//Save Arenas:
 		ArenaUtils.saveArenas();
 		PlayerUtils.savePlayerData();
+		
+		//Reset Running Games:
+		for(Game g : gameManager.getRunningGames())
+			g.resetGame();
 	}
 	
 	public ArenaManager getArenaManager() {
