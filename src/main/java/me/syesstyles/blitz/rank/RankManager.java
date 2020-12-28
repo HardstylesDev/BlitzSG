@@ -4,6 +4,8 @@ import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.rank.ranks.Admin;
 import me.syesstyles.blitz.rank.ranks.Default;
+import me.syesstyles.blitz.rank.ranks.Helper;
+import me.syesstyles.blitz.rank.ranks.Moderator;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
@@ -13,7 +15,7 @@ import java.util.Set;
 
 public class RankManager {
 
-    public static final Class<? extends Rank>[] RANKS = new Class[]{Default.class, Admin.class};
+    public static final Class<? extends Rank>[] RANKS = new Class[]{Default.class, Admin.class, Helper.class, Moderator.class};
     private final ArrayList<Rank> ranks = new ArrayList<>();
 
     public Rank getRank(Player p) {
