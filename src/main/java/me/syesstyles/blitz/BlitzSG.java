@@ -1,7 +1,5 @@
 package me.syesstyles.blitz;
 
-import me.syesstyles.blitz.utils.WorldCommand;
-import net.minecraft.server.v1_8_R3.EnumChatFormat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -12,6 +10,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import me.syesstyles.blitz.arena.ArenaHandler;
 import me.syesstyles.blitz.arena.ArenaManager;
 import me.syesstyles.blitz.arena.ArenaUtils;
+import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
+import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerHandler;
+import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerManager;
 import me.syesstyles.blitz.commands.CommandHandler;
 import me.syesstyles.blitz.elo.EloManager;
 import me.syesstyles.blitz.game.Game;
@@ -19,13 +20,12 @@ import me.syesstyles.blitz.game.GameHandler;
 import me.syesstyles.blitz.game.GameManager;
 import me.syesstyles.blitz.gui.GUIManager;
 import me.syesstyles.blitz.gui.InventoryHandler;
-import me.syesstyles.blitz.perk.PerkManager;
+import me.syesstyles.blitz.kit.KitManager;
 import me.syesstyles.blitz.scoreboard.ScoreboardManager;
-import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
-import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerHandler;
-import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerManager;
 import me.syesstyles.blitz.utils.EnchantListener;
 import me.syesstyles.blitz.utils.PlayerUtils;
+import me.syesstyles.blitz.utils.WorldCommand;
+import net.minecraft.server.v1_8_R3.EnumChatFormat;
 
 public class BlitzSG extends JavaPlugin {
 
@@ -40,7 +40,7 @@ public class BlitzSG extends JavaPlugin {
 	private ScoreboardManager scoreboardManager;
 	private EloManager eloManager;
 	private GUIManager guiManager;
-	private PerkManager perkManager;
+	private KitManager kitManager;
 	
 	public static Location lobbySpawn;
 	
@@ -56,7 +56,7 @@ public class BlitzSG extends JavaPlugin {
 		scoreboardManager = new ScoreboardManager();
 		eloManager = new EloManager();
 		guiManager = new GUIManager();
-		perkManager = new PerkManager();
+		kitManager = new KitManager();
 		
 		//Register Commands::
 		getCommand("speeduhc").setExecutor(new CommandHandler());
@@ -129,8 +129,8 @@ public class BlitzSG extends JavaPlugin {
 		return guiManager;
 	}
 
-	public PerkManager getPerkManager() {
-		return perkManager;
+	public KitManager getKitManager() {
+		return kitManager;
 	}
 
 	public static BlitzSG getInstance() {

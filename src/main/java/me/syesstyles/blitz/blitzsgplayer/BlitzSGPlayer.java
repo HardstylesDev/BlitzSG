@@ -8,7 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.arena.Arena;
 import me.syesstyles.blitz.game.Game;
-import me.syesstyles.blitz.perk.Perk;
+import me.syesstyles.blitz.kit.Kit;
 
 public class BlitzSGPlayer {
 	
@@ -22,7 +22,7 @@ public class BlitzSGPlayer {
 	private int deaths;
 	private int coins;
 	
-	private HashMap<Perk, Integer> perkLevels;
+	private HashMap<Kit, Integer> kitLevels;
 	
 	private Arena editedArena;
 	
@@ -34,9 +34,9 @@ public class BlitzSGPlayer {
 		this.deaths = 0;
 		this.coins = 0;
 		
-		this.perkLevels = new HashMap<Perk, Integer>();
-		for(Perk p : BlitzSG.getInstance().getPerkManager().getPerks())
-			this.perkLevels.put(p, 0);
+		this.kitLevels = new HashMap<Kit, Integer>();
+		for(Kit p : BlitzSG.getInstance().getKitManager().getKits())
+			this.kitLevels.put(p, 0);
 		
 		this.gameKills = 0;
 		BlitzSG.getInstance().getBlitzSGPlayerManager().addUhcPlayer(this.uuid, this);
@@ -48,9 +48,9 @@ public class BlitzSGPlayer {
 		this.kills = statsFile.getInt("Kills");
 		this.deaths = statsFile.getInt("Deaths");
 		this.coins = statsFile.getInt("Coins");
-		for(String str : statsFile.getConfigurationSection("Perks").getKeys(false))
-			this.perkLevels.put(BlitzSG.getInstance().getPerkManager().getPerk(str)
-					, statsFile.getConfigurationSection("Perks").getInt(str));
+		for(String str : statsFile.getConfigurationSection("Kits").getKeys(false))
+			this.kitLevels.put(BlitzSG.getInstance().getKitManager().getKit(str)
+					, statsFile.getConfigurationSection("Kits").getInt(str));
 	}
 
 	//Player Stats
@@ -114,14 +114,14 @@ public class BlitzSGPlayer {
 		this.coins += -coins;
 	}
 	
-	public int getPerkLevel(Perk p) {
-		if(!perkLevels.containsKey(p))
+	public int getKitLevel(Kit p) {
+		if(!kitLevels.containsKey(p))
 			return 0;
-		return this.perkLevels.get(p);
+		return this.kitLevels.get(p);
 	}
 	
-	public void setPerkLevel(Perk p, int level) {
-		this.perkLevels.put(p, level);
+	public void setKitLevel(Kit p, int level) {
+		this.kitLevels.put(p, level);
 	}
 	
 	

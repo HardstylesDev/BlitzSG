@@ -9,8 +9,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import me.syesstyles.blitz.BlitzSG;
-import me.syesstyles.blitz.perk.Perk;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
+import me.syesstyles.blitz.kit.Kit;
 
 public class PlayerUtils {
 	
@@ -39,8 +39,8 @@ public class PlayerUtils {
 			fc.set("Kills", uhcPlayer.getKills());
 			fc.set("Deaths", uhcPlayer.getDeaths());
 			fc.set("Coins", uhcPlayer.getCoins());
-			for(Perk perk : BlitzSG.getInstance().getPerkManager().getPerks())
-				fc.set("Perks." + perk.getName(), uhcPlayer.getPerkLevel(perk));
+			for(Kit kit : BlitzSG.getInstance().getKitManager().getKits())
+				fc.set("Kits." + kit.getName(), uhcPlayer.getKitLevel(kit));
 			
 			try {
 				fc.save(f);

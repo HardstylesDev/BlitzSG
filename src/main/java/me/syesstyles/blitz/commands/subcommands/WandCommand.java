@@ -11,14 +11,14 @@ public class WandCommand extends SubCommand{
 	public void runCommand(Player p, String[] args) {
 		ItemStack br = new ItemStack(Material.BLAZE_ROD);
 		ItemMeta brm = br.getItemMeta();
-		brm.setDisplayName("ï¿½eArena Wand");
+		brm.setDisplayName("§eArena Wand");
 		br.setItemMeta(brm);
 		p.getInventory().addItem(br);
 	}
 
 	@Override
 	public String getHelp() {
-		return "ï¿½8\u2022 ï¿½f/speeduhc wand";
+		return "§8\u2022 §f/speeduhc wand";
 	}
 
 	@Override

@@ -18,13 +18,13 @@ public class VotingGUI {
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		
 		//Create GUI
-		Inventory inv = Bukkit.createInventory(null, 27, "ï¿½7Voting Menu");
+		Inventory inv = Bukkit.createInventory(null, 27, "§7Voting Menu");
 		
 		//Add Items
-		inv.setItem(13, ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM, 1, (short) 3), "ï¿½eEnable Player Heads?"
-				, Arrays.asList("ï¿½7Left-Click to vote ï¿½aTrue", "ï¿½7Right-Click to vote ï¿½cFalse"
-				, "ï¿½7", "ï¿½7Status:", "ï¿½a" + uhcPlayer.getGame().getTrueVotes()
-				+ " ï¿½7/ ï¿½c" + uhcPlayer.getGame().getFalseVotes() + " ï¿½8("
+		inv.setItem(13, ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM, 1, (short) 3), "§eEnable Player Heads?"
+				, Arrays.asList("§7Left-Click to vote §aTrue", "§7Right-Click to vote §cFalse"
+				, "§7", "§7Status:", "§a" + uhcPlayer.getGame().getTrueVotes()
+				+ " §7/ §c" + uhcPlayer.getGame().getFalseVotes() + " §8("
 				+ uhcPlayer.getGame().getVotingPercentage() + "%)")));
 		
 		//Open the GUI

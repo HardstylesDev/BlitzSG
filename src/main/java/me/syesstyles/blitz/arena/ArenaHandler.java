@@ -26,11 +26,11 @@ public class ArenaHandler implements Listener{
 			return;
 		if(e.getAction() == Action.LEFT_CLICK_BLOCK) {
 			ArenaUtils.setCornerLoc1(p, e.getClickedBlock().getLocation());
-			p.sendMessage("ï¿½eCorner ï¿½61 ï¿½eset!");
+			p.sendMessage("§eCorner §61 §eset!");
 		}
 		if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
 			ArenaUtils.setCornerLoc2(p, e.getClickedBlock().getLocation());
-			p.sendMessage("ï¿½eCorner ï¿½62 ï¿½eset!");
+			p.sendMessage("§eCorner §62 §eset!");
 		}
 		e.setCancelled(true);
 	}

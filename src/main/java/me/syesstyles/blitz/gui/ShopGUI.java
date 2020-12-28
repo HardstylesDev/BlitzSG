@@ -8,9 +8,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import me.syesstyles.blitz.BlitzSG;
-import me.syesstyles.blitz.perk.Perk;
-import me.syesstyles.blitz.perk.PerkUtils;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
+import me.syesstyles.blitz.kit.Kit;
+import me.syesstyles.blitz.kit.KitUtils;
 import me.syesstyles.blitz.utils.ItemUtils;
 
 public class ShopGUI {
@@ -19,14 +19,14 @@ public class ShopGUI {
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		
 		//Create GUI
-		Inventory inv = Bukkit.createInventory(null, (int)(((BlitzSG.getInstance().getPerkManager().getPerks().size()+1)/9)+3) * 9 + 9, "ï¿½8SpeedUHC Shop");
+		Inventory inv = Bukkit.createInventory(null, (int)(((BlitzSG.getInstance().getKitManager().getKits().size()+1)/9)+3) * 9 + 9, "§8SpeedUHC Shop");
 		
 		//Add Items
 		int firstItem = 10;
-		for(Perk perk : BlitzSG.getInstance().getPerkManager().getPerks()) {
-			inv.setItem(firstItem, ItemUtils.buildItem(new ItemStack(perk.getIcon())
-					, getName(uhcPlayer, perk)
-					, getFullDescription(uhcPlayer, perk)));
+		for(Kit kit : BlitzSG.getInstance().getKitManager().getKits()) {
+			inv.setItem(firstItem, ItemUtils.buildItem(new ItemStack(kit.getIcon())
+					, getName(uhcPlayer, kit)
+					, getFullDescription(uhcPlayer, kit)));
 			if((firstItem+2) % 9 == 0) {
 				firstItem += 3;
 				continue;
@@ -39,30 +39,30 @@ public class ShopGUI {
 		p.openInventory(inv);
 	}
 	
-	public static String getName(BlitzSGPlayer uhcPlayer, Perk p) {
-		if(p.getPrice(uhcPlayer.getPerkLevel(p)) == -1)
-			return "ï¿½a" + p.getName() + PerkUtils.getPerkTag(uhcPlayer.getPerkLevel(p));
-		else if(p.getPrice(uhcPlayer.getPerkLevel(p)) <= uhcPlayer.getCoins())
-			return "ï¿½e" + p.getName() + PerkUtils.getPerkTag(uhcPlayer.getPerkLevel(p)+1);
+	public static String getName(BlitzSGPlayer uhcPlayer, Kit p) {
+		if(p.getPrice(uhcPlayer.getKitLevel(p)) == -1)
+			return "§a" + p.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(p));
+		else if(p.getPrice(uhcPlayer.getKitLevel(p)) <= uhcPlayer.getCoins())
+			return "§e" + p.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(p)+1);
 		else
-			return "ï¿½c" + p.getName() + PerkUtils.getPerkTag(uhcPlayer.getPerkLevel(p)+1);
+			return "§c" + p.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(p)+1);
 	}
 	
-	public static ArrayList<String> getFullDescription(BlitzSGPlayer uhcPlayer, Perk p) {
+	public static ArrayList<String> getFullDescription(BlitzSGPlayer uhcPlayer, Kit p) {
 		ArrayList<String> desc = new ArrayList<String>();
-		for(String str : p.getDescription(uhcPlayer.getPerkLevel(p)))
+		for(String str : p.getDescription(uhcPlayer.getKitLevel(p)))
 			desc.add(str);
 		desc.add("");
-		if(p.getPrice(uhcPlayer.getPerkLevel(p)) == -1) {
-			desc.add("ï¿½aMAX LEVEL!");
+		if(p.getPrice(uhcPlayer.getKitLevel(p)) == -1) {
+			desc.add("§aMAX LEVEL!");
 			return desc;
 		}
-		desc.add("ï¿½7Price: ï¿½6" + p.getPrice(uhcPlayer.getPerkLevel(p)));
+		desc.add("§7Price: §6" + p.getPrice(uhcPlayer.getKitLevel(p)));
 		desc.add("");
-		if(p.getPrice(uhcPlayer.getPerkLevel(p)) <= uhcPlayer.getCoins())
-			desc.add("ï¿½eClick to unlock!");
+		if(p.getPrice(uhcPlayer.getKitLevel(p)) <= uhcPlayer.getCoins())
+			desc.add("§eClick to unlock!");
 		else
-			desc.add("ï¿½cNot enough coins!");
+			desc.add("§cNot enough coins!");
 		return desc;
 	}
 }

@@ -16,8 +16,8 @@ public class ItemUtils {
 	public static ItemStack getGracefulItem(Material mat, String name) {
 		ItemStack pick = new ItemStack(mat);
 		ItemMeta pickmeta = pick.getItemMeta();
-		pickmeta.setDisplayName("ï¿½a" + name);
-		pickmeta.setLore(Arrays.asList("ï¿½7", "ï¿½7This Tool deals 0 damage to players."));
+		pickmeta.setDisplayName("§a" + name);
+		pickmeta.setLore(Arrays.asList("§7", "§7This Tool deals 0 damage to players."));
 		pickmeta.addEnchant(Enchantment.DIG_SPEED, 3, true);
 		pickmeta.addEnchant(Enchantment.DURABILITY, 10, true);
 		pick.setItemMeta(pickmeta);
@@ -26,7 +26,7 @@ public class ItemUtils {
 
 	public static ItemStack buildItem(ItemStack i, String name, List<String> lore) {
 		ItemMeta im = i.getItemMeta();
-		im.setDisplayName(name.replace("&", "ï¿½"));
+		im.setDisplayName(name.replace("&", "§"));
 		im.setLore(lore);
 		i.setItemMeta(im);
 		return i;

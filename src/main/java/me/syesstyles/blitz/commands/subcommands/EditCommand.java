@@ -12,7 +12,7 @@ public class EditCommand extends SubCommand{
 	@Override
 	public void runCommand(Player p, String[] args) {
 		if(args.length < 2) {
-			p.sendMessage("ï¿½cUsage: /suhc edit <name>");
+			p.sendMessage("§cUsage: /suhc edit <name>");
 			return;
 		}
 		
@@ -21,16 +21,16 @@ public class EditCommand extends SubCommand{
 			if(a.getName().equalsIgnoreCase(args[1])) {
 				uhcPlayer.setEditedArena(a);
 				p.teleport(new Location(a.getArenaWorld(), 0, 100, 0));
-				p.sendMessage("ï¿½eYou are now editing the arena ï¿½6\"" + args[1] + "\"ï¿½e.");
+				p.sendMessage("§eYou are now editing the arena §6\"" + args[1] + "\"§e.");
 				return;
 			}
 		}
-		p.sendMessage("ï¿½cThe specified arena does not exist, use /suhc arenas for a list of all arenas.");
+		p.sendMessage("§cThe specified arena does not exist, use /suhc arenas for a list of all arenas.");
 	}
 
 	@Override
 	public String getHelp() {
-		return "ï¿½8\u2022 ï¿½f/speeduhc edit <arena>";
+		return "§8\u2022 §f/speeduhc edit <arena>";
 	}
 
 	@Override

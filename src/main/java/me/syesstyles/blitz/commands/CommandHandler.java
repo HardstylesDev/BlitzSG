@@ -60,13 +60,13 @@ public class CommandHandler implements CommandExecutor {
 	}
 	
 	private void sendHelpMenu(CommandSender sender) {
-		sender.sendMessage("ï¿½7ï¿½m------------------------------");
-		sender.sendMessage("               ï¿½6>> ï¿½eï¿½lSpeedUHC ï¿½6<<      ");
+		sender.sendMessage("§7§m------------------------------");
+		sender.sendMessage("               §6>> §e§lSpeedUHC §6<<      ");
 		sender.sendMessage("");
 		for(SubCommand sc : this.commands.values())
 			if(sender.hasPermission(sc.getPermission()))
 				sender.sendMessage(sc.getHelp());
-		sender.sendMessage("ï¿½7ï¿½m------------------------------");
+		sender.sendMessage("§7§m------------------------------");
 	}
 
 }

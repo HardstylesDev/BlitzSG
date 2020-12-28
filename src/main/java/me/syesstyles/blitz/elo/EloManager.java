@@ -12,12 +12,12 @@ public class EloManager {
 	}
 	
 	private void loadLevels(){
-		eloLevels.add(new EloLevel(0, "ï¿½8"));
-		eloLevels.add(new EloLevel(100, "ï¿½7"));
-		eloLevels.add(new EloLevel(200, "ï¿½6"));
-		eloLevels.add(new EloLevel(300, "ï¿½c"));
-		eloLevels.add(new EloLevel(400, "ï¿½a"));
-		eloLevels.add(new EloLevel(500, "ï¿½d"));
+		eloLevels.add(new EloLevel(0, "§8"));
+		eloLevels.add(new EloLevel(100, "§7"));
+		eloLevels.add(new EloLevel(200, "§6"));
+		eloLevels.add(new EloLevel(300, "§c"));
+		eloLevels.add(new EloLevel(400, "§a"));
+		eloLevels.add(new EloLevel(500, "§d"));
 	}
 
 	public ArrayList<EloLevel> getEloLevels() {

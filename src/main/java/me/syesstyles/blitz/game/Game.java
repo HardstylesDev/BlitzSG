@@ -14,8 +14,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.arena.Arena;
-import me.syesstyles.blitz.perk.Perk;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
+import me.syesstyles.blitz.kit.Kit;
 import me.syesstyles.blitz.utils.ItemUtils;
 
 public class Game {
@@ -173,8 +173,8 @@ public class Game {
 			p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 60 * 20, 0));
 			p.getInventory().addItem(ItemUtils.getGracefulItem(Material.DIAMOND_PICKAXE, "Graceful Pickaxe"));
 			p.getInventory().addItem(ItemUtils.getGracefulItem(Material.DIAMOND_AXE, "Graceful Axe"));
-			for(Perk perk : BlitzSG.getInstance().getPerkManager().getGameStartPerks())
-				perk.givePerk(p, BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId()).getPerkLevel(perk));
+			for(Kit kit : BlitzSG.getInstance().getKitManager().getKits())
+				kit.giveKit(p, BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId()).getKitLevel(kit));
 		}
 		for(Location l : arena.getSpawns())
 			if(spawnUsed.contains(l))
@@ -192,9 +192,6 @@ public class Game {
 				BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(winner.getUniqueId()).addCoins(10);
 				if(gameTime == 59) {
 					msgAll("&eThe grace period has ended, PvP is now enabled!");
-					for(Player p : alivePlayers)
-						for(Perk perk : BlitzSG.getInstance().getPerkManager().getPvpStartPerks())
-							perk.givePerk(p, BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId()).getPerkLevel(perk));
 				}
 				if(gameTime == 119) {
 					msgAll("&eThe border will now start shrinking!");

@@ -11,9 +11,9 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.ItemStack;
 
 import me.syesstyles.blitz.BlitzSG;
-import me.syesstyles.blitz.perk.Perk;
-import me.syesstyles.blitz.perk.PerkUtils;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
+import me.syesstyles.blitz.kit.Kit;
+import me.syesstyles.blitz.kit.KitUtils;
 import me.syesstyles.blitz.utils.ItemUtils;
 
 public class InventoryHandler implements Listener {
@@ -33,7 +33,7 @@ public class InventoryHandler implements Listener {
 				e.setCancelled(true);
 		if(BlitzSG.getInstance().getGuiManager().isInGUI(p))
 			e.setCancelled(true);
-		//if(e.getInventory().getName() != "ï¿½7Kit Selector")
+		//if(e.getInventory().getName() != "§7Kit Selector")
 			//return;
 		if(e.getRawSlot() >= e.getInventory().getSize() || e.getRawSlot() <= -1)
 			return;
@@ -46,30 +46,30 @@ public class InventoryHandler implements Listener {
 				uhcPlayer.getGame().setVote(p, true);
 			else if(e.isRightClick())
 				uhcPlayer.getGame().setVote(p, false);
-			p.getOpenInventory().setItem(13, ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM, 1, (short) 3), "ï¿½eEnable Player Heads?"
-					, Arrays.asList("ï¿½7Left-Click to vote ï¿½aTrue", "ï¿½7Right-Click to vote ï¿½cFalse"
-					, "ï¿½7", "ï¿½7Status:", "ï¿½a" + uhcPlayer.getGame().getTrueVotes()
-					+ " ï¿½7/ ï¿½c" + uhcPlayer.getGame().getFalseVotes() + " ï¿½8("
+			p.getOpenInventory().setItem(13, ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM, 1, (short) 3), "§eEnable Player Heads?"
+					, Arrays.asList("§7Left-Click to vote §aTrue", "§7Right-Click to vote §cFalse"
+					, "§7", "§7Status:", "§a" + uhcPlayer.getGame().getTrueVotes()
+					+ " §7/ §c" + uhcPlayer.getGame().getFalseVotes() + " §8("
 							+ uhcPlayer.getGame().getVotingPercentage() + "%)")));
 			//p.closeInventory();
 		}
-		if(e.getInventory().getName() == "ï¿½8SpeedUHC Shop") {
+		if(e.getInventory().getName() == "§8SpeedUHC Shop") {
 			if(uhcPlayer.isInGame())
 				return;
-			if(BlitzSG.getInstance().getPerkManager().getPerk(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName()) == null)
+			if(BlitzSG.getInstance().getKitManager().getKit(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName()) == null)
 				return;
-			Perk perk = BlitzSG.getInstance().getPerkManager().getPerk(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName());
-			if(perk.getPrice(uhcPlayer.getPerkLevel(perk)) == -1) {
-				p.sendMessage("ï¿½cYou already have this perk at max level!!");
-				return;
-			}
-			if(uhcPlayer.getCoins() < perk.getPrice(uhcPlayer.getPerkLevel(perk))) {
-				p.sendMessage("ï¿½cYou don't have enough coins to purchase this upgrade!");
+			Kit kit = BlitzSG.getInstance().getKitManager().getKit(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName());
+			if(kit.getPrice(uhcPlayer.getKitLevel(kit)) == -1) {
+				p.sendMessage("§cYou already have this kit at max level!!");
 				return;
 			}
-			p.sendMessage("ï¿½aSuccessfully purchased " + perk.getName() + PerkUtils.getPerkTag(uhcPlayer.getPerkLevel(perk)+1) + "!");
-			uhcPlayer.removeCoins(perk.getPrice(uhcPlayer.getPerkLevel(perk)));
-			uhcPlayer.setPerkLevel(perk, uhcPlayer.getPerkLevel(perk)+1);
+			if(uhcPlayer.getCoins() < kit.getPrice(uhcPlayer.getKitLevel(kit))) {
+				p.sendMessage("§cYou don't have enough coins to purchase this upgrade!");
+				return;
+			}
+			p.sendMessage("§aSuccessfully purchased " + kit.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(kit)+1) + "!");
+			uhcPlayer.removeCoins(kit.getPrice(uhcPlayer.getKitLevel(kit)));
+			uhcPlayer.setKitLevel(kit, uhcPlayer.getKitLevel(kit)+1);
 			p.closeInventory();
 		}
 			

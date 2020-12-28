@@ -9,7 +9,7 @@ public class JoinCommand extends SubCommand{
 	@Override
 	public void runCommand(Player p, String[] args) {
 		if(BlitzSG.getInstance().getGameManager().getAvailableGame() == null) {
-			p.sendMessage("ï¿½cCouldn't find any available games");
+			p.sendMessage("§cCouldn't find any available games");
 			return;
 		}
 		BlitzSG.getInstance().getGameManager().getAvailableGame().addPlayer(p);
@@ -17,7 +17,7 @@ public class JoinCommand extends SubCommand{
 
 	@Override
 	public String getHelp() {
-		return "ï¿½8\u2022 ï¿½f/speeduhc join";
+		return "§8\u2022 §f/speeduhc join";
 	}
 
 	@Override

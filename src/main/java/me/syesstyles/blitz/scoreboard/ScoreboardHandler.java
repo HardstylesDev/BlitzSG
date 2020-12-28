@@ -39,7 +39,7 @@ public class ScoreboardHandler implements Listener
             if (other != player) {
                 if (this.getScoreboardFor(other) != null) {
                     final Scoreboard scoreboard = this.getScoreboardFor(other).getScoreBoard();
-                    final Team otherTeam = this.getTeam(scoreboard, "other", "&c".replace("&", "ï¿½"));
+                    final Team otherTeam = this.getTeam(scoreboard, "other", "&c".replace("&", "§"));
                     otherTeam.addEntry(player.getName());
                 }
             }
@@ -53,8 +53,8 @@ public class ScoreboardHandler implements Listener
         final Scoreboard scoreboard = this.getScoreboardFor(player).getScoreBoard();
         this.unregister(scoreboard, "player");
         this.unregister(scoreboard, "other");
-        final Team playerTeam = this.getTeam(scoreboard, "player", "&a".replace("&", "ï¿½"));
-        final Team otherTeam = this.getTeam(scoreboard, "other", "&c".replace("&", "ï¿½"));
+        final Team playerTeam = this.getTeam(scoreboard, "player", "&a".replace("&", "§"));
+        final Team otherTeam = this.getTeam(scoreboard, "other", "&c".replace("&", "§"));
         for(Player other : Bukkit.getServer().getOnlinePlayers()) {
             if (other == player) {
                 playerTeam.addEntry(other.getName());

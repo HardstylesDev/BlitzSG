@@ -43,7 +43,7 @@ public class ScoreboardHelper
         this.scoreBoard = scoreBoard;
         (this.objective = this.getOrCreateObjective(this.tag, "dummy")).setDisplaySlot(DisplaySlot.SIDEBAR);
         (this.healthName = this.getOrCreateObjective("healthName", "health")).setDisplaySlot(DisplaySlot.BELOW_NAME);
-        this.healthName.setDisplayName("ï¿½c\u2764");
+        this.healthName.setDisplayName("§c\u2764");
       //  this.getOrCreateObjective("healthTab", "health").setDisplaySlot(DisplaySlot.PLAYER_LIST);
     }
     
@@ -56,13 +56,13 @@ public class ScoreboardHelper
         else {
             String str1 = paramString.substring(0, 16);
             String str2 = paramString.substring(16, paramString.length());
-            if (str1.endsWith(String.valueOf("ï¿½"))) {
+            if (str1.endsWith(String.valueOf("§"))) {
                 str1 = str1.substring(0, str1.length() - 1);
-                str2 = String.valueOf(String.valueOf("ï¿½")) + str2;
+                str2 = String.valueOf(String.valueOf("§")) + str2;
             }
             final String str3 = ChatColor.getLastColors(str1);
             str2 = String.valueOf(String.valueOf(str3)) + str2;
-            localScoreboardInput = new ScoreboardText(str1.replace("&", "ï¿½"), StringUtils.left(str2, 16).replace("&", "ï¿½"));
+            localScoreboardInput = new ScoreboardText(str1.replace("&", "§"), StringUtils.left(str2, 16).replace("&", "§"));
         }
         this.list.add(localScoreboardInput);
     }

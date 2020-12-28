@@ -38,7 +38,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.game.Game.GameMode;
 import me.syesstyles.blitz.gui.VotingGUI;
-import me.syesstyles.blitz.perk.Perk;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.utils.ItemUtils;
 
@@ -51,7 +50,7 @@ public class GameHandler implements Listener {
 		if(uhcPlayer.isInGame()) {
 			if(uhcPlayer.getGame().getGameMode() == GameMode.INGAME) {
 				uhcPlayer.getGame().killPlayer(p);
-				uhcPlayer.getGame().msgAll("ï¿½c" + p.getName() + " left the game and was killed!");
+				uhcPlayer.getGame().msgAll("§c" + p.getName() + " left the game and was killed!");
 				for(ItemStack i : p.getInventory().getContents()) {
 					if(i != null)
 						if(i.getType() != Material.AIR)
@@ -74,11 +73,11 @@ public class GameHandler implements Listener {
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(victim.getUniqueId());
 		if(!uhcPlayer.isInGame())
 			return;
-		e.setDeathMessage("ï¿½c" + e.getDeathMessage());
+		e.setDeathMessage("§c" + e.getDeathMessage());
 		victim.getWorld().strikeLightningEffect(victim.getLocation());
 		if(uhcPlayer.getGame().isHeadGame())
 			victim.getWorld().dropItemNaturally(victim.getLocation(), ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM, 1, (short) 3)
-					, "ï¿½c" + victim.getName() + "'s head", Arrays.asList("ï¿½7Regeneration III ï¿½8(4s)", "ï¿½7Speed II ï¿½8(4s)")));
+					, "§c" + victim.getName() + "'s head", Arrays.asList("§7Regeneration III §8(4s)", "§7Speed II §8(4s)")));
 		uhcPlayer.getGame().msgAll(e.getDeathMessage());
 		uhcPlayer.getGame().killPlayer(victim);
 		uhcPlayer.addDeath();
@@ -87,10 +86,8 @@ public class GameHandler implements Listener {
 			BlitzSGPlayer uhcPlayerKiller = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(victim.getKiller().getUniqueId());
 			uhcPlayerKiller.addGameKill();
 			uhcPlayerKiller.addCoins(50);
-			victim.getKiller().sendMessage("ï¿½6+50 Coins (Kill)");
+			victim.getKiller().sendMessage("§6+50 Coins (Kill)");
 			BlitzSG.getInstance().getBlitzSGPlayerManager().handleKillElo(victim, victim.getKiller());
-			for(Perk perk : BlitzSG.getInstance().getPerkManager().getKillPerks())
-				perk.givePerk(victim.getKiller(), uhcPlayerKiller.getPerkLevel(perk));
 			return;
 		}
 		BlitzSG.getInstance().getBlitzSGPlayerManager().handleDeathElo(victim);
@@ -325,7 +322,7 @@ public class GameHandler implements Listener {
 			return;
 		}
 		if(e.getBlockPlaced().getLocation().getBlockY() >= uhcPlayer.getGame().getArena().getArenaMaxCorner().getBlockY()) {
-			p.sendMessage("ï¿½cYou have reached the building height limit!");
+			p.sendMessage("§cYou have reached the building height limit!");
 			e.setCancelled(true);
 			return;
 		}
@@ -370,7 +367,7 @@ public class GameHandler implements Listener {
 		Player p = (Player) e.getPlayer();
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isInGame()) {
-			p.sendMessage("ï¿½cThe Nether is disabled.");
+			p.sendMessage("§cThe Nether is disabled.");
 			return;
 		}
 		e.setCancelled(true);
@@ -388,19 +385,19 @@ public class GameHandler implements Listener {
 			if(((Player)e.getDamager()).getItemInHand() != null)
 				if(((Player)e.getDamager()).getItemInHand().hasItemMeta())
 					if(((Player)e.getDamager()).getItemInHand().getItemMeta().hasDisplayName())
-						if(((Player)e.getDamager()).getItemInHand().getItemMeta().getDisplayName().equals("ï¿½aGraceful Pickaxe"))
+						if(((Player)e.getDamager()).getItemInHand().getItemMeta().getDisplayName().equals("§aGraceful Pickaxe"))
 							e.setDamage(0);
-						else if(((Player)e.getDamager()).getItemInHand().getItemMeta().getDisplayName().equals("ï¿½aGraceful Axe"))
+						else if(((Player)e.getDamager()).getItemInHand().getItemMeta().getDisplayName().equals("§aGraceful Axe"))
 							e.setDamage(0);
 		if(uhcPlayer.getGame().getGameTime() >= 60)
 			return;
 		if(e.getDamager() instanceof Player) {
 			e.setCancelled(true);
-			((Player)e.getDamager()).sendMessage("ï¿½cYou can't damage other players during the grace period!");
+			((Player)e.getDamager()).sendMessage("§cYou can't damage other players during the grace period!");
 		}else if(e.getDamager() instanceof Projectile) {
 			if(((Projectile)e.getDamager()).getShooter() instanceof Player) {
 				e.setCancelled(true);
-				((Player)((Projectile)e.getDamager()).getShooter()).sendMessage("ï¿½cYou can't damage other players during the grace period!");
+				((Player)((Projectile)e.getDamager()).getShooter()).sendMessage("§cYou can't damage other players during the grace period!");
 			}
 		}
 	}
@@ -494,7 +491,7 @@ public class GameHandler implements Listener {
 		if(e.getItem().getDurability() != 3)
 			return;
 		e.setCancelled(true);
-		p.sendMessage("ï¿½aYou ate a player head and gained Regeneration III and Speed II for 4 seconds!");
+		p.sendMessage("§aYou ate a player head and gained Regeneration III and Speed II for 4 seconds!");
 		p.playSound(p.getLocation(), Sound.EAT, 2, 1);
 		p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 80, 2));
 		p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 80, 1));
