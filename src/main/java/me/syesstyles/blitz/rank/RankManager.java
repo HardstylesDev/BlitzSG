@@ -17,10 +17,6 @@ public class RankManager {
     private final ArrayList<Rank> ranks = new ArrayList<>();
 
     public Rank getRank(Player p) {
-        System.out.println("Nick: " + p.getName());
-        System.out.println("Player: " + p.getDisplayName());
-        System.out.println("UUID: " + p.getUniqueId());
-        System.out.println("Fake UUID: " + ((CraftPlayer) p).getHandle().getProfile().getId());
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
         if (bsgPlayer.getRank() == null)
             return new Default();
