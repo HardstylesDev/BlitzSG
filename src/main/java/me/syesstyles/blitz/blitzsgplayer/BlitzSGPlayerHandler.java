@@ -27,8 +27,8 @@ public class BlitzSGPlayerHandler implements Listener{
 		uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		p.setGameMode(GameMode.SURVIVAL);
 		p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0)); //todo change back
-		p.setPlayerListName(BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix()
-				+ "[" + uhcPlayer.getElo() + "] " + p.getName());
+		p.setPlayerListName(uhcPlayer.getRank().getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix()
+				+ " [" + uhcPlayer.getElo() + "]");
 		BlitzSG.getInstance().getBlitzSGPlayerManager().setLobbyInventory(p);
 	}
 	

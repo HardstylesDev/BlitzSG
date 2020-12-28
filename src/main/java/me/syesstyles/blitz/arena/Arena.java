@@ -23,7 +23,13 @@ public class Arena {
 	private World arenaWorld;
 	private Location arenaMinCorner;
 	private Location arenaMaxCorner;
-	
+
+	public void setSpawns(ArrayList<Location> spawns) {
+		this.spawns = spawns;
+	}
+	public void setWorld(World world) {
+		this.arenaWorld = world;
+	}
 	private ArrayList<Location> spawns;
 	
 	private boolean inUse;

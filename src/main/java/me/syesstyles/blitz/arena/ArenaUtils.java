@@ -84,73 +84,73 @@ public class ArenaUtils {
 	}
 	
 	public static void loadArenas() {
-		if(!new File (BlitzSG.getInstance().getDataFolder() + "/arenas").exists())
-			return;
-		for(File fe : new File(BlitzSG.getInstance().getDataFolder() + "/arenas").listFiles()) {
-			FileConfiguration fc = new YamlConfiguration();
-			try {
-				fc.load(fe);
-			} catch (IOException | InvalidConfigurationException e) {
-				e.printStackTrace();
-			}
-			
-			File f = new File(BlitzSG.getInstance().getDataFolder() + "/worlds/" + fc.getString("World"));
-			File f1 = new File(fc.getString("World") + "_temp");
-			if(f1.exists())
-				f1.delete();
-			try {
-				FileUtils.copyDirectory(f, f1);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			for(File f2 : f1.listFiles()) {
-				if(f2.getName().contains("uid") || f2.getName().contains("session")
-						|| f2.getName().contains("level") || f2.getName().contains("playerdata"))
-					f2.delete();
-			}
-			
-			File session = new File(fc.getString("World") + "_temp" + "/session.lock");
-	        try {
-				session.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	        try {
-	            session.createNewFile();
-	            DataOutputStream dataoutputstream = new DataOutputStream(new FileOutputStream(session));
-	 
-	            try {
-	                dataoutputstream.writeLong(System.currentTimeMillis());
-	            } finally {
-	                dataoutputstream.close();
-	            }
-	        } catch (IOException ioexception) {
-	        	ioexception.printStackTrace();
-	        }
-	        
-			Bukkit.getServer().createWorld(new WorldCreator(fc.getString("World") + "_temp"));
-			World w = Bukkit.getWorld(fc.getString("World") + "_temp");
-			
-			w.setAutoSave(false);
-	        w.setTicksPerAnimalSpawns(1);
-	        w.setTicksPerMonsterSpawns(1);
-	        w.setGameRuleValue("doMobSpawning", "false");
-	        w.setGameRuleValue("mobGriefing", "false");
-	        w.setGameRuleValue("doFireTick", "false");
-	        w.setGameRuleValue("showDeathMessages", "false");
-			
-			Location cornerMin = new Location(Bukkit.getWorld(fc.getString("Name") + "_temp"), fc.getInt("Bounds.Min.X")
-					, fc.getInt("Bounds.Min.Y"), fc.getInt("Bounds.Min.Z"));
-			Location cornerMax = new Location(Bukkit.getWorld(fc.getString("Name") + "_temp"), fc.getInt("Bounds.Max.X")
-					, fc.getInt("Bounds.Max.Y"), fc.getInt("Bounds.Max.Z"));
-			
-			Arena a = new Arena(cornerMin, cornerMax, fc.getString("Name"));
-			for(String str : fc.getConfigurationSection("Spawns").getKeys(false)) {
-				a.addSpawn(new Location(Bukkit.getWorld(fc.getString("Name") + "_temp")
-						, fc.getInt("Spawns." + str + ".X"), fc.getInt("Spawns." + str + ".Y"), fc.getInt("Spawns." + str + ".Z")));
-			}
-		}
+		//if(!new File (BlitzSG.getInstance().getDataFolder() + "/arenas").exists())
+		//	return;
+		//for(File fe : new File(BlitzSG.getInstance().getDataFolder() + "/arenas").listFiles()) {
+		//	FileConfiguration fc = new YamlConfiguration();
+		//	try {
+		//		fc.load(fe);
+		//	} catch (IOException | InvalidConfigurationException e) {
+		//		e.printStackTrace();
+		//	}
+		//
+		//	File f = new File(BlitzSG.getInstance().getDataFolder() + "/worlds/" + fc.getString("World"));
+		//	File f1 = new File(fc.getString("World") + "_temp");
+		//	if(f1.exists())
+		//		f1.delete();
+		//	try {
+		//		FileUtils.copyDirectory(f, f1);
+		//	} catch (IOException e) {
+		//		e.printStackTrace();
+		//	}
+		//	for(File f2 : f1.listFiles()) {
+		//		if(f2.getName().contains("uid") || f2.getName().contains("session")
+		//				|| f2.getName().contains("level") || f2.getName().contains("playerdata"))
+		//			f2.delete();
+		//	}
+		//
+		//	File session = new File(fc.getString("World") + "_temp" + "/session.lock");
+	    //    try {
+		//		session.createNewFile();
+		//	} catch (IOException e) {
+		//		// TODO Auto-generated catch block
+		//		e.printStackTrace();
+		//	}
+	    //    try {
+	    //        session.createNewFile();
+	    //        DataOutputStream dataoutputstream = new DataOutputStream(new FileOutputStream(session));
+	 //
+	    //        try {
+	    //            dataoutputstream.writeLong(System.currentTimeMillis());
+	    //        } finally {
+	    //            dataoutputstream.close();
+	    //        }
+	    //    } catch (IOException ioexception) {
+	    //    	ioexception.printStackTrace();
+	    //    }
+	    //
+		//	Bukkit.getServer().createWorld(new WorldCreator(fc.getString("World") + "_temp"));
+		//	World w = Bukkit.getWorld(fc.getString("World") + "_temp");
+		//
+		//	w.setAutoSave(false);
+	    //    w.setTicksPerAnimalSpawns(1);
+	    //    w.setTicksPerMonsterSpawns(1);
+	    //    w.setGameRuleValue("doMobSpawning", "false");
+	    //    w.setGameRuleValue("mobGriefing", "false");
+	    //    w.setGameRuleValue("doFireTick", "false");
+	    //    w.setGameRuleValue("showDeathMessages", "false");
+		//
+		//	Location cornerMin = new Location(Bukkit.getWorld(fc.getString("Name") + "_temp"), fc.getInt("Bounds.Min.X")
+		//			, fc.getInt("Bounds.Min.Y"), fc.getInt("Bounds.Min.Z"));
+		//	Location cornerMax = new Location(Bukkit.getWorld(fc.getString("Name") + "_temp"), fc.getInt("Bounds.Max.X")
+		//			, fc.getInt("Bounds.Max.Y"), fc.getInt("Bounds.Max.Z"));
+		//
+		//	Arena a = new Arena(cornerMin, cornerMax, fc.getString("Name"));
+		//	for(String str : fc.getConfigurationSection("Spawns").getKeys(false)) {
+		//		a.addSpawn(new Location(Bukkit.getWorld(fc.getString("Name") + "_temp")
+		//				, fc.getInt("Spawns." + str + ".X"), fc.getInt("Spawns." + str + ".Y"), fc.getInt("Spawns." + str + ".Z")));
+		//	}
+		//}
 	}
 
 }

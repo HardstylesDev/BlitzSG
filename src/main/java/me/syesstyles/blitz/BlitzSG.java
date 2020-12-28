@@ -1,5 +1,6 @@
 package me.syesstyles.blitz;
 
+import me.syesstyles.blitz.rank.RankManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -38,6 +39,7 @@ public class BlitzSG extends JavaPlugin {
 	private BlitzSGPlayerManager blitzSGPlayerManager;
 	private GameManager gameManager;
 	private ScoreboardManager scoreboardManager;
+	private RankManager rankManager;
 	private EloManager eloManager;
 	private GUIManager guiManager;
 	private KitManager kitManager;
@@ -57,6 +59,7 @@ public class BlitzSG extends JavaPlugin {
 		eloManager = new EloManager();
 		guiManager = new GUIManager();
 		kitManager = new KitManager();
+		rankManager = new RankManager();
 		
 		//Register Commands::
 		getCommand("speeduhc").setExecutor(new CommandHandler());
@@ -69,7 +72,7 @@ public class BlitzSG extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new EnchantListener(), this);
 		getServer().getPluginManager().registerEvents(new InventoryHandler(), this);
 		getServer().getPluginManager().registerEvents(scoreboardManager.getScoreboardHandler(), this);
-		
+
 		//Load Players:
 		PlayerUtils.loadPlayerData();
 		for(Player p : getServer().getOnlinePlayers())
@@ -77,7 +80,8 @@ public class BlitzSG extends JavaPlugin {
 				new BlitzSGPlayer(p.getUniqueId());
 		
 		//Load Arena:
-		ArenaUtils.loadArenas();
+		//ArenaUtils.loadArenas();
+		arenaManager.loadArena("citadel");
 		
 		//Start Scoreboard:
 
@@ -131,6 +135,10 @@ public class BlitzSG extends JavaPlugin {
 
 	public KitManager getKitManager() {
 		return kitManager;
+	}
+
+	public RankManager getRankManager() {
+		return rankManager;
 	}
 
 	public static BlitzSG getInstance() {

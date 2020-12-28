@@ -1,5 +1,7 @@
 package me.syesstyles.blitz.arena;
 
+import me.syesstyles.blitz.BlitzSG;
+import me.syesstyles.blitz.rank.ranks.Admin;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,7 +14,8 @@ public class ArenaHandler implements Listener{
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
-		if(!p.hasPermission("bsg.admin"))
+		if ((BlitzSG.getInstance().getRankManager().getRank(e.getPlayer()) instanceof Admin))
+
 			return;
 		if(e.getAction() != Action.RIGHT_CLICK_BLOCK && e.getAction() != Action.LEFT_CLICK_BLOCK)
 			return;

@@ -3,6 +3,7 @@ package me.syesstyles.blitz.game;
 import java.util.Arrays;
 import java.util.Random;
 
+import me.syesstyles.blitz.rank.ranks.Admin;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -76,9 +77,6 @@ public class GameHandler implements Listener {
 			return;
 		e.setDeathMessage("§c" + e.getDeathMessage());
 		victim.getWorld().strikeLightningEffect(victim.getLocation());
-		if(uhcPlayer.getGame().isHeadGame())
-			victim.getWorld().dropItemNaturally(victim.getLocation(), ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM, 1, (short) 3)
-					, "§c" + victim.getName() + "'s head", Arrays.asList("§7Regeneration III §8(4s)", "§7Speed II §8(4s)")));
 		uhcPlayer.getGame().msgAll(e.getDeathMessage());
 		uhcPlayer.getGame().killPlayer(victim);
 		uhcPlayer.addDeath();
@@ -124,29 +122,30 @@ public class GameHandler implements Listener {
             }
     }
 	
-	@EventHandler
-	public void onPlayerEat(PlayerItemConsumeEvent e) {
-		if(e.getItem().getType().equals(Material.GOLDEN_APPLE) && e.getItem().getDurability() == 1) {
-            new BukkitRunnable() {
-                public void run() {
-        			e.getPlayer().removePotionEffect(PotionEffectType.REGENERATION);
-        			e.getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-        			e.getPlayer().removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
-        	        e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 10, 3));
-        	        e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 120, 0));
-        	        e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20 * 120, 0));
-                }
-            }.runTaskLater(BlitzSG.getInstance(), 1);
-		}
-	}
+	//@EventHandler
+	//public void onPlayerEat(PlayerItemConsumeEvent e) {
+	//	if(e.getItem().getType().equals(Material.GOLDEN_APPLE) && e.getItem().getDurability() == 1) {
+    //        new BukkitRunnable() {
+    //            public void run() {
+    //    			e.getPlayer().removePotionEffect(PotionEffectType.REGENERATION);
+    //    			e.getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
+    //    			e.getPlayer().removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+    //    	        e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 10, 3));
+    //    	        e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 120, 0));
+    //    	        e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20 * 120, 0));
+    //            }
+    //        }.runTaskLater(BlitzSG.getInstance(), 1);
+	//	}
+	//}
 	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
 		Player p = e.getPlayer();
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isInGame()) {
-			if(!p.hasPermission("speeduhc.admin"))
-					e.setCancelled(true);
+			if(!(uhcPlayer.getRank() instanceof Admin))
+
+				e.setCancelled(true);
 			return;
 		}
 		if(uhcPlayer.getGame().getGameMode() != GameMode.INGAME)
@@ -329,7 +328,8 @@ public class GameHandler implements Listener {
 		Player p = e.getPlayer();
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isInGame()) {
-			if(!p.hasPermission("speeduhc.admin"))
+			if(!(uhcPlayer.getRank() instanceof Admin))
+
 				e.setCancelled(true);
 			return;
 		}
@@ -353,7 +353,7 @@ public class GameHandler implements Listener {
 		Player p = e.getPlayer();
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isInGame()) {
-			if(!p.hasPermission("speeduhc.admin"))
+			if(!(uhcPlayer.getRank() instanceof Admin))
 				e.setCancelled(true);
 			return;
 		}

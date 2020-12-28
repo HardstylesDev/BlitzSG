@@ -2,6 +2,7 @@ package me.syesstyles.blitz.gui;
 
 import java.util.Arrays;
 
+import me.syesstyles.blitz.rank.ranks.Admin;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -29,7 +30,7 @@ public class InventoryHandler implements Listener {
 		Player p = (Player) e.getWhoClicked();
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		if(!uhcPlayer.isInGame())
-			if(!p.hasPermission("speeduhc.admin"))
+		if(!(uhcPlayer.getRank() instanceof Admin))
 				e.setCancelled(true);
 		if(BlitzSG.getInstance().getGuiManager().isInGUI(p))
 			e.setCancelled(true);

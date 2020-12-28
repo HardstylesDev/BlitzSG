@@ -1,5 +1,7 @@
 package me.syesstyles.blitz.utils;
 
+import me.syesstyles.blitz.BlitzSG;
+import me.syesstyles.blitz.rank.ranks.Admin;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -11,20 +13,18 @@ import org.bukkit.entity.Player;
 
 public class WorldCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
-        if (!sender.hasPermission("admin"))
+        if (!(BlitzSG.getInstance().getRankManager().getRank((Player) sender) instanceof Admin))
             return true;
         if (args.length == 0) {
             sender.sendMessage("&7Teleport to a world '&7/world tp <name>&a'");
             sender.sendMessage("&7Generate new empty world '&7/world new <name>&a'");
             sender.sendMessage("&7List all worlds '&7/world list&a'");
             return true;
-        }
-        else if (args[0].equalsIgnoreCase("new")) {
+        } else if (args[0].equalsIgnoreCase("new")) {
             new WorldCreator(args[1]).generator(new VoidGenerator()).createWorld();
             sender.sendMessage("&aWorld generated! Type '&7/world tp " + args[1] + "&a'");
             return true;
-        }
-        else if (args[0].equalsIgnoreCase("tp")) {
+        } else if (args[0].equalsIgnoreCase("tp")) {
             // if (!Worlds.exists(args[1])) {
             //     sender.sendMessage(sendColor.format("&cLooks like that world doesn't exist!"));
             //     return true;
@@ -34,7 +34,7 @@ public class WorldCommand implements CommandExecutor {
             //     return true;
             // }
             World world = Bukkit.getWorld(args[1]);
-            if(world == null){
+            if (world == null) {
                 sender.sendMessage("&cLooks like that world doesn't exist!");
 
                 return true;
@@ -42,8 +42,7 @@ public class WorldCommand implements CommandExecutor {
             ((Player) sender).teleport(new Location(world, 0.5, 100, 0.5));
             sender.sendMessage("&aTeleporting you to '&7" + args[1] + "&a'!");
             return true;
-        }
-        else if (args[0].equalsIgnoreCase("list")) {
+        } else if (args[0].equalsIgnoreCase("list")) {
             sender.sendMessage("&7&m----------------------------------------");
             //Worlds.worlds.forEach((o, aBoolean) -> sender.sendMessage(o + " : " + aBoolean));
 
@@ -69,7 +68,7 @@ public class WorldCommand implements CommandExecutor {
             //}
             //Worlds.updateWorld(args[1], true);
             World world = Bukkit.getWorld(args[1]);
-            if(world != null){
+            if (world != null) {
                 sender.sendMessage("&aWorld is already loaded!");
                 return true;
             }
