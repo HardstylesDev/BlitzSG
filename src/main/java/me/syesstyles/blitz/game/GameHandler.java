@@ -141,14 +141,14 @@ public class GameHandler implements Listener {
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
 		Player p = e.getPlayer();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-		if(!uhcPlayer.isInGame()) {
-			if(!(uhcPlayer.getRank() instanceof Admin))
+		BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+		if(!bsgPlayer.isInGame()) {
+			if(!(bsgPlayer.getRank() instanceof Admin))
 
 				e.setCancelled(true);
 			return;
 		}
-		if(uhcPlayer.getGame().getGameMode() != GameMode.INGAME)
+		if(bsgPlayer.getGame().getGameMode() != GameMode.INGAME)
 				e.setCancelled(true);
 		Block b = e.getBlock();
 		if(b.getType() == Material.DIAMOND_ORE) {
@@ -373,9 +373,8 @@ public class GameHandler implements Listener {
 			e.setCancelled(true);
 			return;
 		}
-		if(uhcPlayer.getGame().getGameTime() >= 15)
-			return;
-		e.setCancelled(true);
+
+		//e.setCancelled(true);
 	}
 	
 	@EventHandler
@@ -399,15 +398,16 @@ public class GameHandler implements Listener {
 			return;
 		if(uhcPlayer.getGame().getGameTime() >= 60)
 			return;
-		if(e.getDamager() instanceof Player) {
-			e.setCancelled(true);
-			((Player)e.getDamager()).sendMessage("§cYou can't damage other players during the grace period!");
-		}else if(e.getDamager() instanceof Projectile) {
-			if(((Projectile)e.getDamager()).getShooter() instanceof Player) {
-				e.setCancelled(true);
-				((Player)((Projectile)e.getDamager()).getShooter()).sendMessage("§cYou can't damage other players during the grace period!");
-			}
-		}
+		//if(e.getDamager() instanceof Player) { //todo do later!
+		//	e.setCancelled(true);
+		//	((Player)e.getDamager()).sendMessage("§cYou can't damage other players during the grace period!");
+		//}else
+		// if(e.getDamager() instanceof Projectile) {
+		//	if(((Projectile)e.getDamager()).getShooter() instanceof Player) {
+		//		e.setCancelled(true);
+		//		((Player)((Projectile)e.getDamager()).getShooter()).sendMessage("§cYou can't damage other players during the grace period!");
+		//	}
+		//}
 	}
 	
 	@EventHandler

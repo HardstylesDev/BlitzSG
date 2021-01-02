@@ -46,7 +46,8 @@ public class Game {
         gameMode = GameMode.LOADING;
         arena = BlitzSG.getInstance().getArenaManager().getRandomArena();
         BlitzSG.getInstance().getArenaManager().fixSpawns(arena);
-        if (arena == null) {
+        if (arena == null || arena.getSpawns().get(0).getWorld() == null) {
+            System.out.println("No arena available I guess " + arena.getSpawns().get(0).getWorld());
             return;
         }
         arena.setInUse(true);
@@ -71,10 +72,10 @@ public class Game {
     }
 
     public void addPlayer(Player p) {
-        //if(arena == null) {
-        //p.sendMessage("&cCouldn't find an available arena!");
-        //return;
-        //}
+        if (arena == null || arena.getSpawns().get(0).getWorld() == null) {
+            p.sendMessage("Couldn't find an available arena!");
+            return;
+        }
         BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
         if (uhcPlayer.isInGame()) {
 
@@ -166,6 +167,7 @@ public class Game {
         for (Player p : alivePlayers) {
             p.closeInventory();
             resetPlayer(p);
+            p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60 * 20, 2));
             p.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 2, 1);
             p.sendMessage("&aThe game has started, Good Luck!");
             if (isHeadGame())
@@ -174,8 +176,7 @@ public class Game {
                 p.sendMessage("&ePlayer heads are &cDisabled&e!");
             p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60 * 20, 0));
             p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 60 * 20, 0));
-            for (Kit kit : BlitzSG.getInstance().getKitManager().getKits())
-                kit.giveKit(p, BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId()).getKitLevel(kit));
+
         }
         for (Location l : arena.getSpawns())
             if (spawnUsed.contains(l))
@@ -188,11 +189,15 @@ public class Game {
                     endGame(false);
                     return;
                 }
-                if ((gameTime + 1) % 60 == 0)
-                    winner.sendMessage("&6+10 Coins (Survived + " + gameTime + " seconds)");
-                BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(winner.getUniqueId()).addCoins(10);
+                // if ((gameTime + 1) % 60 == 0)
+                //     winner.sendMessage("&6+10 Coins (Survived + " + gameTime + " seconds)");
+                // BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(winner.getUniqueId()).addCoins(10);
                 if (gameTime == 59) {
                     msgAll("&eThe grace period has ended, PvP is now enabled!");
+                    for (Player p : alivePlayers)
+                        for (Kit kit : BlitzSG.getInstance().getKitManager().getKits())
+
+                            kit.giveKit(p, BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId()).getKitLevel(kit));
                 }
                 if (gameTime == 119) {
                     msgAll("&eThe border will now start shrinking!");

@@ -22,11 +22,17 @@ public class GameManager {
 	public Game getAvailableGame() {
 		for(Game g : games) {
 			if(g.getGameMode() == GameMode.WAITING || g.getGameMode() == GameMode.STARTING) {
+				System.out.println("apperantly " + g + " is availabile");
+				System.out.println("apperantly " + g.getArena());
 				return g;
 			}
 		}
 		if(BlitzSG.getInstance().getArenaManager().getRandomArena() != null){
-			return new Game();
+			System.out.println("Returned a brand spankin new game!!! " + BlitzSG.getInstance().getArenaManager().getRandomArena().getName());
+
+			Game game = new Game();
+			System.out.println("the game: " + game.getArena());
+			return game;
 		}
 		return null;
 	}

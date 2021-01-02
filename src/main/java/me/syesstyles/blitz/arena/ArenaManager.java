@@ -57,6 +57,10 @@ public class ArenaManager {
     }
 
 
+    public boolean deleteMap(String map) {
+        return deleteMap(getArena(map));
+    }
+
     public boolean deleteMap(Arena map) {
         map.setInUse(false);
         World world = Bukkit.getWorld(map.getName().toLowerCase());
@@ -65,6 +69,7 @@ public class ArenaManager {
             try {
                 FileUtils.forceDelete(world.getWorldFolder());
             } catch (IOException exception) {
+                exception.printStackTrace();
             }
         }
         File worldFile = new File("worlds/" + map.getName().toLowerCase());
@@ -73,20 +78,25 @@ public class ArenaManager {
                 FileUtils.forceDelete(worldFile);
                 return true;
             } catch (IOException exception) {
+                exception.printStackTrace();
                 return false;
             }
         }
         return false;
     }
 
-    public void unloadMap(Arena map) {
-        World world = Bukkit.getWorld(map.getName().toLowerCase());
+    public void unloadMap(String map) {
+        World world = Bukkit.getWorld(map.toLowerCase());
         if (world != null) {
-            Bukkit.getWorld(map.getName().toLowerCase()).getPlayers().forEach(player -> {
+            Bukkit.getWorld(map.toLowerCase()).getPlayers().forEach(player -> {
                 player.teleport(BlitzSG.lobbySpawn);
             });
         }
-        Bukkit.unloadWorld(map.getName(), false);
+        Bukkit.unloadWorld(map, false);
+    }
+
+    public void unloadMap(Arena map) {
+        unloadMap(map.getName());
     }
 
 
@@ -102,7 +112,12 @@ public class ArenaManager {
                 e.printStackTrace();
             }
 
-
+            World world = Bukkit.getWorld(arena.toLowerCase());
+            world.setAutoSave(false);
+            world.setGameRuleValue("doMobSpawning", "false");
+            world.setGameRuleValue("mobGriefing", "false");
+            world.setGameRuleValue("doFireTick", "false");
+            world.setGameRuleValue("showDeathMessages", "false");
             Location cornerMin = new Location(Bukkit.getWorld(fc.getString("Name") + "_temp"), fc.getInt("Bounds.Min.X")
                     , fc.getInt("Bounds.Min.Y"), fc.getInt("Bounds.Min.Z"));
             Location cornerMax = new Location(Bukkit.getWorld(fc.getString("Name") + "_temp"), fc.getInt("Bounds.Max.X")
@@ -117,6 +132,7 @@ public class ArenaManager {
 
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

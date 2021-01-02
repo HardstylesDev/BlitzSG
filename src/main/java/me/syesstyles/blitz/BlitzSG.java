@@ -91,12 +91,8 @@ public class BlitzSG extends JavaPlugin {
 		scoreboardManager.runTaskTimer(this, 20, 20);
 		
 		//Load LobbySpawn:
-		//lobbySpawn = new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0);
-		//if(Bukkit.getWorld(this.getConfig().getString("Lobby.Spawn")) == null){
-		//	lobbySpawn = new Location(Bukkit.getWorlds().get(0), 0 , 100 , 0);
-		//}else
-		//	lobbySpawn = new Location(Bukkit.getWorld(this.getConfig().getString("Lobby.Spawn"))
-		//		, this.getConfig().getInt("Lobby.X"), this.getConfig().getInt("Lobby.Y"), this.getConfig().getInt("Lobby.Z"));
+
+		lobbySpawn = new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0);
 	}
 	
 	public void onDisable() {
