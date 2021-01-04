@@ -9,6 +9,7 @@ me\syesstyles\blitz\gui\KitsGUI.class
 me\syesstyles\blitz\game\Game$GameMode.class
 me\syesstyles\blitz\utils\WorldCommand.class
 me\syesstyles\blitz\kit\KitUtils.class
+me\syesstyles\blitz\game\Game$NextEvent.class
 me\syesstyles\blitz\game\Game.class
 me\syesstyles\blitz\utils\PrepareItemEnchant.class
 me\syesstyles\blitz\commands\subcommands\JoinCommand.class
@@ -20,6 +21,7 @@ me\syesstyles\blitz\gui\ShopGUI.class
 me\syesstyles\blitz\commands\subcommands\WarpCommand.class
 me\syesstyles\blitz\rank\Rank.class
 me\syesstyles\blitz\commands\subcommands\SaveCommand.class
+me\syesstyles\blitz\game\Game$5.class
 me\syesstyles\blitz\game\GameHandler.class
 me\syesstyles\blitz\game\GameManager.class
 me\syesstyles\blitz\commands\CommandHandler.class

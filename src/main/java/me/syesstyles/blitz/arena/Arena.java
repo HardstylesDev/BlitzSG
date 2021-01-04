@@ -5,6 +5,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.IllegalPluginAccessException;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -16,11 +17,12 @@ public class Arena {
     private World arenaWorld;
     private Location arenaMinCorner;
     private Location arenaMaxCorner;
+    private Location lobby;
 
     public void setSpawns(ArrayList<Location> spawns) {
         this.spawns = spawns;
     }
-
+    public void setLobby(Location lobby){ this.lobby = lobby; }
     public void setWorld(World world) {
         this.arenaWorld = world;
     }
@@ -32,6 +34,7 @@ public class Arena {
     public Arena(Location corner1, Location corner2, String name) {
         this.name = name;
         this.spawns = new ArrayList<Location>();
+
         this.arenaWorld = corner1.getWorld();
         this.inUse = false;
 
@@ -51,6 +54,7 @@ public class Arena {
         this.name = name;
         this.inUse = false;
         this.spawns = new ArrayList<Location>();
+        this.lobby = null;
         BlitzSG.getInstance().getArenaManager().addArena(this);
         //SpeedUHC.getInstance().getArenaManager().addArenaPreset(this);
     }
@@ -62,74 +66,76 @@ public class Arena {
                 p.kickPlayer("§6>> §e§lArena Resetting §6<<");
         }
         System.out.println("killing myself!");
-        new BukkitRunnable() {
-            public void run() {
-                setInUse(false);
-                //Bukkit.unloadWorld(getArenaWorld(), false);
-                //
-                ////World w = Bukkit.getWorld(fc.getString("World"));
-                //File fo = getArenaWorld().getWorldFolder();
-                //fo.delete();
-                //
-                //File f = new File(BlitzSG.getInstance().getDataFolder() + "/worlds/" + name);
-                //File f1 = new File(name + "_temp");
-                //if(f1.exists())
-                //	f1.delete();
-                //try {
-                //	FileUtils.copyDirectory(f, f1);
-                //} catch (IOException e) {
-                //	e.printStackTrace();
-                //}
-                //for(File f2 : f1.listFiles()) {
-                //	if(f2.getName().contains("uid") || f2.getName().contains("session")
-                //			|| f2.getName().contains("level") || f2.getName().contains("playerdata"))
-                //		f2.delete();
-                //}
-                //
-                //File session = new File(name + "_temp" + "/session.lock");
-                //try {
-                //	session.createNewFile();
-                //} catch (IOException e) {
-                //	e.printStackTrace();
-                //}
-                //try {
-                //    session.createNewFile();
-                //    DataOutputStream dataoutputstream = new DataOutputStream(new FileOutputStream(session));
-                //
-                //    try {
-                //        dataoutputstream.writeLong(System.currentTimeMillis());
-                //    } finally {
-                //        dataoutputstream.close();
-                //    }
-                //} catch (IOException ioexception) {
-                //	ioexception.printStackTrace();
-                //}
-                //
-                //Bukkit.getServer().createWorld(new WorldCreator(name + "_temp"));
-                //World w = Bukkit.getWorld(name + "_temp");
-                //
-                //w.setAutoSave(false);
-                //w.setTicksPerAnimalSpawns(1);
-                //w.setTicksPerMonsterSpawns(1);
-                //w.setGameRuleValue("doMobSpawning", "false");
-                //w.setGameRuleValue("mobGriefing", "false");
-                //w.setGameRuleValue("doFireTick", "false");
-                //w.setGameRuleValue("showDeathMessages", "false");
-                //setArenaWorld(w);
-                //for(Location loc : spawns) {
-                //	loc.setWorld(w);
-                //}
-                //arenaMinCorner.setWorld(w);
-                //arenaMaxCorner.setWorld(w);
-                try {
-                    if(!BlitzSG.getInstance().getArenaManager().deleteMap(getArenaWorld().getName()))
-                        System.out.println("Error unloading + removing map: " + getArenaWorld().getName());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        try {
+            new BukkitRunnable() {
+                public void run() {
+                    setInUse(false);
+                    //Bukkit.unloadWorld(getArenaWorld(), false);
+                    //
+                    ////World w = Bukkit.getWorld(fc.getString("World"));
+                    //File fo = getArenaWorld().getWorldFolder();
+                    //fo.delete();
+                    //
+                    //File f = new File(BlitzSG.getInstance().getDataFolder() + "/worlds/" + name);
+                    //File f1 = new File(name + "_temp");
+                    //if(f1.exists())
+                    //	f1.delete();
+                    //try {
+                    //	FileUtils.copyDirectory(f, f1);
+                    //} catch (IOException e) {
+                    //	e.printStackTrace();
+                    //}
+                    //for(File f2 : f1.listFiles()) {
+                    //	if(f2.getName().contains("uid") || f2.getName().contains("session")
+                    //			|| f2.getName().contains("level") || f2.getName().contains("playerdata"))
+                    //		f2.delete();
+                    //}
+                    //
+                    //File session = new File(name + "_temp" + "/session.lock");
+                    //try {
+                    //	session.createNewFile();
+                    //} catch (IOException e) {
+                    //	e.printStackTrace();
+                    //}
+                    //try {
+                    //    session.createNewFile();
+                    //    DataOutputStream dataoutputstream = new DataOutputStream(new FileOutputStream(session));
+                    //
+                    //    try {
+                    //        dataoutputstream.writeLong(System.currentTimeMillis());
+                    //    } finally {
+                    //        dataoutputstream.close();
+                    //    }
+                    //} catch (IOException ioexception) {
+                    //	ioexception.printStackTrace();
+                    //}
+                    //
+                    //Bukkit.getServer().createWorld(new WorldCreator(name + "_temp"));
+                    //World w = Bukkit.getWorld(name + "_temp");
+                    //
+                    //w.setAutoSave(false);
+                    //w.setTicksPerAnimalSpawns(1);
+                    //w.setTicksPerMonsterSpawns(1);
+                    //w.setGameRuleValue("doMobSpawning", "false");
+                    //w.setGameRuleValue("mobGriefing", "false");
+                    //w.setGameRuleValue("doFireTick", "false");
+                    //w.setGameRuleValue("showDeathMessages", "false");
+                    //setArenaWorld(w);
+                    //for(Location loc : spawns) {
+                    //	loc.setWorld(w);
+                    //}
+                    //arenaMinCorner.setWorld(w);
+                    //arenaMaxCorner.setWorld(w);
+                    try {
+                        if (!BlitzSG.getInstance().getArenaManager().deleteMap(getArenaWorld().getName()))
+                            System.out.println("Error unloading + removing map: " + getArenaWorld().getName());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-            }
-        }.runTaskLater(BlitzSG.getInstance(), 5);
+                }
+            }.runTaskLater(BlitzSG.getInstance(), 5);
+        }catch (IllegalPluginAccessException ignored) {}
     }
 
     public String getName() {
@@ -174,7 +180,9 @@ public class Arena {
     public ArrayList<Location> getSpawns() {
         return spawns;
     }
-
+    public Location getLobby() {
+        return lobby;
+    }
     public boolean isInUse() {
         return inUse;
     }

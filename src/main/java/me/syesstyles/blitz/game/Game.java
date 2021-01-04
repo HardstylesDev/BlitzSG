@@ -19,9 +19,15 @@ import java.util.HashSet;
 
 public class Game {
 
+    private NextEvent nextEvent;
+
     public static enum GameMode {
         LOADING, INACTIVE, WAITING,
         STARTING, INGAME, RESETING
+    }
+
+    public static enum NextEvent {
+        STAR, REFILL, DEATHMATCH
     }
 
     private ArrayList<Player> allPlayers;
@@ -47,7 +53,6 @@ public class Game {
         arena = BlitzSG.getInstance().getArenaManager().getRandomArena();
         BlitzSG.getInstance().getArenaManager().fixSpawns(arena);
         if (arena == null || arena.getSpawns().get(0).getWorld() == null) {
-            System.out.println("No arena available I guess " + arena.getSpawns().get(0).getWorld());
             return;
         }
         arena.setInUse(true);
@@ -58,9 +63,8 @@ public class Game {
         votes = new HashMap<Player, Boolean>();
         spawnUsed = new HashSet<Location>();
         gameMode = GameMode.WAITING;
-        System.out.println("spawns: " + arena.getSpawns().size());
+
         for (Location loc : arena.getSpawns()) {
-            System.out.println(loc);
 
             loc.getBlock().setType(Material.AIR);
         }
@@ -90,6 +94,16 @@ public class Game {
         uhcPlayer.setGame(this);
         allPlayers.add(p);
         alivePlayers.add(p);
+        p.teleport(arena.getLobby().clone().add(0.5, 0, 0.5));
+        msgAll(BlitzSG.CORE_NAME + "&7" + p.getName() + " &ehas joined (&b" + alivePlayers.size() + "&e/&b" + arena.getSpawns().size() + "&e)!");
+        if (alivePlayers.size() >= 2 && gameMode.equals(GameMode.WAITING)) {
+            startLobbyCountdown();
+        }
+        resetPlayer(p);
+        setPregameInventory(p);
+    }
+
+    public void teleportSpawn(Player p) {
         Location playerSpawn = null;
         for (Location l : arena.getSpawns())
             if (!spawnUsed.contains(l)) {
@@ -97,14 +111,10 @@ public class Game {
                 break;
             }
         //createCage(playerSpawn);
+
         spawnUsed.add(playerSpawn);
         p.teleport(playerSpawn.clone().add(0.5, 1.0, 0.5));
-        msgAll(BlitzSG.CORE_NAME + "&7" + p.getName() + " &ehas joined (&b" + alivePlayers.size() + "&e/&b" + arena.getSpawns().size() + "&e)!");
-        if (alivePlayers.size() >= 2 && gameMode.equals(GameMode.WAITING)) {
-            startCountDown();
-        }
-        resetPlayer(p);
-        setPregameInventory(p);
+
     }
 
     public void removePlayer(Player p) {
@@ -125,16 +135,54 @@ public class Game {
         BlitzSG.send(p, BlitzSG.CORE_NAME + "&cYou have left the game!");
     }
 
+    public void startLobbyCountdown() {
+
+        countdownTime = 6; // 21
+       //for (Player alivePlayer : alivePlayers) {
+       //    teleportSpawn(alivePlayer);
+       //}
+
+        new BukkitRunnable() {
+            public void run() {
+                countdownTime--;
+                if (alivePlayers.size() < 2) {
+                    this.cancel();
+                    gameMode = GameMode.WAITING;
+                    msgAll("&cWe don't have enough players! Countdown cancelled.");
+                    return;
+                }
+                if (countdownTime == 0) {
+
+                    for (Player alivePlayer : alivePlayers) {
+
+                        teleportSpawn(alivePlayer);
+                    }
+
+                    startCountDown();
+                    this.cancel();
+
+
+                    return;
+                }
+                if (countdownTime % 10 == 0 || countdownTime <= 10) {
+                    if (countdownTime <= 10)
+                        msgAll(BlitzSG.CORE_NAME + "&e" + countdownTime + " &eseconds until the game starts!");
+                }
+            }
+        }.runTaskTimer(BlitzSG.getInstance(), 0, 20);
+    }
+
     public void startCountDown() {
         gameMode = GameMode.STARTING;
-        countdownTime = 31;
+        countdownTime = 6; // 31
+
         new BukkitRunnable() {
             public void run() {
                 countdownTime--;
                 if (countdownTime == 30) {
-                    Bukkit.broadcastMessage("");
-                    Bukkit.broadcastMessage("&eA BSG &egame on the map &a" + arena.getName() + " &eis bound to start in &b" + countdownTime + " &eseconds. Use &6/bsg join &eto enter the game.");
-                    Bukkit.broadcastMessage("");
+                    BlitzSG.broadcast("",  Bukkit.getWorld("world"));
+                    BlitzSG.broadcast("&eA BSG &egame on the map &a" + arena.getName() + " &eis bound to start in &b" + countdownTime + " &eseconds. Use &6/bsg join &eto enter the game.", Bukkit.getWorld("world"));
+                    BlitzSG.broadcast("",  Bukkit.getWorld("world"));
                 }
                 if (alivePlayers.size() < 2) {
                     this.cancel();
@@ -149,33 +197,34 @@ public class Game {
                 }
                 if (countdownTime % 10 == 0 || countdownTime <= 5) {
                     if (countdownTime <= 5)
-                        msgAll(BlitzSG.CORE_NAME + "&eGame starting in &c" + countdownTime + " &eseconds!");
+                        msgAll(BlitzSG.CORE_NAME + "&eYou will be able to move in &c" + countdownTime + " &eseconds!");
                     else if (countdownTime <= 15)
-                        msgAll(BlitzSG.CORE_NAME + "&eGame starting in &6" + countdownTime + " &eseconds!");
+                        msgAll(BlitzSG.CORE_NAME + "&eYou will be able to move in &6" + countdownTime + " &eseconds!");
                     else if (countdownTime <= 25)
-                        msgAll(BlitzSG.CORE_NAME + "&eGame starting in &e" + countdownTime + " &eseconds!");
-                    else if (countdownTime <= 30)
-                        msgAll(BlitzSG.CORE_NAME + "&eGame starting in &a" + countdownTime + " &eseconds!");
-                }
+                        msgAll(BlitzSG.CORE_NAME + "&eYou will be able to move in &e" + countdownTime + " &eseconds!");
+                    else if (countdownTime <= 30){
+                        msgAll(BlitzSG.CORE_NAME + "&eYou will be able to move in " + countdownTime + " seconds! Choose a kit by right clicking the bow!");
+
+                }}
             }
         }.runTaskTimer(BlitzSG.getInstance(), 0, 20);
     }
 
     public void startGame() {
+        nextEvent = NextEvent.STAR;
         gameMode = GameMode.INGAME;
         arena.getArenaWorld().setTime(0);
         for (Player p : alivePlayers) {
             p.closeInventory();
             resetPlayer(p);
-            p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60 * 20, 2));
+
             p.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 2, 1);
             p.sendMessage("&aThe game has started, Good Luck!");
             if (isHeadGame())
                 p.sendMessage("&ePlayer heads are &aEnabled&e!");
             else
                 p.sendMessage("&ePlayer heads are &cDisabled&e!");
-            p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60 * 20, 0));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 60 * 20, 0));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60 * 20, 2));
 
         }
         for (Location l : arena.getSpawns())
@@ -198,6 +247,7 @@ public class Game {
                         for (Kit kit : BlitzSG.getInstance().getKitManager().getKits())
 
                             kit.giveKit(p, BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId()).getKitLevel(kit));
+
                 }
                 if (gameTime == 119) {
                     msgAll("&eThe border will now start shrinking!");
@@ -409,7 +459,9 @@ public class Game {
     public GameMode getGameMode() {
         return gameMode;
     }
-
+    public NextEvent getNextEvent(){
+        return nextEvent;
+    }
     public void setGameMode(GameMode gameMode) {
         this.gameMode = gameMode;
     }

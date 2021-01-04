@@ -5,6 +5,6 @@ import org.bukkit.ChatColor;
 
 public class Default extends Rank {
     public Default(){
-        super("Default","" + ChatColor.GRAY);
+        super("Default","" + ChatColor.GRAY, ChatColor.GRAY + "");
     }
 }

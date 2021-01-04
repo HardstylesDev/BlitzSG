@@ -12,6 +12,7 @@ import java.util.UUID;
 
 public class BlitzSGPlayer {
 
+    private int gameTaunt;
     private UUID uuid;
 
     private int gameKills;
@@ -40,6 +41,7 @@ public class BlitzSGPlayer {
             this.kitLevels.put(p, 0);
 
         this.gameKills = 0;
+        this.gameTaunt = -1;
         BlitzSG.getInstance().getBlitzSGPlayerManager().addUhcPlayer(this.uuid, this);
     }
 
@@ -140,9 +142,15 @@ public class BlitzSGPlayer {
     public int getGameKills() {
         return this.gameKills;
     }
+    public int getGameTaunt() {
+        return this.gameTaunt;
+    }
 
     public void resetGameKills() {
         this.gameKills = 0;
+    }
+    public void resetGameTaunt( int i) {
+        this.gameTaunt = i;
     }
 
     public void addGameKill() {

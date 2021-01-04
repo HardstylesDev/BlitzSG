@@ -69,7 +69,7 @@ public class ArenaManager {
             try {
                 FileUtils.forceDelete(world.getWorldFolder());
             } catch (IOException exception) {
-                exception.printStackTrace();
+               // exception.printStackTrace();
             }
         }
         File worldFile = new File("worlds/" + map.getName().toLowerCase());
@@ -78,7 +78,7 @@ public class ArenaManager {
                 FileUtils.forceDelete(worldFile);
                 return true;
             } catch (IOException exception) {
-                exception.printStackTrace();
+              //  exception.printStackTrace();
                 return false;
             }
         }
@@ -128,6 +128,8 @@ public class ArenaManager {
                 a.addSpawn(new Location(Bukkit.getWorld(fc.getString("Name") + "_temp")
                         , fc.getInt("Spawns." + str + ".X"), fc.getInt("Spawns." + str + ".Y"), fc.getInt("Spawns." + str + ".Z")));
             }
+            a.setLobby(new Location(a.getArenaWorld(), fc.getInt("Lobby.X"),fc.getInt("Lobby.Y"), fc.getInt("Lobby.Z")));
+
 
 
             return true;
@@ -173,7 +175,12 @@ public class ArenaManager {
         for (Location location : locations) {
             location.setWorld(world);
         }
+
         arena.setWorld(world);
         arena.setSpawns(locations);
+
+        Location lobby = arena.getLobby();
+        lobby.setWorld(world);
+        arena.setLobby(lobby);
     }
 }

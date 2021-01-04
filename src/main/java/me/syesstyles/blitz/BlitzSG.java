@@ -81,7 +81,7 @@ public class BlitzSG extends JavaPlugin {
 		
 		//Load Arena:
 		//ArenaUtils.loadArenas();
-		arenaManager.loadArena("citadel");
+		arenaManager.loadArena("caelum");
 		
 		//Start Scoreboard:
 

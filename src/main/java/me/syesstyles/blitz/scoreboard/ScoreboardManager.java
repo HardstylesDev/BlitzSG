@@ -2,6 +2,7 @@ package me.syesstyles.blitz.scoreboard;
 
 import java.util.Date;
 
+import me.syesstyles.blitz.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -25,80 +26,60 @@ public class ScoreboardManager extends BukkitRunnable
     public void run() {
         for(Player p : Bukkit.getServer().getOnlinePlayers()) {
             ScoreboardHelper board = this.scoreboardHandler.getScoreboard(p);
-            BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+            BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
             board.clear();
     		Date now = new Date();
-            if(!uhcPlayer.isInGame()) {
+            if(!bsgPlayer.isInGame()) {
                 board.add(separator);
-                board.add("Kills: &a" + uhcPlayer.getKills());
-                board.add("Wins: &a" + uhcPlayer.getWins());
+                board.add("Kills: &a" + bsgPlayer.getKills());
+                board.add("Wins: &a" + bsgPlayer.getWins());
                 board.add("Blitz Score: &cN/A");
                 board.add("Blitz Rank: &cN/A");
 
 
                 board.add(separator);
 
-                board.add("Coins: &a" + uhcPlayer.getCoins());
+                board.add("Coins: &a" + bsgPlayer.getCoins());
                 board.add("Unlocks: &cN/A");
 
                 board.add(separator);
                 board.add("&ewww.hypixel.net");
-            }else if(uhcPlayer.isInGame()) {
-            	if(uhcPlayer.getGame().getGameMode() == GameMode.WAITING) {
-                    board.add("&7" + now.getDate() + "/" + (now.getMonth()+1) + " &8Mini01");
+            }else if(bsgPlayer.isInGame()) {
+            	if(bsgPlayer.getGame().getGameMode() == GameMode.WAITING) {
+                    board.clear();
+            	}else if(bsgPlayer.getGame().getGameMode() == GameMode.STARTING) {
                     board.add(separator);
-                    board.add("&fPlayers: &a" + uhcPlayer.getGame().getAlivePlayers().size() + "/" + uhcPlayer.getGame().getArena().getSpawns().size());
+                    board.add("&fNext Event");
+                    board.add("&aBlitz Star 05:00");
                     board.add(separator);
-                    board.add("&fGame starting if &a1 &fmore");
-                    board.add("&fplayer(s) join...");
+                    board.add("Players: &a" + bsgPlayer.getGame().getAlivePlayers().size() );
+                    board.add("Kills: &a" + bsgPlayer.getGameKills() );
                     board.add(separator);
-                    board.add("&fMode: &6&lSolo");
+                    board.add("Taunt");
+                    board.add(bsgPlayer.getGameTaunt() == -1 ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : "&cUSED"));
+                }else if(bsgPlayer.getGame().getGameMode() == GameMode.INGAME) {
+
                     board.add(separator);
-                    board.add("&erelium.eu");
-            	}else if(uhcPlayer.getGame().getGameMode() == GameMode.STARTING) {
-                    board.add("&7" + now.getDate() + "/" + (now.getMonth()+1) + " &8Mini01");
+                    board.add("&fNext Event");
+                    board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) +  " " + convert(300 - bsgPlayer.getGame().getGameTime()));
                     board.add(separator);
-                    board.add("&fPlayers: &a" + uhcPlayer.getGame().getAlivePlayers().size() + "/" + uhcPlayer.getGame().getArena().getSpawns().size());
+                    board.add("&fPlayers: &a" + bsgPlayer.getGame().getAlivePlayers().size());
+                    board.add("&fKills: &a" + bsgPlayer.getGameKills());
                     board.add(separator);
-                    board.add("&fStarting in: &a" + format(uhcPlayer.getGame().getCountdownTime()));
+                    board.add("Taunt");
+                    board.add(bsgPlayer.getGameTaunt() == -1 ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : "&cUSED"));
+
+                }else if(bsgPlayer.getGame().getGameMode() == GameMode.RESETING) {
                     board.add(separator);
-                    board.add("&fMode: &6&lSolo");
+                    board.add("&fWinner");
+                    board.add("&a" + bsgPlayer.getRank().getPrefix() + bsgPlayer.getGame().getWinner().getName());
                     board.add(separator);
-                    board.add("&erelium.eu");
-                }else if(uhcPlayer.getGame().getGameMode() == GameMode.INGAME) {
-                    board.add("&7" + now.getDate() + "/" + (now.getMonth()+1) + " &8Mini01");
+                    board.add("&fPlayers: &a" + bsgPlayer.getGame().getAlivePlayers().size());
+                    board.add("&fKills: &a" + bsgPlayer.getGameKills());
                     board.add(separator);
-                    board.add("&fGame Time: ");
-                    board.add("&a" + convert(uhcPlayer.getGame().getGameTime()));
-                    board.add(separator);
-                    board.add("&fSurface Players: &a" + uhcPlayer.getGame().getAlivePlayers().size());
-                    board.add(separator);
-                    board.add("&fKills: &a" + uhcPlayer.getGameKills());
-                    board.add(separator);
-                    board.add("&fWorld Border:");
-                    if(uhcPlayer.getGame().getGameTime() >= 120)
-                    	board.add("&e-" + (int)uhcPlayer.getGame().getArena().getArenaWorld().getWorldBorder().getSize()/2
-                    			+ ", +" + (int)uhcPlayer.getGame().getArena().getArenaWorld().getWorldBorder().getSize()/2);
-                    else
-                    	board.add("&a-" + (int)uhcPlayer.getGame().getArena().getArenaWorld().getWorldBorder().getSize()/2
-                    			+ ", +" + (int)uhcPlayer.getGame().getArena().getArenaWorld().getWorldBorder().getSize()/2);
-                    board.add(separator);
-                    board.add("&erelium.eu");
-                }else if(uhcPlayer.getGame().getGameMode() == GameMode.RESETING) {
-                    board.add("&7" + now.getDate() + "/" + (now.getMonth()+1) + " &8Mini01");
-                    board.add(separator);
-                    board.add("&fGame Time: ");
-                    board.add("&aGame ended!");
-                    board.add(separator);
-                    board.add("&fWinner: &a" + uhcPlayer.getGame().getWinner().getName());
-                    board.add(separator);
-                    board.add("&fKills: &a" + uhcPlayer.getGameKills());
-                    board.add(separator);
-                    board.add("&fWorld Border:");
-                    board.add("&e-" + (int)uhcPlayer.getGame().getArena().getArenaWorld().getWorldBorder().getSize()/2
-                    		+ ", +" + (int)uhcPlayer.getGame().getArena().getArenaWorld().getWorldBorder().getSize()/2);
-                    board.add(separator);
-                    board.add("&erelium.eu");
+                    board.add("Taunt");
+                    board.add(bsgPlayer.getGameTaunt() == -1 ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : "&cUSED"));
+
                 }
             }
             board.update(p);
@@ -111,10 +92,8 @@ public class ScoreboardManager extends BukkitRunnable
         final int m = i / 60;
         final int s = i - m * 60;
         String timeF = "";
-        if (h < 10) {
-            timeF = String.valueOf(timeF) + "0";
-        }
-        timeF = String.valueOf(timeF) + h + ":";
+
+
         if (m < 10) {
             timeF = String.valueOf(timeF) + "0";
         }
@@ -132,7 +111,12 @@ public class ScoreboardManager extends BukkitRunnable
         final String str = String.format("%02d:%02d", minutes, seconds);
         return str;
     }
-    
+
+    private String nextEvent(Game.NextEvent nextEvent){
+        if(nextEvent == Game.NextEvent.STAR)
+            return "Blitz Star";
+        return "" + nextEvent;
+    }
     public ScoreboardHandler getScoreboardHandler() {
     	return this.scoreboardHandler;
     }
