@@ -16,17 +16,17 @@ import me.syesstyles.blitz.utils.ItemUtils;
 public class ShopGUI {
 	
 	public static void openGUI(Player p) {
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+		BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		
 		//Create GUI
-		Inventory inv = Bukkit.createInventory(null, (int)(((BlitzSG.getInstance().getKitManager().getKits().size()+1)/9)+3) * 9 + 9, "§8SpeedUHC Shop");
+		Inventory inv = Bukkit.createInventory(null, (int)(((BlitzSG.getInstance().getKitManager().getKits().size()+1)/9)+3) * 9 + 9, "§8Blitz Shop");
 		
 		//Add Items
 		int firstItem = 10;
 		for(Kit kit : BlitzSG.getInstance().getKitManager().getKits()) {
 			inv.setItem(firstItem, ItemUtils.buildItem(new ItemStack(kit.getIcon())
-					, getName(uhcPlayer, kit)
-					, getFullDescription(uhcPlayer, kit)));
+					, getName(bsgPlayer, kit)
+					, getFullDescription(bsgPlayer, kit)));
 			if((firstItem+2) % 9 == 0) {
 				firstItem += 3;
 				continue;
@@ -39,13 +39,13 @@ public class ShopGUI {
 		p.openInventory(inv);
 	}
 	
-	public static String getName(BlitzSGPlayer uhcPlayer, Kit p) {
-		if(p.getPrice(uhcPlayer.getKitLevel(p)) == -1)
-			return "§a" + p.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(p));
-		else if(p.getPrice(uhcPlayer.getKitLevel(p)) <= uhcPlayer.getCoins())
-			return "§e" + p.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(p)+1);
+	public static String getName(BlitzSGPlayer blitzSGPlayer, Kit p) {
+		if(p.getPrice(blitzSGPlayer.getKitLevel(p)) == -1)
+			return "§a" + p.getName() + KitUtils.getKitTag(blitzSGPlayer.getKitLevel(p));
+		else if(p.getPrice(blitzSGPlayer.getKitLevel(p)) <= blitzSGPlayer.getCoins())
+			return "§e" + p.getName() + KitUtils.getKitTag(blitzSGPlayer.getKitLevel(p)+1);
 		else
-			return "§c" + p.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(p)+1);
+			return "§c" + p.getName() + KitUtils.getKitTag(blitzSGPlayer.getKitLevel(p)+1);
 	}
 	
 	public static ArrayList<String> getFullDescription(BlitzSGPlayer uhcPlayer, Kit p) {

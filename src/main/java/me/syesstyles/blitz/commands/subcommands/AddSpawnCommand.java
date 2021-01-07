@@ -25,7 +25,7 @@ public class AddSpawnCommand extends SubCommand{
 
 	@Override
 	public String getPermission() {
-		return "speeduhc.admin";
+		return "bsg.admin";
 	}
 
 }

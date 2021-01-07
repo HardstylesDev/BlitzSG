@@ -3,7 +3,7 @@ package me.syesstyles.blitz.game;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.game.Game.GameMode;
-import me.syesstyles.blitz.gui.VotingGUI;
+import me.syesstyles.blitz.gui.KitGUI;
 import me.syesstyles.blitz.rank.ranks.Admin;
 import me.syesstyles.blitz.utils.ItemUtils;
 import org.bukkit.Material;
@@ -415,8 +415,8 @@ public class GameHandler implements Listener {
             return;
         if (e.getItem() == null)
             return;
-        if (e.getItem().getType() == Material.PAPER)
-            VotingGUI.openGUI(p);
+        if (e.getItem().getType() == Material.BOW)
+            KitGUI.openGUI(p);
         if (e.getItem().getType() == Material.BARRIER)
             bsgPlayer.getGame().removePlayer(p);
     }

@@ -21,7 +21,7 @@ public class ArenasCommand extends SubCommand {
 
 	@Override
 	public String getPermission() {
-		return "speeduhc.admin";
+		return "bsg.admin";
 	}
 
 }

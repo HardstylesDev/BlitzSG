@@ -17,7 +17,7 @@ public class CreateCommand extends SubCommand {
 	@Override
 	public void runCommand(Player p, String[] args) {
 		if(args.length < 2) {
-			p.sendMessage("§cUsage: /suhc create <name>");
+			p.sendMessage("§cUsage: /bsg create <name>");
 			return;
 		}
 		/*if(ArenaUtils.getCornerLoc1(p) == null || ArenaUtils.getCornerLoc2(p) == null) {
@@ -75,7 +75,7 @@ public class CreateCommand extends SubCommand {
 
 	@Override
 	public String getPermission() {
-		return "speeduhc.admin";
+		return "bsg.admin";
 	}
 
 }

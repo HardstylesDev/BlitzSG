@@ -21,7 +21,7 @@ public class LeaveCommand extends SubCommand{
 
 	@Override
 	public String getPermission() {
-		return "speeduhc.default";
+		return "bsg.default";
 	}
 
 }

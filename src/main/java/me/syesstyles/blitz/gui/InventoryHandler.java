@@ -28,9 +28,9 @@ public class InventoryHandler implements Listener {
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e) {
 		Player p = (Player) e.getWhoClicked();
-		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-		if(!uhcPlayer.isInGame())
-		if(!(uhcPlayer.getRank() instanceof Admin))
+		BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+		if(!bsgPlayer.isInGame())
+		if(!(bsgPlayer.getRank() instanceof Admin))
 				e.setCancelled(true);
 		if(BlitzSG.getInstance().getGuiManager().isInGUI(p))
 			e.setCancelled(true);
@@ -41,36 +41,36 @@ public class InventoryHandler implements Listener {
 		if(e.getInventory().getItem(e.getSlot()) == null)
 			return;
 		if(e.getInventory().getItem(e.getSlot()).getType() == Material.SKULL_ITEM) {
-			if(!uhcPlayer.isInGame())
+			if(!bsgPlayer.isInGame())
 				return;
 			if(e.isLeftClick())
-				uhcPlayer.getGame().setVote(p, true);
+				bsgPlayer.getGame().setVote(p, true);
 			else if(e.isRightClick())
-				uhcPlayer.getGame().setVote(p, false);
+				bsgPlayer.getGame().setVote(p, false);
 			p.getOpenInventory().setItem(13, ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM, 1, (short) 3), "§eEnable Player Heads?"
 					, Arrays.asList("§7Left-Click to vote §aTrue", "§7Right-Click to vote §cFalse"
-					, "§7", "§7Status:", "§a" + uhcPlayer.getGame().getTrueVotes()
-					+ " §7/ §c" + uhcPlayer.getGame().getFalseVotes() + " §8("
-							+ uhcPlayer.getGame().getVotingPercentage() + "%)")));
+					, "§7", "§7Status:", "§a" + bsgPlayer.getGame().getTrueVotes()
+					+ " §7/ §c" + bsgPlayer.getGame().getFalseVotes() + " §8("
+							+ bsgPlayer.getGame().getVotingPercentage() + "%)")));
 			//p.closeInventory();
 		}
 		if(e.getInventory().getName() == "§8SpeedUHC Shop") {
-			if(uhcPlayer.isInGame())
+			if(bsgPlayer.isInGame())
 				return;
 			if(BlitzSG.getInstance().getKitManager().getKit(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName()) == null)
 				return;
 			Kit kit = BlitzSG.getInstance().getKitManager().getKit(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName());
-			if(kit.getPrice(uhcPlayer.getKitLevel(kit)) == -1) {
+			if(kit.getPrice(bsgPlayer.getKitLevel(kit)) == -1) {
 				p.sendMessage("§cYou already have this kit at max level!!");
 				return;
 			}
-			if(uhcPlayer.getCoins() < kit.getPrice(uhcPlayer.getKitLevel(kit))) {
+			if(bsgPlayer.getCoins() < kit.getPrice(bsgPlayer.getKitLevel(kit))) {
 				p.sendMessage("§cYou don't have enough coins to purchase this upgrade!");
 				return;
 			}
-			p.sendMessage("§aSuccessfully purchased " + kit.getName() + KitUtils.getKitTag(uhcPlayer.getKitLevel(kit)+1) + "!");
-			uhcPlayer.removeCoins(kit.getPrice(uhcPlayer.getKitLevel(kit)));
-			uhcPlayer.setKitLevel(kit, uhcPlayer.getKitLevel(kit)+1);
+			p.sendMessage("§aSuccessfully purchased " + kit.getName() + KitUtils.getKitTag(bsgPlayer.getKitLevel(kit)+1) + "!");
+			bsgPlayer.removeCoins(kit.getPrice(bsgPlayer.getKitLevel(kit)));
+			bsgPlayer.setKitLevel(kit, bsgPlayer.getKitLevel(kit)+1);
 			p.closeInventory();
 		}
 			

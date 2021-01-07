@@ -12,7 +12,7 @@ public class EditCommand extends SubCommand{
 	@Override
 	public void runCommand(Player p, String[] args) {
 		if(args.length < 2) {
-			p.sendMessage("§cUsage: /suhc edit <name>");
+			p.sendMessage("§cUsage: /bsg edit <name>");
 			return;
 		}
 		
@@ -25,17 +25,17 @@ public class EditCommand extends SubCommand{
 				return;
 			}
 		}
-		p.sendMessage("§cThe specified arena does not exist, use /suhc arenas for a list of all arenas.");
+		p.sendMessage("§cThe specified arena does not exist, use /bsg arenas for a list of all arenas.");
 	}
 
 	@Override
 	public String getHelp() {
-		return "§8\u2022 §f/speeduhc edit <arena>";
+		return "§8\u2022 §f/bsg edit <arena>";
 	}
 
 	@Override
 	public String getPermission() {
-		return "speeduhc.admin";
+		return "bsg.admin";
 	}
 	
 }

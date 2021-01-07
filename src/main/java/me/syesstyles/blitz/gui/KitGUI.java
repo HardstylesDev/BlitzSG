@@ -12,7 +12,7 @@ import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.utils.ItemUtils;
 
-public class VotingGUI {
+public class KitGUI {
 	
 	public static void openGUI(Player p) {
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());

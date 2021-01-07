@@ -62,7 +62,7 @@ public class BlitzSG extends JavaPlugin {
 		rankManager = new RankManager();
 		
 		//Register Commands::
-		getCommand("speeduhc").setExecutor(new CommandHandler());
+		getCommand("bsg").setExecutor(new CommandHandler());
 		getCommand("world").setExecutor(new WorldCommand());
 
 		//Register Handlers:
