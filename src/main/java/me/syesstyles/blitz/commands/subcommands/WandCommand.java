@@ -18,7 +18,7 @@ public class WandCommand extends SubCommand{
 
 	@Override
 	public String getHelp() {
-		return "§8\u2022 §f/speeduhc wand";
+		return "§8\u2022 §f/bsg wand";
 	}
 
 	@Override

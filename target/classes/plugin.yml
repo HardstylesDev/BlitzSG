@@ -4,8 +4,13 @@ main: me.syesstyles.blitz.BlitzSG
 author: Syes
 description: BlitzSG Plugin
 commands:
-  suhc:
+  bsg:
     description: main plugin command
-    aliases: [speeduhc]
+    aliases: [blitz]
   world:
     description: world command lol
+  nick:
+    description: world command lol
+  fw:
+    description: world command lol
+    aliases: [firework]

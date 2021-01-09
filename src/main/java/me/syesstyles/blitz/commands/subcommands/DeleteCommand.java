@@ -12,7 +12,7 @@ public class DeleteCommand extends SubCommand{
 
 	@Override
 	public String getHelp() {
-		return "§8\u2022 §f/speeduhc delete <arena>";
+		return "§8\u2022 §f/bsg delete <arena>";
 	}
 
 	@Override

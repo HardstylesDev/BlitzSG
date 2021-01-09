@@ -17,7 +17,7 @@ public class JoinCommand extends SubCommand{
 
 	@Override
 	public String getHelp() {
-		return "§8\u2022 §f/speeduhc join";
+		return "§8\u2022 §f/bsg join";
 	}
 
 	@Override

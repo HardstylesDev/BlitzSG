@@ -22,13 +22,66 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7a886556-406b-424f-8316-6290f7bbf82d" name="Default Changelist" comment="Scoreboard done, spawn + prelobby done">
+    <list default="true" id="7a886556-406b-424f-8316-6290f7bbf82d" name="Default Changelist" comment="uhc &gt; bsg replacer">
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/GameMobHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/kit/kits/Blaze.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/kit/kits/HorseTamer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/kit/kits/Knight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/kit/kits/Meatmaster.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/kit/kits/Necromancer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/kit/kits/Snowman.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/ranks/Champion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/ranks/Mvp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/ranks/MvpPlus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/ranks/Vip.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/ranks/VipPlus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/ranks/Youtuber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/ChestUtils.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/FireworkCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/ItemBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/nametag/Nametag.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/nametag/NametagManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/nickname/Nick.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/nickname/NicknameCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/BlitzSG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/BlitzSG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/blitzsgplayer/BlitzSGPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/blitzsgplayer/BlitzSGPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/blitzsgplayer/BlitzSGPlayerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/blitzsgplayer/BlitzSGPlayerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/blitzsgplayer/BlitzSGPlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/blitzsgplayer/BlitzSGPlayerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/CommandHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/CommandHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/AddSpawnCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/AddSpawnCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/ArenasCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/ArenasCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/CreateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/CreateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/EditCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/EditCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/DeleteCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/DeleteCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/JoinCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/JoinCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/LeaveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/LeaveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/SaveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/SaveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/WandCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/WandCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/WarpCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/WarpCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/GameHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/GameManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/InventoryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/InventoryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/KitGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/KitGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/ShopGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/ShopGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/kit/Kit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/kit/Kit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/kit/KitManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/kit/KitManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/Rank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/Rank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/RankManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/RankManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/ranks/Admin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/ranks/Admin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/ranks/Default.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/ranks/Default.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/ranks/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/ranks/Helper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/ranks/Moderator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/ranks/Moderator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/scoreboard/ScoreboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/scoreboard/ScoreboardHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/scoreboard/ScoreboardManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/scoreboard/ScoreboardManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/ItemUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/ItemUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/PlayerUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/PlayerUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/nickname/Nickname.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/nickname/Nickname.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/SpigotServer-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/SpigotServer-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,11 +136,11 @@
       <recent name="me.hardstyles" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="me.syesstyles.blitz.kit.kits" />
+      <recent name="me.syesstyles.blitz.game" />
       <recent name="me.syesstyles.blitz.rank.ranks" />
+      <recent name="me.syesstyles.blitz.utils" />
       <recent name="me.syesstyles.blitz.commands.subcommands" />
-      <recent name="org.example.SpigotServer.games.deathmatch.kit.kits" />
-      <recent name="org.example.SpigotServer.games.deathmatch.map.maps" />
-      <recent name="org.example.SpigotServer.utils" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -130,7 +183,8 @@
       <workItem from="1609850175542" duration="284000" />
       <workItem from="1609850733316" duration="2501000" />
       <workItem from="1609853593121" duration="2141000" />
-      <workItem from="1610023533461" duration="775000" />
+      <workItem from="1610023533461" duration="32354000" />
+      <workItem from="1610099190930" duration="52432000" />
     </task>
     <task id="LOCAL-00001" summary="fff">
       <created>1597086521686</created>
@@ -265,7 +319,14 @@
       <option name="project" value="LOCAL" />
       <updated>1609790643862</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="uhc &gt; bsg replacer">
+      <created>1610025241092</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1610025241092</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -293,7 +354,8 @@
     <MESSAGE value="Added ranks" />
     <MESSAGE value="nick issue resolved, still one more though" />
     <MESSAGE value="Scoreboard done, spawn + prelobby done" />
-    <option name="LAST_COMMIT_MESSAGE" value="Scoreboard done, spawn + prelobby done" />
+    <MESSAGE value="uhc &gt; bsg replacer" />
+    <option name="LAST_COMMIT_MESSAGE" value="uhc &gt; bsg replacer" />
   </component>
   <component name="WindowStateProjectService">
     <state x="726" y="112" key="#Auto_Import" timestamp="1607800331267">
@@ -304,74 +366,74 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="625" y="95" key="#Unnamed/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1602936898458" />
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1609019753730">
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1610030526661">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1609019753730" />
-    <state x="765" y="221" key="#com.intellij.ide.util.MemberChooser" timestamp="1609167885803">
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610030526661" />
+    <state x="765" y="221" key="#com.intellij.ide.util.MemberChooser" timestamp="1610100229260">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="-1155" y="223" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1609085290432" />
-    <state x="765" y="221" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1609167885803" />
+    <state x="765" y="221" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610100229260" />
     <state x="745" y="211" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog" timestamp="1602936943552">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="745" y="211" key="#com.intellij.openapi.keymap.impl.ui.EditKeymapsDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1602936943552" />
-    <state x="723" y="414" width="476" height="217" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1609610322310">
+    <state x="723" y="414" width="476" height="217" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes" timestamp="1610136756954">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="723" y="414" width="476" height="217" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1609610322310" />
+    <state x="723" y="414" width="476" height="217" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610136756954" />
     <state x="-1164" y="429" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages" timestamp="1609020533915">
       <screen x="-1920" y="2" width="1920" height="1040" />
     </state>
     <state x="-1164" y="429" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1609020533915" />
     <state x="756" y="427" key="#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.packages/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1608929576320" />
-    <state x="-1775" y="2" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1609020470403">
-      <screen x="-1920" y="2" width="1920" height="1040" />
-    </state>
-    <state x="-1775" y="2" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1609020470403" />
-    <state x="145" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1608907952343" />
-    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1607807301530">
+    <state x="145" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1610112386939">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1607807301530" />
+    <state x="-1775" y="2" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1609020470403" />
+    <state x="145" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610112386939" />
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1610141386057">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="690" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610141386057" />
     <state x="2610" y="267" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1602940439805" />
     <state x="-1180" y="277" key="FileChooserDialogImpl" timestamp="1609021135552">
       <screen x="-1920" y="2" width="1920" height="1040" />
     </state>
     <state x="-1180" y="277" key="FileChooserDialogImpl/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1609021135552" />
     <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1604185542586" />
-    <state width="1877" height="276" key="GridCell.Tab.0.bottom" timestamp="1609790652893">
+    <state width="1877" height="208" key="GridCell.Tab.0.bottom" timestamp="1610153549899">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="271" key="GridCell.Tab.0.bottom/-1920.2.1920.1040/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1608922564069" />
-    <state width="1877" height="283" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1609100272819" />
-    <state width="1877" height="274" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1609625184555" />
-    <state width="1877" height="270" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1609024682853" />
+    <state width="1877" height="208" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1610133619226" />
+    <state width="1877" height="208" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610153549899" />
+    <state width="1877" height="268" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1610111493198" />
     <state width="1877" height="276" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.0.1920.1040/-1920.2.1920.1040@0.0.1920.1040" timestamp="1609790652893" />
-    <state width="1877" height="276" key="GridCell.Tab.0.center" timestamp="1609790652893">
+    <state width="1877" height="208" key="GridCell.Tab.0.center" timestamp="1610153549898">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="271" key="GridCell.Tab.0.center/-1920.2.1920.1040/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1608922564069" />
-    <state width="1877" height="283" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1609100272819" />
-    <state width="1877" height="274" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1609625184555" />
-    <state width="1877" height="270" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1609024682853" />
+    <state width="1877" height="208" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1610133619226" />
+    <state width="1877" height="208" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610153549898" />
+    <state width="1877" height="268" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1610111493198" />
     <state width="1877" height="276" key="GridCell.Tab.0.center/0.0.1920.1040/1920.0.1920.1040/-1920.2.1920.1040@0.0.1920.1040" timestamp="1609790652893" />
-    <state width="1877" height="276" key="GridCell.Tab.0.left" timestamp="1609790652893">
+    <state width="1877" height="208" key="GridCell.Tab.0.left" timestamp="1610153549898">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="271" key="GridCell.Tab.0.left/-1920.2.1920.1040/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1608922564069" />
-    <state width="1877" height="283" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1609100272819" />
-    <state width="1877" height="274" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1609625184555" />
-    <state width="1877" height="270" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1609024682853" />
+    <state width="1877" height="208" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1610133619226" />
+    <state width="1877" height="208" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610153549898" />
+    <state width="1877" height="268" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1610111493198" />
     <state width="1877" height="276" key="GridCell.Tab.0.left/0.0.1920.1040/1920.0.1920.1040/-1920.2.1920.1040@0.0.1920.1040" timestamp="1609790652893" />
-    <state width="1877" height="276" key="GridCell.Tab.0.right" timestamp="1609790652893">
+    <state width="1877" height="208" key="GridCell.Tab.0.right" timestamp="1610153549898">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1877" height="271" key="GridCell.Tab.0.right/-1920.2.1920.1040/1920.0.1920.1040/0.0.1920.1040@1920.0.1920.1040" timestamp="1608922564069" />
-    <state width="1877" height="283" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1609100272819" />
-    <state width="1877" height="274" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1609625184555" />
-    <state width="1877" height="270" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1609024682853" />
+    <state width="1877" height="208" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1610133619226" />
+    <state width="1877" height="208" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610153549898" />
+    <state width="1877" height="268" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1610111493198" />
     <state width="1877" height="276" key="GridCell.Tab.0.right/0.0.1920.1040/1920.0.1920.1040/-1920.2.1920.1040@0.0.1920.1040" timestamp="1609790652893" />
     <state x="184" y="86" key="MergeDialog" timestamp="1609165806454">
       <screen x="0" y="0" width="1920" height="1040" />
@@ -388,14 +450,15 @@
     <state x="-1368" y="255" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1609100075350" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1609625177551" />
     <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/1920.0.1920.1040/-1920.2.1920.1040@0.0.1920.1040" timestamp="1609790645165" />
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1609172321742">
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1610142346258">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1609172321742" />
-    <state x="573" y="156" width="585" height="801" key="find.popup" timestamp="1610025222293">
+    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610142346258" />
+    <state x="573" y="156" width="585" height="801" key="find.popup" timestamp="1610143206594">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="573" y="156" width="585" height="801" key="find.popup/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610025222293" />
+    <state x="-1347" y="158" width="585" height="801" key="find.popup/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1610116534509" />
+    <state x="573" y="156" width="585" height="801" key="find.popup/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610143206594" />
     <state x="573" y="156" width="585" height="801" key="find.popup/0.0.1920.1040/1920.0.1920.1040/-1920.2.1920.1040@0.0.1920.1040" timestamp="1609773451017" />
     <state x="-1179" y="423" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1609021469852">
       <screen x="-1920" y="2" width="1920" height="1040" />
@@ -405,14 +468,14 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="342" y="130" key="new project wizard/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1608935824578" />
-    <state x="660" y="277" key="refactoring.ChangeSignatureDialog" timestamp="1608898997147">
+    <state x="660" y="277" key="refactoring.ChangeSignatureDialog" timestamp="1610038588168">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="660" y="277" key="refactoring.ChangeSignatureDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1608898997147" />
-    <state x="616" y="240" width="672" height="677" key="run.anything.popup" timestamp="1608898668613">
+    <state x="660" y="277" key="refactoring.ChangeSignatureDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610038588168" />
+    <state x="616" y="240" width="672" height="677" key="run.anything.popup" timestamp="1610137915106">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="616" y="240" width="672" height="677" key="run.anything.popup/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1608898668613" />
+    <state x="616" y="240" width="672" height="677" key="run.anything.popup/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610137915106" />
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1609768879063">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>

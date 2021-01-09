@@ -5,10 +5,15 @@ import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.game.Game.GameMode;
 import me.syesstyles.blitz.gui.KitGUI;
 import me.syesstyles.blitz.rank.ranks.Admin;
-import me.syesstyles.blitz.utils.ItemUtils;
+import me.syesstyles.blitz.utils.ChestUtils;
+import me.syesstyles.blitz.utils.FireworkCommand;
+import me.syesstyles.blitz.utils.ItemBuilder;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,10 +23,8 @@ import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
-import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
-import org.bukkit.inventory.BrewerInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -29,6 +32,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Random;
 
 public class GameHandler implements Listener {
+    ChestUtils chestUtils = new ChestUtils();
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
@@ -56,21 +60,30 @@ public class GameHandler implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent e) {
+
         Player victim = e.getEntity();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(victim.getUniqueId());
         if (!bsgPlayer.isInGame())
             return;
-        e.setDeathMessage("§c" + e.getDeathMessage());
+        //e.setDeathMessage("§c" + e.getDeathMessage());
+        e.setDeathMessage("");
         victim.getWorld().strikeLightningEffect(victim.getLocation());
         bsgPlayer.getGame().msgAll(e.getDeathMessage());
+        bsgPlayer.getGameEntities().forEach(entity -> entity.remove());
+        bsgPlayer.getGameEntities().clear();
         bsgPlayer.getGame().killPlayer(victim);
         bsgPlayer.addDeath();
         if (victim.getKiller() != null) {
             //p.getKiller().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 50, 2));
             BlitzSGPlayer blitzSGPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(victim.getKiller().getUniqueId());
             blitzSGPlayer.addGameKill();
-            blitzSGPlayer.addCoins(50);
-            victim.getKiller().sendMessage("§6+50 Coins (Kill)");
+            int coins = 7 * blitzSGPlayer.getRank().getMultiplier();
+            blitzSGPlayer.addCoins(coins);
+            for (Player p : blitzSGPlayer.getGame().getAllPlayers()) {
+                BlitzSG.send(p, BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed by " + blitzSGPlayer.getRank(true).getChatColor() + victim.getKiller().getName() + " &eand everyone got a speed buff!");
+                p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 15 * 15, 1));
+            }
+            BlitzSG.send(victim.getKiller(), "§6+" + coins + " Coins (Kill)");
             BlitzSG.getInstance().getBlitzSGPlayerManager().handleKillElo(victim, victim.getKiller());
             return;
         }
@@ -100,10 +113,10 @@ public class GameHandler implements Listener {
             return;
         if (bsgPlayer.getGame().getGameMode() == GameMode.STARTING)
             if (e.getTo().getBlockX() != p.getLocation().getBlockX() || e.getTo().getBlockZ() != p.getLocation().getBlockZ()) {
-                int x = e.getPlayer().getLocation().getBlockX();
-                int z = e.getPlayer().getLocation().getBlockZ();
-                e.getTo().setX(x + 0.5);
-                e.getTo().setZ(z + 0.5);
+                Location spawn = bsgPlayer.getGameSpawn();
+                spawn.setY(e.getPlayer().getLocation().getY());
+                spawn.setDirection(e.getTo().getDirection());
+                e.getPlayer().teleport(spawn);
             }
     }
 
@@ -127,23 +140,25 @@ public class GameHandler implements Listener {
     @EventHandler
     public void onBlockExplode(BlockExplodeEvent e) {
         for (Game runningGame : BlitzSG.getInstance().getGameManager().getRunningGames()) {
-            if(runningGame.getArena().getArenaWorld() == e.getBlock().getWorld())
+            if (runningGame.getArena().getArenaWorld() == e.getBlock().getWorld())
                 e.blockList().clear();
         }
     }
+
     @EventHandler
     public void onBlockExplode(EntityExplodeEvent e) {
         for (Game runningGame : BlitzSG.getInstance().getGameManager().getRunningGames()) {
-            if(runningGame.getArena().getArenaWorld() == e.getEntity().getWorld())
+            if (runningGame.getArena().getArenaWorld() == e.getEntity().getWorld())
                 e.blockList().clear();
         }
     }
+
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
         if (!bsgPlayer.isInGame()) {
-            if (!(bsgPlayer.getRank() instanceof Admin))
+            if (!(bsgPlayer.getRank() instanceof Admin) && !(p.getGameMode() == org.bukkit.GameMode.CREATIVE))
 
                 e.setCancelled(true);
             return;
@@ -250,9 +265,7 @@ public class GameHandler implements Listener {
         if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB)
             return;
         if (!bsgPlayer.isInGame()) {
-
-            if (!(bsgPlayer.getRank() instanceof Admin))
-
+            if (!(bsgPlayer.getRank() instanceof Admin) && !(p.getGameMode() == org.bukkit.GameMode.CREATIVE))
                 e.setCancelled(true);
             return;
         }
@@ -279,11 +292,15 @@ public class GameHandler implements Listener {
         Player p = e.getPlayer();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
         if (!bsgPlayer.isInGame()) {
-            if (!(bsgPlayer.getRank() instanceof Admin))
+            if (!(bsgPlayer.getRank() instanceof Admin) && !(p.getGameMode() == org.bukkit.GameMode.CREATIVE))
                 e.setCancelled(true);
             return;
         }
-        if (bsgPlayer.getGame().getGameMode() != GameMode.INGAME || bsgPlayer.getGame().getGameMode() != GameMode.WAITING) {
+
+        if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME)
+            return;
+        if (bsgPlayer.getGame().getGameMode() != GameMode.STARTING && bsgPlayer.getGame().getGameMode() != GameMode.WAITING) {
+            System.out.println("cancelled for no reason1!!");
             e.setCancelled(true);
             return;
         }
@@ -300,7 +317,8 @@ public class GameHandler implements Listener {
             return;
         Player p = (Player) e.getEntity();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        if (bsgPlayer.getGame().getGameMode() == GameMode.WAITING || bsgPlayer.getGame().getGameMode() == GameMode.STARTING)
+
+        if (bsgPlayer.getGame().getGameMode() == GameMode.WAITING || bsgPlayer.getGame().getGameMode() == GameMode.STARTING || bsgPlayer.getGame().getGameMode() == GameMode.RESETING)
             e.setCancelled(true);
         if (!bsgPlayer.isInGame()) {
             e.setCancelled(true);
@@ -325,11 +343,23 @@ public class GameHandler implements Listener {
     public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player))
             return;
+
         Player p = (Player) e.getEntity();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-
         if (!bsgPlayer.isInGame())
             return;
+        if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME) {
+            if (bsgPlayer.getGameEntities().contains(e.getDamager()) || (e.getDamager() instanceof Snowball && bsgPlayer.getGameEntities().contains(((Snowball) e.getDamager()).getShooter()))) {
+                e.setCancelled(true);
+            }
+            if (!(e.getDamager() instanceof Player)) {
+                if (e.getDamager() instanceof Arrow)
+                    if ((Arrow) ((Arrow) e.getDamager()).getShooter() instanceof Player)
+                        return;
+                e.setDamage(e.getDamage() / 10);
+            }
+        }
+
         if (bsgPlayer.getGame().getGameTime() >= 60)
             return;
         //if(e.getDamager() instanceof Player) { //todo do later!
@@ -389,19 +419,6 @@ public class GameHandler implements Listener {
 					}	
 	}*/
 
-    @EventHandler
-    public void onPotionBrew(BrewEvent e) {
-        BrewerInventory inv = e.getContents().getHolder().getInventory();
-        for (int slot = 0; slot <= 2; slot++)
-            if (inv.getItem(slot) != null)
-                if (inv.getItem(slot).getType() == Material.POTION)
-                    if (inv.getItem(slot).getDurability() == (short) 16) {
-                        if (inv.getIngredient().getType() == Material.SUGAR)
-                            inv.setItem(slot, ItemUtils.buildPotion(PotionEffectType.SPEED, 24 * 20, 2, (short) 16418));
-                        if (inv.getIngredient().getType() == Material.SPECKLED_MELON)
-                            inv.setItem(slot, ItemUtils.buildPotion(PotionEffectType.HEAL, 1, 1, (short) 16453));
-                    }
-    }
 
     @EventHandler
     public void playerOpenVotingMenu(PlayerInteractEvent e) {
@@ -440,4 +457,35 @@ public class GameHandler implements Listener {
         p.getInventory().setItemInHand((ItemStack) null);
     }
 
+    @EventHandler
+    public void onBlockInteract(PlayerInteractEvent e) {
+        BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getPlayer().getUniqueId());
+        if (!bsgPlayer.isInGame())
+            return;
+        if (!(bsgPlayer.getGame().getGameMode() == GameMode.INGAME))
+            return;
+        if (e.getClickedBlock() != null)
+            if (e.getClickedBlock().getType() == Material.CHEST || e.getClickedBlock().getType() == Material.TRAPPED_CHEST) {
+                //e.setCancelled(true);
+                if (!bsgPlayer.getGame().getOpenedChests().contains(e.getClickedBlock().getLocation())) {
+                    Chest chest = (Chest) e.getClickedBlock().getState();
+                    chest.getInventory().clear();
+                    chestUtils.generateChestLoot(chest.getInventory(), 3);
+                    chest.update();
+                    bsgPlayer.getGame().getOpenedChests().add(e.getClickedBlock().getLocation());
+                }
+                if (bsgPlayer.getGame().canFindStar() && !(bsgPlayer.getGame().getStarChests().contains(e.getClickedBlock().getLocation()))) {
+                    int foo = (int) (Math.random() * 100);
+                    if (foo < 12) {
+                        Chest chest = (Chest) e.getClickedBlock().getState();
+                        chest.getInventory().addItem(new ItemBuilder(Material.NETHER_STAR).name("&6Blitz Star").lores(new String[]{"&7Plase in hotbar and right click", "&7to activate your Blitz!", "&7A Blitz is a super-powerful", "&7ability that can change the", "&7course of the game.", "&7Unlock more in the shop", "&7with coins."}).enchantment(Enchantment.LOOT_BONUS_BLOCKS, 1).make());
+                        bsgPlayer.getGame().msgAll(BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + e.getPlayer().getName() + " &efound the &6Blitz Star&e!");
+                        bsgPlayer.getGame().setFindStar(false);
+                        new FireworkCommand().launchFirework(chest.getLocation());
+                        bsgPlayer.getGame().getStarChests().clear();
+                    }
+                    bsgPlayer.getGame().getStarChests().add(e.getClickedBlock().getLocation());
+                }
+            }
+    }
 }

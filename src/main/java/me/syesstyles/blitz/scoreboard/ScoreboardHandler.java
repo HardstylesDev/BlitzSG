@@ -23,7 +23,9 @@ public class ScoreboardHandler implements Listener
         this.boardHelper = new HashMap<Player, ScoreboardHelper>();
         this.helper = new WeakHashMap<Player, ScoreboardHelper>();
         for(Player player : Bukkit.getServer().getOnlinePlayers()) {
+            registerScoreboards(player);
             this.handleScoreboard(player);
+
         }
     }
     

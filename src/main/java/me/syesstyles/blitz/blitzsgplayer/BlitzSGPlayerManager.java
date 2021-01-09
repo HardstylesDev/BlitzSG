@@ -78,14 +78,32 @@ public class BlitzSGPlayerManager {
 		victim.sendMessage("§c-" + (int)eloToRemove + " §7ELO §c(\u25bc" + victimUhc.getElo() + ")");
 	}*/
 	
-	public void setLobbyInventory(Player p) {
+	public void setLobbyInventoryAndNameTag(Player p) {
 		p.getInventory().clear();
-		p.getInventory().setItem(1, ItemUtils.buildItem(new ItemStack(Material.IRON_SWORD), "&b&lJoin a Game &7(Right-Click)", Arrays.asList("§7Right-Click to join a SpeedUHC game")));
+		p.getInventory().setItem(1, ItemUtils.buildItem(new ItemStack(Material.IRON_SWORD), "&b&lJoin a Game &7(Right-Click)", Arrays.asList("§7Right-Click to join a Blitz game")));
 		p.getInventory().setItem(3, ItemUtils.buildItem(new ItemStack(Material.EMERALD), "&a&lOpen the Shop &7(Right-Click)", Arrays.asList("§7Right-Click to open the shop")));
 		p.getInventory().setItem(5, ItemUtils.buildItem(new ItemStack(Material.PAINTING), "&e&lYour Stats &7(Right-Click)", Arrays.asList("§7Right-Click to view your stats")));
 		p.getInventory().setItem(7, ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM), "&c???", Arrays.asList("§7Coming soon...")));
+
+		BlitzSG.getInstance().getNametagManager().update();
+
+
+		//ArrayList<NametagEdit> nametagEdits = BlitzSG.getInstance().getRankManager().getNametags();
+		//for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+//
+		//	for (NametagEdit nametagEdit : nametagEdits) {
+		//		if (nametagEdit.getRequiredRank() == bsgPlayer.getRank())
+		//			nametagEdit.addPlayer(onlinePlayer);
+		//	}
+//
+		//}
+		//for (NametagEdit nametagEdit : nametagEdits) {
+		//	nametagEdit.updateAll();
+		//}
 	}
-	
+
+
+
 	public void handleKillElo(Player victim, Player killer) {
 		BlitzSGPlayer victimUhc = this.getBsgPlayer(victim.getUniqueId());
 		BlitzSGPlayer killerUhc = this.getBsgPlayer(killer.getUniqueId());
@@ -97,9 +115,9 @@ public class BlitzSGPlayerManager {
 			eloChange = Math.sqrt(victimUhc.getElo()/1) + 1;
 		
 		victimUhc.removeElo((int) eloChange);
-		victim.sendMessage("§c-" + (int)eloChange + " §7ELO §c(\u25bc" + victimUhc.getElo() + ")");
+		//victim.sendMessage("§c-" + (int)eloChange + " §7ELO §c(\u25bc" + victimUhc.getElo() + ")");
 		killerUhc.addElo((int) eloChange);
-		killer.sendMessage("§a+" + (int)eloChange + " §7ELO §a(\u25b2" + killerUhc.getElo() + ")");
+		//killer.sendMessage("§a+" + (int)eloChange + " §7ELO §a(\u25b2" + killerUhc.getElo() + ")");
 	}
 	
 	public void handleDeathElo(Player victim) {
@@ -117,7 +135,7 @@ public class BlitzSGPlayerManager {
 			eloChange = (victimUhc.getElo() * 0.1) * 4 + 1;
 		
 		victimUhc.removeElo((int) eloChange);
-		victim.sendMessage("§c-" + (int)eloChange + " §7ELO §c(\u25bc" + victimUhc.getElo() + ")");
+		//victim.sendMessage("§c-" + (int)eloChange + " §7ELO §c(\u25bc" + victimUhc.getElo() + ")");
 	}
 	
 	/*public void handleWinElo(Game g) {
@@ -147,7 +165,7 @@ public class BlitzSGPlayerManager {
 		
 		//Apply ELO + Message Player
 		uhcPlayer.addElo((int) eloChange);
-		g.getWinner().sendMessage("§a+" + (int)eloChange + " §7ELO §a(\u25b2" + uhcPlayer.getElo() + ")");
+		//g.getWinner().sendMessage("§a+" + (int)eloChange + " §7ELO §a(\u25b2" + uhcPlayer.getElo() + ")");
 	}
 	
 }

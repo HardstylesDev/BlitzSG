@@ -52,7 +52,7 @@ public class CommandHandler implements CommandExecutor {
 
     private void sendHelpMenu(CommandSender sender) {
         sender.sendMessage("§7§m------------------------------");
-        sender.sendMessage("               §6>> §e§lSpeedUHC §6<<      ");
+        sender.sendMessage("               §6>> §e§lBlitzSG §6<<      ");
         sender.sendMessage("");
         for (SubCommand sc : this.commands.values())
             if ((BlitzSG.getInstance().getRankManager().getRank((Player) sender) instanceof Admin))

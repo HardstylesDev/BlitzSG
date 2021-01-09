@@ -28,13 +28,26 @@ public class ItemUtils {
 		return i;
 	}
 
-	public static ItemStack buildPotion(PotionEffectType effectType, int durationTicks, int potionLevel, short durability) {
+	public static ItemStack buildPotion(PotionEffectType effectType, int durationTicks, int potionLevel, short durability, int amount) {
 		ItemStack p = new ItemStack(Material.POTION);
 		PotionMeta pm = (PotionMeta) p.getItemMeta();
 		pm.addCustomEffect(new PotionEffect(effectType, durationTicks, potionLevel-1), false);
 		p.setItemMeta(pm);
 		p.setDurability(durability);
+		p.setAmount(amount);
 		return p;
 	}
+
+	public static ItemStack buildPotion(PotionEffect[] potions, short durability) {
+		ItemStack p = new ItemStack(Material.POTION);
+		PotionMeta pm = (PotionMeta) p.getItemMeta();
+		for (PotionEffect potion : potions) {
+			pm.addCustomEffect(potion, false);
+		}
+		p.setItemMeta(pm);
+		p.setDurability(durability);
+		return p;
+	}
+
 
 }

@@ -16,7 +16,7 @@ public class ArenasCommand extends SubCommand {
 
 	@Override
 	public String getHelp() {
-		return "§8\u2022 §f/speeduhc arenas";
+		return "§8\u2022 §f/bsg arenas";
 	}
 
 	@Override

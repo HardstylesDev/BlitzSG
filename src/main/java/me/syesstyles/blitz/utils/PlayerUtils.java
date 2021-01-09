@@ -36,7 +36,13 @@ public class PlayerUtils {
                 fc.set("Rank", "Default");
             else
                 fc.set("Rank", uhcPlayer.getRank().getRank());
+            if (uhcPlayer.getSelectedKit() == null)
+                fc.set("SelectedKit", "Knight");
+            else fc.set("SelectedKit", uhcPlayer.getSelectedKit().getName());
 
+            if (uhcPlayer.getNickName() == null)
+                fc.set("Nickname", "");
+            else fc.set("Nickname", uhcPlayer.getNickName());
             fc.set("ELO", uhcPlayer.getElo());
             fc.set("Wins", uhcPlayer.getWins());
             fc.set("Kills", uhcPlayer.getKills());

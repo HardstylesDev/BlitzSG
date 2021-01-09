@@ -51,7 +51,7 @@ public class SaveCommand extends SubCommand{
 
 	@Override
 	public String getHelp() {
-		return "§8\u2022 §f/speeduhc save";
+		return "§8\u2022 §f/bsg save";
 	}
 
 	@Override

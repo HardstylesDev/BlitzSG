@@ -17,7 +17,7 @@ public class WarpCommand extends SubCommand{
 
 	@Override
 	public String getHelp() {
-		return "§8\u2022 §f/speeduhc warp <arena>";
+		return "§8\u2022 §f/bsg warp <arena>";
 	}
 
 	@Override

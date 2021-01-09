@@ -57,7 +57,7 @@ public class CreateCommand extends SubCommand {
 		p.teleport(new Location(w, 0, 100, 0));
 		uhcPlayer.setEditedArena(new Arena(p.getWorld(), args[1]));
 		p.sendMessage("§eSuccessfully created the world for arena §6\"" + args[1] + "\"§e.");
-		p.sendMessage("§eUse §6/speeduhc save §eto save the arena.");
+		p.sendMessage("§eUse §6/bsg save §eto save the arena.");
 		
 		//new Arena(ArenaUtils.getCornerLoc1(p), ArenaUtils.getCornerLoc2(p), args[1]);
 		//p.sendMessage("§eSuccessfully created the arena §6\"" + args[1] + "\"");
@@ -70,7 +70,7 @@ public class CreateCommand extends SubCommand {
 
 	@Override
 	public String getHelp() {
-		return "§8\u2022 §f/speeduhc create <arena>";
+		return "§8\u2022 §f/bsg create <arena>";
 	}
 
 	@Override
