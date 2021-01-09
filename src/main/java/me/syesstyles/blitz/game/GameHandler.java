@@ -158,9 +158,9 @@ public class GameHandler implements Listener {
         Player p = e.getPlayer();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
         if (!bsgPlayer.isInGame()) {
-            if (!(bsgPlayer.getRank() instanceof Admin) && !(p.getGameMode() == org.bukkit.GameMode.CREATIVE))
-
-                e.setCancelled(true);
+            if ((bsgPlayer.getRank() instanceof Admin) && (p.getGameMode() == org.bukkit.GameMode.CREATIVE))
+                return;
+            e.setCancelled(true);
             return;
         }
         Block b = e.getBlock();
@@ -265,8 +265,11 @@ public class GameHandler implements Listener {
         if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB)
             return;
         if (!bsgPlayer.isInGame()) {
-            if (!(bsgPlayer.getRank() instanceof Admin) && !(p.getGameMode() == org.bukkit.GameMode.CREATIVE))
-                e.setCancelled(true);
+
+            if ((bsgPlayer.getRank() instanceof Admin) && (p.getGameMode() == org.bukkit.GameMode.CREATIVE)) {
+                return;
+            }
+            e.setCancelled(true);
             return;
         }
         if (bsgPlayer.getGame().getGameMode() != GameMode.INGAME) {

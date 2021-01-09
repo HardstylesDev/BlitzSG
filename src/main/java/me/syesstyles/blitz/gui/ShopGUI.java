@@ -55,9 +55,7 @@ public class ShopGUI {
 
     public static ArrayList<String> getFullDescription(BlitzSGPlayer uhcPlayer, Kit p) {
         ArrayList<String> desc = new ArrayList<String>();
-        //for(String str : p.getDescription(uhcPlayer.getKitLevel(p)))
-        //	desc.add(str);
-        //desc.add(ChatColor.GRAY + p.getDescription());
+
         getItemDescription(p, uhcPlayer.getKitLevel(p)).forEach(s -> desc.add(ChatColor.GRAY + s.replaceAll("" + ChatColor.RESET, "")));
         desc.add("");
         if (p.getPrice(uhcPlayer.getKitLevel(p)) == -1) {

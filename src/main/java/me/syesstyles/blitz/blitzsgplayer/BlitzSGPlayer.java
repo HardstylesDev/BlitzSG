@@ -79,8 +79,10 @@ public class BlitzSGPlayer {
     }
 
     public Rank getRank(boolean checkNick) {
-        if (nick.isNicked())
+        if (nick != null && nick.isNicked())
             return BlitzSG.getInstance().getRankManager().getRankByName("Default");
+        if(nick == null)
+            this.nick = new Nick("", null, null, false);
         return rank;
     }
 
@@ -155,7 +157,7 @@ public class BlitzSGPlayer {
         return this.kills;
     }
 
-    public HashSet<Entity> getGameEntities(){
+    public HashSet<Entity> getGameEntities() {
         return gameEntities;
     }
 
