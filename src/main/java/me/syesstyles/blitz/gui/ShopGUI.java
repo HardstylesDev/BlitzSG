@@ -16,6 +16,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class ShopGUI {
@@ -74,18 +75,23 @@ public class ShopGUI {
     }
 
     public static ArrayList<String> getItemDescription(Kit kit, int level) {
+
+        List<ItemStack> items = new ArrayList<>();
+        if (level == 10 || level == 0)
+            items = kit.getKitItems(level);
+        else items = kit.getKitItems(level + 1);
         ArrayList<String> desc = new ArrayList<String>();
-        kit.getKitItems(level).forEach(itemStack -> {
+        items.forEach(itemStack -> {
             if (itemStack.getType() == Material.MONSTER_EGG)
-                desc.add(ChatColor.RESET + "" + itemStack.getAmount() + " " + itemStack.getItemMeta().getDisplayName().split(" ")[0] + " Egg");
+                desc.add(ChatColor.RESET + "" + itemStack.getAmount() + "x " + itemStack.getItemMeta().getDisplayName().split(" ")[0] + " Egg");
             else if (itemStack.getEnchantments().size() > 0)
                 desc.add("" + ChatColor.RESET + capitalizeString(itemStack.getType().toString().replaceAll("_", " ")) + (" (" + getEnchantString(itemStack) + ")").replaceAll(" \\)", "\\)"));
             else if (itemStack.getType() == Material.POTION) {
                 PotionMeta meta = (PotionMeta) itemStack.getItemMeta();
-                String pot = meta.getCustomEffects().get(0).getType().getName();
-                desc.add("" + ChatColor.RESET + (itemStack.getAmount() > 1 ? itemStack.getAmount() + " " : "") + capitalizeString(pot) + " potion" + (itemStack.getAmount() > 1 ? "s" : ""));
+                String pot = meta.getCustomEffects().get(0).getType().getName().toLowerCase();
+                desc.add("" + ChatColor.RESET + (itemStack.getAmount() > 1 ? itemStack.getAmount() + "x " : "") + capitalizeString(pot) + " potion" + (itemStack.getAmount() > 1 ? "s" : ""));
             } else
-                desc.add("" + ChatColor.RESET + capitalizeString(itemStack.getType().toString().replaceAll("_", " ")));
+                desc.add("" + ChatColor.RESET + (itemStack.getAmount() > 1 ? itemStack.getAmount() + "x " : "") + capitalizeString(itemStack.getType().toString().replaceAll("_", " ")));
 
         });
         return desc;
@@ -119,6 +125,8 @@ public class ShopGUI {
                 enchantmentList.add("Feather Falling" + KitUtils.getKitTag(integer));
             else if (enchantment == Enchantment.DAMAGE_ALL)
                 enchantmentList.add("Sharpness" + KitUtils.getKitTag(integer));
+            else if (enchantment == Enchantment.DURABILITY)
+                enchantmentList.add("Unbreaking" + KitUtils.getKitTag(integer));
             else enchantmentList.add("" + enchantment.getName());
         });
         for (String enchantment : enchantmentList) {

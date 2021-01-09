@@ -33,6 +33,10 @@ import java.util.Random;
 
 public class GameHandler implements Listener {
     ChestUtils chestUtils = new ChestUtils();
+    @EventHandler
+    public void onExpBottle(ExpBottleEvent e) {
+        e.setExperience(e.getExperience() / 2);
+    }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
