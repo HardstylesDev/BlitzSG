@@ -2,6 +2,7 @@ me\syesstyles\blitz\BlitzSG.class
 me\syesstyles\blitz\commands\subcommands\LeaveCommand.class
 me\syesstyles\blitz\utils\nametag\Nametag.class
 me\syesstyles\blitz\commands\subcommands\ArenasCommand.class
+me\syesstyles\blitz\game\Game$3.class
 me\syesstyles\blitz\game\GameMobHandler.class
 me\syesstyles\blitz\commands\subcommands\AddSpawnCommand.class
 me\syesstyles\blitz\game\GameMobHandler$1.class
@@ -18,14 +19,18 @@ me\syesstyles\blitz\game\Game.class
 me\syesstyles\blitz\utils\PrepareItemEnchant.class
 me\syesstyles\blitz\commands\subcommands\JoinCommand.class
 me\syesstyles\blitz\utils\nametag\NametagManager.class
-me\syesstyles\blitz\commands\subcommands\DebugCommand.class
 me\syesstyles\blitz\rank\ranks\Mvp.class
 me\syesstyles\blitz\scoreboard\ScoreboardHandler.class
 me\syesstyles\blitz\rank\ranks\Helper.class
+me\syesstyles\blitz\kit\kits\Wolftamer.class
+me\syesstyles\blitz\game\Game$2.class
 me\syesstyles\blitz\gui\ShopGUI.class
 me\syesstyles\blitz\commands\subcommands\WarpCommand.class
 me\syesstyles\blitz\rank\ranks\VipPlus.class
+me\syesstyles\blitz\kit\kits\Speleologist.class
+me\syesstyles\blitz\kit\kits\Tim.class
 me\syesstyles\blitz\rank\Rank.class
+me\syesstyles\blitz\kit\kits\Archer.class
 me\syesstyles\blitz\rank\ranks\Vip.class
 me\syesstyles\blitz\commands\subcommands\SaveCommand.class
 me\syesstyles\blitz\game\GameHandler.class
@@ -49,6 +54,7 @@ me\syesstyles\blitz\arena\Arena.class
 me\syesstyles\blitz\kit\KitManager.class
 me\syesstyles\blitz\utils\nickname\Nickname.class
 me\syesstyles\blitz\elo\EloManager.class
+me\syesstyles\blitz\game\Game$4.class
 me\syesstyles\blitz\kit\kits\Blaze.class
 me\syesstyles\blitz\game\GameManager$1.class
 me\syesstyles\blitz\utils\VoidGenerator.class

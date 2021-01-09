@@ -90,7 +90,7 @@ public class Snowman extends Kit {
 
         super(
                 "Snowman", "Full of festive spirit.", new ItemBuilder(Material.MONSTER_EGG).durability(999).amount(1).make()
-                , Arrays.asList(0, 100, 1000, 2000, 4000, 16000, 50000, 100000, 250000, 1000000)
+                , Arrays.asList(400000, 100, 1000, 2000, 4000, 16000, 50000, 100000, 250000, 1000000)
                 , Arrays.asList(Arrays.asList("§7Start the game with 3x TNT.")
                         , Arrays.asList("§7Start the game with some bullshit.")
                         , Arrays.asList("§7Start the game with some bullshit.")

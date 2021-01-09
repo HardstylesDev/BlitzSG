@@ -89,7 +89,7 @@ public class Necromancer extends Kit {
 
         super(
                 "Necromancer", "Living dead mobs", new ItemBuilder(Material.MONSTER_EGG).durability(54).make()
-                , Arrays.asList(0, 100, 1000, 2000, 4000, 16000, 50000, 100000, 250000, 1000000)
+                , Arrays.asList(125000, 100, 1000, 2000, 4000, 16000, 50000, 100000, 250000, 1000000)
                 , Arrays.asList(Arrays.asList("§7Start the game with 3x TNT.")
                         , Arrays.asList("§7Start the game with some bullshit.")
                         , Arrays.asList("§7Start the game with some bullshit.")

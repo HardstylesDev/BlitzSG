@@ -3,15 +3,14 @@ package me.syesstyles.blitz.game;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.game.Game.GameMode;
+import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityCombustEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.SpawnEgg;
@@ -23,6 +22,13 @@ import org.bukkit.util.Vector;
 
 public class GameMobHandler implements Listener {
 
+    @EventHandler
+    public void onCreatureSpawn(CreatureSpawnEvent event) {
+        if (event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.BREEDING)) {
+            event.setCancelled(true);
+        }
+
+    }
 
     @EventHandler
     public void mobSpawnEvent(PlayerInteractEvent e) {
@@ -43,7 +49,17 @@ public class GameMobHandler implements Listener {
 
 
                 Entity entity = e.getClickedBlock().getWorld().spawn(e.getClickedBlock().getLocation().add(0, 1, 0), entityType.getEntityClass());
-                if (entity instanceof Horse) {
+                if(entity instanceof  Wolf){
+                    ((Wolf)entity).setAngry(false);
+                    ((Wolf)entity).setAdult();
+                    ((Wolf)entity).setHealth(15);
+                    ((Wolf)entity).setCustomNameVisible(false);
+
+                    ((Wolf)entity).setTamed(true);
+                    ((Wolf)entity).setOwner(e.getPlayer());
+                    ((Wolf)entity).setCollarColor(DyeColor.RED);
+                }
+                else if (entity instanceof Horse) {
                     ((Horse) entity).setColor(Horse.Color.BLACK);
                     ((Horse) entity).setTamed(true);
                     ((Horse) entity).setAdult();
@@ -70,6 +86,7 @@ public class GameMobHandler implements Listener {
                 ItemStack itemInHand = e.getPlayer().getItemInHand();
                 itemInHand.setAmount(itemInHand.getAmount() - 1);
                 e.getPlayer().setItemInHand(itemInHand);
+
 
 
                 Entity entity = e.getClickedBlock().getWorld().spawn(e.getClickedBlock().getLocation().add(0, 1, 0), EntityType.SNOWMAN.getEntityClass());
@@ -124,7 +141,7 @@ public class GameMobHandler implements Listener {
                 new BukkitRunnable() {
                     @Override
                     public void run() {
-                            shoot((Entity) e.getEntity().getShooter());
+                        shoot((Entity) e.getEntity().getShooter());
 
                     }
                 }.runTaskLater(BlitzSG.getInstance(), a * 8);
