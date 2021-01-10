@@ -1,6 +1,7 @@
 package me.syesstyles.blitz.kit;
 
 import me.syesstyles.blitz.kit.kits.*;
+import org.bukkit.entity.Slime;
 import org.bukkit.entity.Wolf;
 
 import java.util.ArrayList;
@@ -27,6 +28,14 @@ public class KitManager {
         addKit(new Speleologist());
         addKit(new Wolftamer());
         addKit(new Tim());
+
+        addKit(new Troll());
+        addKit(new Creepertamer());
+        addKit(new Arachnologist());
+        addKit(new SlimeySlime());
+        addKit(new Armorer());
+        addKit(new Scout());
+
 
 
         // this.kits.add(new Kit("Bomberman", "Test kit", Material.TNT
@@ -68,7 +77,5 @@ public class KitManager {
     public void addKit(Kit kit) {
         kit.initialize();
         this.kits.add(kit);
-
     }
-
 }

@@ -4,10 +4,12 @@ import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.game.Game.GameMode;
 import me.syesstyles.blitz.gui.KitGUI;
+import me.syesstyles.blitz.gui.StarGUI;
 import me.syesstyles.blitz.rank.ranks.Admin;
 import me.syesstyles.blitz.utils.ChestUtils;
 import me.syesstyles.blitz.utils.FireworkCommand;
 import me.syesstyles.blitz.utils.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -22,7 +24,6 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
-import org.bukkit.event.entity.EntityRegainHealthEvent.RegainReason;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
@@ -33,6 +34,7 @@ import java.util.Random;
 
 public class GameHandler implements Listener {
     ChestUtils chestUtils = new ChestUtils();
+
     @EventHandler
     public void onExpBottle(ExpBottleEvent e) {
         e.setExperience(e.getExperience() / 2);
@@ -118,6 +120,11 @@ public class GameHandler implements Listener {
         if (bsgPlayer.getGame().getGameMode() == GameMode.STARTING)
             if (e.getTo().getBlockX() != p.getLocation().getBlockX() || e.getTo().getBlockZ() != p.getLocation().getBlockZ()) {
                 Location spawn = bsgPlayer.getGameSpawn();
+                if (spawn == null) {
+
+                    bsgPlayer.getGame().resetGame();
+                    Bukkit.broadcastMessage("Error occured in game " + bsgPlayer.getGame());
+                }
                 spawn.setY(e.getPlayer().getLocation().getY());
                 spawn.setDirection(e.getTo().getDirection());
                 e.getPlayer().teleport(spawn);
@@ -324,7 +331,8 @@ public class GameHandler implements Listener {
             return;
         Player p = (Player) e.getEntity();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-
+        if (bsgPlayer == null || bsgPlayer.getGame() == null || bsgPlayer.getGame().getGameMode() == null)
+            return;
         if (bsgPlayer.getGame().getGameMode() == GameMode.WAITING || bsgPlayer.getGame().getGameMode() == GameMode.STARTING || bsgPlayer.getGame().getGameMode() == GameMode.RESETING)
             e.setCancelled(true);
         if (!bsgPlayer.isInGame()) {
@@ -355,7 +363,7 @@ public class GameHandler implements Listener {
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
         if (!bsgPlayer.isInGame())
             return;
-        if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME) {
+        if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME || bsgPlayer.getGame().getGameMode() == GameMode.RESETING) {
             if (bsgPlayer.getGameEntities().contains(e.getDamager()) || (e.getDamager() instanceof Snowball && bsgPlayer.getGameEntities().contains(((Snowball) e.getDamager()).getShooter()))) {
                 e.setCancelled(true);
             }
@@ -383,10 +391,10 @@ public class GameHandler implements Listener {
 
     @EventHandler
     public void onHealthRegain(EntityRegainHealthEvent e) {
-        if (!(e.getEntity() instanceof Player))
-            return;
-        if (e.getRegainReason() == RegainReason.SATIATED)
-            e.setCancelled(true);
+        //if (!(e.getEntity() instanceof Player))
+        //    return;
+        //if (e.getRegainReason() == RegainReason.SATIATED)
+        //    e.setCancelled(true);
     }
 
     @EventHandler
@@ -443,6 +451,23 @@ public class GameHandler implements Listener {
             KitGUI.openGUI(p);
         if (e.getItem().getType() == Material.BARRIER)
             bsgPlayer.getGame().removePlayer(p);
+    }
+
+    @EventHandler
+    public void playerOpenStarMenu(PlayerInteractEvent e) {
+        Player p = e.getPlayer();
+        BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+        if (!bsgPlayer.isInGame())
+            return;
+        if (bsgPlayer.getGame().getGameMode() != GameMode.INGAME)
+            return;
+        if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK)
+            return;
+        if (e.getItem() == null)
+            return;
+        if (e.getItem().getType() == Material.NETHER_STAR)
+            StarGUI.openGUI(p);
+
     }
 
     @EventHandler

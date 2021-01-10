@@ -9,10 +9,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerChatEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.Potion;
 
 public class BlitzSGPlayerHandler implements Listener {
 
@@ -46,25 +46,11 @@ public class BlitzSGPlayerHandler implements Listener {
         if (uhcPlayer.getRank() == null)
             uhcPlayer.setRank(BlitzSG.getInstance().getRankManager().getRankByName("Default"));
 
-        System.out.println("--------");
-        System.out.println("-" + uhcPlayer.getElo());
-        System.out.println("-" + uhcPlayer.getRank());
-        System.out.println("-" + uhcPlayer.getRank(true).getPrefix());
-
-        System.out.println("--------");
         p.setPlayerListName(uhcPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix()
                 + " [" + uhcPlayer.getElo() + "]");
 
         BlitzSG.getInstance().getBlitzSGPlayerManager().setLobbyInventoryAndNameTag(p);
     }
-
-    // @EventHandler
-    // public void onKick(PlayerKickEvent e){
-    //     BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getPlayer().getUniqueId());
-    //     System.out.println("kick handler: " + uhcPlayer.getNick().isNicked());
-    //     if(uhcPlayer.getNick().isNicked())
-    //         e.setLeaveMessage("bye");
-    // }
     @EventHandler
     public void onRespawn(PlayerRespawnEvent e) {
         Player p = e.getPlayer();
@@ -84,6 +70,14 @@ public class BlitzSGPlayerHandler implements Listener {
     //Bukkit.broadcastMessage(BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix() + "[" + uhcPlayer.getElo() + "] "
     //		+ e.getPlayer().getName() + ": §f" + e.getMessage());
 
+    @EventHandler
+    public void voidDamage(EntityDamageEvent e) {
+        if (!e.getEntity().getWorld().getName().equalsIgnoreCase("world"))
+            return;
+        if (e.getCause().equals(EntityDamageEvent.DamageCause.VOID))
+            if (e.getEntity() instanceof Player)
+                e.getEntity().teleport(BlitzSG.lobbySpawn);
+    }
 
     @EventHandler
     public void playerLobbyInteractEvent(PlayerInteractEvent e) {
@@ -107,6 +101,21 @@ public class BlitzSGPlayerHandler implements Listener {
             }
             BlitzSG.getInstance().getGameManager().getAvailableGame().addPlayer(p);
         }
+
+    }
+
+    @EventHandler
+    public void onPickUp(PlayerPickupItemEvent e) {
+        if (!(e.getItem().getItemStack().getType() == Material.POTION)) {
+            return;
+        }
+        if (e.getPlayer().getInventory().firstEmpty() == -1) {
+            return;
+        }
+        e.setCancelled(true);
+        e.getPlayer().getInventory().addItem(e.getItem().getItemStack());
+        e.getItem().remove();
+        e.getPlayer().playSound(e.getItem().getLocation(), Sound.ITEM_PICKUP, (float)0.1,(float)1.5);
 
     }
 

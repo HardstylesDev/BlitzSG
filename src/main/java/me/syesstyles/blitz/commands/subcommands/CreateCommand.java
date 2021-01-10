@@ -12,6 +12,8 @@ import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.arena.Arena;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 
+import java.io.File;
+
 public class CreateCommand extends SubCommand {
 
 	@Override
@@ -43,8 +45,11 @@ public class CreateCommand extends SubCommand {
 		//wc.createWorld();
 		//
 		//
-		new WorldCreator(BlitzSG.getInstance().getDataFolder() + "/worlds/" + args[1]).generator(new VoidGenerator()).createWorld();
-		World w = Bukkit.getWorld(BlitzSG.getInstance().getDataFolder() + "/worlds/" + args[1]);
+
+		BlitzSG.getInstance().getArenaManager().copyFileStructure(new File("arenas/" + args[1].toLowerCase()), new File("worlds/" + args[1].toLowerCase()));
+		new WorldCreator(args[1].toLowerCase()).generator(new VoidGenerator()).createWorld();
+
+		World w = Bukkit.getWorld(args[1].toLowerCase());
 
 		//w.setAutoSave(false);
         //w.setTicksPerAnimalSpawns(1);

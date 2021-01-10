@@ -25,6 +25,7 @@ public class Archer extends Kit {
     List<ItemStack> IX = new ArrayList<>();
     List<ItemStack> X = new ArrayList<>();
 
+    Color color = Color.fromRGB(0, 255, 0);
 
     @Override
     public void initialize() {
@@ -37,38 +38,38 @@ public class Archer extends Kit {
         II = Arrays.asList(new ItemBuilder(Material.BOW).name("&rArcher's Bow (II)").enchantment(Enchantment.DURABILITY, 1).make(),
                 new ItemStack(Material.ARROW, 9));
         III = Arrays.asList(new ItemBuilder(Material.BOW).name("&rArcher's Bow (III)").enchantment(Enchantment.DURABILITY, 1).make(),
-                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (III)").make(),
+                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (III)").color(color).make(),
                 new ItemStack(Material.ARROW, 16));
         IV = Arrays.asList(new ItemBuilder(Material.BOW).name("&rArcher's Bow (IV)").enchantment(Enchantment.DURABILITY, 1).make(),
-                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (IV)").make(),
+                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (IV)").color(color).make(),
                 new ItemStack(Material.ARROW, 24));
         V = Arrays.asList(new ItemBuilder(Material.BOW).name("&rArcher's Bow (V)").enchantment(Enchantment.DURABILITY, 1).make(),
-                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (V)").make(),
+                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (V)").color(color).make(),
                 new ItemStack(Material.ARROW, 32));
         VI = Arrays.asList(new ItemBuilder(Material.BOW).name("&rArcher's Bow (VI)").make(),
                 new ItemBuilder(Material.GOLD_HELMET).name("&rArcher's Gold Helmet (VI)").make(),
-                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (VI)").make(),
+                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (VI)").color(color).make(),
                 new ItemStack(Material.ARROW, 32));
         VII = Arrays.asList(new ItemBuilder(Material.BOW).name("&rArcher's Bow (VII)").make(),
                 new ItemBuilder(Material.DIAMOND_HELMET).name("&rArcher's Diamond Helmet (VII)").make(),
-                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (VII)").make(),
+                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (VII)").color(color).make(),
                 new ItemStack(Material.ARROW, 32));
         VIII = Arrays.asList(new ItemBuilder(Material.BOW).name("&rArcher's Bow (VIII)").make(),
                 new ItemBuilder(Material.DIAMOND_HELMET).name("&rArcher's Diamond Helmet (VIII)").enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).make(),
-                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rArcher's Leather Leggings (VIII)").make(),
-                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (VIII)").make(),
+                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rArcher's Leather Leggings (VIII)").color(color).make(),
+                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (VIII)").color(color).make(),
                 new ItemStack(Material.ARROW, 32));
         IX = Arrays.asList(new ItemBuilder(Material.BOW).name("&rArcher's Bow (IX)").enchantment(Enchantment.ARROW_DAMAGE, 1).make(),
                 new ItemBuilder(Material.DIAMOND_HELMET).name("&rArcher's Diamond Helmet (IX)").enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).make(),
-                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rArcher's Leather Chestplate (IX)").make(),
-                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rArcher's Leather Leggings (IX)").make(),
-                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (IX)").make(),
+                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rArcher's Leather Chestplate (IX)").color(color).make(),
+                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rArcher's Leather Leggings (IX)").color(color).make(),
+                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (IX)").color(color).make(),
                 new ItemStack(Material.ARROW, 48));
         X = Arrays.asList(new ItemBuilder(Material.BOW).name("&rArcher's Bow (X)").enchantment(Enchantment.ARROW_DAMAGE, 2).enchantment(Enchantment.ARROW_KNOCKBACK, 1).make(),
                 new ItemBuilder(Material.DIAMOND_HELMET).name("&rArcher's Diamond Helmet (X)").enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 3).make(),
-                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rArcher's Leather Chestplate (X)").make(),
-                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rArcher's Leather Leggings (X)").make(),
-                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (X)").make(),
+                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rArcher's Leather Chestplate (X)").color(color).make(),
+                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rArcher's Leather Leggings (X)").color(color).make(),
+                new ItemBuilder(Material.LEATHER_BOOTS).name("&rArcher's Leather Boots (X)").color(color).make(),
                 new ItemStack(Material.ARROW, 64));
 
         setKitItems(Arrays.asList(I, II, III, IV, V, VI, VII, VIII, IX, X));

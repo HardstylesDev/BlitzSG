@@ -56,32 +56,32 @@ public class Snowman extends Kit {
                 new ItemBuilder(Material.STONE_AXE).name("&rSnowman's Wooden Axe (VII)").make(),
                 new ItemBuilder(Material.LEATHER_HELMET).name("&rSnowman's Leather Helmet (VII)").color(Color.fromRGB(255, 255, 255)).make(),
                 new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rSnowman's Leather Leggings (VII)").color(Color.fromRGB(255, 255, 255)).make(),
-                new ItemBuilder(Material.IRON_BOOTS).name("&rSnowman's Iron Boots (VII)").make());
+                new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rSnowman's Chain Boots (VII)").make());
         VIII = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(999).name("&rSnowman Spawn Egg").amount(2).make(),
                 new ItemStack(Material.SNOW_BALL, 16),
                 new ItemStack(Material.CARROT, 6),
                 new ItemBuilder(Material.STONE_AXE).name("&rSnowman's Stone Axe (VIII)").make(),
-                new ItemBuilder(Material.IRON_HELMET).name("&rSnowman's Iron Helmet (VIII)").make(),
-                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rSnowman's Leather Leggings (VIII)").color(Color.fromRGB(255, 255, 255)).make(),
-                new ItemBuilder(Material.IRON_BOOTS).name("&rSnowman's Iron Boots (VIII)").make());
+                new ItemBuilder(Material.IRON_HELMET).name("&rSnowman's Iron Helmet (VIII)").enchantment(Enchantment.PROTECTION_ENVIRONMENTAL,1).make(),
+                new ItemBuilder(Material.GOLD_LEGGINGS).name("&rSnowman's Gold Leggings (VIII)").make(),
+                new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rSnowman's Chain Boots (VIII)").make());
 
         IX = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(999).name("&rSnowman Spawn Egg").amount(3).make(),
                 new ItemStack(Material.SNOW_BALL, 16),
                 new ItemStack(Material.CARROT, 8),
                 new ItemBuilder(Material.IRON_AXE).name("&rSnowman's Iron Axe (IX)").make(),
-                new ItemBuilder(Material.IRON_HELMET).name("&rSnowman's Iron Helmet (IX)").make(),
+                new ItemBuilder(Material.IRON_HELMET).name("&rSnowman's Iron Helmet (IX)").enchantment(Enchantment.PROTECTION_ENVIRONMENTAL,3).make(),
                 new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rSnowman's Leather Chestplate (IX)").color(Color.fromRGB(255, 255, 255)).make(),
-                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rSnowman's Leather Leggings (IX)").color(Color.fromRGB(255, 255, 255)).make(),
-                new ItemBuilder(Material.IRON_BOOTS).name("&rSnowman's Iron Boots (IX)").enchantment(Enchantment.PROTECTION_FALL,1).make());
+                new ItemBuilder(Material.CHAINMAIL_LEGGINGS).name("&rSnowman's Chain Leggings (IX)").make(),
+                new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rSnowman's Chain Boots (IX)").enchantment(Enchantment.PROTECTION_FALL,1).make());
 
         X = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(999).name("&rSnowman Spawn Egg").amount(4).make(),
                 new ItemStack(Material.SNOW_BALL, 16),
                 new ItemStack(Material.CARROT, 10),
                 new ItemBuilder(Material.DIAMOND_AXE).name("&rSnowman's Diamond Axe (X)").make(),
-                new ItemBuilder(Material.IRON_HELMET).name("&rSnowman's Iron Helmet (X)").enchantment(Enchantment.PROTECTION_ENVIRONMENTAL,1).make(),
-                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rSnowman's Leather Chestplate (X)").color(Color.fromRGB(255, 255, 255)).make(),
-                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rSnowman's Leather Leggings (X)").color(Color.fromRGB(255, 255, 255)).make(),
-                new ItemBuilder(Material.IRON_BOOTS).name("&rSnowman's Iron Boots (X)").enchantment(Enchantment.PROTECTION_FALL,1).make());
+                new ItemBuilder(Material.IRON_HELMET).name("&rSnowman's Iron Helmet (X)").enchantment(Enchantment.PROTECTION_ENVIRONMENTAL,4).make(),
+                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rSnowman's Chain Chestplate (X)").make(),
+                new ItemBuilder(Material.CHAINMAIL_LEGGINGS).name("&rSnowman's Chain Leggings (X)").make(),
+                new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rSnowman's Chain Boots (X)").enchantment(Enchantment.PROTECTION_FALL,1).make());
 
         setKitItems(Arrays.asList(I, II, III, IV, V, VI, VII, VIII, IX, X));
     }

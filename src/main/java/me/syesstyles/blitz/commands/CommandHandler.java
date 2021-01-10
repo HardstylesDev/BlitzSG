@@ -30,6 +30,7 @@ public class CommandHandler implements CommandExecutor {
         commands.put("leave", new LeaveCommand());
         commands.put("arenas", new ArenasCommand());
         commands.put("warp", new WarpCommand());
+        commands.put("debug", new DebugCommand());
         commands.put("setlobby", new SetLobbyCommand());
       //  commands.put("debug", new DebugCommand());
     }

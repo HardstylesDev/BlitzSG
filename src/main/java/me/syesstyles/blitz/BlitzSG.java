@@ -12,6 +12,7 @@ import me.syesstyles.blitz.game.Game;
 import me.syesstyles.blitz.game.GameHandler;
 import me.syesstyles.blitz.game.GameManager;
 import me.syesstyles.blitz.game.GameMobHandler;
+import me.syesstyles.blitz.gamestar.StarManager;
 import me.syesstyles.blitz.gui.GUIManager;
 import me.syesstyles.blitz.gui.InventoryHandler;
 import me.syesstyles.blitz.kit.KitManager;
@@ -46,6 +47,7 @@ public class BlitzSG extends JavaPlugin {
     private EloManager eloManager;
     private GUIManager guiManager;
     private KitManager kitManager;
+    private StarManager starManager;
 
     public static Location lobbySpawn;
 
@@ -54,6 +56,7 @@ public class BlitzSG extends JavaPlugin {
     }
 
     public void onEnable() {
+
         //Load UHC Core:
         kitManager = new KitManager();
         arenaManager = new ArenaManager();
@@ -62,6 +65,7 @@ public class BlitzSG extends JavaPlugin {
         scoreboardManager = new ScoreboardManager();
         eloManager = new EloManager();
         guiManager = new GUIManager();
+        starManager = new StarManager();
 
         rankManager = new RankManager();
         nametagManager = new NametagManager();
@@ -89,7 +93,7 @@ public class BlitzSG extends JavaPlugin {
 
         //Load Arena:
         //ArenaUtils.loadArenas();
-        arenaManager.loadArena("caelum");
+       // arenaManager.loadArena("aelinstower");
 
         //Start Scoreboard:
 
@@ -104,9 +108,14 @@ public class BlitzSG extends JavaPlugin {
 
     public void onDisable() {
         //Save Arenas:
-        ArenaUtils.saveArenas();
-        PlayerUtils.savePlayerData();
 
+        PlayerUtils.savePlayerData();
+       // try {
+       //     ArenaUtils.saveArenas();
+       // }catch (Exception e){
+       //     System.out.println("we good");
+       //     e.printStackTrace();
+       // }
         //Reset Running Games:
         for (Game g : gameManager.getRunningGames())
             g.resetGame();
@@ -134,6 +143,9 @@ public class BlitzSG extends JavaPlugin {
 
     public GUIManager getGuiManager() {
         return guiManager;
+    }
+    public StarManager getStarManager() {
+        return starManager;
     }
 
     public KitManager getKitManager() {

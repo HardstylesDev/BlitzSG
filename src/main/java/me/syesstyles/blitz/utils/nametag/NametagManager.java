@@ -3,14 +3,11 @@ package me.syesstyles.blitz.utils.nametag;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.rank.Rank;
-import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardTeam;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class NametagManager {
 
@@ -38,7 +35,9 @@ public class NametagManager {
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
 
             BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(onlinePlayer.getUniqueId());
+            if (bsgPlayer.isInGame())
 
+                nametag.setNametag(onlinePlayer, ChatColor.RED + "", bsgPlayer.getNick().isNicked());
             nametag.setNametag(onlinePlayer, bsgPlayer.getRank().getPrefix(), bsgPlayer.getNick().isNicked());
         }
     }

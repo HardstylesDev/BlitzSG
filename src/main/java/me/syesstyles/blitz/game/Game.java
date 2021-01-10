@@ -16,13 +16,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class Game {
 
+    private boolean speedMode = false;
     private NextEvent nextEvent;
     private boolean canFindStar = false;
 
@@ -32,7 +30,7 @@ public class Game {
     }
 
     public static enum NextEvent {
-        STAR, REFILL, DEATHMATCH
+        STAR, REFILL, DEATHMATCH, ENDING
     }
 
     private ArrayList<Player> allPlayers;
@@ -74,10 +72,10 @@ public class Game {
         spawnUsed = new HashSet<Location>();
         gameMode = GameMode.WAITING;
 
-        for (Location loc : arena.getSpawns()) {
-
-            loc.getBlock().setType(Material.AIR);
-        }
+       // for (Location loc : arena.getSpawns()) {
+//
+       //     loc.getBlock().setType(Material.AIR);
+       // }
         // borderSize = Math.max(arena.getArenaMaxCorner().getBlockX(), arena.getArenaMaxCorner().getBlockZ()) - Math.max(arena.getCenter().getBlockX(), arena.getCenter().getBlockZ());
         // borderShrinkBy = -0.00625;
         // arena.getArenaWorld().getWorldBorder().setSize(borderSize * 2);
@@ -87,7 +85,7 @@ public class Game {
 
     public void addPlayer(Player p) {
         if (arena == null || arena.getSpawns().get(0).getWorld() == null) {
-            p.sendMessage("Couldn't find an available arena!");
+            p.sendMessage(BlitzSG.CORE_NAME + ChatColor.YELLOW + "Couldn't find an available arena!");
             return;
         }
         BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
@@ -150,9 +148,13 @@ public class Game {
         BlitzSG.send(p, BlitzSG.CORE_NAME + "&cYou have left the game!");
     }
 
-    public void startLobbyCountdown() {
+    private boolean startedCountdown = false;
 
-        countdownTime = 21; // 21
+    public void startLobbyCountdown() {
+        if (startedCountdown)
+            return;
+        startedCountdown = true;
+        countdownTime = speedMode ? 4 : 21; // 21
         //for (Player alivePlayer : alivePlayers) {
         //    teleportSpawn(alivePlayer);
         //}
@@ -163,6 +165,7 @@ public class Game {
                 if (alivePlayers.size() < 2) {
                     this.cancel();
                     gameMode = GameMode.WAITING;
+                    startedCountdown = false;
                     msgAll("&cWe don't have enough players! Countdown cancelled.");
                     return;
                 }
@@ -189,7 +192,8 @@ public class Game {
 
     public void startCountDown() {
         gameMode = GameMode.STARTING;
-        countdownTime = 31; // 31
+        countdownTime = speedMode ? 4 : 31;
+        ; // 31
 
         new BukkitRunnable() {
             public void run() {
@@ -296,7 +300,18 @@ public class Game {
 				}*/
                 if (gameTime == 599) {
                     refillChests();
+                    nextEvent = NextEvent.DEATHMATCH;
                 }
+                if (gameTime == 839 || gameTime == 869)
+                    msgAll(BlitzSG.CORE_NAME + "&eDeathmatch begins in " + (gameTime == 839 ? 60 : 30) + " seconds!");
+                if (gameTime > 893 && gameTime < 899)
+                    msgAll(BlitzSG.CORE_NAME + "&eDeathmatch begins in " + (899 - gameTime) + " second" + (((899 - gameTime) == 1) ? "" : "s") + "!");
+                if (gameTime == 899) {
+                    nextEvent = NextEvent.ENDING;
+                    msgAll(BlitzSG.CORE_NAME + "&eDeathmatch started! You cannot damage anyone for 15 seconds!");
+
+                }
+
                 if (gameTime == 1199)
                     endGame(true);
                 gameTime++;
@@ -311,15 +326,16 @@ public class Game {
                 }
 
             }
-        }.runTaskTimer(BlitzSG.getInstance(), 20, 20);
+        }.runTaskTimer(BlitzSG.getInstance(), speedMode ? 1 : 20, speedMode ? 1 : 20);
     }
 
     public void mobTeleport(Player p) {
         BlitzSGPlayer blitzSGPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
         if (blitzSGPlayer.getGameEntities().size() >= 1) {
+            List<Entity> removeList = new ArrayList<>();
             blitzSGPlayer.getGameEntities().forEach(entity -> {
                         if (entity.isDead())
-                            blitzSGPlayer.getGameEntities().remove(entity);
+                            removeList.add(entity);
                         if (p.getLocation().distance(entity.getLocation()) > 15) {
                             entity.teleport(p.getLocation());
                         }
@@ -339,9 +355,9 @@ public class Game {
                                         ((Golem) entity).setTarget(potentialTarget);
                             continue;
                         }
-
                     }
             });
+            removeList.forEach(entity -> blitzSGPlayer.getGameEntities().remove(entity));
         }
     }
 
@@ -365,12 +381,14 @@ public class Game {
     }
 
     public void killPlayer(Player p) {
+
         alivePlayers.remove(p);
         deadPlayers.add(p);
         //SpeedUHCPlayer uhcPlayer = SpeedUHC.getInstance().getSpeedUHCPlayerManager().getUhcPlayer(p.getUniqueId());
     }
 
     public void endGame(boolean draw) {
+        System.out.println("endgame claled with " + draw);
         gameMode = GameMode.RESETING;
         msgAll("&7&m------------------------------");
         msgAll("                   &f&lBlitz SG     ");
@@ -420,6 +438,7 @@ public class Game {
     }
 
     public void resetGame() {
+        this.startedCountdown = false;
         BlitzSG.getInstance().getGameManager().removeGame(this);
         for (Player p : allPlayers) {
             BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());

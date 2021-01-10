@@ -1,5 +1,6 @@
 package me.syesstyles.blitz.commands.subcommands;
 
+import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import org.bukkit.entity.Player;
 
 import me.syesstyles.blitz.BlitzSG;
@@ -8,11 +9,8 @@ public class SetLobbyCommand extends SubCommand{
 
 	@Override
 	public void runCommand(Player p, String[] args) {
-		BlitzSG.getInstance().getConfig().set("Lobby.Spawn", p.getLocation().getWorld().getName());
-		BlitzSG.getInstance().getConfig().set("Lobby.X", p.getLocation().getBlockX());
-		BlitzSG.getInstance().getConfig().set("Lobby.Y", p.getLocation().getBlockY());
-		BlitzSG.getInstance().getConfig().set("Lobby.Z", p.getLocation().getBlockZ());
-		BlitzSG.getInstance().saveConfig();
+		BlitzSGPlayer blitzSGPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+		blitzSGPlayer.getEditedArena().setLobby(p.getLocation());
 		p.sendMessage("§eSuccesfully set the new lobby location!");
 	}
 

@@ -10,7 +10,10 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityCombustEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.SpawnEgg;
@@ -19,6 +22,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+import org.spigotmc.event.entity.EntityMountEvent;
 
 public class GameMobHandler implements Listener {
 
@@ -49,23 +53,24 @@ public class GameMobHandler implements Listener {
 
 
                 Entity entity = e.getClickedBlock().getWorld().spawn(e.getClickedBlock().getLocation().add(0, 1, 0), entityType.getEntityClass());
-                if(entity instanceof  Wolf){
-                    ((Wolf)entity).setAngry(false);
-                    ((Wolf)entity).setAdult();
-                    ((Wolf)entity).setHealth(15);
-                    ((Wolf)entity).setCustomNameVisible(false);
+                if (entity instanceof Wolf) {
+                    ((Wolf) entity).setAngry(false);
+                    ((Wolf) entity).setAdult();
+                    ((Wolf) entity).setCustomNameVisible(false);
 
-                    ((Wolf)entity).setTamed(true);
-                    ((Wolf)entity).setOwner(e.getPlayer());
-                    ((Wolf)entity).setCollarColor(DyeColor.RED);
-                }
-                else if (entity instanceof Horse) {
+                    ((Wolf) entity).setTamed(true);
+                    ((Wolf) entity).setOwner(e.getPlayer());
+                    ((Wolf) entity).setCollarColor(DyeColor.RED);
+                } else if (entity instanceof Horse) {
+                    ((Horse) entity).setVariant(Horse.Variant.HORSE);
                     ((Horse) entity).setColor(Horse.Color.BLACK);
+                    ((Horse) entity).setStyle(Horse.Style.NONE);
+
                     ((Horse) entity).setTamed(true);
                     ((Horse) entity).setAdult();
                     ((Horse) entity).getInventory().setSaddle(new ItemStack(Material.SADDLE));
                     ((Horse) entity).setMaxHealth(30);
-                    ((Horse) entity).setJumpStrength(0.2);
+                    ((Horse) entity).setJumpStrength(0.8);
                 }
                 entity.setCustomName(null);
                 entity.setCustomNameVisible(false);
@@ -74,7 +79,10 @@ public class GameMobHandler implements Listener {
                     if (entityList instanceof Player) {
                         Player potentialTarget = (Player) entityList;
                         if (!sgPlayer.getGame().isDead(potentialTarget) && potentialTarget != e.getPlayer())
-                            ((Monster) entity).setTarget(potentialTarget);
+                            if (entity instanceof Monster)
+                                ((Monster) entity).setTarget(potentialTarget);
+                            else if (entity instanceof Wolf)
+                                ((Wolf) entity).setTarget(potentialTarget);
 
                     }
             } else {
@@ -86,7 +94,6 @@ public class GameMobHandler implements Listener {
                 ItemStack itemInHand = e.getPlayer().getItemInHand();
                 itemInHand.setAmount(itemInHand.getAmount() - 1);
                 e.getPlayer().setItemInHand(itemInHand);
-
 
 
                 Entity entity = e.getClickedBlock().getWorld().spawn(e.getClickedBlock().getLocation().add(0, 1, 0), EntityType.SNOWMAN.getEntityClass());
@@ -127,6 +134,23 @@ public class GameMobHandler implements Listener {
     }
 
     @EventHandler
+    public void mobRide(EntityMountEvent e) {
+        if(!(e.getEntity() instanceof Player))
+            return;
+        BlitzSGPlayer sgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getEntity().getUniqueId());
+        if (!sgPlayer.isInGame())
+            return;
+        if(sgPlayer.getGameEntities().contains(e.getMount()))
+            return;
+        Location loc = e.getEntity().getLocation();
+        loc.setPitch(e.getEntity().getLocation().getPitch());
+        loc.setYaw(e.getEntity().getLocation().getYaw());
+
+        e.setCancelled(true);
+        e.getEntity().teleport(loc);
+
+    }
+    @EventHandler
     public void onBurn(EntityCombustEvent e) {
         if (e.getEntity() instanceof Zombie || e.getEntity() instanceof Skeleton)
             e.setCancelled(true);
@@ -144,7 +168,7 @@ public class GameMobHandler implements Listener {
                         shoot((Entity) e.getEntity().getShooter());
 
                     }
-                }.runTaskLater(BlitzSG.getInstance(), a * 8);
+                }.runTaskLater(BlitzSG.getInstance(), a * 7);
         }
     }
 

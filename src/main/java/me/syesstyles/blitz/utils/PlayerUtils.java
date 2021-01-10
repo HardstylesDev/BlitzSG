@@ -17,7 +17,6 @@ public class PlayerUtils {
         for (BlitzSGPlayer uhcPlayer : BlitzSG.getInstance().getBlitzSGPlayerManager().getUhcPlayers().values()) {
             //new File(Kits.getInstance().getDataFolder() + "/players").mkdir();
             File f = new File(BlitzSG.getInstance().getDataFolder() + "/players/" + uhcPlayer.getUuid() + ".yml");
-
             if (!f.exists()) {
                 try {
                     f.createNewFile();

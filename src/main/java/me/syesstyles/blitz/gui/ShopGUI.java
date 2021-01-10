@@ -87,7 +87,8 @@ public class ShopGUI {
             else if (itemStack.getType() == Material.POTION) {
                 PotionMeta meta = (PotionMeta) itemStack.getItemMeta();
                 String pot = meta.getCustomEffects().get(0).getType().getName().toLowerCase();
-                desc.add("" + ChatColor.RESET + (itemStack.getAmount() > 1 ? itemStack.getAmount() + "x " : "") + capitalizeString(pot) + " potion" + (itemStack.getAmount() > 1 ? "s" : ""));
+                int lvl = meta.getCustomEffects().get(0).getAmplifier() + 1;
+                desc.add("" + ChatColor.RESET + (itemStack.getAmount() > 1 ? itemStack.getAmount() + "x " : "") + capitalizeString(pot) + "" + KitUtils.getKitTag(lvl == 0 ? 1 : lvl) + " potion" + (itemStack.getAmount() > 1 ? "s" : ""));
             } else
                 desc.add("" + ChatColor.RESET + (itemStack.getAmount() > 1 ? itemStack.getAmount() + "x " : "") + capitalizeString(itemStack.getType().toString().replaceAll("_", " ")));
 
@@ -97,6 +98,8 @@ public class ShopGUI {
     }
 
     public static String capitalizeString(String string) {
+        if(string.equalsIgnoreCase("Slow")) return "Slowness";
+        if(string.equalsIgnoreCase("Heal")) return "Health";
         char[] chars = string.toLowerCase().toCharArray();
         boolean found = false;
         for (int i = 0; i < chars.length; i++) {
@@ -125,6 +128,8 @@ public class ShopGUI {
                 enchantmentList.add("Sharpness" + KitUtils.getKitTag(integer));
             else if (enchantment == Enchantment.DURABILITY)
                 enchantmentList.add("Unbreaking" + KitUtils.getKitTag(integer));
+        else if (enchantment == Enchantment.OXYGEN)
+                enchantmentList.add("Respiration" + KitUtils.getKitTag(integer));
             else enchantmentList.add("" + enchantment.getName());
         });
         for (String enchantment : enchantmentList) {

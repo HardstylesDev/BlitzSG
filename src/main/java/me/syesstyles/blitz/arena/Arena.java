@@ -20,9 +20,19 @@ public class Arena {
     private Location lobby;
 
     public void setSpawns(ArrayList<Location> spawns) {
+        ArrayList<Location> test = new ArrayList<>();
+        spawns.forEach(location -> {
+            if (test.contains(location))
+                Bukkit.broadcastMessage(location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ() + " is double!");
+            test.add(location);
+        });
         this.spawns = spawns;
     }
-    public void setLobby(Location lobby){ this.lobby = lobby; }
+
+    public void setLobby(Location lobby) {
+        this.lobby = lobby;
+    }
+
     public void setWorld(World world) {
         this.arenaWorld = world;
     }
@@ -135,7 +145,8 @@ public class Arena {
 
                 }
             }.runTaskLater(BlitzSG.getInstance(), 5);
-        }catch (IllegalPluginAccessException ignored) {}
+        } catch (IllegalPluginAccessException ignored) {
+        }
     }
 
     public String getName() {
@@ -177,12 +188,16 @@ public class Arena {
         spawns.add(location);
     }
 
+
+
     public ArrayList<Location> getSpawns() {
         return spawns;
     }
+
     public Location getLobby() {
         return lobby;
     }
+
     public boolean isInUse() {
         return inUse;
     }

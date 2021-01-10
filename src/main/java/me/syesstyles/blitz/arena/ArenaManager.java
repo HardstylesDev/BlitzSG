@@ -10,6 +10,7 @@ import org.bukkit.WorldCreator;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Entity;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -118,6 +119,9 @@ public class ArenaManager {
             world.setGameRuleValue("mobGriefing", "false");
             world.setGameRuleValue("doFireTick", "false");
             world.setGameRuleValue("showDeathMessages", "false");
+            for (Entity entity : world.getEntities()) {
+                entity.remove();
+            }
             Location cornerMin = new Location(Bukkit.getWorld(fc.getString("Name") + "_temp"), fc.getInt("Bounds.Min.X")
                     , fc.getInt("Bounds.Min.Y"), fc.getInt("Bounds.Min.Z"));
             Location cornerMax = new Location(Bukkit.getWorld(fc.getString("Name") + "_temp"), fc.getInt("Bounds.Max.X")
@@ -139,7 +143,7 @@ public class ArenaManager {
         }
     }
 
-    private static void copyFileStructure(File source, File target) {
+    public static void copyFileStructure(File source, File target) {
         try {
             ArrayList<String> ignore = new ArrayList<>(Arrays.asList("uid.dat", "session.lock"));
             if (!ignore.contains(source.getName())) {

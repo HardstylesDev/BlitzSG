@@ -5,6 +5,6 @@ import org.bukkit.ChatColor;
 
 public class VipPlus extends Rank {
     public VipPlus(){
-    super("VIP+",ChatColor.GREEN + "[VIP" + ChatColor.GOLD + "+" + ChatColor.GREEN + "] ", ChatColor.GREEN + "",2);
+    super("VIP+",ChatColor.GREEN + "[VIP" + ChatColor.GOLD + "+" + ChatColor.GREEN + "] ", ChatColor.GREEN + "",3);
     }
 }
