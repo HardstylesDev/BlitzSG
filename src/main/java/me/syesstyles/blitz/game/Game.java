@@ -99,8 +99,9 @@ public class Game {
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&cThe game is already full!");
             return;
         }
-        BlitzSG.getInstance().getNametagManager().update();
+
         uhcPlayer.setGame(this);
+        BlitzSG.getInstance().getNametagManager().update();
         allPlayers.add(p);
         alivePlayers.add(p);
         p.teleport(arena.getLobby().clone().add(0.5, 0, 0.5));

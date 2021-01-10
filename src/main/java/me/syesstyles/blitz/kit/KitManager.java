@@ -19,6 +19,7 @@ public class KitManager {
 
     private void loadKits() {
         addKit(new Knight());
+        addKit(new Baker());
         addKit(new HorseTamer());
         addKit(new Necromancer());
         addKit(new Snowman());
@@ -69,7 +70,7 @@ public class KitManager {
 
     public Kit getKit(String kitName) {
         for (Kit p : kits)
-            if (kitName.contains(p.getName()))
+            if (kitName.toLowerCase().contains(p.getName().toLowerCase()))
                 return p;
         return null;
     }

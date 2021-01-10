@@ -35,6 +35,7 @@ me\syesstyles\blitz\utils\nickname\Nick.class
 me\syesstyles\blitz\scoreboard\ScoreboardHelper.class
 me\syesstyles\blitz\utils\ItemUtils.class
 me\syesstyles\blitz\utils\nickname\NicknameCommand.class
+me\syesstyles\blitz\kit\kits\Baker.class
 me\syesstyles\blitz\gamestar\stars\Assassin.class
 me\syesstyles\blitz\arena\Arena.class
 me\syesstyles\blitz\kit\KitManager.class

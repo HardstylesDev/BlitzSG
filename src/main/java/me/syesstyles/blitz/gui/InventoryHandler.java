@@ -25,12 +25,9 @@ public class InventoryHandler implements Listener {
     }
 
     @EventHandler
-    public void plugin(PluginEvent e){
-
-    }
-    @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
+
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
         if (!bsgPlayer.isInGame())
             if (!(bsgPlayer.getRank() instanceof Admin))

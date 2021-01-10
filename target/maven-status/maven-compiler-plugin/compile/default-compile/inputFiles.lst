@@ -5,6 +5,8 @@ D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\rank\Ran
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\gui\StarGUI.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\commands\subcommands\DeleteCommand.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\utils\VoidGenerator.java
+D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\kit\kits\Baker.java
+D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\gamestar\stars\HolyWarrior.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\commands\subcommands\SetLobbyCommand.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\kit\kits\Tim.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\rank\ranks\Admin.java
@@ -60,6 +62,7 @@ D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\arena\Ar
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\gamestar\StarManager.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\utils\nickname\Nickname.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\gamestar\Star.java
+D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\kit\kits\Scout.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\kit\kits\Wolftamer.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\rank\ranks\Helper.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\kit\kits\Necromancer.java

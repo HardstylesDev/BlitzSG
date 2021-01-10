@@ -36,9 +36,9 @@ public class NametagManager {
 
             BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(onlinePlayer.getUniqueId());
             if (bsgPlayer.isInGame())
-
                 nametag.setNametag(onlinePlayer, ChatColor.RED + "", bsgPlayer.getNick().isNicked());
-            nametag.setNametag(onlinePlayer, bsgPlayer.getRank().getPrefix(), bsgPlayer.getNick().isNicked());
+            else
+                nametag.setNametag(onlinePlayer, bsgPlayer.getRank().getPrefix(), bsgPlayer.getNick().isNicked());
         }
     }
 }
