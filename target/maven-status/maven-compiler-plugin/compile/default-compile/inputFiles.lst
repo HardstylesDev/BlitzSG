@@ -1,3 +1,4 @@
+D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\commands\subcommands\setDeathmatchDistanceCommand.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\game\GameHandler.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\utils\PlayerUtils.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\gamestar\stars\Assassin.java
@@ -34,6 +35,7 @@ D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\utils\ni
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\rank\ranks\Champion.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\rank\ranks\Moderator.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\commands\subcommands\DebugCommand.java
+D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\utils\database\Database.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\utils\nickname\Nick.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\rank\ranks\Youtuber.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\blitzsgplayer\BlitzSGPlayer.java
@@ -73,6 +75,7 @@ D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\scoreboa
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\arena\ArenaUtils.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\commands\subcommands\AddSpawnCommand.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\blitzsgplayer\BlitzSGPlayerHandler.java
+D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\commands\subcommands\setDeathmatchCommand.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\rank\RankManager.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\utils\nametag\Nametag.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\kit\kits\Speleologist.java

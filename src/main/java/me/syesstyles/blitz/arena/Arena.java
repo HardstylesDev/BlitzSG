@@ -18,7 +18,8 @@ public class Arena {
     private Location arenaMinCorner;
     private Location arenaMaxCorner;
     private Location lobby;
-
+    private Location deathmatch;
+    private int deathmatchDistance;
     public void setSpawns(ArrayList<Location> spawns) {
         ArrayList<Location> test = new ArrayList<>();
         spawns.forEach(location -> {
@@ -80,62 +81,7 @@ public class Arena {
             new BukkitRunnable() {
                 public void run() {
                     setInUse(false);
-                    //Bukkit.unloadWorld(getArenaWorld(), false);
-                    //
-                    ////World w = Bukkit.getWorld(fc.getString("World"));
-                    //File fo = getArenaWorld().getWorldFolder();
-                    //fo.delete();
-                    //
-                    //File f = new File(BlitzSG.getInstance().getDataFolder() + "/worlds/" + name);
-                    //File f1 = new File(name + "_temp");
-                    //if(f1.exists())
-                    //	f1.delete();
-                    //try {
-                    //	FileUtils.copyDirectory(f, f1);
-                    //} catch (IOException e) {
-                    //	e.printStackTrace();
-                    //}
-                    //for(File f2 : f1.listFiles()) {
-                    //	if(f2.getName().contains("uid") || f2.getName().contains("session")
-                    //			|| f2.getName().contains("level") || f2.getName().contains("playerdata"))
-                    //		f2.delete();
-                    //}
-                    //
-                    //File session = new File(name + "_temp" + "/session.lock");
-                    //try {
-                    //	session.createNewFile();
-                    //} catch (IOException e) {
-                    //	e.printStackTrace();
-                    //}
-                    //try {
-                    //    session.createNewFile();
-                    //    DataOutputStream dataoutputstream = new DataOutputStream(new FileOutputStream(session));
-                    //
-                    //    try {
-                    //        dataoutputstream.writeLong(System.currentTimeMillis());
-                    //    } finally {
-                    //        dataoutputstream.close();
-                    //    }
-                    //} catch (IOException ioexception) {
-                    //	ioexception.printStackTrace();
-                    //}
-                    //
-                    //Bukkit.getServer().createWorld(new WorldCreator(name + "_temp"));
-                    //World w = Bukkit.getWorld(name + "_temp");
-                    //
-                    //w.setAutoSave(false);
-                    //w.setTicksPerAnimalSpawns(1);
-                    //w.setTicksPerMonsterSpawns(1);
-                    //w.setGameRuleValue("doMobSpawning", "false");
-                    //w.setGameRuleValue("mobGriefing", "false");
-                    //w.setGameRuleValue("doFireTick", "false");
-                    //w.setGameRuleValue("showDeathMessages", "false");
-                    //setArenaWorld(w);
-                    //for(Location loc : spawns) {
-                    //	loc.setWorld(w);
-                    //}
-                    //arenaMinCorner.setWorld(w);
-                    //arenaMaxCorner.setWorld(w);
+
                     try {
                         if (!BlitzSG.getInstance().getArenaManager().deleteMap(getArenaWorld().getName()))
                             System.out.println("Error unloading + removing map: " + getArenaWorld().getName());
@@ -189,7 +135,6 @@ public class Arena {
     }
 
 
-
     public ArrayList<Location> getSpawns() {
         return spawns;
     }
@@ -197,6 +142,24 @@ public class Arena {
     public Location getLobby() {
         return lobby;
     }
+
+    public Location getDeathmatch() {
+        return deathmatch;
+    }
+
+    public void setDeathmatch(Location location) {
+        this.deathmatch = location;
+    }
+
+    public int getDeathmatchDistance() {
+        return deathmatchDistance;
+    }
+
+    public void setDeathmatchDistance(int distance) {
+        this.deathmatchDistance = distance;
+    }
+
+
 
     public boolean isInUse() {
         return inUse;

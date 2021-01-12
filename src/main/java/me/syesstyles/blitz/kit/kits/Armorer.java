@@ -42,7 +42,7 @@ public class Armorer extends Kit {
                 new ItemBuilder(Material.LEATHER_BOOTS).name("&rArmorer's Leather Boots (IV)").color(Color.fromRGB(128, 128, 128)).make());
         V = Arrays.asList(new ItemBuilder(Material.LEATHER_HELMET).name("&rArmorer's Leather Helmet (V)").color(Color.fromRGB(255, 165, 0)).make(),
                 new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rArmorer's Leather Chestplate (V)").color(Color.fromRGB(0, 128, 0)).make(),
-                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rArmorer's Leather Leggings (V)").enchantment(Enchantment.PROTECTION_FIRE, 1).make(),
+                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rArmorer's Leather Leggings (V)").enchantment(Enchantment.PROTECTION_FIRE, 1).color(Color.fromRGB(0, 0, 255)).make(),
                 new ItemBuilder(Material.LEATHER_BOOTS).name("&rArmorer's Leather Boots (V)").color(Color.fromRGB(128, 128, 128)).make(),
                 new ItemStack(Material.COOKIE, 1));
         VI = Arrays.asList(new ItemBuilder(Material.LEATHER_HELMET).name("&rArmorer's Leather Helmet (VI)").color(Color.fromRGB(255, 165, 0)).make(),

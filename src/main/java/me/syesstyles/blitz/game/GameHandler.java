@@ -9,15 +9,13 @@ import me.syesstyles.blitz.rank.ranks.Admin;
 import me.syesstyles.blitz.utils.ChestUtils;
 import me.syesstyles.blitz.utils.FireworkCommand;
 import me.syesstyles.blitz.utils.ItemBuilder;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -25,6 +23,7 @@ import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
+import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -47,7 +46,8 @@ public class GameHandler implements Listener {
         if (bsgPlayer.isInGame()) {
             if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME) {
                 bsgPlayer.getGame().killPlayer(p);
-                bsgPlayer.getGame().msgAll("§c" + p.getName() + " left the game and was killed!");
+                bsgPlayer.getGame().msgAll(BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + p.getName() + " &ewas killed!");
+
                 for (ItemStack i : p.getInventory().getContents()) {
                     if (i != null)
                         if (i.getType() != Material.AIR)
@@ -74,10 +74,10 @@ public class GameHandler implements Listener {
         //e.setDeathMessage("§c" + e.getDeathMessage());
         e.setDeathMessage("");
         victim.getWorld().strikeLightningEffect(victim.getLocation());
-        bsgPlayer.getGame().msgAll(e.getDeathMessage());
+        //bsgPlayer.getGame().msgAll(e.getDeathMessage());
         bsgPlayer.getGameEntities().forEach(entity -> entity.remove());
         bsgPlayer.getGameEntities().clear();
-        bsgPlayer.getGame().killPlayer(victim);
+
         bsgPlayer.addDeath();
         if (victim.getKiller() != null) {
             //p.getKiller().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 50, 2));
@@ -89,10 +89,12 @@ public class GameHandler implements Listener {
                 BlitzSG.send(p, BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed by " + blitzSGPlayer.getRank(true).getChatColor() + victim.getKiller().getName() + " &eand everyone got a speed buff!");
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 15 * 15, 1));
             }
+            bsgPlayer.getGame().killPlayer(victim);
             BlitzSG.send(victim.getKiller(), "§6+" + coins + " Coins (Kill)");
             BlitzSG.getInstance().getBlitzSGPlayerManager().handleKillElo(victim, victim.getKiller());
             return;
         }
+        bsgPlayer.getGame().killPlayer(victim);
         BlitzSG.getInstance().getBlitzSGPlayerManager().handleDeathElo(victim);
     }
 
@@ -363,6 +365,10 @@ public class GameHandler implements Listener {
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
         if (!bsgPlayer.isInGame())
             return;
+        if (bsgPlayer.getGame().getDeathmatchStartTime() >= 45 && bsgPlayer.getGame().getDeathmatchStartTime() <= 60) {
+            e.setCancelled(true);
+            return;
+        }
         if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME || bsgPlayer.getGame().getGameMode() == GameMode.RESETING) {
             if (bsgPlayer.getGameEntities().contains(e.getDamager()) || (e.getDamager() instanceof Snowball && bsgPlayer.getGameEntities().contains(((Snowball) e.getDamager()).getShooter()))) {
                 e.setCancelled(true);
@@ -408,8 +414,19 @@ public class GameHandler implements Listener {
     }
 
     @EventHandler
-    public void onWeatherChange(WeatherChangeEvent e) {
-        e.setCancelled(true);
+    public void onWeatherChange(WeatherChangeEvent event) {
+
+        boolean rain = event.toWeatherState();
+        if(rain)
+            event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onThunderChange(ThunderChangeEvent event) {
+
+        boolean storm = event.toThunderState();
+        if(storm)
+            event.setCancelled(true);
     }
 	
 	/*@EventHandler
@@ -465,8 +482,14 @@ public class GameHandler implements Listener {
             return;
         if (e.getItem() == null)
             return;
-        if (e.getItem().getType() == Material.NETHER_STAR)
+        if (e.getItem().getType() == Material.NETHER_STAR) {
+            if (bsgPlayer.getGame().getDeathmatchStartTime() >= 15) {
+                p.sendMessage(BlitzSG.CORE_NAME + ChatColor.RED + "The Blitz Star has been disabled!");
+                e.setCancelled(true);
+                return;
+            }
             StarGUI.openGUI(p);
+        }
 
     }
 

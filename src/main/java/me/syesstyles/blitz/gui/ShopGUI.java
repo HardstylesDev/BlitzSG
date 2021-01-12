@@ -128,6 +128,10 @@ public class ShopGUI {
                 enchantmentList.add("Sharpness" + KitUtils.getKitTag(integer));
             else if (enchantment == Enchantment.DURABILITY)
                 enchantmentList.add("Unbreaking" + KitUtils.getKitTag(integer));
+            else if (enchantment == Enchantment.KNOCKBACK)
+                enchantmentList.add("Knockback" + KitUtils.getKitTag(integer));
+            else if (enchantment == Enchantment.PROTECTION_EXPLOSIONS)
+                enchantmentList.add("Blast Protection" + KitUtils.getKitTag(integer));
         else if (enchantment == Enchantment.OXYGEN)
                 enchantmentList.add("Respiration" + KitUtils.getKitTag(integer));
             else enchantmentList.add("" + enchantment.getName());

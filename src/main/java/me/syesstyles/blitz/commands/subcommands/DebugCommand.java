@@ -10,6 +10,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class DebugCommand extends SubCommand {
 
     @Override
@@ -27,15 +32,26 @@ public class DebugCommand extends SubCommand {
                 new Nickname().setNick(p, args[2]);
             }
 
+        } else if (args[1].equalsIgnoreCase("db")) {
+            try {
+                Connection con = BlitzSG.getInstance().getData().getConnection();
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery("select * from stats");
+                while (rs.next())
+                    System.out.println("" + rs.getString("uuid"));
+                con.close();
+
+            } catch (SQLException e) {
+            }
         } else if (args[1].equalsIgnoreCase("kit")) {
             if (args.length > 2) {
                 p.getInventory().clear();
-               Kit kit = BlitzSG.getInstance().getKitManager().getKit(args[2]);
-               if(kit == null){
-                   p.sendMessage("invalid kit");
-                   return;
-               }
-               kit.giveKit(p, Integer.parseInt(args[3]));
+                Kit kit = BlitzSG.getInstance().getKitManager().getKit(args[2]);
+                if (kit == null) {
+                    p.sendMessage("invalid kit");
+                    return;
+                }
+                kit.giveKit(p, Integer.parseInt(args[3]));
             }
         } else if (args[1].equalsIgnoreCase("info")) {
             if (args.length > 2) {

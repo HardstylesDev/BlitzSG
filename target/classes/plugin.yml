@@ -1,16 +1,15 @@
 name: BlitzSG
 version: 1.0
 main: me.syesstyles.blitz.BlitzSG
-author: Syes
+author: Syes, Hardstyles
 description: BlitzSG Plugin
 commands:
-  bsg:
-    description: main plugin command
-    aliases: [blitz]
-  world:
-    description: world command lol
   nick:
-    description: world command lol
+    description: lol
+  world:
+    description: lol
+  bsg:
+    description: lol
   fw:
-    description: world command lol
-    aliases: [firework]
+    description: lol
+

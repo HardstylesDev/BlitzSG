@@ -61,6 +61,15 @@ public class GameMobHandler implements Listener {
                     ((Wolf) entity).setTamed(true);
                     ((Wolf) entity).setOwner(e.getPlayer());
                     ((Wolf) entity).setCollarColor(DyeColor.RED);
+
+                } else if (entity instanceof Slime) {
+                    ((Slime) entity).setSize(3);
+                    ((Slime) entity).setHealth(6);
+
+                } else if (entity instanceof MagmaCube) {
+                    ((MagmaCube) entity).setSize(3);
+                    ((MagmaCube) entity).setHealth(6);
+
                 } else if (entity instanceof Horse) {
                     ((Horse) entity).setVariant(Horse.Variant.HORSE);
                     ((Horse) entity).setColor(Horse.Color.BLACK);
@@ -113,6 +122,7 @@ public class GameMobHandler implements Listener {
                     }
             }
         }
+
     }
 
     @EventHandler
@@ -135,12 +145,12 @@ public class GameMobHandler implements Listener {
 
     @EventHandler
     public void mobRide(EntityMountEvent e) {
-        if(!(e.getEntity() instanceof Player))
+        if (!(e.getEntity() instanceof Player))
             return;
         BlitzSGPlayer sgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getEntity().getUniqueId());
         if (!sgPlayer.isInGame())
             return;
-        if(sgPlayer.getGameEntities().contains(e.getMount()))
+        if (sgPlayer.getGameEntities().contains(e.getMount()))
             return;
         Location loc = e.getEntity().getLocation();
         loc.setPitch(e.getEntity().getLocation().getPitch());
@@ -150,6 +160,7 @@ public class GameMobHandler implements Listener {
         e.getEntity().teleport(loc);
 
     }
+
     @EventHandler
     public void onBurn(EntityCombustEvent e) {
         if (e.getEntity() instanceof Zombie || e.getEntity() instanceof Skeleton)

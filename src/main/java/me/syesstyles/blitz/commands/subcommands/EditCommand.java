@@ -18,9 +18,14 @@ public class EditCommand extends SubCommand{
 		
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 		for(Arena a : BlitzSG.getInstance().getArenaManager().getArenas()) {
-			if(a.getName().equalsIgnoreCase(args[1])) {
+			BlitzSG.getInstance().getArenaManager().fixSpawns(a);
+			if(a == null || a.getLobby().getWorld() == null) continue;
+
+
+			if(a.getLobby().getWorld().getName().equalsIgnoreCase(args[1])) {
+				System.out.println(a.getLobby().getWorld().getName() + " is being edited" );
 				uhcPlayer.setEditedArena(a);
-				p.teleport(new Location(a.getArenaWorld(), 0, 100, 0));
+				p.teleport(a.getLobby());
 				p.sendMessage("§eYou are now editing the arena §6\"" + args[1] + "\"§e.");
 				return;
 			}

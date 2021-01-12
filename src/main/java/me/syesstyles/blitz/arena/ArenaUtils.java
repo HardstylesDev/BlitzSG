@@ -60,11 +60,21 @@ public class ArenaUtils {
                 fc.set("Spawns." + a.getSpawns().indexOf(loc) + ".Y", loc.getBlockY());
                 fc.set("Spawns." + a.getSpawns().indexOf(loc) + ".Z", loc.getBlockZ());
             }
-            try{
-            fc.set("Lobby.X", a.getLobby().getBlockX());
-            fc.set("Lobby.Y", a.getLobby().getBlockY());
-            fc.set("Lobby.Z", a.getLobby().getBlockZ());}catch (NullPointerException ignored){
+            try {
+                fc.set("Lobby.X", a.getLobby().getBlockX());
+                fc.set("Lobby.Y", a.getLobby().getBlockY());
+                fc.set("Lobby.Z", a.getLobby().getBlockZ());
+            } catch (NullPointerException ignored) {
+            }
 
+            try {
+                fc.set("Deathmatch.X", a.getDeathmatch().getBlockX());
+                fc.set("Deathmatch.Y", a.getDeathmatch().getBlockY());
+                fc.set("Deathmatch.Z", a.getDeathmatch().getBlockZ());
+
+                fc.set("Deathmatch.Distance", a.getDeathmatchDistance());
+
+            } catch (NullPointerException ignored) {
             }
             try {
                 fc.save(f);

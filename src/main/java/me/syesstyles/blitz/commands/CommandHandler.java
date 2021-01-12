@@ -32,6 +32,8 @@ public class CommandHandler implements CommandExecutor {
         commands.put("warp", new WarpCommand());
         commands.put("debug", new DebugCommand());
         commands.put("setlobby", new SetLobbyCommand());
+        commands.put("setdeathmatch", new setDeathmatchCommand());
+        commands.put("setdeathmatchdistance", new setDeathmatchDistanceCommand());
       //  commands.put("debug", new DebugCommand());
     }
 

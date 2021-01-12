@@ -1,8 +1,8 @@
 package me.syesstyles.blitz;
 
+import com.zaxxer.hikari.HikariDataSource;
 import me.syesstyles.blitz.arena.ArenaHandler;
 import me.syesstyles.blitz.arena.ArenaManager;
-import me.syesstyles.blitz.arena.ArenaUtils;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerHandler;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerManager;
@@ -22,6 +22,7 @@ import me.syesstyles.blitz.utils.EnchantListener;
 import me.syesstyles.blitz.utils.FireworkCommand;
 import me.syesstyles.blitz.utils.PlayerUtils;
 import me.syesstyles.blitz.utils.WorldCommand;
+import me.syesstyles.blitz.utils.database.Database;
 import me.syesstyles.blitz.utils.nametag.NametagManager;
 import me.syesstyles.blitz.utils.nickname.NicknameCommand;
 import net.minecraft.server.v1_8_R3.EnumChatFormat;
@@ -31,6 +32,10 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class BlitzSG extends JavaPlugin {
 
@@ -48,8 +53,9 @@ public class BlitzSG extends JavaPlugin {
     private GUIManager guiManager;
     private KitManager kitManager;
     private StarManager starManager;
-
+    private HikariDataSource hikari;
     public static Location lobbySpawn;
+    private Database database;
 
     public BlitzSG() {
         instance = this;
@@ -57,7 +63,9 @@ public class BlitzSG extends JavaPlugin {
 
     public void onEnable() {
 
-        //Load UHC Core:
+        database = new Database();
+
+
         kitManager = new KitManager();
         arenaManager = new ArenaManager();
         blitzSGPlayerManager = new BlitzSGPlayerManager();
@@ -93,7 +101,7 @@ public class BlitzSG extends JavaPlugin {
 
         //Load Arena:
         //ArenaUtils.loadArenas();
-       // arenaManager.loadArena("aelinstower");
+        // arenaManager.loadArena("aelinstower");
 
         //Start Scoreboard:
 
@@ -110,15 +118,19 @@ public class BlitzSG extends JavaPlugin {
         //Save Arenas:
 
         PlayerUtils.savePlayerData();
-       // try {
-       //     ArenaUtils.saveArenas();
-       // }catch (Exception e){
-       //     System.out.println("we good");
-       //     e.printStackTrace();
-       // }
+        // try {
+        //     ArenaUtils.saveArenas();
+        // }catch (Exception e){
+        //     System.out.println("we good");
+        //     e.printStackTrace();
+        // }
         //Reset Running Games:
         for (Game g : gameManager.getRunningGames())
             g.resetGame();
+    }
+
+    public Database getData() {
+        return database;
     }
 
     public ArenaManager getArenaManager() {
@@ -144,6 +156,7 @@ public class BlitzSG extends JavaPlugin {
     public GUIManager getGuiManager() {
         return guiManager;
     }
+
     public StarManager getStarManager() {
         return starManager;
     }

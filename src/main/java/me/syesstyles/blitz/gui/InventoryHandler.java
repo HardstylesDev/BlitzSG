@@ -96,6 +96,13 @@ public class InventoryHandler implements Listener {
             p.closeInventory();
         }
         if (e.getInventory().getName() == "§8Star Selector") {
+            if(bsgPlayer.getGame().isDeathmatchStarting())
+                if(bsgPlayer.getGame().getDeathmatchStartTime() >= 15)
+                {
+                    p.sendMessage(BlitzSG.CORE_NAME  + ChatColor.RED + "The Blitz Star has been disabled!");
+                    e.setCancelled(true);
+                    return;
+                }
             e.setCancelled(true);
             if (!bsgPlayer.isInGame())
                 return;

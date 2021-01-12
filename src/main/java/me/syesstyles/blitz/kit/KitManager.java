@@ -29,13 +29,19 @@ public class KitManager {
         addKit(new Speleologist());
         addKit(new Wolftamer());
         addKit(new Tim());
-
+        addKit(new Fisherman());
+        addKit(new Astronaut());
         addKit(new Troll());
         addKit(new Creepertamer());
         addKit(new Arachnologist());
         addKit(new SlimeySlime());
         addKit(new Armorer());
         addKit(new Scout());
+        addKit(new Toxicologist());
+        addKit(new RedDragon());
+        addKit(new Rogue());
+        //rogue
+        //reddragon
 
 
 

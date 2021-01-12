@@ -59,14 +59,23 @@ public class ScoreboardManager extends BukkitRunnable {
 
                     board.add(separator);
                     board.add("&fNext Event");
-                    if (bsgPlayer.getGame().getNextEvent() == Game.NextEvent.STAR)
-                        board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(300 - bsgPlayer.getGame().getGameTime()));
-                    else if (bsgPlayer.getGame().getNextEvent() == Game.NextEvent.REFILL)
-                        board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(600 - bsgPlayer.getGame().getGameTime()));
-                    else if (bsgPlayer.getGame().getNextEvent() == Game.NextEvent.DEATHMATCH)
-                        board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(900 - bsgPlayer.getGame().getGameTime()));
-                    else
-                        board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(1200 - bsgPlayer.getGame().getGameTime()));
+                    if (!bsgPlayer.getGame().isDeathmatchStarting()) {
+                        if (bsgPlayer.getGame().getNextEvent() == Game.NextEvent.STAR)
+                            board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(300 - bsgPlayer.getGame().getGameTime()));
+                        else if (bsgPlayer.getGame().getNextEvent() == Game.NextEvent.REFILL)
+                            board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(600 - bsgPlayer.getGame().getGameTime()));
+                        else if (bsgPlayer.getGame().getNextEvent() == Game.NextEvent.DEATHMATCH)
+                            board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(900 - bsgPlayer.getGame().getGameTime()));
+                        else
+                            board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(1200 - bsgPlayer.getGame().getGameTime()));
+                    }
+                    else{
+                        if (bsgPlayer.getGame().getDeathmatchStartTime() < 45)
+                            board.add("&aDeathmatch" + " " + convert(45 - bsgPlayer.getGame().getDeathmatchStartTime()));
+                        else
+                            board.add("&aEnding" + " " + convert(255 - bsgPlayer.getGame().getDeathmatchStartTime()));
+
+                    }
                     board.add(separator);
                     board.add("&fPlayers: &a" + bsgPlayer.getGame().getAlivePlayers().size());
                     board.add("&fKills: &a" + bsgPlayer.getGameKills());

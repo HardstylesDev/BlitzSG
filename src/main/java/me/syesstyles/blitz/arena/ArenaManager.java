@@ -70,7 +70,7 @@ public class ArenaManager {
             try {
                 FileUtils.forceDelete(world.getWorldFolder());
             } catch (IOException exception) {
-               // exception.printStackTrace();
+                // exception.printStackTrace();
             }
         }
         File worldFile = new File("worlds/" + map.getName().toLowerCase());
@@ -79,7 +79,7 @@ public class ArenaManager {
                 FileUtils.forceDelete(worldFile);
                 return true;
             } catch (IOException exception) {
-              //  exception.printStackTrace();
+                //  exception.printStackTrace();
                 return false;
             }
         }
@@ -132,8 +132,13 @@ public class ArenaManager {
                 a.addSpawn(new Location(Bukkit.getWorld(fc.getString("Name") + "_temp")
                         , fc.getInt("Spawns." + str + ".X"), fc.getInt("Spawns." + str + ".Y"), fc.getInt("Spawns." + str + ".Z")));
             }
-            a.setLobby(new Location(a.getArenaWorld(), fc.getInt("Lobby.X"),fc.getInt("Lobby.Y"), fc.getInt("Lobby.Z")));
-
+            a.setLobby(new Location(a.getArenaWorld(), fc.getInt("Lobby.X"), fc.getInt("Lobby.Y"), fc.getInt("Lobby.Z")));
+            if (fc.getInt("Deathmatch.Y") != 0) {
+                a.setDeathmatch(new Location(a.getArenaWorld(), fc.getInt("Deathmatch.X"), fc.getInt("Deathmatch.Y"), fc.getInt("Deathmatch.Z")));
+                if (fc.getInt("Deathmatch.Distance") != 0) {
+                    a.setDeathmatchDistance(fc.getInt("Deathmatch.Distance"));
+                }
+            }
 
 
             return true;
@@ -173,7 +178,7 @@ public class ArenaManager {
         }
     }
 
-    public void fixSpawns(Arena arena){
+    public void fixSpawns(Arena arena) {
         World world = Bukkit.getWorld(arena.getName().toLowerCase());
         ArrayList<Location> locations = arena.getSpawns();
         for (Location location : locations) {
@@ -186,5 +191,11 @@ public class ArenaManager {
         Location lobby = arena.getLobby();
         lobby.setWorld(world);
         arena.setLobby(lobby);
+
+        try {
+            Location deathmatch = arena.getDeathmatch();
+            deathmatch.setWorld(world);
+            arena.setDeathmatch(deathmatch);
+        }catch (NullPointerException ignored){}
     }
 }

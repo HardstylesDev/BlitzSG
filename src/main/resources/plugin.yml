@@ -4,4 +4,12 @@ main: me.syesstyles.blitz.BlitzSG
 author: Syes, Hardstyles
 description: BlitzSG Plugin
 commands:
+  nick:
+    description: lol
+  world:
+    description: lol
+  bsg:
+    description: lol
+  fw:
+    description: lol
 
