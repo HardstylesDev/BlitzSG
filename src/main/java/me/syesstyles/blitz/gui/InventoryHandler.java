@@ -14,7 +14,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.server.PluginEvent;
 
 public class InventoryHandler implements Listener {
 
@@ -94,12 +93,32 @@ public class InventoryHandler implements Listener {
             bsgPlayer.removeCoins(kit.getPrice(bsgPlayer.getKitLevel(kit)));
             bsgPlayer.setKitLevel(kit, bsgPlayer.getKitLevel(kit) + 1);
             p.closeInventory();
+        } else if (e.getInventory().getName() == "§8Blitz Star Shop") {
+            e.setCancelled(true);
+            if (bsgPlayer.isInGame())
+                return;
+            if (BlitzSG.getInstance().getStarManager().getStar(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName()) == null)
+                return;
+            Star star = BlitzSG.getInstance().getStarManager().getStar(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName());
+            if (star.getPrice() == 0) {
+                p.sendMessage("§cYou already have this star unlocked!");
+                return;
+            }
+            if (bsgPlayer.getCoins() < star.getPrice()) {
+                p.sendMessage("§cYou don't have enough coins to purchase this star!");
+                return;
+            }
+            p.sendMessage(ChatColor.GOLD + "You purchased star " + ChatColor.GREEN + star.getName());
+            p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
+
+            bsgPlayer.removeCoins(star.getPrice());
+            bsgPlayer.addStar(star);
+            p.closeInventory();
         }
         if (e.getInventory().getName() == "§8Star Selector") {
-            if(bsgPlayer.getGame().isDeathmatchStarting())
-                if(bsgPlayer.getGame().getDeathmatchStartTime() >= 15)
-                {
-                    p.sendMessage(BlitzSG.CORE_NAME  + ChatColor.RED + "The Blitz Star has been disabled!");
+            if (bsgPlayer.getGame().isDeathmatchStarting())
+                if (bsgPlayer.getGame().getDeathmatchStartTime() >= 15) {
+                    p.sendMessage(BlitzSG.CORE_NAME + ChatColor.RED + "The Blitz Star has been disabled!");
                     e.setCancelled(true);
                     return;
                 }

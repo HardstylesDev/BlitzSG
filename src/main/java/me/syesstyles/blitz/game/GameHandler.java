@@ -15,7 +15,6 @@ import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -316,7 +315,6 @@ public class GameHandler implements Listener {
         if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME)
             return;
         if (bsgPlayer.getGame().getGameMode() != GameMode.STARTING && bsgPlayer.getGame().getGameMode() != GameMode.WAITING) {
-            System.out.println("cancelled for no reason1!!");
             e.setCancelled(true);
             return;
         }
@@ -369,14 +367,34 @@ public class GameHandler implements Listener {
             e.setCancelled(true);
             return;
         }
+        if (bsgPlayer.getWobbuffet()) {
+            e.setCancelled(true);
+            if ((e.getDamager() instanceof Player)) {
+                ((Player) e.getDamager()).damage(e.getDamage());
+                e.getDamager().sendMessage(ChatColor.AQUA + "Damage was bounced back!");
+            } else if (e.getDamager() instanceof Arrow) {
+                if (((Arrow) e.getDamager()).getShooter() instanceof Player) {
+                    ((Player) ((Arrow) e.getDamager()).getShooter()).sendMessage("&bDamage was bounced back!");
+                }
+            }
+            e.getEntity().getWorld().playSound(e.getDamager().getLocation(), Sound.IRONGOLEM_HIT, 1, 1);
+
+        }
         if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME || bsgPlayer.getGame().getGameMode() == GameMode.RESETING) {
-            if (bsgPlayer.getGameEntities().contains(e.getDamager()) || (e.getDamager() instanceof Snowball && bsgPlayer.getGameEntities().contains(((Snowball) e.getDamager()).getShooter()))) {
+            if (bsgPlayer.getGameEntities().contains(e.getDamager()) || (e.getDamager() instanceof Snowball && bsgPlayer.getGameEntities().contains(((Snowball) e.getDamager()).getShooter())) || (e.getDamager() instanceof Arrow && bsgPlayer.getGameEntities().contains(((Arrow) e.getDamager()).getShooter()))) {
                 e.setCancelled(true);
             }
+
             if (!(e.getDamager() instanceof Player)) {
                 if (e.getDamager() instanceof Arrow)
-                    if ((Arrow) ((Arrow) e.getDamager()).getShooter() instanceof Player)
+                    if (((Arrow) e.getDamager()).getShooter() instanceof Player) {
+                        if (BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(((Player) ((Arrow) e.getDamager()).getShooter()).getUniqueId()).getRobinhood()) {
+                            e.setDamage(1000);
+                            e.getEntity().sendMessage("&aYou were taken out in a single shot!");
+                        } else e.setDamage(e.getDamage() / 2);
+
                         return;
+                    }
                 e.setDamage(e.getDamage() / 10);
             }
         }
@@ -417,7 +435,7 @@ public class GameHandler implements Listener {
     public void onWeatherChange(WeatherChangeEvent event) {
 
         boolean rain = event.toWeatherState();
-        if(rain)
+        if (rain)
             event.setCancelled(true);
     }
 
@@ -425,7 +443,7 @@ public class GameHandler implements Listener {
     public void onThunderChange(ThunderChangeEvent event) {
 
         boolean storm = event.toThunderState();
-        if(storm)
+        if (storm)
             event.setCancelled(true);
     }
 	

@@ -1,7 +1,6 @@
 package me.syesstyles.blitz.gamestar;
 
-import me.syesstyles.blitz.gamestar.stars.Assassin;
-import me.syesstyles.blitz.gamestar.stars.HolyWarrior;
+import me.syesstyles.blitz.gamestar.stars.*;
 import me.syesstyles.blitz.kit.Kit;
 import me.syesstyles.blitz.kit.kits.*;
 
@@ -20,6 +19,21 @@ public class StarManager {
     private void registerStars() {
         addKit(new Assassin());
         addKit(new HolyWarrior());
+        addKit(new Timelord());
+        addKit(new Kamikaze());
+        addKit(new Firebreather());
+        addKit(new Ninja());
+        addKit(new Robinhood());
+        addKit(new Wobbuffet());
+        addKit(new Apocalypse());
+        addKit(new Vampire());
+        addKit(new LuckyCharm());
+        addKit(new WitherWarrior());
+        addKit(new Gremlin());
+        addKit(new Dragonborn());
+        addKit(new DarkKnight());
+        addKit(new Imprison());
+        addKit(new Explosion());
     }
 
     public ArrayList<Star> getStars() {

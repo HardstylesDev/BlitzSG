@@ -35,6 +35,8 @@ public class NametagManager {
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
 
             BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(onlinePlayer.getUniqueId());
+            if(bsgPlayer == null || bsgPlayer.getRank() == null || bsgPlayer.getRank().getPrefix() == null || bsgPlayer.getNick() == null)
+                return;
             if (bsgPlayer.isInGame())
                 nametag.setNametag(onlinePlayer, ChatColor.RED + "", bsgPlayer.getNick().isNicked());
             else

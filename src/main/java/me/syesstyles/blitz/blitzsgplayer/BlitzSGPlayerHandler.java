@@ -1,7 +1,7 @@
 package me.syesstyles.blitz.blitzsgplayer;
 
 import me.syesstyles.blitz.BlitzSG;
-import me.syesstyles.blitz.gui.ShopGUI;
+import me.syesstyles.blitz.gui.ShopKitGUI;
 import me.syesstyles.blitz.rank.ranks.Admin;
 import me.syesstyles.blitz.utils.nickname.Nickname;
 import org.bukkit.*;
@@ -11,8 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.Potion;
 
 public class BlitzSGPlayerHandler implements Listener {
 
@@ -93,7 +91,7 @@ public class BlitzSGPlayerHandler implements Listener {
             return;
         e.setCancelled(true);
         if (e.getItem().getType() == Material.EMERALD)
-            ShopGUI.openGUI(p);
+            ShopKitGUI.openGUI(p);
         else if (e.getItem().getType() == Material.IRON_SWORD) {
             if (BlitzSG.getInstance().getGameManager().getAvailableGame() == null) {
                 p.sendMessage("§cCouldn't find any available games");

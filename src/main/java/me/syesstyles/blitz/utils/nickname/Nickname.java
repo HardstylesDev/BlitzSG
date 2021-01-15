@@ -173,7 +173,7 @@ public class Nickname {
                     p.showPlayer(player);
 
                     //if (!p.equals(player))
-                        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, ((CraftPlayer) player).getHandle()));
+                    ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, ((CraftPlayer) player).getHandle()));
                     CraftPlayer cp = (CraftPlayer) player;
                     GameProfile gameProfile = cp.getHandle().getProfile();
 
@@ -181,7 +181,7 @@ public class Nickname {
                     gameProfile.getProperties().put("textures", new Property("textures", nick.getSkinValue(), nick.getSkinSignature()));
 
                     if (!p.equals(player))
-                    ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, ((CraftPlayer) player).getHandle()));
+                        ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, ((CraftPlayer) player).getHandle()));
                     ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(player.getEntityId()));
                     if (!p.equals(player))
                         ((CraftPlayer) p).getHandle().playerConnection.sendPacket(new PacketPlayOutNamedEntitySpawn(((CraftPlayer) player).getHandle()));
@@ -322,7 +322,8 @@ public class Nickname {
             }
         else
             otherWorldLocation = Bukkit.getWorld("world").getSpawnLocation();
-        p.teleport(otherWorldLocation);
+        if (otherWorldLocation != null)
+            p.teleport(otherWorldLocation);
         new BukkitRunnable() {
             @Override
             public void run() {

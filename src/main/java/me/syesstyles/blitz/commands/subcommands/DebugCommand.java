@@ -1,7 +1,10 @@
 package me.syesstyles.blitz.commands.subcommands;
 
 import me.syesstyles.blitz.BlitzSG;
+import me.syesstyles.blitz.aaaaa.LoadStats;
+import me.syesstyles.blitz.aaaaa.SaveStats;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
+import me.syesstyles.blitz.gui.ShopStarGUI;
 import me.syesstyles.blitz.kit.Kit;
 import me.syesstyles.blitz.rank.Rank;
 import me.syesstyles.blitz.rank.RankManager;
@@ -53,6 +56,14 @@ public class DebugCommand extends SubCommand {
                 }
                 kit.giveKit(p, Integer.parseInt(args[3]));
             }
+        } else if (args[1].equalsIgnoreCase("save")) {
+            new SaveStats().save(p);
+        } else if (args[1].equalsIgnoreCase("load")) {
+            new LoadStats().load();
+
+
+        } else if (args[1].equalsIgnoreCase("star")) {
+            ShopStarGUI.openGUI(p);
         } else if (args[1].equalsIgnoreCase("info")) {
             if (args.length > 2) {
                 Player player = Bukkit.getPlayer(args[2]);

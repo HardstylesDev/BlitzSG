@@ -25,9 +25,6 @@ public class StarGUI {
         ArrayList<Star> stars = BlitzSG.getInstance().getStarManager().getStars();
         int index = 0;
         for (Star star : stars) {
-            System.out.println("fail1: " + star.getIcon());
-            System.out.println("fail2: " + star.getName());
-            System.out.println("fail3: " + star.getDescription());
             inv.setItem(index, new ItemBuilder(star.getIcon()).name(ChatColor.GOLD + star.getName()).lore(ChatColor.GRAY + star.getDescription()).make());
             index++;
         }

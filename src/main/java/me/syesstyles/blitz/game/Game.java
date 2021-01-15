@@ -20,7 +20,7 @@ import java.util.*;
 
 public class Game {
 
-    private boolean speedMode = false;
+    private boolean speedMode = true;
     private NextEvent nextEvent;
     private boolean canFindStar = false;
 

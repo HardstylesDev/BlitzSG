@@ -1,6 +1,8 @@
 package me.syesstyles.blitz;
 
 import com.zaxxer.hikari.HikariDataSource;
+import me.syesstyles.blitz.aaaaa.LoadStats;
+import me.syesstyles.blitz.aaaaa.SaveStats;
 import me.syesstyles.blitz.arena.ArenaHandler;
 import me.syesstyles.blitz.arena.ArenaManager;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
@@ -94,11 +96,14 @@ public class BlitzSG extends JavaPlugin {
         getServer().getPluginManager().registerEvents(scoreboardManager.getScoreboardHandler(), this);
 
         //Load Players:
-        PlayerUtils.loadPlayerData();
+        //PlayerUtils.loadPlayerData();
+        new LoadStats().load();
+        System.out.println("looaded dataaa");
         for (Player p : getServer().getOnlinePlayers())
-            if (!blitzSGPlayerManager.getUhcPlayers().containsKey(p.getUniqueId()))
+            if (!blitzSGPlayerManager.getUhcPlayers().containsKey(p.getUniqueId())) {
+                System.out.println("guesss not fagggg");
                 new BlitzSGPlayer(p.getUniqueId());
-
+            }
         //Load Arena:
         //ArenaUtils.loadArenas();
         // arenaManager.loadArena("aelinstower");
@@ -118,6 +123,7 @@ public class BlitzSG extends JavaPlugin {
         //Save Arenas:
 
         PlayerUtils.savePlayerData();
+        new SaveStats().saveAll();
         // try {
         //     ArenaUtils.saveArenas();
         // }catch (Exception e){

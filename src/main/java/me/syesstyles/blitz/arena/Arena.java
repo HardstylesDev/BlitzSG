@@ -74,17 +74,17 @@ public class Arena {
         for (Player p : this.getArenaWorld().getPlayers()) {
             p.teleport(BlitzSG.lobbySpawn);
             if (p.getWorld() != new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0)) // todo change back
-                p.kickPlayer("§6>> §e§lArena Resetting §6<<");
+                p.kickPlayer("Map is resetting");
         }
-        System.out.println("killing myself!");
+
         try {
             new BukkitRunnable() {
                 public void run() {
                     setInUse(false);
 
                     try {
-                        if (!BlitzSG.getInstance().getArenaManager().deleteMap(getArenaWorld().getName()))
-                            System.out.println("Error unloading + removing map: " + getArenaWorld().getName());
+                        if (!BlitzSG.getInstance().getArenaManager().deleteMap(getArenaWorld().getName()));
+                        //    System.out.println("Error unloading + removing map: " + getArenaWorld().getName());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

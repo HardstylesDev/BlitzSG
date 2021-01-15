@@ -6,6 +6,7 @@ import me.syesstyles.blitz.game.Game;
 import me.syesstyles.blitz.gamestar.Star;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -13,9 +14,9 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
-public class HolyWarrior extends Star {
-    public HolyWarrior() {
-        super("Holy Warrior", Material.BREWING_STAND_ITEM, "Strike nearby enemies with lightning for 30s.", 10000);
+public class Firebreather extends Star {
+    public Firebreather() {
+        super("Firebreather", Material.FIREBALL, "Shoot fireballs for 30 seconds.", 10000);
     }
 
     @Override
@@ -31,15 +32,7 @@ public class HolyWarrior extends Star {
                         return;
                     else if(!user.getGame().getAlivePlayers().contains(p))
                         return;
-                    List<Entity> a = p.getNearbyEntities(20, 20, 20);
-                    for (Entity entity : a) {
-                        if (!(entity instanceof Player))
-                            continue;
-                        if (user.getGame().getAlivePlayers().contains(entity)) {
-                            entity.getWorld().strikeLightningEffect(entity.getLocation());
-                            ((Player) entity).damage(2);
-                        }
-                    }
+                    p.launchProjectile(Fireball.class);
                 }
             }.runTaskLater(BlitzSG.getInstance(), t * 20);
         }

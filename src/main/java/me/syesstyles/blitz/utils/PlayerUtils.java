@@ -49,12 +49,17 @@ public class PlayerUtils {
             fc.set("Coins", uhcPlayer.getCoins());
             for (Kit kit : BlitzSG.getInstance().getKitManager().getKits())
                 fc.set("Kits." + kit.getName(), uhcPlayer.getKitLevel(kit));
-
             try {
                 fc.save(f);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+           //fc.set("Stars", uhcPlayer.getStars());
+           //try {
+           //    fc.save(f);
+           //} catch (IOException e) {
+           //    e.printStackTrace();
+           //}
         }
     }
 
@@ -62,6 +67,7 @@ public class PlayerUtils {
         try {
             new File(BlitzSG.getInstance().getDataFolder() + "/players").mkdir();
             for (File f : new File(BlitzSG.getInstance().getDataFolder() + "/players").listFiles()) {
+                System.out.println(f.getAbsolutePath());
                 FileConfiguration fc = new YamlConfiguration();
                 try {
                     fc.load(f);

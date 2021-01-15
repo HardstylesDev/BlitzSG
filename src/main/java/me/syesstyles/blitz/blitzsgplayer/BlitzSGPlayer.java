@@ -3,6 +3,7 @@ package me.syesstyles.blitz.blitzsgplayer;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.arena.Arena;
 import me.syesstyles.blitz.game.Game;
+import me.syesstyles.blitz.gamestar.Star;
 import me.syesstyles.blitz.kit.Kit;
 import me.syesstyles.blitz.rank.Rank;
 import me.syesstyles.blitz.utils.nickname.Nick;
@@ -20,9 +21,12 @@ public class BlitzSGPlayer {
     private int gameTaunt;
     private UUID uuid;
 
+    private boolean robinhood;
+    private boolean wobbuffet;
     private int gameKills;
     private Nick nick;
     private HashSet<Entity> gameEntities;
+    private HashSet<Star> stars;
     private Location gameSpawn;
     private Rank rank;
     private int elo;
@@ -35,6 +39,42 @@ public class BlitzSGPlayer {
 
     private Arena editedArena;
 
+    public void setUuid(UUID uuid) {
+        this.uuid = uuid;
+    }
+
+    public void setGameKills(int gameKills) {
+        this.gameKills = gameKills;
+    }
+
+    public void setNick(Nick nick) {
+        this.nick = nick;
+    }
+
+    public void setGameEntities(HashSet<Entity> gameEntities) {
+        this.gameEntities = gameEntities;
+    }
+
+    public void setWins(int wins) {
+        this.wins = wins;
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
+    }
+
+    public void setDeaths(int deaths) {
+        this.deaths = deaths;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public void setKitLevels(HashMap<Kit, Integer> kitLevels) {
+        this.kitLevels = kitLevels;
+    }
+
     public BlitzSGPlayer(UUID uuid) {
         this.nick = null;
         this.uuid = uuid;
@@ -45,9 +85,11 @@ public class BlitzSGPlayer {
         this.coins = 0;
         this.rank = null;
         this.gameEntities = new HashSet<Entity>();
+        this.stars = new HashSet<Star>();
         this.kitLevels = new HashMap<Kit, Integer>();
         for (Kit p : BlitzSG.getInstance().getKitManager().getKits())
             this.kitLevels.put(p, 0);
+
 
         this.gameKills = 0;
         this.gameTaunt = -1;
@@ -70,18 +112,39 @@ public class BlitzSGPlayer {
         for (String str : statsFile.getConfigurationSection("Kits").getKeys(false))
             this.kitLevels.put(BlitzSG.getInstance().getKitManager().getKit(str)
                     , statsFile.getConfigurationSection("Kits").getInt(str));
+        // for(Object str : statsFile.getList("Stars")){
+        //     System.out.println(str.getClass() + " : " + str);
+        //}
     }
 
     //Player Stats
+
+
+    public HashMap<Kit, Integer> getKits() {
+        return this.kitLevels;
+    }
+
+    public void addStar(Star star) {
+        this.stars.add(star);
+    }
+
     public Rank getRank() {
 
         return rank;
     }
 
+    public void setStars(HashSet<Star> stars) {
+        this.stars = stars;
+    }
+
+    public HashSet<Star> getStars() {
+        return stars;
+    }
+
     public Rank getRank(boolean checkNick) {
         if (nick != null && nick.isNicked())
             return BlitzSG.getInstance().getRankManager().getRankByName("Default");
-        if(nick == null)
+        if (nick == null)
             this.nick = new Nick("", null, null, false);
         return rank;
     }
@@ -186,7 +249,10 @@ public class BlitzSGPlayer {
     }
 
     public void setRank(Rank rank) {
-        this.rank = rank;
+        if (rank == null)
+            this.rank = BlitzSG.getInstance().getRankManager().getRankByName("Default");
+        else
+            this.rank = rank;
     }
 
     public int getKitLevel(Kit p) {
@@ -235,6 +301,23 @@ public class BlitzSGPlayer {
     public Game getGame() {
         return BlitzSG.getInstance().getBlitzSGPlayerManager().getUhcPlayerGame(this);
     }
+
+    public void setWobbuffet(boolean idk) {
+        wobbuffet = idk;
+    }
+
+    public boolean getWobbuffet() {
+        return this.wobbuffet;
+    }
+
+    public void setRobinhood(boolean idk) {
+        robinhood = idk;
+    }
+
+    public boolean getRobinhood() {
+        return this.robinhood;
+    }
+
 
     public void setGame(Game g) {
         BlitzSG.getInstance().getBlitzSGPlayerManager().setUhcPlayerGame(this, g);
