@@ -44,12 +44,15 @@ public class SaveStats {
                 preparedStatement.setString(7, null);
             else
                 preparedStatement.setString(7, p.getNickName());
-     //       preparedStatement.setString(7, p.getNick().getNickName());
+            //       preparedStatement.setString(7, p.getNick().getNickName());
             preparedStatement.setString(8, starsToString(p));
             preparedStatement.setString(9, kitsToJson(p));
             preparedStatement.setInt(10, p.getElo());
             preparedStatement.setInt(11, 0);
-            preparedStatement.setString(12, p.getSelectedKit().getName());
+
+            if (p.getSelectedKit() != null)
+                preparedStatement.setString(12, p.getSelectedKit().getName());
+            else preparedStatement.setString(12, null);
 
 
 //p.getUuid(), p.getCoins(), p.getKills(), p.getDeaths(),p.getWins(),p.getRank().getRank(), p.getNick().getNickName(), starsToString(p), kitsToJson(p), p.getElo(), null );
@@ -76,7 +79,7 @@ public class SaveStats {
 
         for (Map.Entry<Kit, Integer> v : p.getKits().entrySet()) {
             if (v == null || v.getKey() == null || v.getKey().getName() == null) continue;
-           // System.out.println(v.getKey().getName() + " / " + v.getValue());
+            // System.out.println(v.getKey().getName() + " / " + v.getValue());
             kits.put(v.getKey().getName(), v.getValue());
         }
         return new GsonBuilder().setPrettyPrinting().create().toJson(kits);

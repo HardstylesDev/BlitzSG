@@ -3,6 +3,7 @@ package me.syesstyles.blitz.game;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.arena.Arena;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
+import me.syesstyles.blitz.rank.ranks.Default;
 import me.syesstyles.blitz.utils.ItemBuilder;
 import me.syesstyles.blitz.utils.ItemUtils;
 import org.bukkit.*;
@@ -15,12 +16,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import sun.java2d.loops.Blit;
 
 import java.util.*;
 
 public class Game {
 
-    private boolean speedMode = true;
+    private boolean speedMode = false;
     private NextEvent nextEvent;
     private boolean canFindStar = false;
 
@@ -104,6 +106,7 @@ public class Game {
 
         uhcPlayer.setGame(this);
         BlitzSG.getInstance().getNametagManager().update();
+
         allPlayers.add(p);
         alivePlayers.add(p);
         p.teleport(arena.getLobby().clone().add(0.5, 0, 0.5));
@@ -112,6 +115,8 @@ public class Game {
             startLobbyCountdown();
         }
         resetPlayer(p);
+        p.setFlying(false);
+        p.setAllowFlight(false);
 
     }
 
@@ -157,7 +162,7 @@ public class Game {
         if (startedCountdown)
             return;
         startedCountdown = true;
-        countdownTime = speedMode ? 6 : 21; // 21
+        countdownTime = speedMode ? 6 : 16; // 21
         //for (Player alivePlayer : alivePlayers) {
         //    teleportSpawn(alivePlayer);
         //}
@@ -522,6 +527,7 @@ public class Game {
             uhcPlayer.setGame(null);
             resetPlayer(p);
             p.teleport(BlitzSG.lobbySpawn);
+
             BlitzSG.getInstance().getBlitzSGPlayerManager().setLobbyInventoryAndNameTag(p);
             p.setPlayerListName(uhcPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix()
                     + " [" + uhcPlayer.getElo() + "]");

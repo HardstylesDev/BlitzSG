@@ -31,6 +31,7 @@ me\syesstyles\blitz\commands\CommandHandler.class
 me\syesstyles\blitz\blitzsgplayer\BlitzSGPlayer.class
 me\syesstyles\blitz\utils\FireworkCommand.class
 me\syesstyles\blitz\commands\subcommands\WandCommand.class
+me\syesstyles\blitz\punishments\ACBan.class
 me\syesstyles\blitz\commands\subcommands\SubCommand.class
 me\syesstyles\blitz\gamestar\stars\Apocalypse$2.class
 me\syesstyles\blitz\kit\Kit.class
@@ -41,6 +42,8 @@ me\syesstyles\blitz\gamestar\stars\Wobbuffet.class
 me\syesstyles\blitz\utils\nickname\Nick.class
 me\syesstyles\blitz\gamestar\stars\Ninja.class
 me\syesstyles\blitz\gamestar\stars\Firebreather.class
+me\syesstyles\blitz\punishments\PunishmentManager.class
+me\syesstyles\blitz\punishments\commands\Unban.class
 me\syesstyles\blitz\scoreboard\ScoreboardHelper.class
 me\syesstyles\blitz\utils\ItemUtils.class
 me\syesstyles\blitz\utils\nickname\NicknameCommand.class
@@ -104,10 +107,13 @@ me\syesstyles\blitz\arena\ArenaUtils.class
 me\syesstyles\blitz\commands\subcommands\CreateCommand.class
 me\syesstyles\blitz\aaaaa\LoadStats.class
 me\syesstyles\blitz\commands\subcommands\setDeathmatchCommand.class
+me\syesstyles\blitz\punishments\commands\Unban$1.class
+me\syesstyles\blitz\punishments\PunishmentManager$1.class
 me\syesstyles\blitz\utils\ItemBuilder.class
 me\syesstyles\blitz\gamestar\stars\Kamikaze$1.class
 me\syesstyles\blitz\game\Game$4.class
 me\syesstyles\blitz\kit\kits\Blaze.class
+me\syesstyles\blitz\punishments\ACBan$1.class
 me\syesstyles\blitz\game\GameManager$1.class
 me\syesstyles\blitz\gamestar\stars\Gremlin.class
 me\syesstyles\blitz\kit\kits\Snowman.class

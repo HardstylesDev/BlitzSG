@@ -66,6 +66,10 @@ public class Nickname {
                 ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(offlineplayer.getBukkitEntity().getEntityId()));
             }
             BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+            if(uhcPlayer.getNick() == null){
+                uhcPlayer.setNick(new Nick(s, null, null, true));
+
+            }
             uhcPlayer.getNick().setNickName(s);
             uhcPlayer.getNick().setNicked(true);
             uhcPlayer.getNick().setSkinValue(skin[0]);

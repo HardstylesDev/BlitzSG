@@ -18,6 +18,9 @@ import me.syesstyles.blitz.gamestar.StarManager;
 import me.syesstyles.blitz.gui.GUIManager;
 import me.syesstyles.blitz.gui.InventoryHandler;
 import me.syesstyles.blitz.kit.KitManager;
+import me.syesstyles.blitz.punishments.ACBan;
+import me.syesstyles.blitz.punishments.PunishmentManager;
+import me.syesstyles.blitz.punishments.commands.Unban;
 import me.syesstyles.blitz.rank.RankManager;
 import me.syesstyles.blitz.scoreboard.ScoreboardManager;
 import me.syesstyles.blitz.utils.EnchantListener;
@@ -35,10 +38,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 public class BlitzSG extends JavaPlugin {
 
     public static String CORE_NAME = EnumChatFormat.GRAY + "[" + EnumChatFormat.RED + "B-SG" + EnumChatFormat.GRAY + "] " + EnumChatFormat.WHITE;
@@ -55,6 +54,7 @@ public class BlitzSG extends JavaPlugin {
     private GUIManager guiManager;
     private KitManager kitManager;
     private StarManager starManager;
+    private PunishmentManager punishmentManager;
     private HikariDataSource hikari;
     public static Location lobbySpawn;
     private Database database;
@@ -79,12 +79,16 @@ public class BlitzSG extends JavaPlugin {
 
         rankManager = new RankManager();
         nametagManager = new NametagManager();
+        punishmentManager = new PunishmentManager();
+
         //Register Commands::
 
         this.getCommand("bsg").setExecutor(new CommandHandler());
         this.getCommand("world").setExecutor(new WorldCommand());
         this.getCommand("nick").setExecutor(new NicknameCommand());
         this.getCommand("fw").setExecutor(new FireworkCommand());
+        this.getCommand("acban").setExecutor(new ACBan());
+        this.getCommand("unban").setExecutor(new Unban());
 
         //Register Handlers:
         getServer().getPluginManager().registerEvents(new ArenaHandler(), this);
@@ -121,9 +125,9 @@ public class BlitzSG extends JavaPlugin {
 
     public void onDisable() {
         //Save Arenas:
-
-        PlayerUtils.savePlayerData();
         new SaveStats().saveAll();
+        PlayerUtils.savePlayerData();
+
         // try {
         //     ArenaUtils.saveArenas();
         // }catch (Exception e){
@@ -166,7 +170,7 @@ public class BlitzSG extends JavaPlugin {
     public StarManager getStarManager() {
         return starManager;
     }
-
+    public PunishmentManager getPunishmentManager(){return punishmentManager;}
     public KitManager getKitManager() {
         return kitManager;
     }

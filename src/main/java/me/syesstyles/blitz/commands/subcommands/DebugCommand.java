@@ -61,6 +61,8 @@ public class DebugCommand extends SubCommand {
         } else if (args[1].equalsIgnoreCase("load")) {
             new LoadStats().load();
 
+        } else if (args[1].equalsIgnoreCase("block")) {
+
 
         } else if (args[1].equalsIgnoreCase("star")) {
             ShopStarGUI.openGUI(p);
@@ -82,8 +84,12 @@ public class DebugCommand extends SubCommand {
             if (args.length > 2) {
                 Player player = Bukkit.getPlayer(args[2]);
                 BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(player.getUniqueId());
-                bsgPlayer.addCoins(Integer.parseInt(args[3]));
-
+                if (bsgPlayer == null)
+                    p.sendMessage("Unknown player.");
+                else {
+                    bsgPlayer.addCoins(Integer.parseInt(args[3]));
+                    p.sendMessage("Coins given.");
+                }
             }
             if (args[1].equalsIgnoreCase("name")) {
                 if (args.length > 2) {

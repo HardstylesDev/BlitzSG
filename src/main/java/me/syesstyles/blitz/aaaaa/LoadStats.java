@@ -7,6 +7,7 @@ import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.gamestar.Star;
 import me.syesstyles.blitz.kit.Kit;
+import me.syesstyles.blitz.utils.nickname.Nick;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,10 +40,12 @@ public class LoadStats {
                 blitzSGPlayer.setElo(rs.getInt("elo"));
                 blitzSGPlayer.setWins(rs.getInt("wins"));
                 blitzSGPlayer.setKitLevels(getKitsFromJson(rs.getString("kits")));
+                if (rs.getString("nickname") != null && !rs.getString("nickname").equalsIgnoreCase("")) {
+                    blitzSGPlayer.setNick(new Nick(rs.getString("nickname"), null, null, !rs.getString("nickname").equalsIgnoreCase("")));
+                }
+
                 blitzSGPlayer.setStars(getStarsFromString(rs.getString("stars")));
-                System.out.println("It was " + BlitzSG.getInstance().getRankManager().getRankByName(rs.getString("rank")).getRank());
                 blitzSGPlayer.setRank(BlitzSG.getInstance().getRankManager().getRankByName(rs.getString("rank")));
-                System.out.println(blitzSGPlayer.getUuid() + " is a mofo " + BlitzSG.getInstance().getRankManager().getRankByName(rs.getString("rank")));
                 //  blitzSGPlayer.setNickName(rs.getString("nickname").length() > 3 ? rs.getString("nickname") : null);
                 if (rs.getString("selectedKit") != null && BlitzSG.getInstance().getKitManager().getKit(rs.getString("selectedKit")) != null)
                     blitzSGPlayer.setSelectedKit(BlitzSG.getInstance().getKitManager().getKit(rs.getString("selectedKit")));
@@ -77,7 +80,6 @@ public class LoadStats {
             Iterator it = myMap.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry pair = (Map.Entry) it.next();
-                System.out.println(pair.getKey() + " = " + pair.getValue());
                 it.remove(); // avoids a ConcurrentModificationException
 
 
