@@ -120,6 +120,7 @@ public class Nickname {
         uhcPlayer.setNickName(null);
         uhcPlayer.getNick().setNicked(false);
         uhcPlayer.getNick().setNickName(null);
+        uhcPlayer.setNick(null);
         p.kickPlayer(ChatColor.GREEN + "Please rejoin");
 
     }

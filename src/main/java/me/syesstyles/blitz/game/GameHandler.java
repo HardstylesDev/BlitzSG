@@ -116,6 +116,7 @@ public class GameHandler implements Listener {
     public void onPlayerMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+
         if (!bsgPlayer.isInGame())
             return;
         if (bsgPlayer.getGame().getGameMode() == GameMode.STARTING)

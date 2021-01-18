@@ -9,6 +9,7 @@ import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerHandler;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerManager;
 import me.syesstyles.blitz.commands.CommandHandler;
+import me.syesstyles.blitz.cosmetics.CosmeticsManager;
 import me.syesstyles.blitz.elo.EloManager;
 import me.syesstyles.blitz.game.Game;
 import me.syesstyles.blitz.game.GameHandler;
@@ -58,6 +59,7 @@ public class BlitzSG extends JavaPlugin {
     private HikariDataSource hikari;
     public static Location lobbySpawn;
     private Database database;
+    private CosmeticsManager cosmeticsManager;
 
     public BlitzSG() {
         instance = this;
@@ -80,7 +82,8 @@ public class BlitzSG extends JavaPlugin {
         rankManager = new RankManager();
         nametagManager = new NametagManager();
         punishmentManager = new PunishmentManager();
-
+        cosmeticsManager = new CosmeticsManager();
+        cosmeticsManager.init();
         //Register Commands::
 
         this.getCommand("bsg").setExecutor(new CommandHandler());
@@ -161,6 +164,9 @@ public class BlitzSG extends JavaPlugin {
 
     public EloManager getEloManager() {
         return eloManager;
+    }
+    public CosmeticsManager getCosmeticsManager() {
+        return cosmeticsManager;
     }
 
     public GUIManager getGuiManager() {

@@ -24,6 +24,7 @@ public class BlitzSGPlayer {
     private boolean robinhood;
     private boolean wobbuffet;
     private int gameKills;
+    private boolean punched;
     private Nick nick;
     private HashSet<Entity> gameEntities;
     private HashSet<Star> stars;
@@ -133,6 +134,12 @@ public class BlitzSGPlayer {
         return rank;
     }
 
+    public void setPunched(boolean b){
+        this.punched = b;
+    }
+    public boolean getPunched(){
+        return this.punched;
+    }
     public void setStars(HashSet<Star> stars) {
         this.stars = stars;
     }

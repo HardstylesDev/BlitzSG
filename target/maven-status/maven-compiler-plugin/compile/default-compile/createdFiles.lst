@@ -1,7 +1,9 @@
+me\syesstyles\blitz\cosmetics\Cosmetic.class
 me\syesstyles\blitz\utils\nametag\Nametag.class
 me\syesstyles\blitz\commands\subcommands\ArenasCommand.class
 me\syesstyles\blitz\game\Game$3.class
 me\syesstyles\blitz\game\GameMobHandler.class
+me\syesstyles\blitz\cosmetics\CosmeticsManager$1.class
 me\syesstyles\blitz\gamestar\stars\Firebreather$1.class
 me\syesstyles\blitz\kit\kits\Scout.class
 me\syesstyles\blitz\aaaaa\SaveStats.class
@@ -71,6 +73,7 @@ me\syesstyles\blitz\gamestar\stars\DarkKnight.class
 me\syesstyles\blitz\rank\ranks\Champion.class
 me\syesstyles\blitz\gamestar\stars\LuckyCharm.class
 me\syesstyles\blitz\kit\kits\Armorer.class
+me\syesstyles\blitz\blitzsgplayer\BlitzSGPlayerHandler$1.class
 me\syesstyles\blitz\blitzsgplayer\BlitzSGPlayerHandler.class
 me\syesstyles\blitz\BlitzSG.class
 me\syesstyles\blitz\gamestar\Star.class
@@ -100,6 +103,7 @@ me\syesstyles\blitz\gui\StarGUI.class
 me\syesstyles\blitz\gamestar\stars\Wobbuffet$1.class
 me\syesstyles\blitz\gamestar\stars\WitherWarrior$1.class
 me\syesstyles\blitz\game\Game$5.class
+me\syesstyles\blitz\cosmetics\CosmeticsManager.class
 me\syesstyles\blitz\gamestar\stars\WitherWarrior.class
 me\syesstyles\blitz\commands\subcommands\DeleteCommand.class
 me\syesstyles\blitz\gamestar\stars\HolyWarrior$1.class
@@ -121,6 +125,7 @@ me\syesstyles\blitz\scoreboard\ScoreboardManager.class
 me\syesstyles\blitz\utils\PlayerUtils.class
 me\syesstyles\blitz\commands\subcommands\EditCommand.class
 me\syesstyles\blitz\utils\nickname\Nickname$1.class
+me\syesstyles\blitz\cosmetics\CosmeticsManager$1$1.class
 me\syesstyles\blitz\gamestar\stars\Robinhood$1.class
 me\syesstyles\blitz\elo\EloLevel.class
 me\syesstyles\blitz\kit\kits\Meatmaster.class

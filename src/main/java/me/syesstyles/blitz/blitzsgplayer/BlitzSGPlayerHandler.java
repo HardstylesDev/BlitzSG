@@ -3,7 +3,6 @@ package me.syesstyles.blitz.blitzsgplayer;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.gui.ShopKitGUI;
 import me.syesstyles.blitz.rank.ranks.*;
-import me.syesstyles.blitz.utils.nickname.Nick;
 import me.syesstyles.blitz.utils.nickname.Nickname;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -14,19 +13,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 public class BlitzSGPlayerHandler implements Listener {
 
     @EventHandler
-    public void banCheck(AsyncPlayerPreLoginEvent e){
+    public void banCheck(AsyncPlayerPreLoginEvent e) {
         BlitzSG.getInstance().getPunishmentManager().handlePreLogin(e);
     }
 
@@ -35,10 +28,10 @@ public class BlitzSGPlayerHandler implements Listener {
 
         Player p = e.getPlayer();
 
-        p.getInventory().setHelmet(new ItemStack(Material.AIR,1));
-        p.getInventory().setChestplate(new ItemStack(Material.AIR,1));
-        p.getInventory().setLeggings(new ItemStack(Material.AIR,1));
-        p.getInventory().setBoots(new ItemStack(Material.AIR,1));
+        p.getInventory().setHelmet(new ItemStack(Material.AIR, 1));
+        p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
+        p.getInventory().setLeggings(new ItemStack(Material.AIR, 1));
+        p.getInventory().setBoots(new ItemStack(Material.AIR, 1));
         BlitzSGPlayer uhcPlayer;
         if (BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId()) == null)
             uhcPlayer = new BlitzSGPlayer(e.getPlayer().getUniqueId());
@@ -46,7 +39,7 @@ public class BlitzSGPlayerHandler implements Listener {
 
         p.setGameMode(GameMode.SURVIVAL);
         p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0)); //todo change back
-        if(!(uhcPlayer.getRank() instanceof Default)){
+        if (!(uhcPlayer.getRank() instanceof Default)) {
             p.setAllowFlight(true);
             p.setFlying(true);
         }
@@ -75,6 +68,7 @@ public class BlitzSGPlayerHandler implements Listener {
 
         BlitzSG.getInstance().getBlitzSGPlayerManager().setLobbyInventoryAndNameTag(p);
     }
+
     @EventHandler
     public void onRespawn(PlayerRespawnEvent e) {
         Player p = e.getPlayer();
@@ -139,24 +133,42 @@ public class BlitzSGPlayerHandler implements Listener {
         e.setCancelled(true);
         e.getPlayer().getInventory().addItem(e.getItem().getItemStack());
         e.getItem().remove();
-        e.getPlayer().playSound(e.getItem().getLocation(), Sound.ITEM_PICKUP, (float)0.1,(float)1.5);
+        e.getPlayer().playSound(e.getItem().getLocation(), Sound.ITEM_PICKUP, (float) 0.1, (float) 1.5);
 
     }
-    @EventHandler
-    public void onLobbyPunch(EntityDamageByEntityEvent e){
-        if(!(e.getEntity() instanceof Player && e.getDamager() instanceof Player))
-            return;
-        if(!(e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK))
-            return;
-        BlitzSGPlayer victim = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getEntity().getUniqueId());
-        if(!(victim.getRank() instanceof Admin) && !(victim.getRank() instanceof Moderator) && !(victim.getRank() instanceof Helper))
-            return;
 
+    @EventHandler
+    public void onLobbyPunch(EntityDamageByEntityEvent e) {
+        System.out.println("1");
+        if (!(e.getEntity() instanceof Player && e.getDamager() instanceof Player))
+            return;
+        System.out.println("2");
+        if (!(e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK))
+            return;
+        System.out.println("3");
+        BlitzSGPlayer victim = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getEntity().getUniqueId());
+        if (!(victim.getRank() instanceof Admin) && !(victim.getRank() instanceof Moderator) && !(victim.getRank() instanceof Helper))
+            return;
+        System.out.println("4");
         BlitzSGPlayer attacker = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getDamager().getUniqueId());
 
-        if(!(attacker.getRank() instanceof Admin) && !(attacker.getRank() instanceof Moderator) && !(attacker.getRank() instanceof Helper) && !(attacker.getRank() instanceof MvpPlus) && !(attacker.getRank() instanceof Youtuber))
+        if (!(attacker.getRank() instanceof Admin) && !(attacker.getRank() instanceof Moderator) && !(attacker.getRank() instanceof Helper) && !(attacker.getRank() instanceof MvpPlus) && !(attacker.getRank() instanceof Youtuber))
             return;
+        System.out.println("5");
+        if (victim.getPunched())
+            return;
+        System.out.println("6");
         //todo punching
-
+        victim.setPunched(true);
+        BlitzSG.broadcast(attacker.getRank().getPrefix() + e.getDamager().getName() + " &7punched " + victim.getRank().getChatColor() + e.getEntity().getName() + " &7into the sky!", e.getDamager().getWorld());
+        e.getEntity().getLocation().getWorld().createExplosion(e.getEntity().getLocation().getX(), e.getEntity().getLocation().getY(), e.getEntity().getLocation().getZ(), 2, false, false);
+        ((Player) e.getEntity()).setAllowFlight(true);
+        ((Player) e.getEntity()).setFlying(true);
+        e.getEntity().setVelocity(new Vector(0, 3, 0));
+        new BukkitRunnable() {
+            public void run() {
+                victim.setPunched(false);
+            }
+        }.runTaskLater(BlitzSG.getInstance(), 20 * 20);
     }
 }
