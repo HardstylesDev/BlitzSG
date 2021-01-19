@@ -5,6 +5,6 @@ import org.bukkit.ChatColor;
 
 public class Mvp extends Rank {
     public Mvp(){
-    super("MVP",ChatColor.AQUA + "[MVP] ", ChatColor.AQUA + "",4 );
+    super("MVP",ChatColor.AQUA + "[MVP] ", ChatColor.AQUA + "",4,3 );
     }
 }

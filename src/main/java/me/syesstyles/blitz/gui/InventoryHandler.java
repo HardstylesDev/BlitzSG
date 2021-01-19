@@ -2,6 +2,7 @@ package me.syesstyles.blitz.gui;
 
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
+import me.syesstyles.blitz.cosmetic.Aura;
 import me.syesstyles.blitz.gamestar.Star;
 import me.syesstyles.blitz.kit.Kit;
 import me.syesstyles.blitz.kit.KitUtils;
@@ -51,8 +52,6 @@ public class InventoryHandler implements Listener {
 
                 //e.getWhoClicked().sendMessage("Selected: " + kit.getName());
                 if (bsgPlayer.getKitLevel(kit) == 0) {
-                    System.out.println("price at 1: " + kit.getPrice(1));
-                    System.out.println("price at 0: " + kit.getPrice(0));
                     if (!(kit.getPrice(0) == 0) && !((kit.getPrice(0) == 125000) && bsgPlayer.getRank().getMultiplier() >= 2) && !((kit.getPrice(0) == 250000) && bsgPlayer.getRank().getMultiplier() >= 3)) {
                         BlitzSG.send((Player) e.getWhoClicked(), BlitzSG.CORE_NAME + "&cYou don't have this kit!");
                         return;
@@ -71,8 +70,20 @@ public class InventoryHandler implements Listener {
                 //				+ bsgPlayer.getGame().getVotingPercentage() + "%)")));
                 //p.closeInventory();
             }
-        }
-        if (e.getInventory().getName() == "§8Blitz Shop") {
+        } else if (e.getInventory().getName() == "§8Blitz Shop") {
+            e.setCancelled(true);
+            if (bsgPlayer.isInGame())
+                return;
+            if(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().contains("Basic Kit"))
+                ShopKitBasicGUI.openGUI(p);
+            if(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().contains("Auras"))
+                AuraGUI.openGUI(p);
+            if(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().contains("Advanced Kit"))
+                ShopKitAdvancedGUI.openGUI(p);
+            if(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().contains("Blitz Powerups"))
+                ShopStarGUI.openGUI(p);
+            return;
+        } else if (e.getInventory().getName().contains("Kit Upgrades")) {
             e.setCancelled(true);
             if (bsgPlayer.isInGame())
                 return;
@@ -113,6 +124,24 @@ public class InventoryHandler implements Listener {
 
             bsgPlayer.removeCoins(star.getPrice());
             bsgPlayer.addStar(star);
+            p.closeInventory();
+        } else if (e.getInventory().getName() == "§8Auras") {
+            e.setCancelled(true);
+            if (bsgPlayer.isInGame())
+                return;
+            if (BlitzSG.getInstance().getCosmeticsManager().getAuraByName(ChatColor.stripColor(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName())) == null) {
+                return;
+            }
+            Aura aura = BlitzSG.getInstance().getCosmeticsManager().getAuraByName(ChatColor.stripColor(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName()));
+
+            if (bsgPlayer.getRank().getPosition() < aura.getRequiredRank().getPosition()) {
+                p.sendMessage("§cYou must be " + aura.getRequiredRank().getRankFormatted() + " §cor higher to purchase that!");
+                return;
+            }
+            p.sendMessage(ChatColor.GREEN + "You selected " + ChatColor.GOLD + aura.getName());
+            p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
+
+            bsgPlayer.setAura(aura);
             p.closeInventory();
         }
         if (e.getInventory().getName() == "§8Star Selector") {

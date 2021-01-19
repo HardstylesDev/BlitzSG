@@ -15,6 +15,8 @@ public class Kit {
 	private List<Integer> kitPrices;
 	private String description;
 	private List<List<ItemStack>> kitItems;
+	private int selectorLocation;
+	private int shopLocation;
 	
 	public Kit(String name,String description, ItemStack icon, List<Integer> kitPrices, List<List<String>> levelDescriptions
 			, List<List<ItemStack>> kitItems) {

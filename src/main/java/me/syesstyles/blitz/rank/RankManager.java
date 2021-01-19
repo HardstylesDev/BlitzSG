@@ -14,16 +14,13 @@ public class RankManager {
 
     public static final Class<? extends Rank>[] RANKS = new Class[]{Default.class, Admin.class, Helper.class, Champion.class, Moderator.class, Vip.class, VipPlus.class, Mvp.class, MvpPlus.class, Youtuber.class};
     private final ArrayList<Rank> ranks = new ArrayList<>();
-    private final ArrayList<Nametag> nametagEdits = new ArrayList<>();
+
 
     public Rank getRank(Player p) {
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
         if (bsgPlayer.getRank() == null)
             return getRankByName("Default");
         return bsgPlayer.getRank();
-    }
-    public ArrayList<Nametag> getNametags(){
-        return nametagEdits;
     }
     public Rank getRank(Player p, boolean hideNick) {
         BlitzSGPlayer blitzSGPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
@@ -57,6 +54,7 @@ public class RankManager {
         }
         return null;
     }
+
 
     public Set<Rank> getRanks() {
         HashSet<Rank> allModules = new HashSet<Rank>();

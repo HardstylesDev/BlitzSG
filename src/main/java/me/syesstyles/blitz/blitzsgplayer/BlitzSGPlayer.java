@@ -2,11 +2,13 @@ package me.syesstyles.blitz.blitzsgplayer;
 
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.arena.Arena;
+import me.syesstyles.blitz.cosmetic.Aura;
 import me.syesstyles.blitz.game.Game;
 import me.syesstyles.blitz.gamestar.Star;
 import me.syesstyles.blitz.kit.Kit;
 import me.syesstyles.blitz.rank.Rank;
 import me.syesstyles.blitz.utils.nickname.Nick;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
@@ -35,6 +37,7 @@ public class BlitzSGPlayer {
     private int kills;
     private int deaths;
     private int coins;
+    private Aura aura;
 
     private HashMap<Kit, Integer> kitLevels;
 
@@ -96,6 +99,7 @@ public class BlitzSGPlayer {
         this.gameTaunt = -1;
         this.gameSpawn = null;
         this.selectedKit = null;
+        this.aura = null;
         BlitzSG.getInstance().getBlitzSGPlayerManager().addUhcPlayer(this.uuid, this);
     }
 
@@ -214,7 +218,11 @@ public class BlitzSGPlayer {
     public void setGameSpawn(Location gameSpawn) {
         this.gameSpawn = gameSpawn;
     }
-
+    public void setAura(Aura aura){
+        this.aura = aura;
+        if(!BlitzSG.getInstance().getCosmeticsManager().getPlayers().contains(Bukkit.getPlayer(getUuid())))
+            BlitzSG.getInstance().getCosmeticsManager().add(Bukkit.getPlayer(getUuid()));
+    }
     public int getWins() {
         return this.wins;
     }
@@ -345,4 +353,7 @@ public class BlitzSGPlayer {
         this.editedArena = arena;
     }
 
+    public Aura getAura() {
+        return this.aura;
+    }
 }

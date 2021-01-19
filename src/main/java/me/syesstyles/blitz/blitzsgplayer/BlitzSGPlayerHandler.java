@@ -1,7 +1,8 @@
 package me.syesstyles.blitz.blitzsgplayer;
 
 import me.syesstyles.blitz.BlitzSG;
-import me.syesstyles.blitz.gui.ShopKitGUI;
+import me.syesstyles.blitz.gui.ShopGUI;
+import me.syesstyles.blitz.gui.ShopKitBasicGUI;
 import me.syesstyles.blitz.rank.ranks.*;
 import me.syesstyles.blitz.utils.nickname.Nickname;
 import org.bukkit.*;
@@ -111,7 +112,7 @@ public class BlitzSGPlayerHandler implements Listener {
             return;
         e.setCancelled(true);
         if (e.getItem().getType() == Material.EMERALD)
-            ShopKitGUI.openGUI(p);
+            ShopGUI.openGUI(p);
         else if (e.getItem().getType() == Material.IRON_SWORD) {
             if (BlitzSG.getInstance().getGameManager().getAvailableGame() == null) {
                 p.sendMessage("§cCouldn't find any available games");
@@ -149,6 +150,7 @@ public class BlitzSGPlayerHandler implements Listener {
         BlitzSGPlayer victim = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getEntity().getUniqueId());
         if (!(victim.getRank() instanceof Admin) && !(victim.getRank() instanceof Moderator) && !(victim.getRank() instanceof Helper))
             return;
+        if (victim.getGame() != null) return;
         System.out.println("4");
         BlitzSGPlayer attacker = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getDamager().getUniqueId());
 

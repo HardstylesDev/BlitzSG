@@ -9,7 +9,7 @@ import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerHandler;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerManager;
 import me.syesstyles.blitz.commands.CommandHandler;
-import me.syesstyles.blitz.cosmetics.CosmeticsManager;
+import me.syesstyles.blitz.cosmetic.CosmeticsManager;
 import me.syesstyles.blitz.elo.EloManager;
 import me.syesstyles.blitz.game.Game;
 import me.syesstyles.blitz.game.GameHandler;

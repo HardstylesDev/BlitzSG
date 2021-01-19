@@ -4,6 +4,8 @@ import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.aaaaa.LoadStats;
 import me.syesstyles.blitz.aaaaa.SaveStats;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
+import me.syesstyles.blitz.cosmetic.Aura;
+import me.syesstyles.blitz.gui.AuraGUI;
 import me.syesstyles.blitz.gui.ShopStarGUI;
 import me.syesstyles.blitz.kit.Kit;
 import me.syesstyles.blitz.rank.Rank;
@@ -111,6 +113,27 @@ public class DebugCommand extends SubCommand {
                 BlitzSG.getInstance().getNametagManager().update();
             } else
                 BlitzSG.send(p, "" + new RankManager().getRank(p));
+
+        } else if (args[1].equalsIgnoreCase("aura")) {
+            if (args.length > 2) {
+                BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+                Aura aura = BlitzSG.getInstance().getCosmeticsManager().getAuraByName(args[2]);
+                if(args[2].equalsIgnoreCase("null")){
+                    BlitzSG.send(p, "&cAura has been reset.");
+                    bsgPlayer.setAura(null);
+                    return;
+                }
+                if (aura == null) {
+                    BlitzSG.send(p, "&cthat aura doesn't exist.");
+
+                    return;
+                }
+                BlitzSG.getInstance().getCosmeticsManager().add(p);
+                bsgPlayer.setAura(aura);
+                BlitzSG.send(p, "&aYou've set your aura to " + aura.getName());
+
+            } else
+                AuraGUI.openGUI(p);
 
         }
     }

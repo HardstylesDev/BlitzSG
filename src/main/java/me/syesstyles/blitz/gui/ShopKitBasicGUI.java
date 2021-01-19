@@ -19,17 +19,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class ShopKitGUI {
+public class ShopKitBasicGUI {
 
     public static void openGUI(Player p) {
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 
         //Create GUI
-        Inventory inv = Bukkit.createInventory(null, (int) (((BlitzSG.getInstance().getKitManager().getKits().size() + 1) / 9) + 3) * 9 + 9, "§8Blitz Shop");
+        Inventory inv = Bukkit.createInventory(null, (int) (((BlitzSG.getInstance().getKitManager().getKits().size() + 1) / 9) + 3) * 9 + 9, "§8Basic Kit Upgrades");
 
         //Add Items
         int firstItem = 10;
         for (Kit kit : BlitzSG.getInstance().getKitManager().getKits()) {
+            if(!(kit.getPrice(0) == 0))
+                continue;
             inv.setItem(firstItem, ItemUtils.buildItem(new ItemStack(kit.getIcon())
                     , getName(bsgPlayer, kit)
                     , getFullDescription(bsgPlayer, kit)));
