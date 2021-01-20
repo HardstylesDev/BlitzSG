@@ -1,4 +1,4 @@
-package me.syesstyles.blitz.arena;
+package me.syesstyles.blitz.map;
 
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.rank.ranks.Admin;
@@ -9,7 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-public class ArenaHandler implements Listener{
+public class MapHandler implements Listener{
 	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
@@ -28,11 +28,11 @@ public class ArenaHandler implements Listener{
 		if(!e.getItem().getItemMeta().getDisplayName().contains("Arena Wand"))
 			return;
 		if(e.getAction() == Action.LEFT_CLICK_BLOCK) {
-			ArenaUtils.setCornerLoc1(p, e.getClickedBlock().getLocation());
+			MapUtils.setCornerLoc1(p, e.getClickedBlock().getLocation());
 			p.sendMessage("§eCorner §61 §eset!");
 		}
 		if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			ArenaUtils.setCornerLoc2(p, e.getClickedBlock().getLocation());
+			MapUtils.setCornerLoc2(p, e.getClickedBlock().getLocation());
 			p.sendMessage("§eCorner §62 §eset!");
 		}
 		e.setCancelled(true);

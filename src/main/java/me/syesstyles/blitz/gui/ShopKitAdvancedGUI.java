@@ -30,7 +30,7 @@ public class ShopKitAdvancedGUI {
         //Add Items
         int firstItem = 10;
         for (Kit kit : BlitzSG.getInstance().getKitManager().getKits()) {
-            if(kit.getPrice(0) == 0)
+            if (kit.getPrice(0) == 0)
                 continue;
             inv.setItem(firstItem, ItemUtils.buildItem(new ItemStack(kit.getIcon())
                     , getName(bsgPlayer, kit)
@@ -50,7 +50,12 @@ public class ShopKitAdvancedGUI {
     public static String getName(BlitzSGPlayer blitzSGPlayer, Kit p) {
         if (p.getPrice(blitzSGPlayer.getKitLevel(p)) == -1)
             return "§a" + p.getName() + KitUtils.getKitTag(blitzSGPlayer.getKitLevel(p));
-        else if (p.getPrice(blitzSGPlayer.getKitLevel(p)) <= blitzSGPlayer.getCoins())
+        else if (blitzSGPlayer.getKitLevel(p) == 0) {
+            if (blitzSGPlayer.getRank().getPosition() >= p.getRequiredRank().getPosition())
+                return "§a" + p.getName() + KitUtils.getKitTag(blitzSGPlayer.getKitLevel(p));
+            else
+                return "§c" + p.getName() + KitUtils.getKitTag(blitzSGPlayer.getKitLevel(p));
+        } else if (p.getPrice(blitzSGPlayer.getKitLevel(p)) <= blitzSGPlayer.getCoins())
             return "§e" + p.getName() + KitUtils.getKitTag(blitzSGPlayer.getKitLevel(p) + 1);
         else
             return "§c" + p.getName() + KitUtils.getKitTag(blitzSGPlayer.getKitLevel(p) + 1);
@@ -63,6 +68,15 @@ public class ShopKitAdvancedGUI {
         desc.add("");
         if (p.getPrice(uhcPlayer.getKitLevel(p)) == -1) {
             desc.add("§aMAX LEVEL!");
+            return desc;
+        }
+        if (uhcPlayer.getKitLevel(p) == 0 && p.getPrice(0) > 0) {
+            if (uhcPlayer.getRank().getPosition() >= p.getRequiredRank().getPosition()) {
+                desc.add("§eCick to unlock!");
+                desc.add("");
+                desc.add("§7This is free because you are a " + uhcPlayer.getRank().getRankFormatted());
+            } else
+                desc.add("§7Requires " + p.getRequiredRank().getRankFormatted() + " §7or unlock it for §6" + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice(uhcPlayer.getKitLevel(p))) + " §7coins.");
             return desc;
         }
         desc.add("§7Price: §6" + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice(uhcPlayer.getKitLevel(p))));
@@ -100,8 +114,8 @@ public class ShopKitAdvancedGUI {
     }
 
     public static String capitalizeString(String string) {
-        if(string.equalsIgnoreCase("Slow")) return "Slowness";
-        if(string.equalsIgnoreCase("Heal")) return "Health";
+        if (string.equalsIgnoreCase("Slow")) return "Slowness";
+        if (string.equalsIgnoreCase("Heal")) return "Health";
         char[] chars = string.toLowerCase().toCharArray();
         boolean found = false;
         for (int i = 0; i < chars.length; i++) {
@@ -134,7 +148,7 @@ public class ShopKitAdvancedGUI {
                 enchantmentList.add("Knockback" + KitUtils.getKitTag(integer));
             else if (enchantment == Enchantment.PROTECTION_EXPLOSIONS)
                 enchantmentList.add("Blast Protection" + KitUtils.getKitTag(integer));
-        else if (enchantment == Enchantment.OXYGEN)
+            else if (enchantment == Enchantment.OXYGEN)
                 enchantmentList.add("Respiration" + KitUtils.getKitTag(integer));
             else enchantmentList.add("" + enchantment.getName());
         });

@@ -7,6 +7,7 @@ import me.syesstyles.blitz.gamestar.Star;
 import me.syesstyles.blitz.kit.Kit;
 import me.syesstyles.blitz.kit.KitUtils;
 import me.syesstyles.blitz.rank.ranks.Admin;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -90,6 +91,29 @@ public class InventoryHandler implements Listener {
             if (BlitzSG.getInstance().getKitManager().getKit(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName()) == null)
                 return;
             Kit kit = BlitzSG.getInstance().getKitManager().getKit(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName());
+            if(bsgPlayer.getKitLevel(kit) == 0 && e.getInventory().getName() == "§8Basic Kit Upgrades"){
+                if (bsgPlayer.getCoins() < kit.getPrice(bsgPlayer.getKitLevel(kit)+1)) {
+                    p.sendMessage("§cYou don't have enough coins to purchase this upgrade!");
+                    return;
+                }
+                p.sendMessage(ChatColor.GOLD + "You purchased " + ChatColor.GREEN + kit.getName() + KitUtils.getKitTag(bsgPlayer.getKitLevel(kit) + 2) + "");
+                p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
+
+                bsgPlayer.removeCoins(kit.getPrice(bsgPlayer.getKitLevel(kit)+1));
+                bsgPlayer.setKitLevel(kit, bsgPlayer.getKitLevel(kit) + 2);
+                p.closeInventory();
+                Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer));
+
+                return;
+            }
+            if(bsgPlayer.getKitLevel(kit) == 0 && kit.getRequiredRank().getPosition() <= bsgPlayer.getRank().getPosition()){
+                p.sendMessage(ChatColor.GOLD + "You unlocked the " + ChatColor.GREEN + kit.getName() + ChatColor.GOLD + " kit!");
+                p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
+                bsgPlayer.setKitLevel(kit, 1);
+                p.closeInventory();
+                BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer);
+                return;
+            }
             if (kit.getPrice(bsgPlayer.getKitLevel(kit)) == -1) {
                 p.sendMessage("§cYou already have this kit at max level!!");
                 return;
@@ -104,6 +128,7 @@ public class InventoryHandler implements Listener {
             bsgPlayer.removeCoins(kit.getPrice(bsgPlayer.getKitLevel(kit)));
             bsgPlayer.setKitLevel(kit, bsgPlayer.getKitLevel(kit) + 1);
             p.closeInventory();
+            Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer));
         } else if (e.getInventory().getName() == "§8Blitz Star Shop") {
             e.setCancelled(true);
             if (bsgPlayer.isInGame())
@@ -125,6 +150,7 @@ public class InventoryHandler implements Listener {
             bsgPlayer.removeCoins(star.getPrice());
             bsgPlayer.addStar(star);
             p.closeInventory();
+            Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer));
         } else if (e.getInventory().getName() == "§8Auras") {
             e.setCancelled(true);
             if (bsgPlayer.isInGame())
@@ -157,8 +183,13 @@ public class InventoryHandler implements Listener {
             if (BlitzSG.getInstance().getStarManager().getStar(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName()) == null) {
                 return;
             }
-            Star star = BlitzSG.getInstance().getStarManager().getStar(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName());
+            Star star = BlitzSG.getInstance().getStarManager().getStar(ChatColor.stripColor(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName()));
+            if(star.getPrice() != 0 && !(bsgPlayer.getStars().contains(star))){
+                BlitzSG.send(p, "&cYou don't have this star unlocked!");
+                return;
+            }
             bsgPlayer.getGame().msgAll(BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + p.getName() + " &6BLITZ! &e" + star.getName());
+            p.closeInventory();
             star.run(p);
         }
 

@@ -1,10 +1,9 @@
 package me.syesstyles.blitz.commands.subcommands;
 
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import me.syesstyles.blitz.BlitzSG;
-import me.syesstyles.blitz.arena.Arena;
+import me.syesstyles.blitz.map.Map;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 
 public class EditCommand extends SubCommand{
@@ -17,7 +16,7 @@ public class EditCommand extends SubCommand{
 		}
 		
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-		for(Arena a : BlitzSG.getInstance().getArenaManager().getArenas()) {
+		for(Map a : BlitzSG.getInstance().getArenaManager().getArenas()) {
 			BlitzSG.getInstance().getArenaManager().fixSpawns(a);
 			if(a == null || a.getLobby().getWorld() == null) continue;
 

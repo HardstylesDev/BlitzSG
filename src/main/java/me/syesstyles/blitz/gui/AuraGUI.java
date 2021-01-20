@@ -17,7 +17,6 @@ public class AuraGUI {
 
     public static int get(int a) {
         if (a >= 1 && a <= 7) {
-            System.out.println("row one");
             return a + 9;
         }
         if (a >= 8 && a <= 14) {

@@ -3,8 +3,7 @@ package me.syesstyles.blitz;
 import com.zaxxer.hikari.HikariDataSource;
 import me.syesstyles.blitz.aaaaa.LoadStats;
 import me.syesstyles.blitz.aaaaa.SaveStats;
-import me.syesstyles.blitz.arena.ArenaHandler;
-import me.syesstyles.blitz.arena.ArenaManager;
+import me.syesstyles.blitz.aaaaa.StatisticsManager;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerHandler;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerManager;
@@ -19,6 +18,8 @@ import me.syesstyles.blitz.gamestar.StarManager;
 import me.syesstyles.blitz.gui.GUIManager;
 import me.syesstyles.blitz.gui.InventoryHandler;
 import me.syesstyles.blitz.kit.KitManager;
+import me.syesstyles.blitz.map.MapHandler;
+import me.syesstyles.blitz.map.MapManager;
 import me.syesstyles.blitz.punishments.ACBan;
 import me.syesstyles.blitz.punishments.PunishmentManager;
 import me.syesstyles.blitz.punishments.commands.Unban;
@@ -46,7 +47,7 @@ public class BlitzSG extends JavaPlugin {
 
     public static BlitzSG instance;
     private NametagManager nametagManager;
-    private ArenaManager arenaManager;
+    private MapManager mapManager;
     private BlitzSGPlayerManager blitzSGPlayerManager;
     private GameManager gameManager;
     private ScoreboardManager scoreboardManager;
@@ -56,8 +57,10 @@ public class BlitzSG extends JavaPlugin {
     private KitManager kitManager;
     private StarManager starManager;
     private PunishmentManager punishmentManager;
+    private StatisticsManager statisticsManager;
     private HikariDataSource hikari;
     public static Location lobbySpawn;
+
     private Database database;
     private CosmeticsManager cosmeticsManager;
 
@@ -68,18 +71,19 @@ public class BlitzSG extends JavaPlugin {
     public void onEnable() {
 
         database = new Database();
-
-
-        kitManager = new KitManager();
-        arenaManager = new ArenaManager();
         blitzSGPlayerManager = new BlitzSGPlayerManager();
+        statisticsManager = new StatisticsManager();
+        rankManager = new RankManager();
+        kitManager = new KitManager();
+        mapManager = new MapManager();
+
         gameManager = new GameManager();
         scoreboardManager = new ScoreboardManager();
         eloManager = new EloManager();
         guiManager = new GUIManager();
         starManager = new StarManager();
 
-        rankManager = new RankManager();
+
         nametagManager = new NametagManager();
         punishmentManager = new PunishmentManager();
         cosmeticsManager = new CosmeticsManager();
@@ -94,7 +98,7 @@ public class BlitzSG extends JavaPlugin {
         this.getCommand("unban").setExecutor(new Unban());
 
         //Register Handlers:
-        getServer().getPluginManager().registerEvents(new ArenaHandler(), this);
+        getServer().getPluginManager().registerEvents(new MapHandler(), this);
         getServer().getPluginManager().registerEvents(new GameHandler(), this);
         getServer().getPluginManager().registerEvents(new GameMobHandler(), this);
         getServer().getPluginManager().registerEvents(new BlitzSGPlayerHandler(), this);
@@ -104,12 +108,18 @@ public class BlitzSG extends JavaPlugin {
 
         //Load Players:
         //PlayerUtils.loadPlayerData();
-        new LoadStats().load();
-        System.out.println("looaded dataaa");
+        //new LoadStats().load();
+        statisticsManager.load();
+       // System.out.println("looaded dataaa");
         for (Player p : getServer().getOnlinePlayers())
             if (!blitzSGPlayerManager.getUhcPlayers().containsKey(p.getUniqueId())) {
-                System.out.println("guesss not fagggg");
-                new BlitzSGPlayer(p.getUniqueId());
+                BlitzSGPlayer bsgPlayer = new BlitzSGPlayer(p.getUniqueId());
+                bsgPlayer.setName(p.getDisplayName());
+                bsgPlayer.setIp(p.getAddress().toString().split(":")[0].replaceAll("/", ""));
+            } else {
+                BlitzSGPlayer bsgPlayer = blitzSGPlayerManager.getBsgPlayer(p.getUniqueId());
+                bsgPlayer.setName(p.getDisplayName());
+                bsgPlayer.setIp(p.getAddress().toString().split(":")[0].replaceAll("/", ""));
             }
         //Load Arena:
         //ArenaUtils.loadArenas();
@@ -127,16 +137,15 @@ public class BlitzSG extends JavaPlugin {
     }
 
     public void onDisable() {
-        //Save Arenas:
-        new SaveStats().saveAll();
-        PlayerUtils.savePlayerData();
 
-        // try {
-        //     ArenaUtils.saveArenas();
-        // }catch (Exception e){
-        //     System.out.println("we good");
-        //     e.printStackTrace();
-        // }
+
+        PlayerUtils.savePlayerData();
+        statisticsManager.save();
+
+         try {
+             new SaveStats().saveAll();
+         }catch (Exception e){
+         }
         //Reset Running Games:
         for (Game g : gameManager.getRunningGames())
             g.resetGame();
@@ -146,8 +155,8 @@ public class BlitzSG extends JavaPlugin {
         return database;
     }
 
-    public ArenaManager getArenaManager() {
-        return arenaManager;
+    public MapManager getArenaManager() {
+        return mapManager;
     }
 
     public BlitzSGPlayerManager getBlitzSGPlayerManager() {
@@ -165,6 +174,7 @@ public class BlitzSG extends JavaPlugin {
     public EloManager getEloManager() {
         return eloManager;
     }
+
     public CosmeticsManager getCosmeticsManager() {
         return cosmeticsManager;
     }
@@ -176,9 +186,16 @@ public class BlitzSG extends JavaPlugin {
     public StarManager getStarManager() {
         return starManager;
     }
-    public PunishmentManager getPunishmentManager(){return punishmentManager;}
+
+    public PunishmentManager getPunishmentManager() {
+        return punishmentManager;
+    }
+
     public KitManager getKitManager() {
         return kitManager;
+    }
+    public StatisticsManager getStatisticsManager() {
+        return statisticsManager;
     }
 
     public RankManager getRankManager() {

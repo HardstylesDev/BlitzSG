@@ -30,7 +30,7 @@ public class ShopKitBasicGUI {
         //Add Items
         int firstItem = 10;
         for (Kit kit : BlitzSG.getInstance().getKitManager().getKits()) {
-            if(!(kit.getPrice(0) == 0))
+            if (!(kit.getPrice(0) == 0))
                 continue;
             inv.setItem(firstItem, ItemUtils.buildItem(new ItemStack(kit.getIcon())
                     , getName(bsgPlayer, kit)
@@ -50,9 +50,11 @@ public class ShopKitBasicGUI {
     public static String getName(BlitzSGPlayer blitzSGPlayer, Kit p) {
         if (p.getPrice(blitzSGPlayer.getKitLevel(p)) == -1)
             return "§a" + p.getName() + KitUtils.getKitTag(blitzSGPlayer.getKitLevel(p));
-        else if (p.getPrice(blitzSGPlayer.getKitLevel(p)) <= blitzSGPlayer.getCoins())
+        else if (p.getPrice(blitzSGPlayer.getKitLevel(p)) <= blitzSGPlayer.getCoins()) {
+            if (blitzSGPlayer.getKitLevel(p) == 0)
+                return "§e" + p.getName() + KitUtils.getKitTag(blitzSGPlayer.getKitLevel(p) + 2);
             return "§e" + p.getName() + KitUtils.getKitTag(blitzSGPlayer.getKitLevel(p) + 1);
-        else
+        } else
             return "§c" + p.getName() + KitUtils.getKitTag(blitzSGPlayer.getKitLevel(p) + 1);
     }
 
@@ -65,6 +67,7 @@ public class ShopKitBasicGUI {
             desc.add("§aMAX LEVEL!");
             return desc;
         }
+
         desc.add("§7Price: §6" + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice(uhcPlayer.getKitLevel(p))));
         desc.add("");
         if (p.getPrice(uhcPlayer.getKitLevel(p)) <= uhcPlayer.getCoins())
@@ -100,8 +103,8 @@ public class ShopKitBasicGUI {
     }
 
     public static String capitalizeString(String string) {
-        if(string.equalsIgnoreCase("Slow")) return "Slowness";
-        if(string.equalsIgnoreCase("Heal")) return "Health";
+        if (string.equalsIgnoreCase("Slow")) return "Slowness";
+        if (string.equalsIgnoreCase("Heal")) return "Health";
         char[] chars = string.toLowerCase().toCharArray();
         boolean found = false;
         for (int i = 0; i < chars.length; i++) {
@@ -134,7 +137,7 @@ public class ShopKitBasicGUI {
                 enchantmentList.add("Knockback" + KitUtils.getKitTag(integer));
             else if (enchantment == Enchantment.PROTECTION_EXPLOSIONS)
                 enchantmentList.add("Blast Protection" + KitUtils.getKitTag(integer));
-        else if (enchantment == Enchantment.OXYGEN)
+            else if (enchantment == Enchantment.OXYGEN)
                 enchantmentList.add("Respiration" + KitUtils.getKitTag(integer));
             else enchantmentList.add("" + enchantment.getName());
         });

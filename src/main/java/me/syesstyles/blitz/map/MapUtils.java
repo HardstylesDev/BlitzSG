@@ -1,4 +1,4 @@
-package me.syesstyles.blitz.arena;
+package me.syesstyles.blitz.map;
 
 import me.syesstyles.blitz.BlitzSG;
 import org.bukkit.Bukkit;
@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class ArenaUtils {
+public class MapUtils {
 
     public static HashMap<Player, Location> cornerLoc1 = new HashMap<Player, Location>();
     public static HashMap<Player, Location> cornerLoc2 = new HashMap<Player, Location>();
@@ -34,7 +34,7 @@ public class ArenaUtils {
     }
 
     public static void saveArenas() {
-        for (Arena a : BlitzSG.getInstance().getArenaManager().getArenas()) {
+        for (Map a : BlitzSG.getInstance().getArenaManager().getArenas()) {
             File f = new File(BlitzSG.getInstance().getDataFolder() + "/arenas/" + a.getName() + ".yml");
             if (!f.exists()) {
                 try {

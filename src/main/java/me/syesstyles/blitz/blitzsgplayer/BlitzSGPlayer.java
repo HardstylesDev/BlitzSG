@@ -1,17 +1,19 @@
 package me.syesstyles.blitz.blitzsgplayer;
 
+import com.google.gson.JsonObject;
 import me.syesstyles.blitz.BlitzSG;
-import me.syesstyles.blitz.arena.Arena;
 import me.syesstyles.blitz.cosmetic.Aura;
 import me.syesstyles.blitz.game.Game;
 import me.syesstyles.blitz.gamestar.Star;
 import me.syesstyles.blitz.kit.Kit;
+import me.syesstyles.blitz.map.Map;
 import me.syesstyles.blitz.rank.Rank;
 import me.syesstyles.blitz.utils.nickname.Nick;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -38,10 +40,12 @@ public class BlitzSGPlayer {
     private int deaths;
     private int coins;
     private Aura aura;
-
+    private JsonObject jsonObject;
+    private String ip;
+    private String name;
     private HashMap<Kit, Integer> kitLevels;
 
-    private Arena editedArena;
+    private Map editedMap;
 
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
@@ -80,6 +84,9 @@ public class BlitzSGPlayer {
     }
 
     public BlitzSGPlayer(UUID uuid) {
+        this.jsonObject = new JsonObject();
+
+
         this.nick = null;
         this.uuid = uuid;
         this.elo = 0;
@@ -138,12 +145,14 @@ public class BlitzSGPlayer {
         return rank;
     }
 
-    public void setPunched(boolean b){
+    public void setPunched(boolean b) {
         this.punched = b;
     }
-    public boolean getPunched(){
+
+    public boolean getPunched() {
         return this.punched;
     }
+
     public void setStars(HashSet<Star> stars) {
         this.stars = stars;
     }
@@ -188,6 +197,22 @@ public class BlitzSGPlayer {
         return (nick.isNicked());
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getIp() {
+        return this.ip;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
     public String getNickName() {
         if (this.nick != null)
             return this.nick.getNickName();
@@ -218,11 +243,15 @@ public class BlitzSGPlayer {
     public void setGameSpawn(Location gameSpawn) {
         this.gameSpawn = gameSpawn;
     }
-    public void setAura(Aura aura){
+
+    public void setAura(Aura aura) {
         this.aura = aura;
-        if(!BlitzSG.getInstance().getCosmeticsManager().getPlayers().contains(Bukkit.getPlayer(getUuid())))
-            BlitzSG.getInstance().getCosmeticsManager().add(Bukkit.getPlayer(getUuid()));
+        Player p = Bukkit.getPlayer(getUuid());
+        if (p != null && p.isOnline())
+            if (!BlitzSG.getInstance().getCosmeticsManager().getPlayers().contains(Bukkit.getPlayer(getUuid())))
+                BlitzSG.getInstance().getCosmeticsManager().add(Bukkit.getPlayer(getUuid()));
     }
+
     public int getWins() {
         return this.wins;
     }
@@ -339,21 +368,29 @@ public class BlitzSGPlayer {
     }
 
     public boolean isEditingArena() {
-        if (this.editedArena == null)
+        if (this.editedMap == null)
             return false;
         else
             return true;
     }
 
-    public Arena getEditedArena() {
-        return this.editedArena;
+    public Map getEditedArena() {
+        return this.editedMap;
     }
 
-    public void setEditedArena(Arena arena) {
-        this.editedArena = arena;
+    public void setEditedArena(Map map) {
+        this.editedMap = map;
     }
 
     public Aura getAura() {
         return this.aura;
+    }
+
+    public JsonObject getJsonObject() {
+        return this.jsonObject;
+    }
+
+    public void setJsonObject(JsonObject jsonObject) {
+        this.jsonObject = jsonObject;
     }
 }

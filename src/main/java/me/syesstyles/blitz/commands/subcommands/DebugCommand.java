@@ -1,6 +1,7 @@
 package me.syesstyles.blitz.commands.subcommands;
 
 import me.syesstyles.blitz.BlitzSG;
+
 import me.syesstyles.blitz.aaaaa.LoadStats;
 import me.syesstyles.blitz.aaaaa.SaveStats;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
@@ -68,6 +69,11 @@ public class DebugCommand extends SubCommand {
 
         } else if (args[1].equalsIgnoreCase("star")) {
             ShopStarGUI.openGUI(p);
+        } else if (args[1].equalsIgnoreCase("donkeyload")) {
+            new LoadStats().load();
+        } else if (args[1].equalsIgnoreCase("donkey")) {
+            BlitzSG.getInstance().getStatisticsManager().save();
+
         } else if (args[1].equalsIgnoreCase("info")) {
             if (args.length > 2) {
                 Player player = Bukkit.getPlayer(args[2]);

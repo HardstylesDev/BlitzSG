@@ -1,4 +1,4 @@
-package me.syesstyles.blitz.arena;
+package me.syesstyles.blitz.map;
 
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.utils.VoidGenerator;
@@ -17,40 +17,40 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class ArenaManager {
+public class MapManager {
 
-    public ArrayList<Arena> arenas;
+    public ArrayList<Map> maps;
 
-    public ArenaManager() {
-        arenas = new ArrayList<Arena>();
+    public MapManager() {
+        maps = new ArrayList<Map>();
     }
 
-    public Arena getArena(String arenaName) {
-        for (Arena a : arenas)
+    public Map getArena(String arenaName) {
+        for (Map a : maps)
             if (a.getName().equalsIgnoreCase(arenaName))
                 return a;
         return null;
     }
 
-    public void addArena(Arena arena) {
-        arenas.add(arena);
+    public void addArena(Map map) {
+        maps.add(map);
     }
 
-    public void removeArena(Arena arena) {
-        arenas.remove(arena);
+    public void removeArena(Map map) {
+        maps.remove(map);
     }
 
-    public ArrayList<Arena> getArenas() {
-        return this.arenas;
+    public ArrayList<Map> getArenas() {
+        return this.maps;
     }
 
-    public Arena getRandomArena() {
-        if (arenas.size() == 0)
+    public Map getRandomArena() {
+        if (maps.size() == 0)
             return null;
-        Arena a = arenas.get(new Random().nextInt(arenas.size()));
+        Map a = maps.get(new Random().nextInt(maps.size()));
         if (!a.isInUse() && a.isUsable())
             return a;
-        for (Arena aa : arenas) {
+        for (Map aa : maps) {
             if (!aa.isInUse() && aa.isUsable())
                 return aa;
         }
@@ -62,7 +62,7 @@ public class ArenaManager {
         return deleteMap(getArena(map));
     }
 
-    public boolean deleteMap(Arena map) {
+    public boolean deleteMap(Map map) {
         map.setInUse(false);
         World world = Bukkit.getWorld(map.getName().toLowerCase());
         if (world != null) {
@@ -96,7 +96,7 @@ public class ArenaManager {
         Bukkit.unloadWorld(map, false);
     }
 
-    public void unloadMap(Arena map) {
+    public void unloadMap(Map map) {
         unloadMap(map.getName());
     }
 
@@ -127,7 +127,7 @@ public class ArenaManager {
             Location cornerMax = new Location(Bukkit.getWorld(fc.getString("Name") + "_temp"), fc.getInt("Bounds.Max.X")
                     , fc.getInt("Bounds.Max.Y"), fc.getInt("Bounds.Max.Z"));
 
-            Arena a = new Arena(cornerMin, cornerMax, fc.getString("Name"));
+            Map a = new Map(cornerMin, cornerMax, fc.getString("Name"));
             for (String str : fc.getConfigurationSection("Spawns").getKeys(false)) {
                 a.addSpawn(new Location(Bukkit.getWorld(fc.getString("Name") + "_temp")
                         , fc.getInt("Spawns." + str + ".X"), fc.getInt("Spawns." + str + ".Y"), fc.getInt("Spawns." + str + ".Z")));
@@ -178,24 +178,24 @@ public class ArenaManager {
         }
     }
 
-    public void fixSpawns(Arena arena) {
-        World world = Bukkit.getWorld(arena.getName().toLowerCase());
-        ArrayList<Location> locations = arena.getSpawns();
+    public void fixSpawns(Map map) {
+        World world = Bukkit.getWorld(map.getName().toLowerCase());
+        ArrayList<Location> locations = map.getSpawns();
         for (Location location : locations) {
             location.setWorld(world);
         }
 
-        arena.setWorld(world);
-        arena.setSpawns(locations);
+        map.setWorld(world);
+        map.setSpawns(locations);
 
-        Location lobby = arena.getLobby();
+        Location lobby = map.getLobby();
         lobby.setWorld(world);
-        arena.setLobby(lobby);
+        map.setLobby(lobby);
 
         try {
-            Location deathmatch = arena.getDeathmatch();
+            Location deathmatch = map.getDeathmatch();
             deathmatch.setWorld(world);
-            arena.setDeathmatch(deathmatch);
+            map.setDeathmatch(deathmatch);
         }catch (NullPointerException ignored){}
     }
 }

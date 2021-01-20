@@ -1,9 +1,8 @@
 package me.syesstyles.blitz.game;
 
 import me.syesstyles.blitz.BlitzSG;
-import me.syesstyles.blitz.arena.Arena;
+import me.syesstyles.blitz.map.Map;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
-import me.syesstyles.blitz.rank.ranks.Default;
 import me.syesstyles.blitz.utils.ItemBuilder;
 import me.syesstyles.blitz.utils.ItemUtils;
 import org.bukkit.*;
@@ -16,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import sun.java2d.loops.Blit;
 
 import java.util.*;
 
@@ -41,7 +39,7 @@ public class Game {
 
     private GameMode gameMode;
 
-    private Arena arena;
+    private Map map;
     private Player winner;
 
     private HashMap<Player, Boolean> votes;
@@ -57,16 +55,16 @@ public class Game {
 
     public Game() {
         gameMode = GameMode.LOADING;
-        arena = BlitzSG.getInstance().getArenaManager().getRandomArena();
+        map = BlitzSG.getInstance().getArenaManager().getRandomArena();
 
         this.openedChests = new ArrayList<>();
         this.starChests = new ArrayList<>();
 
-        BlitzSG.getInstance().getArenaManager().fixSpawns(arena);
-        if (arena == null || arena.getSpawns().get(0).getWorld() == null) {
+        BlitzSG.getInstance().getArenaManager().fixSpawns(map);
+        if (map == null || map.getSpawns().get(0).getWorld() == null) {
             return;
         }
-        arena.setInUse(true);
+        map.setInUse(true);
         BlitzSG.getInstance().getGameManager().addGame(this);
         allPlayers = new ArrayList<Player>();
         alivePlayers = new ArrayList<Player>();
@@ -87,7 +85,7 @@ public class Game {
     }
 
     public void addPlayer(Player p) {
-        if (arena == null || arena.getSpawns().get(0).getWorld() == null) {
+        if (map == null || map.getSpawns().get(0).getWorld() == null) {
             p.sendMessage(BlitzSG.CORE_NAME + ChatColor.YELLOW + "Couldn't find an available arena!");
             return;
         }
@@ -99,7 +97,7 @@ public class Game {
 
             return;
         }
-        if (arena.getSpawns().size() < alivePlayers.size() + 1) {
+        if (map.getSpawns().size() < alivePlayers.size() + 1) {
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&cThe game is already full!");
             return;
         }
@@ -109,8 +107,8 @@ public class Game {
 
         allPlayers.add(p);
         alivePlayers.add(p);
-        p.teleport(arena.getLobby().clone().add(0.5, 0, 0.5));
-        msgAll(BlitzSG.CORE_NAME + "&7" + uhcPlayer.getRank(true).getChatColor() + p.getName() + " &ehas joined (&b" + alivePlayers.size() + "&e/&b" + arena.getSpawns().size() + "&e)!");
+        p.teleport(map.getLobby().clone().add(0.5, 0, 0.5));
+        msgAll(BlitzSG.CORE_NAME + "&7" + uhcPlayer.getRank(true).getChatColor() + p.getName() + " &ehas joined (&b" + alivePlayers.size() + "&e/&b" + map.getSpawns().size() + "&e)!");
         if (alivePlayers.size() >= 2 && gameMode.equals(GameMode.WAITING)) {
             startLobbyCountdown();
         }
@@ -122,7 +120,7 @@ public class Game {
 
     public void teleportSpawn(Player p) {
         Location playerSpawn = null;
-        for (Location l : arena.getSpawns())
+        for (Location l : map.getSpawns())
             if (!spawnUsed.contains(l)) {
                 playerSpawn = l;
                 break;
@@ -146,10 +144,10 @@ public class Game {
         }
         BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
         uhcPlayer.setGame(null);
-        spawnUsed.remove(arena.getSpawns().get(alivePlayers.indexOf(p)));
+        spawnUsed.remove(map.getSpawns().get(alivePlayers.indexOf(p)));
         alivePlayers.remove(p);
         allPlayers.remove(p);
-        msgAll(BlitzSG.CORE_NAME + "&7" + p.getName() + " &ehas left (&b" + alivePlayers.size() + "&e/&b" + arena.getSpawns().size() + "&e)!");
+        msgAll(BlitzSG.CORE_NAME + "&7" + p.getName() + " &ehas left (&b" + alivePlayers.size() + "&e/&b" + map.getSpawns().size() + "&e)!");
         resetPlayer(p);
         p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0)); //todo change back
         BlitzSG.getInstance().getBlitzSGPlayerManager().setLobbyInventoryAndNameTag(p);
@@ -208,7 +206,7 @@ public class Game {
                 countdownTime--;
                 if (countdownTime == 30) {
                     BlitzSG.broadcast("", Bukkit.getWorld("world"));
-                    BlitzSG.broadcast("&eA BSG &egame on the map &a" + arena.getName() + " &eis bound to start in &b" + countdownTime + " &eseconds. Use &6/bsg join &eto enter the game.", Bukkit.getWorld("world"));
+                    BlitzSG.broadcast("&eA BSG &egame on the map &a" + map.getName() + " &eis bound to start in &b" + countdownTime + " &eseconds. Use &6/bsg join &eto enter the game.", Bukkit.getWorld("world"));
                     BlitzSG.broadcast("", Bukkit.getWorld("world"));
                 }
                 if (alivePlayers.size() < 2) {
@@ -241,7 +239,7 @@ public class Game {
     public void startGame() {
         nextEvent = NextEvent.STAR;
         gameMode = GameMode.INGAME;
-        arena.getArenaWorld().setTime(0);
+        map.getArenaWorld().setTime(0);
         for (Player p : alivePlayers) {
             p.closeInventory();
             resetPlayer(p);
@@ -258,7 +256,7 @@ public class Game {
 
 
         }
-        for (Location l : arena.getSpawns())
+        for (Location l : map.getSpawns())
             if (spawnUsed.contains(l))
                 //removeCage(l);
                 gameTime = 0;
@@ -383,15 +381,15 @@ public class Game {
     }
 
     private void startDeathmatch() {
-        if (arena.getDeathmatch() == null)
+        if (map.getDeathmatch() == null)
             return;
-        Location dm = arena.getDeathmatch();
-        if (arena.getDeathmatchDistance() == 0) {
+        Location dm = map.getDeathmatch();
+        if (map.getDeathmatchDistance() == 0) {
             System.out.println("I took this path, looks nice or msth");
             alivePlayers.forEach(player -> player.teleport(dm));
             return;
         }
-        int dist = arena.getDeathmatchDistance();
+        int dist = map.getDeathmatchDistance();
         Location[] locations = new Location[]{dm.clone().add(dist, 0, 0), dm.clone().add(-dist, 0, 0), dm.clone().add(0, 0, dist), dm.clone().add(0, 0, -dist)};
         int a = 0;
         for (Player alivePlayer : alivePlayers) {
@@ -517,6 +515,8 @@ public class Game {
                 resetGame();
             }
         }.runTaskLater(BlitzSG.getInstance(), 200);
+        Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> BlitzSG.getInstance().getStatisticsManager().save());
+
     }
 
     public void resetGame() {
@@ -535,7 +535,7 @@ public class Game {
         allPlayers.clear();
         alivePlayers.clear();
         deadPlayers.clear();
-        arena.resetArena();
+        map.resetArena();
     }
 
     //private void createCage(Location location) {
@@ -678,8 +678,8 @@ public class Game {
         canFindStar = false;
     }
 
-    public Arena getArena() {
-        return arena;
+    public Map getArena() {
+        return map;
     }
 
     public boolean isDeathmatchStarting() {

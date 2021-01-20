@@ -21,7 +21,6 @@ public class FlowerTrail extends Aura {
     public void uh(Player p) {
         Location loc = p.getLocation().clone().subtract(0, 0, 0);
         Block b = loc.getBlock();
-        System.out.println(b.getLocation().clone().subtract(0,-1,0).getBlock().getType());
         if (b.getType() == Material.AIR && b.getLocation().clone().subtract(0,1,0).getBlock().getType().isOccluding()) {
 
             Bukkit.getOnlinePlayers().forEach(player1 -> player1.sendBlockChange(loc, Material.RED_ROSE, (byte) (new Random().nextInt(8 - 0 + 1) + 0)));

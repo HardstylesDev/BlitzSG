@@ -1,5 +1,6 @@
 package me.syesstyles.blitz.kit.kits;
 
+import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.kit.Kit;
 import me.syesstyles.blitz.utils.ItemBuilder;
 import me.syesstyles.blitz.utils.ItemUtils;
@@ -81,7 +82,7 @@ public class Rogue extends Kit {
 
         super(
                 "Rogue", "Sneak attack!", new ItemBuilder(Material.WOOD_SWORD).durability(Material.WOOD_SWORD.getMaxDurability() - 2).enchantment(Enchantment.KNOCKBACK, 3).make()
-                , Arrays.asList(125000, 100, 1000, 2000, 4000, 16000, 50000, 100000, 250000, 1000000)
+                , Arrays.asList(96000, 100, 1000, 2000, 4000, 16000, 50000, 100000, 250000, 1000000)
                 , Arrays.asList(Arrays.asList("§7Start the game with 3x TNT.")
                         , Arrays.asList("§7Start the game with some bullshit.")
                         , Arrays.asList("§7Start the game with some bullshit.")
@@ -92,7 +93,7 @@ public class Rogue extends Kit {
                         , Arrays.asList("§7Start the game with some bullshit.")
                         , Arrays.asList("§7Start the game with some bullshit.")
                         , Arrays.asList("§7Start the game with some bullshit."))
-                , Arrays.asList(Arrays.asList(new ItemStack(Material.AIR, 1)))
+                , Arrays.asList(Arrays.asList(new ItemStack(Material.AIR, 1))), BlitzSG.getInstance().getRankManager().getRankByName("VIP")
 
         );
     }

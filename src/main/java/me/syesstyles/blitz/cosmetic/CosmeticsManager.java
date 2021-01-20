@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -42,9 +43,9 @@ public class CosmeticsManager {
         return null;
     }
 
-    ArrayList<Player> players = new ArrayList<>();
+    Set<Player> players = new HashSet<>();
 
-    public ArrayList<Player> getPlayers() {
+    public Set<Player> getPlayers() {
         return players;
     }
 
@@ -72,6 +73,12 @@ public class CosmeticsManager {
                 if (players.size() == 0)
                     return;
                 for (Player player : players) {
+                    if (player == null){
+                        try { players.removeIf(b -> b == null); } catch (ConcurrentModificationException ignored){}
+                        continue;
+
+                    }
+
                     BlitzSGPlayer p = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(player.getUniqueId());
                     if (p.getAura() == null || !player.isOnline()) {
                         players.remove(player);

@@ -16,8 +16,8 @@ import java.util.Map;
 public class SaveStats {
 
     public void saveAll() {
-        for (BlitzSGPlayer uhcPlayer : BlitzSG.getInstance().getBlitzSGPlayerManager().getUhcPlayers().values())
-            save(uhcPlayer);
+       // for (BlitzSGPlayer uhcPlayer : BlitzSG.getInstance().getBlitzSGPlayerManager().getUhcPlayers().values())
+       //     save(uhcPlayer);
     }
 
     public void save(Player p) {
@@ -25,45 +25,45 @@ public class SaveStats {
     }
 
     public void save(BlitzSGPlayer p) {
-        try {
-            Connection connection = BlitzSG.getInstance().getData().getConnection();
-            String command = String.format("REPLACE INTO `stats`(`uuid`, `coins`, `kills`, `deaths`, `wins`, `rank`, `nickname`, `stars`, `kits`, `elo`, `taunt`, `selectedKit`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
+      // try {
+      //     Connection connection = BlitzSG.getInstance().getData().getConnection();
+      //     String command = String.format("REPLACE INTO `stats`(`uuid`, `coins`, `kills`, `deaths`, `wins`, `rank`, `nickname`, `stars`, `kits`, `elo`, `taunt`, `selectedKit`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)");
 
-            PreparedStatement preparedStatement = connection.prepareStatement(command);
-            preparedStatement.setString(1, p.getUuid().toString());
-            preparedStatement.setInt(2, p.getCoins());
-            preparedStatement.setInt(3, p.getKills());
-            preparedStatement.setInt(4, p.getDeaths());
-            preparedStatement.setInt(5, p.getWins());
-            if (p == null || p.getRank() == null || p.getRank().getPrefix() == null)
-                preparedStatement.setString(6, null);
-            else
-                preparedStatement.setString(6, p.getRank().getRank());
+      //     PreparedStatement preparedStatement = connection.prepareStatement(command);
+      //     preparedStatement.setString(1, p.getUuid().toString());
+      //     preparedStatement.setInt(2, p.getCoins());
+      //     preparedStatement.setInt(3, p.getKills());
+      //     preparedStatement.setInt(4, p.getDeaths());
+      //     preparedStatement.setInt(5, p.getWins());
+      //     if (p == null || p.getRank() == null || p.getRank().getPrefix() == null)
+      //         preparedStatement.setString(6, null);
+      //     else
+      //         preparedStatement.setString(6, p.getRank().getRank());
 
-            if (p == null || p.getNickName() == null)
-                preparedStatement.setString(7, null);
-            else
-                preparedStatement.setString(7, p.getNickName());
-            //       preparedStatement.setString(7, p.getNick().getNickName());
-            preparedStatement.setString(8, starsToString(p));
-            preparedStatement.setString(9, kitsToJson(p));
-            preparedStatement.setInt(10, p.getElo());
-            preparedStatement.setInt(11, 0);
+      //     if (p == null || p.getNickName() == null)
+      //         preparedStatement.setString(7, null);
+      //     else
+      //         preparedStatement.setString(7, p.getNickName());
+      //     //       preparedStatement.setString(7, p.getNick().getNickName());
+      //     preparedStatement.setString(8, starsToString(p));
+      //     preparedStatement.setString(9, kitsToJson(p));
+      //     preparedStatement.setInt(10, p.getElo());
+      //     preparedStatement.setInt(11, 0);
 
-            if (p.getSelectedKit() != null)
-                preparedStatement.setString(12, p.getSelectedKit().getName());
-            else preparedStatement.setString(12, null);
+      //     if (p.getSelectedKit() != null)
+      //         preparedStatement.setString(12, p.getSelectedKit().getName());
+      //     else preparedStatement.setString(12, null);
 
 
-//p.getUuid(), p.getCoins(), p.getKills(), p.getDeaths(),p.getWins(),p.getRank().getRank(), p.getNick().getNickName(), starsToString(p), kitsToJson(p), p.getElo(), null );
+//p.ge//Uuid(), p.getCoins(), p.getKills(), p.getDeaths(),p.getWins(),p.getRank().getRank(), p.getNick().getNickName(), starsToString(p), kitsToJson(p), p.getElo(), null );
 
-            preparedStatement.execute();
+      //     preparedStatement.execute();
 
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+      //     connection.close();
+      // } catch (SQLException e) {
+      //     e.printStackTrace();
 
-        }
+      // }
     }
 
     private String starsToString(BlitzSGPlayer p) {

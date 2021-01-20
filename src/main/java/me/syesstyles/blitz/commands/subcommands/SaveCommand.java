@@ -5,7 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import me.syesstyles.blitz.BlitzSG;
-import me.syesstyles.blitz.arena.ArenaUtils;
+import me.syesstyles.blitz.map.MapUtils;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 
 public class SaveCommand extends SubCommand{
@@ -34,7 +34,7 @@ public class SaveCommand extends SubCommand{
 		Bukkit.unloadWorld(p.getWorld(), true);
 		uhcPlayer.setEditedArena(null);
 
-		ArenaUtils.saveArenas();
+		MapUtils.saveArenas();
 	}
 
 	@Override

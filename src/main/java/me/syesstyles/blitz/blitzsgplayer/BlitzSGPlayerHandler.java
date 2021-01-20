@@ -37,7 +37,9 @@ public class BlitzSGPlayerHandler implements Listener {
         if (BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId()) == null)
             uhcPlayer = new BlitzSGPlayer(e.getPlayer().getUniqueId());
         uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-
+        uhcPlayer.setName(p.getDisplayName());
+        uhcPlayer.setIp(p.getAddress().toString().split(":")[0].replaceAll("/", ""));
+        if(uhcPlayer.getAura() != null)BlitzSG.getInstance().getCosmeticsManager().add(p);
         p.setGameMode(GameMode.SURVIVAL);
         p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0)); //todo change back
         if (!(uhcPlayer.getRank() instanceof Default)) {
@@ -140,27 +142,23 @@ public class BlitzSGPlayerHandler implements Listener {
 
     @EventHandler
     public void onLobbyPunch(EntityDamageByEntityEvent e) {
-        System.out.println("1");
         if (!(e.getEntity() instanceof Player && e.getDamager() instanceof Player))
             return;
-        System.out.println("2");
+
+        BlitzSGPlayer victim = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getEntity().getUniqueId());
+        if (victim.getGame() != null) return;
         if (!(e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK))
             return;
-        System.out.println("3");
-        BlitzSGPlayer victim = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getEntity().getUniqueId());
+
         if (!(victim.getRank() instanceof Admin) && !(victim.getRank() instanceof Moderator) && !(victim.getRank() instanceof Helper))
             return;
-        if (victim.getGame() != null) return;
-        System.out.println("4");
+
         BlitzSGPlayer attacker = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getDamager().getUniqueId());
 
         if (!(attacker.getRank() instanceof Admin) && !(attacker.getRank() instanceof Moderator) && !(attacker.getRank() instanceof Helper) && !(attacker.getRank() instanceof MvpPlus) && !(attacker.getRank() instanceof Youtuber))
             return;
-        System.out.println("5");
         if (victim.getPunched())
             return;
-        System.out.println("6");
-        //todo punching
         victim.setPunched(true);
         BlitzSG.broadcast(attacker.getRank().getPrefix() + e.getDamager().getName() + " &7punched " + victim.getRank().getChatColor() + e.getEntity().getName() + " &7into the sky!", e.getDamager().getWorld());
         e.getEntity().getLocation().getWorld().createExplosion(e.getEntity().getLocation().getX(), e.getEntity().getLocation().getY(), e.getEntity().getLocation().getZ(), 2, false, false);

@@ -5,11 +5,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
 import org.bukkit.entity.Player;
 
 import me.syesstyles.blitz.BlitzSG;
-import me.syesstyles.blitz.arena.Arena;
+import me.syesstyles.blitz.map.Map;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 
 import java.io.File;
@@ -28,7 +27,7 @@ public class CreateCommand extends SubCommand {
 		}*/
 		
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-		for(Arena a : BlitzSG.getInstance().getArenaManager().getArenas()) {
+		for(Map a : BlitzSG.getInstance().getArenaManager().getArenas()) {
 			if(a.getName().equalsIgnoreCase(args[1])) {
 				uhcPlayer.setEditedArena(a);
 				p.teleport(new Location(a.getArenaWorld(), 0, 100, 0));
@@ -60,7 +59,7 @@ public class CreateCommand extends SubCommand {
         //w.setGameRuleValue("showDeathMessages", "false");
 		
 		p.teleport(new Location(w, 0, 100, 0));
-		uhcPlayer.setEditedArena(new Arena(p.getWorld(), args[1]));
+		uhcPlayer.setEditedArena(new Map(p.getWorld(), args[1]));
 		p.sendMessage("§eSuccessfully created the world for arena §6\"" + args[1] + "\"§e.");
 		p.sendMessage("§eUse §6/bsg save §eto save the arena.");
 		

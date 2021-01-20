@@ -28,7 +28,7 @@ public class GameMobHandler implements Listener {
 
     @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        if (event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.BREEDING)) {
+        if (event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.BREEDING) || event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.SLIME_SPLIT)) {
             event.setCancelled(true);
         }
 

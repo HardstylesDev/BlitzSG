@@ -1,4 +1,4 @@
-package me.syesstyles.blitz.arena;
+package me.syesstyles.blitz.map;
 
 import me.syesstyles.blitz.BlitzSG;
 import org.bukkit.Bukkit;
@@ -10,7 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 
-public class Arena {
+public class Map {
 
     private String name;
 
@@ -42,7 +42,7 @@ public class Arena {
 
     private boolean inUse;
 
-    public Arena(Location corner1, Location corner2, String name) {
+    public Map(Location corner1, Location corner2, String name) {
         this.name = name;
         this.spawns = new ArrayList<Location>();
 
@@ -61,7 +61,7 @@ public class Arena {
         BlitzSG.getInstance().getArenaManager().addArena(this);
     }
 
-    public Arena(World w, String name) {
+    public Map(World w, String name) {
         this.name = name;
         this.inUse = false;
         this.spawns = new ArrayList<Location>();
