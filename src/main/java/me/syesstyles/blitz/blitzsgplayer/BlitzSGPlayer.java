@@ -107,7 +107,7 @@ public class BlitzSGPlayer {
         this.gameSpawn = null;
         this.selectedKit = null;
         this.aura = null;
-        BlitzSG.getInstance().getBlitzSGPlayerManager().addUhcPlayer(this.uuid, this);
+        BlitzSG.getInstance().getBlitzSGPlayerManager().addBsgPlayer(this.uuid, this);
     }
 
     public void loadStats(FileConfiguration statsFile) {
@@ -189,10 +189,6 @@ public class BlitzSGPlayer {
         this.selectedKit = kit;
     }
 
-    public void setNickName(String nickName) {
-        this.nick.setNickName(nickName);
-    }
-
     public boolean isNicked() {
         return (nick.isNicked());
     }
@@ -213,11 +209,11 @@ public class BlitzSGPlayer {
         return this.name;
     }
 
-    public String getNickName() {
-        if (this.nick != null)
-            return this.nick.getNickName();
-        return null;
-    }
+ // public String getNickName() {
+ //     if (this.nick != null)
+ //         return this.nick.getNickName();
+ //     return null;
+ // }
 
     public void setElo(int elo) {
         this.elo = elo;

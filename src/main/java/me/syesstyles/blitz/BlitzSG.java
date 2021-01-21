@@ -1,8 +1,6 @@
 package me.syesstyles.blitz;
 
 import com.zaxxer.hikari.HikariDataSource;
-import me.syesstyles.blitz.aaaaa.LoadStats;
-import me.syesstyles.blitz.aaaaa.SaveStats;
 import me.syesstyles.blitz.aaaaa.StatisticsManager;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerHandler;
@@ -27,7 +25,6 @@ import me.syesstyles.blitz.rank.RankManager;
 import me.syesstyles.blitz.scoreboard.ScoreboardManager;
 import me.syesstyles.blitz.utils.EnchantListener;
 import me.syesstyles.blitz.utils.FireworkCommand;
-import me.syesstyles.blitz.utils.PlayerUtils;
 import me.syesstyles.blitz.utils.WorldCommand;
 import me.syesstyles.blitz.utils.database.Database;
 import me.syesstyles.blitz.utils.nametag.NametagManager;
@@ -39,11 +36,14 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 public class BlitzSG extends JavaPlugin {
 
     public static String CORE_NAME = EnumChatFormat.GRAY + "[" + EnumChatFormat.RED + "B-SG" + EnumChatFormat.GRAY + "] " + EnumChatFormat.WHITE;
 
+    public static JedisPool pool;
 
     public static BlitzSG instance;
     private NametagManager nametagManager;
@@ -69,6 +69,16 @@ public class BlitzSG extends JavaPlugin {
     }
 
     public void onEnable() {
+        pool = new JedisPool("127.0.0.1");
+
+        Jedis j = null;
+        try{
+            j = pool.getResource();
+            j.set("key", "value");
+        }finally {
+            j.close();
+        }
+
 
         database = new Database();
         blitzSGPlayerManager = new BlitzSGPlayerManager();
@@ -109,18 +119,16 @@ public class BlitzSG extends JavaPlugin {
         //Load Players:
         //PlayerUtils.loadPlayerData();
         //new LoadStats().load();
-        statisticsManager.load();
-       // System.out.println("looaded dataaa");
-        for (Player p : getServer().getOnlinePlayers())
-            if (!blitzSGPlayerManager.getUhcPlayers().containsKey(p.getUniqueId())) {
-                BlitzSGPlayer bsgPlayer = new BlitzSGPlayer(p.getUniqueId());
-                bsgPlayer.setName(p.getDisplayName());
-                bsgPlayer.setIp(p.getAddress().toString().split(":")[0].replaceAll("/", ""));
-            } else {
-                BlitzSGPlayer bsgPlayer = blitzSGPlayerManager.getBsgPlayer(p.getUniqueId());
-                bsgPlayer.setName(p.getDisplayName());
-                bsgPlayer.setIp(p.getAddress().toString().split(":")[0].replaceAll("/", ""));
-            }
+        //statisticsManager.load();
+        // System.out.println("looaded dataaa");
+        for (Player p : getServer().getOnlinePlayers()) {
+            statisticsManager.load(p.getUniqueId());
+            BlitzSGPlayer bsgPlayer = blitzSGPlayerManager.getBsgPlayer(p.getUniqueId());
+            blitzSGPlayerManager.addBsgPlayer(p.getUniqueId(), bsgPlayer);
+            bsgPlayer.setName(p.getDisplayName());
+            bsgPlayer.setIp(p.getAddress().toString().split(":")[0].replaceAll("/", ""));
+            p.setPlayerListName(bsgPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(bsgPlayer.getElo()).getPrefix() + " [" + bsgPlayer.getElo() + "]");
+        }
         //Load Arena:
         //ArenaUtils.loadArenas();
         // arenaManager.loadArena("aelinstower");
@@ -139,16 +147,18 @@ public class BlitzSG extends JavaPlugin {
     public void onDisable() {
 
 
-        PlayerUtils.savePlayerData();
-        statisticsManager.save();
+        //PlayerUtils.savePlayerData();
+        //statisticsManager.save();
 
-         try {
-             new SaveStats().saveAll();
-         }catch (Exception e){
-         }
+        try {
+            //new SaveStats().saveAll();
+        } catch (Exception e) {
+        }
         //Reset Running Games:
         for (Game g : gameManager.getRunningGames())
             g.resetGame();
+
+        pool.close();
     }
 
     public Database getData() {
@@ -194,6 +204,7 @@ public class BlitzSG extends JavaPlugin {
     public KitManager getKitManager() {
         return kitManager;
     }
+
     public StatisticsManager getStatisticsManager() {
         return statisticsManager;
     }

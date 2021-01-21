@@ -14,7 +14,7 @@ import java.util.UUID;
 public class PlayerUtils {
 
     public static void savePlayerData() {
-        for (BlitzSGPlayer uhcPlayer : BlitzSG.getInstance().getBlitzSGPlayerManager().getUhcPlayers().values()) {
+        for (BlitzSGPlayer uhcPlayer : BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayers().values()) {
             //new File(Kits.getInstance().getDataFolder() + "/players").mkdir();
             File f = new File(BlitzSG.getInstance().getDataFolder() + "/players/" + uhcPlayer.getUuid() + ".yml");
             if (!f.exists()) {
@@ -39,9 +39,9 @@ public class PlayerUtils {
                 fc.set("SelectedKit", "Knight");
             else fc.set("SelectedKit", uhcPlayer.getSelectedKit().getName());
 
-            if (uhcPlayer.getNickName() == null)
+            if (uhcPlayer.getNick() == null)
                 fc.set("Nickname", "");
-            else fc.set("Nickname", uhcPlayer.getNickName());
+            else fc.set("Nickname", uhcPlayer.getNick().getNickName());
             fc.set("ELO", uhcPlayer.getElo());
             fc.set("Wins", uhcPlayer.getWins());
             fc.set("Kills", uhcPlayer.getKills());

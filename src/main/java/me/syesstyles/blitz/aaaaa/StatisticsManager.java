@@ -6,6 +6,7 @@ import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.gamestar.Star;
 import me.syesstyles.blitz.kit.Kit;
+import me.syesstyles.blitz.utils.nickname.Nick;
 
 import java.lang.reflect.Type;
 import java.sql.Connection;
@@ -20,10 +21,11 @@ public class StatisticsManager {
     }
 
     public void save() {
-        for (BlitzSGPlayer bsgPlayer : BlitzSG.getInstance().getBlitzSGPlayerManager().getUhcPlayers().values()) {
+        for (BlitzSGPlayer bsgPlayer : BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayers().values()) {
             save(bsgPlayer);
         }
     }
+
     public void save(BlitzSGPlayer bsgPlayer) {
         JsonObject jsonObject = bsgPlayer.getJsonObject();
         jsonObject.addProperty("uuid", bsgPlayer.getUuid().toString());
@@ -42,11 +44,26 @@ public class StatisticsManager {
             jsonObject.addProperty("selected_aura", bsgPlayer.getAura().getName());
         jsonObject.add("kits", kitsToJson(bsgPlayer));
         jsonObject.add("stars", starsToJson(bsgPlayer));
+        if (bsgPlayer.getNick() != null) {
+            jsonObject.add("nick", nickToJson(bsgPlayer));
+            System.out.println("I put " + nickToJson(bsgPlayer).toString());
+        }
+
         bsgPlayer.setJsonObject(jsonObject);
         insert(bsgPlayer.getUuid().toString(), jsonObject);
 
     }
 
+
+    private JsonObject nickToJson(BlitzSGPlayer p) {
+        JsonObject j = new JsonObject();
+        j.addProperty("name", p.getNick().getNickName());
+        j.addProperty("value", p.getNick().getSkinValue());
+        j.addProperty("signature", p.getNick().getSkinSignature());
+        j.addProperty("nicked", p.getNick().isNicked());
+        return j;
+
+    }
 
     private JsonObject kitsToJson(BlitzSGPlayer p) {
         HashMap<String, Integer> kits = new HashMap<>();
@@ -116,12 +133,60 @@ public class StatisticsManager {
                 //}
                 if (jsonObject.has("stars"))
                     blitzSGPlayer.setStars(getStarsFromJsonArray(jsonObject.get("stars").getAsJsonArray()));
+                if (jsonObject.has("nick") && jsonObject.get("nick") != null && jsonObject.get("nick").getAsJsonObject() != null && jsonObject.get("nick").getAsJsonObject().has("name") && jsonObject.get("nick").getAsJsonObject() != null && jsonObject.get("nick").getAsJsonObject().get("value") != null && jsonObject.get("nick").getAsJsonObject().get("signature") != null) {
+                    blitzSGPlayer.setNick(new Nick(jsonObject.get("nick").getAsJsonObject().get("name").getAsString(), jsonObject.get("nick").getAsJsonObject().get("value").getAsString(), jsonObject.get("nick").getAsJsonObject().get("signature").getAsString(), jsonObject.get("nick").getAsJsonObject().get("nicked").getAsBoolean()));
+                }
 
             }
             rs.close();
             ps.close();
             conn.close();
-        } catch (SQLException e) {
+        } catch (
+                SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void load(UUID uuid) {
+        try {
+            Connection conn = BlitzSG.getInstance().getData().getConnection();
+            String sql = "select * from data WHERE uuid = ?;";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, uuid.toString());
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                BlitzSGPlayer blitzSGPlayer = new BlitzSGPlayer(UUID.fromString(rs.getString("uuid")));
+                if (blitzSGPlayer == null)
+                    continue;
+                JsonObject jsonObject = new JsonParser().parse(rs.getString("data")).getAsJsonObject();
+
+
+                if (jsonObject.has("name")) blitzSGPlayer.setName(jsonObject.get("name").getAsString());
+                if (jsonObject.has("rank"))
+                    blitzSGPlayer.setRank(BlitzSG.getInstance().getRankManager().getRankByName(jsonObject.get("rank").getAsString()));
+                blitzSGPlayer.setKills(jsonObject.get("kills").getAsInt());
+                blitzSGPlayer.setDeaths(jsonObject.get("deaths").getAsInt());
+                blitzSGPlayer.setWins(jsonObject.get("wins").getAsInt());
+                blitzSGPlayer.setCoins(jsonObject.get("coins").getAsInt());
+                blitzSGPlayer.setElo(jsonObject.get("elo").getAsInt());
+                if (jsonObject.has("selected_kit"))
+                    blitzSGPlayer.setSelectedKit(BlitzSG.getInstance().getKitManager().getKit(jsonObject.get("selected_kit").getAsString()));
+                if (jsonObject.has("selected_aura"))
+                    blitzSGPlayer.setAura(BlitzSG.getInstance().getCosmeticsManager().getAuraByName(jsonObject.get("selected_aura").getAsString()));
+
+                blitzSGPlayer.setKitLevels(getKitsFromJson(jsonObject.get("kits").getAsJsonObject().toString()));
+                if (jsonObject.has("stars"))
+                    blitzSGPlayer.setStars(getStarsFromJsonArray(jsonObject.get("stars").getAsJsonArray()));
+                if (jsonObject.has("nick") && jsonObject.get("nick") != null && jsonObject.get("nick").getAsJsonObject() != null && jsonObject.get("nick").getAsJsonObject().has("name") && jsonObject.get("nick").getAsJsonObject() != null && jsonObject.get("nick").getAsJsonObject().get("value") != null && jsonObject.get("nick").getAsJsonObject().get("signature") != null) {
+                    blitzSGPlayer.setNick(new Nick(jsonObject.get("nick").getAsJsonObject().get("name").getAsString(), jsonObject.get("nick").getAsJsonObject().get("value").getAsString(), jsonObject.get("nick").getAsJsonObject().get("signature").getAsString(), jsonObject.get("nick").getAsJsonObject().get("nicked").getAsBoolean()));
+                }
+
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (
+                SQLException e) {
             e.printStackTrace();
         }
     }

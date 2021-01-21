@@ -32,10 +32,6 @@ public class Nickname {
         setNick(p, s, false);
     }
 
-    private GameProfile personal = null;
-    private String skinValue = null;
-    private String skinSignature = null;
-
     public void setNick(Player p, String s, boolean onJoin) {
         if (!onJoin) {
             String skin[] = prepareSkinTextures(p, s);
@@ -65,20 +61,21 @@ public class Nickname {
                 ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(player.getBukkitEntity().getEntityId()));
                 ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(offlineplayer.getBukkitEntity().getEntityId()));
             }
-            BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-            if(uhcPlayer.getNick() == null){
-                uhcPlayer.setNick(new Nick(s, null, null, true));
+            BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+            if(bsgPlayer.getNick() == null){
+                bsgPlayer.setNick(new Nick(s, null, null, true));
 
             }
-            uhcPlayer.getNick().setNickName(s);
-            uhcPlayer.getNick().setNicked(true);
-            uhcPlayer.getNick().setSkinValue(skin[0]);
-            uhcPlayer.getNick().setSkinSignature(skin[1]);
+            bsgPlayer.getNick().setNickName(s);
+            bsgPlayer.getNick().setNicked(true);
+            bsgPlayer.getNick().setSkinValue(skin[0]);
+            bsgPlayer.getNick().setSkinSignature(skin[1]);
+            BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer);
             return;
         }
-        BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+        BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 
-        if (uhcPlayer.getNick().getSkinSignature() == null) return;
+        if (bsgPlayer.getNick().getSkinSignature() == null) return;
         setSkinForSelf(p);
         refresh(p);
         setPlayerNameTag(p, s);
@@ -86,9 +83,9 @@ public class Nickname {
         //removeOfflinePlayer(p.getDisplayName());
 
 
-        uhcPlayer.setNickName(s);
-        p.setPlayerListName(uhcPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix()
-                + " [" + uhcPlayer.getElo() + "]");
+        //bsgPlayer.setNickName(s);
+        p.setPlayerListName(bsgPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(bsgPlayer.getElo()).getPrefix()
+                + " [" + bsgPlayer.getElo() + "]");
 
     }
 
@@ -116,12 +113,12 @@ public class Nickname {
     }
 
     public void unnick(Player p) {
-        BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        uhcPlayer.setNickName(null);
-        uhcPlayer.getNick().setNicked(false);
-        uhcPlayer.getNick().setNickName(null);
-        uhcPlayer.setNick(null);
+        BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+
+
+        bsgPlayer.setNick(null);
         p.kickPlayer(ChatColor.GREEN + "Please rejoin");
+        BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer);
 
     }
 
@@ -139,7 +136,6 @@ public class Nickname {
             try {
                 Class.forName("net.minecraft.util.com.mojang.authlib.GameProfile");
                 gameProfileExists = true;
-                this.personal = ((CraftPlayer) player).getHandle().getProfile();
             } catch (ClassNotFoundException ignored) {
 
             }

@@ -73,6 +73,8 @@ public class DebugCommand extends SubCommand {
             new LoadStats().load();
         } else if (args[1].equalsIgnoreCase("donkey")) {
             BlitzSG.getInstance().getStatisticsManager().save();
+        } else if (args[1].equalsIgnoreCase("test")) {
+        p.sendMessage("xd: " + BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayers().size());
 
         } else if (args[1].equalsIgnoreCase("info")) {
             if (args.length > 2) {

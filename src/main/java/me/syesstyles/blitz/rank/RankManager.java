@@ -24,7 +24,7 @@ public class RankManager {
     }
     public Rank getRank(Player p, boolean hideNick) {
         BlitzSGPlayer blitzSGPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        if (blitzSGPlayer.getNickName() != null && !blitzSGPlayer.getNickName().equalsIgnoreCase("")) {
+        if (blitzSGPlayer.getNick() != null && !blitzSGPlayer.getNick().getNickName().equalsIgnoreCase("")) {
             return getRankByName("Default");
         }
         return getRank(p);

@@ -80,7 +80,7 @@ public class CosmeticsManager {
                     }
 
                     BlitzSGPlayer p = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(player.getUniqueId());
-                    if (p.getAura() == null || !player.isOnline()) {
+                    if (p == null || p.getAura() == null || !player.isOnline()) {
                         players.remove(player);
                         return;
                     }

@@ -14,28 +14,28 @@ import me.syesstyles.blitz.utils.ItemUtils;
 
 public class BlitzSGPlayerManager {
 
-	private HashMap<UUID, BlitzSGPlayer> uhcPlayers;
+	private HashMap<UUID, BlitzSGPlayer> bsgPlayers;
 	private HashMap<BlitzSGPlayer, Game> playerGames;
 	
 	public BlitzSGPlayerManager() {
-		uhcPlayers = new HashMap<UUID, BlitzSGPlayer>();
+		bsgPlayers = new HashMap<UUID, BlitzSGPlayer>();
 		playerGames = new HashMap<BlitzSGPlayer, Game>();
 	}
 
-	public HashMap<UUID, BlitzSGPlayer> getUhcPlayers() {
-		return uhcPlayers;
+	public HashMap<UUID, BlitzSGPlayer> getBsgPlayers() {
+		return bsgPlayers;
 	}
 
 	public BlitzSGPlayer getBsgPlayer(UUID uuid) {
-		return uhcPlayers.get(uuid);
+		return bsgPlayers.get(uuid);
 	}
 
-	public void addUhcPlayer(UUID uuid, BlitzSGPlayer uhcPlayer) {
-		uhcPlayers.put(uuid, uhcPlayer);
+	public void addBsgPlayer(UUID uuid, BlitzSGPlayer uhcPlayer) {
+		bsgPlayers.put(uuid, uhcPlayer);
 	}
 
-	public void removeUhcPlayer(UUID uuid) {
-		uhcPlayers.remove(uuid);
+	public void removeBsgPlayer(UUID uuid) {
+		bsgPlayers.remove(uuid);
 	}
 
 	public Game getUhcPlayerGame(BlitzSGPlayer uhcPlayer) {

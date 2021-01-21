@@ -2,7 +2,6 @@ package me.syesstyles.blitz.blitzsgplayer;
 
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.gui.ShopGUI;
-import me.syesstyles.blitz.gui.ShopKitBasicGUI;
 import me.syesstyles.blitz.rank.ranks.*;
 import me.syesstyles.blitz.utils.nickname.Nickname;
 import org.bukkit.*;
@@ -25,6 +24,24 @@ public class BlitzSGPlayerHandler implements Listener {
     }
 
     @EventHandler
+    public void onConnect(AsyncPlayerPreLoginEvent e) {
+        Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
+            BlitzSG.getInstance().getStatisticsManager().load(e.getUniqueId());
+            BlitzSG.getInstance().getBlitzSGPlayerManager().addBsgPlayer(e.getUniqueId(), BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getUniqueId()));
+        });
+
+    }
+
+    @EventHandler
+    public void onDisconnect(PlayerQuitEvent e) {
+        Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
+            BlitzSG.getInstance().getStatisticsManager().save(BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getPlayer().getUniqueId()));
+            BlitzSG.getInstance().getBlitzSGPlayerManager().removeBsgPlayer(e.getPlayer().getUniqueId());
+        });
+    }
+
+    @EventHandler
+
     public void onJoin(PlayerJoinEvent e) {
 
         Player p = e.getPlayer();
@@ -39,7 +56,7 @@ public class BlitzSGPlayerHandler implements Listener {
         uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
         uhcPlayer.setName(p.getDisplayName());
         uhcPlayer.setIp(p.getAddress().toString().split(":")[0].replaceAll("/", ""));
-        if(uhcPlayer.getAura() != null)BlitzSG.getInstance().getCosmeticsManager().add(p);
+        if (uhcPlayer.getAura() != null) BlitzSG.getInstance().getCosmeticsManager().add(p);
         p.setGameMode(GameMode.SURVIVAL);
         p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0)); //todo change back
         if (!(uhcPlayer.getRank() instanceof Default)) {
@@ -47,6 +64,7 @@ public class BlitzSGPlayerHandler implements Listener {
             p.setFlying(true);
         }
         if (uhcPlayer.getNick() != null && uhcPlayer.getNick().isNicked()) {
+
             e.setJoinMessage((ChatColor.YELLOW + uhcPlayer.getNick().getNickName() + " joined the game").replaceAll("  ", " "));
             Nickname nickname = new Nickname();
             if (uhcPlayer.getNick().getSkinSignature() == null) {
@@ -150,7 +168,7 @@ public class BlitzSGPlayerHandler implements Listener {
         if (!(e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK))
             return;
 
-        if (!(victim.getRank() instanceof Admin) && !(victim.getRank() instanceof Moderator) && !(victim.getRank() instanceof Helper))
+        if (!(victim.getRank(true) instanceof Admin) && !(victim.getRank(true) instanceof Moderator) && !(victim.getRank(true) instanceof Helper))
             return;
 
         BlitzSGPlayer attacker = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getDamager().getUniqueId());
@@ -160,7 +178,7 @@ public class BlitzSGPlayerHandler implements Listener {
         if (victim.getPunched())
             return;
         victim.setPunched(true);
-        BlitzSG.broadcast(attacker.getRank().getPrefix() + e.getDamager().getName() + " &7punched " + victim.getRank().getChatColor() + e.getEntity().getName() + " &7into the sky!", e.getDamager().getWorld());
+        BlitzSG.broadcast(attacker.getRank(true).getPrefix() + e.getDamager().getName() + " &7punched " + victim.getRank().getChatColor() + e.getEntity().getName() + " &7into the sky!", e.getDamager().getWorld());
         e.getEntity().getLocation().getWorld().createExplosion(e.getEntity().getLocation().getX(), e.getEntity().getLocation().getY(), e.getEntity().getLocation().getZ(), 2, false, false);
         ((Player) e.getEntity()).setAllowFlight(true);
         ((Player) e.getEntity()).setFlying(true);
