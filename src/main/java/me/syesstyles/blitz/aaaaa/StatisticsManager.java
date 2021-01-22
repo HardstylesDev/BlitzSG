@@ -40,13 +40,15 @@ public class StatisticsManager {
         jsonObject.addProperty("elo", bsgPlayer.getElo());
         if (bsgPlayer.getSelectedKit() != null)
             jsonObject.addProperty("selected_kit", bsgPlayer.getSelectedKit().getName());
+        if (bsgPlayer.getTaunt() != null)
+            jsonObject.addProperty("selected_taunt", bsgPlayer.getTaunt().getName());
         if (bsgPlayer.getAura() != null)
             jsonObject.addProperty("selected_aura", bsgPlayer.getAura().getName());
         jsonObject.add("kits", kitsToJson(bsgPlayer));
         jsonObject.add("stars", starsToJson(bsgPlayer));
         if (bsgPlayer.getNick() != null) {
             jsonObject.add("nick", nickToJson(bsgPlayer));
-            System.out.println("I put " + nickToJson(bsgPlayer).toString());
+
         }
 
         bsgPlayer.setJsonObject(jsonObject);
@@ -126,6 +128,8 @@ public class StatisticsManager {
                     blitzSGPlayer.setSelectedKit(BlitzSG.getInstance().getKitManager().getKit(jsonObject.get("selected_kit").getAsString()));
                 if (jsonObject.has("selected_aura"))
                     blitzSGPlayer.setAura(BlitzSG.getInstance().getCosmeticsManager().getAuraByName(jsonObject.get("selected_aura").getAsString()));
+                if (jsonObject.has("selected_taunt"))
+                    blitzSGPlayer.setTaunt(BlitzSG.getInstance().getCosmeticsManager().getTauntByName(jsonObject.get("selected_aura").getAsString()));
 
                 blitzSGPlayer.setKitLevels(getKitsFromJson(jsonObject.get("kits").getAsJsonObject().toString()));
                 //if (rs.getString("nickname") != null && !rs.getString("nickname").equalsIgnoreCase("")) {
@@ -173,6 +177,8 @@ public class StatisticsManager {
                     blitzSGPlayer.setSelectedKit(BlitzSG.getInstance().getKitManager().getKit(jsonObject.get("selected_kit").getAsString()));
                 if (jsonObject.has("selected_aura"))
                     blitzSGPlayer.setAura(BlitzSG.getInstance().getCosmeticsManager().getAuraByName(jsonObject.get("selected_aura").getAsString()));
+                if (jsonObject.has("selected_taunt"))
+                    blitzSGPlayer.setTaunt(BlitzSG.getInstance().getCosmeticsManager().getTauntByName(jsonObject.get("selected_taunt").getAsString()));
 
                 blitzSGPlayer.setKitLevels(getKitsFromJson(jsonObject.get("kits").getAsJsonObject().toString()));
                 if (jsonObject.has("stars"))

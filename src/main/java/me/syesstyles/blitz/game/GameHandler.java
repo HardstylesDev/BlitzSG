@@ -12,6 +12,9 @@ import me.syesstyles.blitz.utils.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -30,7 +33,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Random;
 
-public class GameHandler implements Listener {
+public class GameHandler implements Listener, CommandExecutor {
     ChestUtils chestUtils = new ChestUtils();
 
     @EventHandler
@@ -533,9 +536,17 @@ public class GameHandler implements Listener {
 
     @EventHandler
     public void onBlockInteract(PlayerInteractEvent e) {
+
+
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getPlayer().getUniqueId());
         if (!bsgPlayer.isInGame())
             return;
+        if (e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_AIR) {
+            if (e.getPlayer().getItemInHand().getType() == Material.COMPASS && e.getPlayer().isSneaking()) {
+                taunt(e.getPlayer(), false);
+            }
+            return;
+        }
         if (!(bsgPlayer.getGame().getGameMode() == GameMode.INGAME))
             return;
         if (e.getClickedBlock() != null)
@@ -561,5 +572,40 @@ public class GameHandler implements Listener {
                     bsgPlayer.getGame().getStarChests().add(e.getClickedBlock().getLocation());
                 }
             }
+    }
+
+    public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
+        Player p = (Player) sender;
+        taunt(p, true);
+        return true;
+    }
+
+
+    private void taunt(Player p, boolean byCommand) {
+        BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+        if (bsgPlayer.getGame() == null) {
+            if (byCommand)
+                p.sendMessage(ChatColor.RED + "You can't taunt when the game isn't running!");
+            return;
+        }
+        if (bsgPlayer.getGame().getGameMode() != GameMode.INGAME) {
+            if (byCommand)
+                p.sendMessage(ChatColor.RED + "You can't taunt when the game isn't running!");
+            return;
+        }
+        if (bsgPlayer.getTaunt() == null) {
+            p.sendMessage(ChatColor.RED + "You don't have a taunt! Buy it in the shop!");
+            return;
+        }
+        if (bsgPlayer.getGameTaunt() == 0) {
+            bsgPlayer.getGame().msgAll(bsgPlayer.getRank(true).getPrefix() + p.getName() + "&e performed the &l" + bsgPlayer.getTaunt().getName() + " Taunt&r&e!");
+            bsgPlayer.resetGameTaunt(1);
+            bsgPlayer.getTaunt().go(p);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(BlitzSG.getInstance(), () -> bsgPlayer.resetGameTaunt(2), 15 * 20);
+        }
+        if (bsgPlayer.getGameTaunt() == 2) {
+            p.sendMessage(ChatColor.RED + "You already used your taunt this game.");
+            return;
+        }
     }
 }

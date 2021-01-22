@@ -3,6 +3,7 @@ package me.syesstyles.blitz.blitzsgplayer;
 import com.google.gson.JsonObject;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.cosmetic.Aura;
+import me.syesstyles.blitz.cosmetic.Taunt;
 import me.syesstyles.blitz.game.Game;
 import me.syesstyles.blitz.gamestar.Star;
 import me.syesstyles.blitz.kit.Kit;
@@ -39,13 +40,16 @@ public class BlitzSGPlayer {
     private int kills;
     private int deaths;
     private int coins;
+    private Taunt selectedTaunt;
     private Aura aura;
     private JsonObject jsonObject;
     private String ip;
+
     private String name;
     private HashMap<Kit, Integer> kitLevels;
 
     private Map editedMap;
+
 
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
@@ -92,6 +96,7 @@ public class BlitzSGPlayer {
         this.elo = 0;
         this.wins = 0;
         this.kills = 0;
+
         this.deaths = 0;
         this.coins = 0;
         this.rank = null;
@@ -106,6 +111,7 @@ public class BlitzSGPlayer {
         this.gameTaunt = -1;
         this.gameSpawn = null;
         this.selectedKit = null;
+        this.selectedTaunt = null;
         this.aura = null;
         BlitzSG.getInstance().getBlitzSGPlayerManager().addBsgPlayer(this.uuid, this);
     }
@@ -230,7 +236,12 @@ public class BlitzSGPlayer {
         }
         this.elo += -elo;
     }
-
+    public void setTaunt(Taunt taunt){
+        this.selectedTaunt = taunt;
+    }
+    public Taunt getTaunt(){
+        return this.selectedTaunt;
+    }
     public Location getGameSpawn() {
         return gameSpawn;
     }

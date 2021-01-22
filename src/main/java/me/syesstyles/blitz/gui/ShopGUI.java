@@ -43,7 +43,9 @@ public class ShopGUI {
         inv.setItem(13+9+9, ItemUtils.buildItem(new ItemStack(Material.BLAZE_POWDER)
                 , ChatColor.GREEN + "Auras"
                 , Arrays.asList(ChatColor.GRAY + "Cosmetic particle auras that make you stand out!")));
-
+        inv.setItem(13+9+7, ItemUtils.buildItem(new ItemStack(Material.MAGMA_CREAM)
+                , ChatColor.GREEN + "Taunts"
+                , Arrays.asList(ChatColor.GRAY + "Unlock and customize the Taunt ability")));
 
 
         //Open the GUI

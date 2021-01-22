@@ -1,4 +1,4 @@
-package me.syesstyles.blitz.cosmetic.cosmetics;
+package me.syesstyles.blitz.cosmetic.cosmetics.aura;
 
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.cosmetic.Aura;

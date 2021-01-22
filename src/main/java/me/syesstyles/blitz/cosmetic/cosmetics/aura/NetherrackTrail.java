@@ -1,4 +1,4 @@
-package me.syesstyles.blitz.cosmetic.cosmetics;
+package me.syesstyles.blitz.cosmetic.cosmetics.aura;
 
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.cosmetic.Aura;
@@ -10,9 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class MyceliumTrail extends Aura {
-    public MyceliumTrail() {
-        super("MyceliumTrail", "Mycelium Trail", "Now just some red and white colored cows and we're all set!", BlitzSG.getInstance().getRankManager().getRankByName("VIP+"),new ItemStack(Material.MYCEL, 1),12);
+public class NetherrackTrail extends Aura {
+    public NetherrackTrail() {
+        super("NetherrackTrail", "Netherrack Trail", "You're officially a demon.", BlitzSG.getInstance().getRankManager().getRankByName("VIP+"),new ItemStack(Material.NETHERRACK, 1),13);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class MyceliumTrail extends Aura {
         Block b = loc.getBlock();
         if (!b.getType().isTransparent() && b.getType().isSolid() && b.getType().isOccluding()) {
 
-            Bukkit.getOnlinePlayers().forEach(player1 -> player1.sendBlockChange(loc, Material.MYCEL, (byte) 0));
+            Bukkit.getOnlinePlayers().forEach(player1 -> player1.sendBlockChange(loc, Material.NETHERRACK, (byte) 0));
             new BukkitRunnable() {
                 @Override
                 public void run() {

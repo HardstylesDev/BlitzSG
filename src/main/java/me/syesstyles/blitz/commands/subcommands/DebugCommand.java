@@ -1,11 +1,11 @@
 package me.syesstyles.blitz.commands.subcommands;
 
 import me.syesstyles.blitz.BlitzSG;
-
 import me.syesstyles.blitz.aaaaa.LoadStats;
 import me.syesstyles.blitz.aaaaa.SaveStats;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.cosmetic.Aura;
+import me.syesstyles.blitz.cosmetic.Taunt;
 import me.syesstyles.blitz.gui.AuraGUI;
 import me.syesstyles.blitz.gui.ShopStarGUI;
 import me.syesstyles.blitz.kit.Kit;
@@ -74,7 +74,7 @@ public class DebugCommand extends SubCommand {
         } else if (args[1].equalsIgnoreCase("donkey")) {
             BlitzSG.getInstance().getStatisticsManager().save();
         } else if (args[1].equalsIgnoreCase("test")) {
-        p.sendMessage("xd: " + BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayers().size());
+            p.sendMessage("xd: " + BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayers().size());
 
         } else if (args[1].equalsIgnoreCase("info")) {
             if (args.length > 2) {
@@ -126,7 +126,7 @@ public class DebugCommand extends SubCommand {
             if (args.length > 2) {
                 BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
                 Aura aura = BlitzSG.getInstance().getCosmeticsManager().getAuraByName(args[2]);
-                if(args[2].equalsIgnoreCase("null")){
+                if (args[2].equalsIgnoreCase("null")) {
                     BlitzSG.send(p, "&cAura has been reset.");
                     bsgPlayer.setAura(null);
                     return;
@@ -142,6 +142,28 @@ public class DebugCommand extends SubCommand {
 
             } else
                 AuraGUI.openGUI(p);
+
+
+        } else if (args[1].equalsIgnoreCase("taunt")) {
+            if (args.length > 2) {
+                BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+                Taunt aura = BlitzSG.getInstance().getCosmeticsManager().getTauntByName(args[2]);
+                if (args[2].equalsIgnoreCase("null")) {
+                    BlitzSG.send(p, "&cTaunt has been reset.");
+                    bsgPlayer.setTaunt(null);
+                    return;
+                }
+                if (aura == null) {
+                    BlitzSG.send(p, "&cthat taunt doesn't exist.");
+
+                    return;
+                }
+                BlitzSG.getInstance().getCosmeticsManager().add(p);
+                bsgPlayer.setTaunt(aura);
+                BlitzSG.send(p, "&aYou've set your taunt to " + aura.getName());
+
+            } else
+                BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId()).getTaunt().go(p);
 
         }
     }

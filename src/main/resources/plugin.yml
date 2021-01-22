@@ -16,4 +16,6 @@ commands:
     description: lol
   unban:
     description: lol
+  taunt:
+    description: lol
 

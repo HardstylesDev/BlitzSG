@@ -1,8 +1,8 @@
 package me.syesstyles.blitz.game;
 
 import me.syesstyles.blitz.BlitzSG;
-import me.syesstyles.blitz.map.Map;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
+import me.syesstyles.blitz.map.Map;
 import me.syesstyles.blitz.utils.ItemBuilder;
 import me.syesstyles.blitz.utils.ItemUtils;
 import org.bukkit.*;
@@ -465,7 +465,7 @@ public class Game {
     }
 
     public void endGame(boolean draw) {
-        if(gameMode == GameMode.RESETING)
+        if (gameMode == GameMode.RESETING)
             return;
         gameMode = GameMode.RESETING;
         try {
@@ -500,7 +500,7 @@ public class Game {
                 msgAll("      &c&l3rd Killer &7- " + thirdKiller.getRank(true).getChatColor() + Bukkit.getOfflinePlayer(BlitzSG.getInstance().getGameManager().getTopKillers(this).get(3).getUuid()).getName() + " &7- "
                         + thirdKiller.getGameKills());
             }
-            msgAll("&7&m------------------------------");
+
             if (!draw) {
                 BlitzSG.getInstance().getBlitzSGPlayerManager().handleWinElo(this);
                 BlitzSGPlayer blitzSGWinner = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(winner.getUniqueId());
@@ -509,7 +509,9 @@ public class Game {
                 blitzSGWinner.addCoins(coins);
                 winner.sendMessage(ChatColor.GOLD + "+" + coins + " Coins (Win)");
             }
-        }catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
+        msgAll("&7&m------------------------------");
         new BukkitRunnable() {
             public void run() {
                 resetGame();
@@ -523,14 +525,18 @@ public class Game {
         this.startedCountdown = false;
         BlitzSG.getInstance().getGameManager().removeGame(this);
         for (Player p : allPlayers) {
+
             BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-            uhcPlayer.setGame(null);
+            if (uhcPlayer != null)
+                uhcPlayer.setGame(null);
             resetPlayer(p);
             p.teleport(BlitzSG.lobbySpawn);
 
             BlitzSG.getInstance().getBlitzSGPlayerManager().setLobbyInventoryAndNameTag(p);
-            p.setPlayerListName(uhcPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix()
-                    + " [" + uhcPlayer.getElo() + "]");
+            if (uhcPlayer != null)
+
+                p.setPlayerListName(uhcPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix()
+                        + " [" + uhcPlayer.getElo() + "]");
         }
         allPlayers.clear();
         alivePlayers.clear();
@@ -585,7 +591,10 @@ public class Game {
 
     private void resetPlayer(Player p) {
         BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+        if (uhcPlayer == null)
+            return;
         uhcPlayer.resetGameKills();
+        uhcPlayer.resetGameTaunt(0);
         ((CraftPlayer) p).getHandle().getDataWatcher().watch(9, (byte) 0);
 
         p.getInventory().clear();

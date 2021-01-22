@@ -1,4 +1,4 @@
-package me.syesstyles.blitz.cosmetic.cosmetics;
+package me.syesstyles.blitz.cosmetic.cosmetics.aura;
 
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.cosmetic.Aura;
@@ -10,11 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Random;
-
-public class RainbowTrail extends Aura {
-    public RainbowTrail() {
-        super("RainbowTrail", "Rainbow Tron Trail", "Great. Can it send me to hawaii?", BlitzSG.getInstance().getRankManager().getRankByName("MVP+"),new ItemStack(Material.STAINED_GLASS, 1),14);
+public class MyceliumTrail extends Aura {
+    public MyceliumTrail() {
+        super("MyceliumTrail", "Mycelium Trail", "Now just some red and white colored cows and we're all set!", BlitzSG.getInstance().getRankManager().getRankByName("VIP+"),new ItemStack(Material.MYCEL, 1),12);
     }
 
     @Override
@@ -22,8 +20,8 @@ public class RainbowTrail extends Aura {
         Location loc = p.getLocation().clone().subtract(0, 1, 0);
         Block b = loc.getBlock();
         if (!b.getType().isTransparent() && b.getType().isSolid() && b.getType().isOccluding()) {
-            int random = randomColor();
-            Bukkit.getOnlinePlayers().forEach(player1 -> player1.sendBlockChange(loc, Material.STAINED_GLASS, (byte) random));
+
+            Bukkit.getOnlinePlayers().forEach(player1 -> player1.sendBlockChange(loc, Material.MYCEL, (byte) 0));
             new BukkitRunnable() {
                 @Override
                 public void run() {
@@ -32,12 +30,4 @@ public class RainbowTrail extends Aura {
             }.runTaskLaterAsynchronously(BlitzSG.getInstance(), 20);
         }
     }
-
-    int[] random = new int[]{14, 1, 4, 5, 9, 11, 2, 10};
-    public int randomColor() {
-        int rnd = new Random().nextInt(random.length);
-        return random[rnd];
-    }
-
-
 }

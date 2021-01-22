@@ -36,7 +36,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 public class BlitzSG extends JavaPlugin {
@@ -69,15 +68,15 @@ public class BlitzSG extends JavaPlugin {
     }
 
     public void onEnable() {
-        pool = new JedisPool("127.0.0.1");
+       // pool = new JedisPool("127.0.0.1");
 
-        Jedis j = null;
-        try{
-            j = pool.getResource();
-            j.set("key", "value");
-        }finally {
-            j.close();
-        }
+      // Jedis j = null;
+      // try{
+      //     j = pool.getResource();
+      //     j.set("key", "value");
+      // }finally {
+      //     j.close();
+      // }
 
 
         database = new Database();
@@ -97,7 +96,7 @@ public class BlitzSG extends JavaPlugin {
         nametagManager = new NametagManager();
         punishmentManager = new PunishmentManager();
         cosmeticsManager = new CosmeticsManager();
-        cosmeticsManager.init();
+        cosmeticsManager.initializeAuras();
         //Register Commands::
 
         this.getCommand("bsg").setExecutor(new CommandHandler());
@@ -106,6 +105,7 @@ public class BlitzSG extends JavaPlugin {
         this.getCommand("fw").setExecutor(new FireworkCommand());
         this.getCommand("acban").setExecutor(new ACBan());
         this.getCommand("unban").setExecutor(new Unban());
+        this.getCommand("taunt").setExecutor(new GameHandler());
 
         //Register Handlers:
         getServer().getPluginManager().registerEvents(new MapHandler(), this);
@@ -158,7 +158,9 @@ public class BlitzSG extends JavaPlugin {
         for (Game g : gameManager.getRunningGames())
             g.resetGame();
 
-        pool.close();
+
+
+       // pool.close();
     }
 
     public Database getData() {
