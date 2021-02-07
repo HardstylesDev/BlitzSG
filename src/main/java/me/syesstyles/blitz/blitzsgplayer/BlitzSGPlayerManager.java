@@ -81,7 +81,7 @@ public class BlitzSGPlayerManager {
 	public void setLobbyInventoryAndNameTag(Player p) {
 		p.getInventory().clear();
 		p.getInventory().setItem(1, ItemUtils.buildItem(new ItemStack(Material.IRON_SWORD), "&b&lJoin a Game &7(Right-Click)", Arrays.asList("§7Right-Click to join a Blitz game")));
-		p.getInventory().setItem(3, ItemUtils.buildItem(new ItemStack(Material.EMERALD), "&a&lOpen the Shop &7(Right-Click)", Arrays.asList("§7Right-Click to open the shop")));
+		p.getInventory().setItem(3, ItemUtils.buildItem(new ItemStack(Material.EMERALD), "&aShop &7(Right-Click)", Arrays.asList("§7Right-Click to open the shop")));
 		p.getInventory().setItem(5, ItemUtils.buildItem(new ItemStack(Material.PAINTING), "&e&lYour Stats &7(Right-Click)", Arrays.asList("§7Right-Click to view your stats")));
 		p.getInventory().setItem(7, ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM), "&c???", Arrays.asList("§7Coming soon...")));
 

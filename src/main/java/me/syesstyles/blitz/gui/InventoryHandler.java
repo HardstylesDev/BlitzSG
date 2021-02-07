@@ -1,5 +1,8 @@
 package me.syesstyles.blitz.gui;
 
+import com.google.common.collect.Iterables;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.cosmetic.Aura;
@@ -54,12 +57,12 @@ public class InventoryHandler implements Listener {
 
                 //e.getWhoClicked().sendMessage("Selected: " + kit.getName());
                 if (bsgPlayer.getKitLevel(kit) == 0) {
-                    if (!(kit.getPrice(0) == 0) && !((kit.getPrice(0) == 125000) && bsgPlayer.getRank().getMultiplier() >= 2) && !((kit.getPrice(0) == 250000) && bsgPlayer.getRank().getMultiplier() >= 3)) {
+                    if (!(kit.getPrice(0) == 0) && !(kit.getRequiredRank().getPosition() <= bsgPlayer.getRank().getPosition())) {
                         BlitzSG.send((Player) e.getWhoClicked(), BlitzSG.CORE_NAME + "&cYou don't have this kit!");
                         return;
                     }
                 }
-                BlitzSG.send((Player) e.getWhoClicked(), BlitzSG.CORE_NAME + "&eYou have chosen the &a" + kit.getName() + " &ekit, You will get your items 60 seconds after the game starts.");
+                BlitzSG.send((Player) e.getWhoClicked(), BlitzSG.CORE_NAME + "&eYou have chosen the &a" + kit.getName() + KitUtils.getKitTag(bsgPlayer.getKitLevel(kit)) + " &ekit, You will get your items 60 seconds after the game starts.");
                 bsgPlayer.setSelectedKit(kit);
                 //if(e.isLeftClick())
                 //	bsgPlayer.getGame().setVote(p, true);
@@ -173,6 +176,14 @@ public class InventoryHandler implements Listener {
             bsgPlayer.setAura(aura);
             p.closeInventory();
         } else if (e.getInventory().getName() == "§8Taunts") {
+
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("Connect");
+            out.writeUTF("hub");
+
+            p.sendPluginMessage(BlitzSG.getInstance(), "BungeeCord", out.toByteArray());
+
+
             e.setCancelled(true);
             if (bsgPlayer.isInGame())
                 return;

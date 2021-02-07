@@ -119,6 +119,8 @@ public class MapManager {
             world.setGameRuleValue("mobGriefing", "false");
             world.setGameRuleValue("doFireTick", "false");
             world.setGameRuleValue("showDeathMessages", "false");
+            world.setThundering(false);
+            world.setStorm(false);
             for (Entity entity : world.getEntities()) {
                 entity.remove();
             }
@@ -197,5 +199,19 @@ public class MapManager {
             deathmatch.setWorld(world);
             map.setDeathmatch(deathmatch);
         }catch (NullPointerException ignored){}
+    }
+
+    public String getRandom(){
+        File dir = new File(BlitzSG.getInstance().getDataFolder() + "/arenas/");
+        System.out.println(BlitzSG.getInstance().getDataFolder() + "/arenas/");
+
+        File[] files = dir.listFiles();
+        System.out.println("amount of files: "  + files.length);
+        Random rand = new Random();
+
+        File file = files[rand.nextInt(files.length)];
+        String t = file.getName().replaceAll(".yml", "");
+        System.out.println(t);
+        return t;
     }
 }

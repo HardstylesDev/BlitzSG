@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="SpigotServer" />
         <module name="Blitz" />
+        <module name="BlitzSGGame" />
         <module name="KitPVP" />
         <module name="BlitzRemake" />
         <module name="BlitzSG" />

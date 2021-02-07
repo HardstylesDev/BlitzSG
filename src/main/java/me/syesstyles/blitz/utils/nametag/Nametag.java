@@ -38,7 +38,7 @@ public class Nametag {
         setField(packet, "h", 0);
         setField(packet, "b", randomString(10));
         setField(packet, "a", randomString(10));
-        setField(packet, "c", defaultRank ? ChatColor.GRAY + "" : prefix);
+        setField(packet, "c", ChatColor.WHITE + "");
         setField(packet, "e", "always");
         setField(packet, "i", 1);
         addPlayer(packet, p);

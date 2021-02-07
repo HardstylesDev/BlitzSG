@@ -31,7 +31,6 @@ public class Nickname {
     public void setNick(Player p, String s) {
         setNick(p, s, false);
     }
-
     public void setNick(Player p, String s, boolean onJoin) {
         if (!onJoin) {
             String skin[] = prepareSkinTextures(p, s);
@@ -84,11 +83,9 @@ public class Nickname {
 
 
         //bsgPlayer.setNickName(s);
-        p.setPlayerListName(bsgPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(bsgPlayer.getElo()).getPrefix()
-                + " [" + bsgPlayer.getElo() + "]");
+        p.setPlayerListName(ChatColor.RED + p.getName());
 
     }
-
     public void removeOfflinePlayer(String realIGN) {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(realIGN);
         GameProfile gameProfile = ((CraftPlayer) offlinePlayer).getProfile();
@@ -307,32 +304,15 @@ public class Nickname {
 
 
     public void refresh(Player p) {
+
         final EntityPlayer ep = ((CraftPlayer) p).getHandle();
         final PacketPlayOutPlayerInfo removeInfo = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, ep);
         final PacketPlayOutPlayerInfo addInfo = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, ep);
-        final Location loc = p.getLocation().clone();
+       // final Location loc = BlitzSG.getInstance().getGameManager().getAvailableGame().getArena().getLobby().clone();
         ep.playerConnection.sendPacket(removeInfo);
         ep.playerConnection.sendPacket(addInfo);
-        Location otherWorldLocation = null;
-        if (p.getWorld().getName().equalsIgnoreCase("world"))
-            for (World world : Bukkit.getWorlds()) {
-                if (!world.getName().equalsIgnoreCase("world")) {
-                    otherWorldLocation = world.getSpawnLocation();
-                    break;
-                }
-            }
-        else
-            otherWorldLocation = Bukkit.getWorld("world").getSpawnLocation();
-        if (otherWorldLocation != null)
-            p.teleport(otherWorldLocation);
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                p.teleport(loc);
-                ep.playerConnection.sendPacket(new PacketPlayOutRespawn(ep.dimension, ep.getWorld().getDifficulty(), ep.getWorld().getWorldData().getType(), ep.playerInteractManager.getGameMode()));
-                p.updateInventory();
-            }
-        }.runTaskLater(BlitzSG.getInstance(), 1);
+      //     }
+       // }.runTaskLater(BlitzSG.getInstance(), 1);
     }
 
     public String fetchRealName(Player p) {

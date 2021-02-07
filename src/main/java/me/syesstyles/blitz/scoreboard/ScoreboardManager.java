@@ -54,7 +54,7 @@ public class ScoreboardManager extends BukkitRunnable {
                     board.add("Kills: &a" + bsgPlayer.getGameKills());
                     board.add(separator);
                     board.add("Taunt");
-                    board.add(bsgPlayer.getGameTaunt() == -1 ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : "&cUSED"));
+                    board.add(bsgPlayer.getTaunt() == null ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : (bsgPlayer.getGameTaunt() == 1 ? "&aTAUNTING" : "&cUSED")));
                 } else if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME) {
 
                     board.add(separator);
@@ -68,8 +68,7 @@ public class ScoreboardManager extends BukkitRunnable {
                             board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(900 - bsgPlayer.getGame().getGameTime()));
                         else
                             board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(1200 - bsgPlayer.getGame().getGameTime()));
-                    }
-                    else{
+                    } else {
                         if (bsgPlayer.getGame().getDeathmatchStartTime() < 45)
                             board.add("&aDeathmatch" + " " + convert(45 - bsgPlayer.getGame().getDeathmatchStartTime()));
                         else
@@ -81,7 +80,7 @@ public class ScoreboardManager extends BukkitRunnable {
                     board.add("&fKills: &a" + bsgPlayer.getGameKills());
                     board.add(separator);
                     board.add("Taunt");
-                    board.add(bsgPlayer.getGameTaunt() == -1 ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : "&cUSED"));
+                    board.add(bsgPlayer.getTaunt() == null ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : (bsgPlayer.getGameTaunt() == 1 ? "&aTAUNTING" : "&cUSED")));
 
                 } else if (bsgPlayer.getGame().getGameMode() == GameMode.RESETING) {
                     if (bsgPlayer.getGame().getWinner() == null)
@@ -89,7 +88,11 @@ public class ScoreboardManager extends BukkitRunnable {
                     BlitzSGPlayer winner = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(bsgPlayer.getGame().getWinner().getUniqueId());
                     board.add(separator);
                     board.add("&fWinner");
-                    board.add("&a" + winner.getRank(true).getPrefix() + bsgPlayer.getGame().getWinner().getName());
+                    if (winner.getRank(true).getPrefix() != null)
+                        board.add("&a" + winner.getRank(true).getPrefix() + bsgPlayer.getGame().getWinner().getName());
+                    else
+                        board.add("&a" + winner.getRank().getPrefix() + bsgPlayer.getGame().getWinner().getName());
+
                     board.add(separator);
                     board.add("&fPlayers: &a" + bsgPlayer.getGame().getAlivePlayers().size());
                     board.add("&fKills: &a" + bsgPlayer.getGameKills());
