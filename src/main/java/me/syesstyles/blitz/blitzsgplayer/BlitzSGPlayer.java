@@ -26,6 +26,7 @@ public class BlitzSGPlayer {
     private int gameTaunt;
     private UUID uuid;
 
+    private String customTag;
     private boolean robinhood;
     private boolean wobbuffet;
     private int gameKills;
@@ -39,6 +40,7 @@ public class BlitzSGPlayer {
     private int wins;
     private int kills;
     private int deaths;
+    private boolean hideOthers;
     private int coins;
     private Taunt selectedTaunt;
     private Aura aura;
@@ -50,7 +52,9 @@ public class BlitzSGPlayer {
 
     private Map editedMap;
 
-
+    public void setHideOthers(boolean b){
+        this.hideOthers = b;
+    }
     public void setUuid(UUID uuid) {
         this.uuid = uuid;
     }
@@ -91,12 +95,14 @@ public class BlitzSGPlayer {
         this.jsonObject = new JsonObject();
 
 
+
+        this.hideOthers = false;
         this.nick = null;
         this.uuid = uuid;
         this.elo = 0;
         this.wins = 0;
         this.kills = 0;
-
+        this.customTag = null;
         this.deaths = 0;
         this.coins = 0;
         this.rank = null;
@@ -175,6 +181,9 @@ public class BlitzSGPlayer {
         return rank;
     }
 
+    public boolean doesHideOthers(){
+        return this.hideOthers;
+    }
     public Nick getNick() {
         return nick;
     }
@@ -209,6 +218,14 @@ public class BlitzSGPlayer {
 
     public String getIp() {
         return this.ip;
+    }
+
+    public void setCustomTag(String tag) {
+        this.customTag = tag;
+    }
+
+    public String getCustomTag() {
+        return this.customTag;
     }
 
     public String getName() {
@@ -331,7 +348,7 @@ public class BlitzSGPlayer {
         this.gameKills = 0;
     }
 
-    public void resetGameTaunt(int i) {
+    public void setGameTaunt(int i) {
         this.gameTaunt = i;
     }
 

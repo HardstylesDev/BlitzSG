@@ -81,7 +81,7 @@ public class ScoreboardManager extends BukkitRunnable {
                     board.add("&fKills: &a" + bsgPlayer.getGameKills());
                     board.add(separator);
                     board.add("Taunt");
-                    board.add(bsgPlayer.getGameTaunt() == -1 ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : "&cUSED"));
+                    board.add(bsgPlayer.getTaunt() == null ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : (bsgPlayer.getGameTaunt() == 1 ? "&aTAUNTING" : "&cUSED")));
 
                 } else if (bsgPlayer.getGame().getGameMode() == GameMode.RESETING) {
                     if (bsgPlayer.getGame().getWinner() == null)

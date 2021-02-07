@@ -1,5 +1,7 @@
 package me.syesstyles.blitz.commands.subcommands;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.aaaaa.LoadStats;
 import me.syesstyles.blitz.aaaaa.SaveStats;
@@ -11,10 +13,14 @@ import me.syesstyles.blitz.gui.ShopStarGUI;
 import me.syesstyles.blitz.kit.Kit;
 import me.syesstyles.blitz.rank.Rank;
 import me.syesstyles.blitz.rank.RankManager;
+import me.syesstyles.blitz.utils.leaderboard.Leaderboard;
 import me.syesstyles.blitz.utils.nickname.Nickname;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import redis.clients.jedis.Jedis;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -101,14 +107,22 @@ public class DebugCommand extends SubCommand {
                     p.sendMessage("Coins given.");
                 }
             }
-            if (args[1].equalsIgnoreCase("name")) {
-                if (args.length > 2) {
-                    BlitzSG.send(p, "&aChanging your nick to &e" + args[2]);
-                    new Nickname().setNick(p, args[2]);
-                }
-            }
-        } else if (args[1].equalsIgnoreCase("rank")) {
+
+        } else if (args[1].equalsIgnoreCase("startdm")) {
+
+
+            BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+            bsgPlayer.getGame().startDeathmatchCounter(bsgPlayer.getGame().getGameTime());
+
+        }
+        if (args[1].equalsIgnoreCase("name")) {
             if (args.length > 2) {
+                BlitzSG.send(p, "&aChanging your nick to &e" + args[2]);
+                new Nickname().setNick(p, args[2]);
+            }
+
+        } else if (args[1].equalsIgnoreCase("rank")) {
+            if (args.length == 3) {
                 BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
                 Rank rank = BlitzSG.getInstance().getRankManager().getRankByName(args[2]);
                 if (rank == null) {
@@ -121,8 +135,24 @@ public class DebugCommand extends SubCommand {
                 BlitzSG.getInstance().getNametagManager().update();
             } else
                 BlitzSG.send(p, "" + new RankManager().getRank(p));
+            if (args.length == 4) {
+               OfflinePlayer offlinePlayer =  Bukkit.getOfflinePlayer(args[2]);
+                BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(offlinePlayer.getUniqueId());
+                Rank rank = BlitzSG.getInstance().getRankManager().getRankByName(args[3]);
+                if (rank == null) {
+                    BlitzSG.send(p, "&cthat rank doesn't exist.");
 
-        } else if (args[1].equalsIgnoreCase("aura")) {
+                    return;
+                }
+                bsgPlayer.setRank(rank);
+                BlitzSG.send(p, "&aYou've their your rank to " + rank.getPrefix() + rank.getRank());
+                BlitzSG.getInstance().getNametagManager().update();
+            } else
+                BlitzSG.send(p, "" + new RankManager().getRank(p));
+
+        } else if (args[1].
+
+                equalsIgnoreCase("aura")) {
             if (args.length > 2) {
                 BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
                 Aura aura = BlitzSG.getInstance().getCosmeticsManager().getAuraByName(args[2]);
@@ -144,7 +174,9 @@ public class DebugCommand extends SubCommand {
                 AuraGUI.openGUI(p);
 
 
-        } else if (args[1].equalsIgnoreCase("taunt")) {
+        } else if (args[1].
+
+                equalsIgnoreCase("taunt")) {
             if (args.length > 2) {
                 BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
                 Taunt aura = BlitzSG.getInstance().getCosmeticsManager().getTauntByName(args[2]);
@@ -165,7 +197,34 @@ public class DebugCommand extends SubCommand {
             } else
                 BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId()).getTaunt().go(p);
 
+        } else if (args[1].equalsIgnoreCase("bungee")) {
+            Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
+                try {
+                    Jedis jedisResource = BlitzSG.getInstance().getJedisPool().getResource();
+                    String canJoin = jedisResource.get("canJoin");
+                    jedisResource.close();
+
+                    if (Boolean.parseBoolean(canJoin) == false) {
+                        p.sendMessage(ChatColor.RED + "No games available at the moment!");
+                        return;
+                    }
+
+                    ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                    out.writeUTF("Connect");
+                    out.writeUTF("hub");
+
+                    p.sendPluginMessage(BlitzSG.getInstance(), "BungeeCord", out.toByteArray());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    p.sendMessage(ChatColor.RED + "No games available at the moment! " + ChatColor.GRAY + "(e)");
+
+                }
+            });
+
+        } else if (args[1].equalsIgnoreCase("lb")) {
+            new Leaderboard().update();
         }
+
     }
 
     @Override

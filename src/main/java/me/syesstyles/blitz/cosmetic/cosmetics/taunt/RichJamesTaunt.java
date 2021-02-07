@@ -27,11 +27,9 @@ public class RichJamesTaunt extends Taunt {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-
                     drop(player.getLocation());
                     drop(player.getLocation());
                     player.getWorld().getPlayers().forEach(player1 -> player1.playSound(player.getLocation(), Sound.ORB_PICKUP, 2,1));
-
                 }
             }.runTaskLater(BlitzSG.getInstance(), t * 5);
         }

@@ -41,9 +41,9 @@ public class ScoreboardHelper
         Preconditions.checkState(title.length() <= 32, (Object)"title can not be more than 32");
         this.tag = ChatColor.translateAlternateColorCodes('&', title);
         this.scoreBoard = scoreBoard;
-        (this.objective = this.getOrCreateObjective(this.tag, "dummy")).setDisplaySlot(DisplaySlot.SIDEBAR);
-        (this.healthName = this.getOrCreateObjective("healthName", "health")).setDisplaySlot(DisplaySlot.BELOW_NAME);
-        this.healthName.setDisplayName("§c\u2764");
+       (this.objective = this.getOrCreateObjective(this.tag, "dummy")).setDisplaySlot(DisplaySlot.SIDEBAR);
+      // (this.healthName = this.getOrCreateObjective("healthName", "health")).setDisplaySlot(DisplaySlot.BELOW_NAME);
+      // this.healthName.setDisplayName("§c\u2764");
       //  this.getOrCreateObjective("healthTab", "health").setDisplaySlot(DisplaySlot.PLAYER_LIST);
     }
     
@@ -121,6 +121,7 @@ public class ScoreboardHelper
     {
         private String left;
         private String right;
+
         
         public ScoreboardText(final String left, final String right) {
             this.left = left;

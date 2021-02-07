@@ -40,10 +40,16 @@ public class StatisticsManager {
         jsonObject.addProperty("elo", bsgPlayer.getElo());
         if (bsgPlayer.getSelectedKit() != null)
             jsonObject.addProperty("selected_kit", bsgPlayer.getSelectedKit().getName());
+        if(bsgPlayer.doesHideOthers())
+            jsonObject.addProperty("hide_others",bsgPlayer.doesHideOthers());
         if (bsgPlayer.getTaunt() != null)
             jsonObject.addProperty("selected_taunt", bsgPlayer.getTaunt().getName());
         if (bsgPlayer.getAura() != null)
             jsonObject.addProperty("selected_aura", bsgPlayer.getAura().getName());
+
+        if (bsgPlayer.getCustomTag() != null)
+            jsonObject.addProperty("custom_tag", bsgPlayer.getCustomTag());
+
         jsonObject.add("kits", kitsToJson(bsgPlayer));
         jsonObject.add("stars", starsToJson(bsgPlayer));
         if (bsgPlayer.getNick() != null) {
@@ -124,6 +130,10 @@ public class StatisticsManager {
                 blitzSGPlayer.setWins(jsonObject.get("wins").getAsInt());
                 blitzSGPlayer.setCoins(jsonObject.get("coins").getAsInt());
                 blitzSGPlayer.setElo(jsonObject.get("elo").getAsInt());
+                if(jsonObject.has("hide_others"))
+                    blitzSGPlayer.setHideOthers(jsonObject.get("hide_others").getAsBoolean());
+                if(jsonObject.has("custom_tag"))
+                    blitzSGPlayer.setCustomTag(jsonObject.get("custom_tag").getAsString());
                 if (jsonObject.has("selected_kit"))
                     blitzSGPlayer.setSelectedKit(BlitzSG.getInstance().getKitManager().getKit(jsonObject.get("selected_kit").getAsString()));
                 if (jsonObject.has("selected_aura"))
@@ -173,6 +183,10 @@ public class StatisticsManager {
                 blitzSGPlayer.setWins(jsonObject.get("wins").getAsInt());
                 blitzSGPlayer.setCoins(jsonObject.get("coins").getAsInt());
                 blitzSGPlayer.setElo(jsonObject.get("elo").getAsInt());
+                if(jsonObject.has("custom_tag"))
+                    blitzSGPlayer.setCustomTag(jsonObject.get("custom_tag").getAsString());
+                if(jsonObject.has("hide_others"))
+                    blitzSGPlayer.setHideOthers(jsonObject.get("hide_others").getAsBoolean());
                 if (jsonObject.has("selected_kit"))
                     blitzSGPlayer.setSelectedKit(BlitzSG.getInstance().getKitManager().getKit(jsonObject.get("selected_kit").getAsString()));
                 if (jsonObject.has("selected_aura"))

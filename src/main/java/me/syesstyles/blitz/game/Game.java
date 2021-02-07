@@ -197,6 +197,7 @@ public class Game {
     }
 
     public void startCountDown() {
+
         gameMode = GameMode.STARTING;
         countdownTime = speedMode ? 6 : 31;
         ; // 31
@@ -362,7 +363,7 @@ public class Game {
                 }
                 if (deathmatchStartTime > 54 && deathmatchStartTime < 60)
                     msgAll(BlitzSG.CORE_NAME + "&eYou will be able to damage players in " + (60 - deathmatchStartTime) + " second" + (((60 - deathmatchStartTime) == 1) ? "" : "s") + "!");
-                if (deathmatchStartTime == 70)
+                if (deathmatchStartTime == 60)
                     msgAll(BlitzSG.CORE_NAME + "&eKill! Kill! Kill!");
                 if (deathmatchStartTime == 240) {
 
@@ -525,7 +526,6 @@ public class Game {
         this.startedCountdown = false;
         BlitzSG.getInstance().getGameManager().removeGame(this);
         for (Player p : allPlayers) {
-
             BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
             if (uhcPlayer != null)
                 uhcPlayer.setGame(null);
@@ -535,8 +535,7 @@ public class Game {
             BlitzSG.getInstance().getBlitzSGPlayerManager().setLobbyInventoryAndNameTag(p);
             if (uhcPlayer != null)
 
-                p.setPlayerListName(uhcPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix()
-                        + " [" + uhcPlayer.getElo() + "]");
+                p.setPlayerListName(uhcPlayer.getRank(true).getPrefix() + p.getName());
         }
         allPlayers.clear();
         alivePlayers.clear();
@@ -594,7 +593,7 @@ public class Game {
         if (uhcPlayer == null)
             return;
         uhcPlayer.resetGameKills();
-        uhcPlayer.resetGameTaunt(0);
+        uhcPlayer.setGameTaunt(0);
         ((CraftPlayer) p).getHandle().getDataWatcher().watch(9, (byte) 0);
 
         p.getInventory().clear();
@@ -603,6 +602,7 @@ public class Game {
         p.setSaturation(10);
         p.setMaxHealth(20);
         p.setHealth(20);
+        p.setFireTicks(0);
         p.setExp(0);
         p.setLevel(0);
         p.setGameMode(org.bukkit.GameMode.SURVIVAL);

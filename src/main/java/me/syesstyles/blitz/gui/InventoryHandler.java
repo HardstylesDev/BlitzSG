@@ -1,5 +1,8 @@
 package me.syesstyles.blitz.gui;
 
+import com.google.common.collect.Iterables;
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.cosmetic.Aura;
@@ -54,7 +57,7 @@ public class InventoryHandler implements Listener {
 
                 //e.getWhoClicked().sendMessage("Selected: " + kit.getName());
                 if (bsgPlayer.getKitLevel(kit) == 0) {
-                    if (!(kit.getPrice(0) == 0) && !((kit.getPrice(0) == 125000) && bsgPlayer.getRank().getMultiplier() >= 2) && !((kit.getPrice(0) == 250000) && bsgPlayer.getRank().getMultiplier() >= 3)) {
+                    if (!(kit.getPrice(0) == 0) && !(kit.getRequiredRank().getPosition() <= bsgPlayer.getRank().getPosition())) {
                         BlitzSG.send((Player) e.getWhoClicked(), BlitzSG.CORE_NAME + "&cYou don't have this kit!");
                         return;
                     }
@@ -114,7 +117,7 @@ public class InventoryHandler implements Listener {
                 p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
                 bsgPlayer.setKitLevel(kit, 1);
                 p.closeInventory();
-                BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer);
+                Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer));
                 return;
             }
             if (kit.getPrice(bsgPlayer.getKitLevel(kit)) == -1) {
@@ -136,9 +139,9 @@ public class InventoryHandler implements Listener {
             e.setCancelled(true);
             if (bsgPlayer.isInGame())
                 return;
-            if (BlitzSG.getInstance().getStarManager().getStar(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName()) == null)
+            if (BlitzSG.getInstance().getStarManager().getStar(ChatColor.stripColor(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName())) == null)
                 return;
-            Star star = BlitzSG.getInstance().getStarManager().getStar(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName());
+            Star star = BlitzSG.getInstance().getStarManager().getStar(ChatColor.stripColor(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName()));
             if (star.getPrice() == 0) {
                 p.sendMessage("§cYou already have this star unlocked!");
                 return;
@@ -172,6 +175,8 @@ public class InventoryHandler implements Listener {
 
             bsgPlayer.setAura(aura);
             p.closeInventory();
+            Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer));
+
         } else if (e.getInventory().getName() == "§8Taunts") {
             e.setCancelled(true);
             if (bsgPlayer.isInGame())
@@ -201,6 +206,8 @@ public class InventoryHandler implements Listener {
 
             bsgPlayer.setTaunt(aura);
             p.closeInventory();
+            Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer));
+
         }
         if (e.getInventory().getName() == "§8Star Selector") {
             if (bsgPlayer.getGame().isDeathmatchStarting())

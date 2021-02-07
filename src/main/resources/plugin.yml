@@ -17,5 +17,9 @@ commands:
   unban:
     description: lol
   taunt:
-    description: lol
+    description: lolR
+  horsey:
+    description: lolR
+  tag:
+    description: lolR
 

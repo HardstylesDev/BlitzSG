@@ -85,14 +85,20 @@ public class GameHandler implements Listener, CommandExecutor {
             //p.getKiller().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 50, 2));
             BlitzSGPlayer blitzSGPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(victim.getKiller().getUniqueId());
             blitzSGPlayer.addGameKill();
-            int coins = 7 * blitzSGPlayer.getRank().getMultiplier();
-            blitzSGPlayer.addCoins(coins);
+
             for (Player p : blitzSGPlayer.getGame().getAllPlayers()) {
                 BlitzSG.send(p, BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed by " + blitzSGPlayer.getRank(true).getChatColor() + victim.getKiller().getName() + " &eand everyone got a speed buff!");
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 15 * 15, 1));
             }
             bsgPlayer.getGame().killPlayer(victim);
-            BlitzSG.send(victim.getKiller(), "§6+" + coins + " Coins (Kill)");
+            int coins = 7 * blitzSGPlayer.getRank().getMultiplier();
+            if (bsgPlayer.getGameTaunt() == 1) {
+                coins = (int) (coins * 2.4);
+                bsgPlayer.setGameTaunt(2);
+                BlitzSG.send(victim.getKiller(), "§6+" + coins + " Coins (Taunt Kill)");
+            } else
+                BlitzSG.send(victim.getKiller(), "§6+" + coins + " Coins (Kill)");
+            blitzSGPlayer.addCoins(coins);
             BlitzSG.getInstance().getBlitzSGPlayerManager().handleKillElo(victim, victim.getKiller());
             return;
         }
@@ -515,24 +521,6 @@ public class GameHandler implements Listener, CommandExecutor {
 
     }
 
-    @EventHandler
-    public void playerEatHead(PlayerInteractEvent e) {
-        Player p = e.getPlayer();
-        if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK)
-            return;
-        if (e.getItem() == null)
-            return;
-        if (e.getItem().getType() != Material.SKULL_ITEM)
-            return;
-        if (e.getItem().getDurability() != 3)
-            return;
-        e.setCancelled(true);
-        p.sendMessage("§aYou ate a player head and gained Regeneration III and Speed II for 4 seconds!");
-        p.playSound(p.getLocation(), Sound.EAT, 2, 1);
-        p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 80, 2));
-        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 80, 1));
-        p.getInventory().setItemInHand((ItemStack) null);
-    }
 
     @EventHandler
     public void onBlockInteract(PlayerInteractEvent e) {
@@ -599,9 +587,9 @@ public class GameHandler implements Listener, CommandExecutor {
         }
         if (bsgPlayer.getGameTaunt() == 0) {
             bsgPlayer.getGame().msgAll(bsgPlayer.getRank(true).getPrefix() + p.getName() + "&e performed the &l" + bsgPlayer.getTaunt().getName() + " Taunt&r&e!");
-            bsgPlayer.resetGameTaunt(1);
+            bsgPlayer.setGameTaunt(1);
             bsgPlayer.getTaunt().go(p);
-            Bukkit.getScheduler().runTaskLaterAsynchronously(BlitzSG.getInstance(), () -> bsgPlayer.resetGameTaunt(2), 15 * 20);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(BlitzSG.getInstance(), () -> bsgPlayer.setGameTaunt(2), 15 * 20);
         }
         if (bsgPlayer.getGameTaunt() == 2) {
             p.sendMessage(ChatColor.RED + "You already used your taunt this game.");

@@ -28,6 +28,7 @@ me\syesstyles\blitz\commands\CommandHandler.class
 me\syesstyles\blitz\utils\entity\NBT.class
 me\syesstyles\blitz\cosmetic\cosmetics\taunt\DefaultTaunt.class
 me\syesstyles\blitz\commands\subcommands\WandCommand.class
+me\syesstyles\blitz\utils\leaderboard\Leaderboard.class
 me\syesstyles\blitz\punishments\ACBan.class
 me\syesstyles\blitz\gamestar\stars\Apocalypse$2.class
 me\syesstyles\blitz\kit\Kit.class
@@ -69,6 +70,7 @@ me\syesstyles\blitz\commands\subcommands\setDeathmatchDistanceCommand.class
 me\syesstyles\blitz\cosmetic\cosmetics\taunt\RichJamesTaunt$1.class
 me\syesstyles\blitz\gamestar\stars\Imprison.class
 me\syesstyles\blitz\gui\KitsGUI.class
+me\syesstyles\blitz\utils\bungee\BungeeMessaging.class
 me\syesstyles\blitz\game\Game$NextEvent.class
 me\syesstyles\blitz\game\Game.class
 me\syesstyles\blitz\utils\PrepareItemEnchant.class
@@ -95,6 +97,7 @@ me\syesstyles\blitz\game\GameManager$1.class
 me\syesstyles\blitz\gamestar\stars\Gremlin.class
 me\syesstyles\blitz\elo\EloLevel.class
 me\syesstyles\blitz\kit\kits\Meatmaster.class
+me\syesstyles\blitz\commands\TagCommand.class
 me\syesstyles\blitz\gamestar\stars\Timelord.class
 me\syesstyles\blitz\cosmetic\cosmetics\aura\RedTrail.class
 me\syesstyles\blitz\kit\kits\HorseTamer.class
@@ -160,6 +163,7 @@ me\syesstyles\blitz\game\GameMobHandler$1.class
 me\syesstyles\blitz\kit\kits\Necromancer.class
 me\syesstyles\blitz\commands\subcommands\JoinCommand.class
 me\syesstyles\blitz\commands\subcommands\DebugCommand.class
+me\syesstyles\blitz\commands\HorseCommand.class
 me\syesstyles\blitz\cosmetic\cosmetics\aura\RainbowParticle.class
 me\syesstyles\blitz\gamestar\stars\Explosion$1.class
 me\syesstyles\blitz\cosmetic\CosmeticsManager$1.class
@@ -176,9 +180,9 @@ me\syesstyles\blitz\punishments\ACBan$1.class
 me\syesstyles\blitz\cosmetic\cosmetics\taunt\RichJamesTaunt.class
 me\syesstyles\blitz\kit\kits\Snowman.class
 me\syesstyles\blitz\scoreboard\ScoreboardManager.class
+me\syesstyles\blitz\utils\ImportantCommandModifier.class
 me\syesstyles\blitz\utils\PlayerUtils.class
 me\syesstyles\blitz\commands\subcommands\EditCommand.class
-me\syesstyles\blitz\utils\nickname\Nickname$1.class
 me\syesstyles\blitz\gamestar\stars\Robinhood$1.class
 me\syesstyles\blitz\map\MapHandler.class
 me\syesstyles\blitz\cosmetic\cosmetics\aura\SnowParticle.class
