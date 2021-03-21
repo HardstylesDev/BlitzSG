@@ -25,10 +25,7 @@ import me.syesstyles.blitz.punishments.PunishmentManager;
 import me.syesstyles.blitz.punishments.commands.Unban;
 import me.syesstyles.blitz.rank.RankManager;
 import me.syesstyles.blitz.scoreboard.ScoreboardManager;
-import me.syesstyles.blitz.utils.EnchantListener;
-import me.syesstyles.blitz.utils.FireworkCommand;
-import me.syesstyles.blitz.utils.ImportantCommandModifier;
-import me.syesstyles.blitz.utils.WorldCommand;
+import me.syesstyles.blitz.utils.*;
 import me.syesstyles.blitz.utils.bungee.BungeeMessaging;
 import me.syesstyles.blitz.utils.database.Database;
 import me.syesstyles.blitz.utils.nametag.NametagManager;
@@ -114,6 +111,7 @@ public class BlitzSG extends JavaPlugin {
         this.getCommand("acban").setExecutor(new ACBan());
         this.getCommand("unban").setExecutor(new Unban());
         this.getCommand("taunt").setExecutor(new GameHandler());
+        this.getCommand("fly").setExecutor(new FlyCommand());
 
         //Register Handlers:
         getServer().getPluginManager().registerEvents(new MapHandler(), this);
@@ -155,6 +153,16 @@ public class BlitzSG extends JavaPlugin {
         lobbySpawn = new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0);
         Bukkit.getWorld("world").setDifficulty(Difficulty.PEACEFUL);
         nametagManager.update();
+
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+            try {
+                new VanillaCommands().removeCommands();
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
+        }, 5L);
+
     }
 
     public void onDisable() {

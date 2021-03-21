@@ -43,6 +43,7 @@ D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\commands
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\gamestar\stars\Apocalypse.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\cosmetic\cosmetics\aura\RainbowParticle.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\kit\kits\Blaze.java
+D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\utils\FlyCommand.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\BlitzSG.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\rank\ranks\Vip.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\game\GameManager.java
@@ -136,6 +137,7 @@ D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\cosmetic
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\commands\subcommands\LeaveCommand.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\utils\ItemUtils.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\commands\subcommands\WarpCommand.java
+D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\utils\VanillaCommands.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\kit\kits\Armorer.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\cosmetic\cosmetics\taunt\IRefuseTaunt.java
 D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\java\me\syesstyles\blitz\gamestar\StarManager.java

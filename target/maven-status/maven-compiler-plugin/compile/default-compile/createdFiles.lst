@@ -18,6 +18,7 @@ me\syesstyles\blitz\rank\ranks\Helper.class
 me\syesstyles\blitz\cosmetic\cosmetics\aura\RainbowDustParticle.class
 me\syesstyles\blitz\gui\AuraGUI.class
 me\syesstyles\blitz\gamestar\stars\Apocalypse.class
+me\syesstyles\blitz\utils\FlyCommand.class
 me\syesstyles\blitz\gui\TauntGUI.class
 me\syesstyles\blitz\kit\kits\Archer.class
 me\syesstyles\blitz\commands\subcommands\SaveCommand.class
@@ -93,6 +94,7 @@ me\syesstyles\blitz\utils\ItemBuilder.class
 me\syesstyles\blitz\gamestar\stars\Kamikaze$1.class
 me\syesstyles\blitz\game\Game$4.class
 me\syesstyles\blitz\kit\kits\Blaze.class
+me\syesstyles\blitz\utils\VanillaCommands.class
 me\syesstyles\blitz\game\GameManager$1.class
 me\syesstyles\blitz\gamestar\stars\Gremlin.class
 me\syesstyles\blitz\elo\EloLevel.class

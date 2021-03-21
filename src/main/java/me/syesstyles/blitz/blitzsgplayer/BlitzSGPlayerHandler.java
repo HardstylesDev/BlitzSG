@@ -61,6 +61,7 @@ public class BlitzSGPlayerHandler implements Listener {
         p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
         p.getInventory().setLeggings(new ItemStack(Material.AIR, 1));
         p.getInventory().setBoots(new ItemStack(Material.AIR, 1));
+        BlitzSG.getInstance().getNametagManager().update();
         BlitzSGPlayer uhcPlayer;
         if (BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId()) == null)
             uhcPlayer = new BlitzSGPlayer(e.getPlayer().getUniqueId());
@@ -73,22 +74,22 @@ public class BlitzSGPlayerHandler implements Listener {
         p.setGameMode(GameMode.SURVIVAL);
         p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0)); //todo change back
 
-        if (uhcPlayer.getNick() != null && uhcPlayer.getNick().isNicked()) {
+      // if (uhcPlayer.getNick() != null && uhcPlayer.getNick().isNicked()) {
 
-            //e.setJoinMessage((ChatColor.YELLOW + uhcPlayer.getNick().getNickName() + " joined the game").replaceAll("  ", " "));
-            Nickname nickname = new Nickname();
-            if (uhcPlayer.getNick().getSkinSignature() == null) {
-                // e.setJoinMessage((ChatColor.YELLOW + uhcPlayer.getNick().getNickName() + " joined the game").replaceAll("  ", " "));
-                uhcPlayer.getNick().setNicked(true);
-                p.kickPlayer(ChatColor.GREEN + "Re-applied nick, please rejoin");
-                String[] skin = nickname.prepareSkinTextures(p, uhcPlayer.getNick().getNickName());
-                uhcPlayer.getNick().setNicked(true);
-                uhcPlayer.getNick().setSkinValue(skin[0]);
-                uhcPlayer.getNick().setSkinSignature(skin[1]);
-            } else {
-                nickname.setNick(p, uhcPlayer.getNick().getNickName(), true);
-            }
-        } else
+      //     //e.setJoinMessage((ChatColor.YELLOW + uhcPlayer.getNick().getNickName() + " joined the game").replaceAll("  ", " "));
+      //     Nickname nickname = new Nickname();
+      //     if (uhcPlayer.getNick().getSkinSignature() == null) {
+      //         // e.setJoinMessage((ChatColor.YELLOW + uhcPlayer.getNick().getNickName() + " joined the game").replaceAll("  ", " "));
+      //         uhcPlayer.getNick().setNicked(true);
+      //         p.kickPlayer(ChatColor.GREEN + "Re-applied nick, please rejoin");
+      //         String[] skin = nickname.prepareSkinTextures(p, uhcPlayer.getNick().getNickName());
+      //         uhcPlayer.getNick().setNicked(true);
+      //         uhcPlayer.getNick().setSkinValue(skin[0]);
+      //         uhcPlayer.getNick().setSkinSignature(skin[1]);
+      //     } else {
+      //         nickname.setNick(p, uhcPlayer.getNick().getNickName(), true);
+      //     }
+      // } else
             // e.setJoinMessage((ChatColor.YELLOW + p.getName() + " joined the game").replaceAll("  ", " "));
 
             if (uhcPlayer.getRank() == null)
@@ -144,7 +145,7 @@ public class BlitzSGPlayerHandler implements Listener {
     @EventHandler
     public void onAsyncChat(PlayerChatEvent e) {
         BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getPlayer().getUniqueId());
-        e.setFormat(uhcPlayer.getRank(true).getPrefix() + e.getPlayer().getName() + (uhcPlayer.getRank(true).getPrefix().equalsIgnoreCase(ChatColor.GRAY + "") ? ChatColor.GRAY + ": " : ChatColor.WHITE + ": ") + e.getMessage().replaceAll("%", "%%"));
+        e.setFormat(uhcPlayer.getRank(true).getPrefix() + e.getPlayer().getName() + (uhcPlayer.getRank().getPrefix().equalsIgnoreCase(ChatColor.GRAY + "") ? ChatColor.GRAY + ": " : ChatColor.WHITE + ": ") + e.getMessage().replaceAll("%", "%%"));
     }
 
     //BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());

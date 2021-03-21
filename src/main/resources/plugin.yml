@@ -6,6 +6,8 @@ description: BlitzSG Plugin
 commands:
   nick:
     description: lol
+    aliases:
+      - unnick
   world:
     description: lol
   bsg:
@@ -21,5 +23,7 @@ commands:
   horsey:
     description: lolR
   tag:
+    description: lolR
+  fly:
     description: lolR
 

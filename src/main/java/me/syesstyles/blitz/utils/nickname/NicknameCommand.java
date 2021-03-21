@@ -15,14 +15,19 @@ public class NicknameCommand implements CommandExecutor {
 
             return true;
         }
+        if(alias.equalsIgnoreCase("unnick")){
+            BlitzSG.send((Player) sender, "&eYou are no longer nicked!");
+            new Nickname().unnick((Player) sender);
+            return true;
+        }
         Player p = (Player) sender;
         if (args.length == 1) {
             if(args[0].equalsIgnoreCase("unnick") || args[0].equalsIgnoreCase("reset")){
-                BlitzSG.send(p, "&aUnnicking");
+                BlitzSG.send(p, "&eYou are no longer nicked");
                 new Nickname().unnick(p);
                 return true;
             }
-            BlitzSG.send(p, "&aChanging your nickname to &e" + args[0]);
+            BlitzSG.send(p, "&eYour nickname has been set to &e" + args[0]);
             new Nickname().setNick(p, args[0]);
             return true;
         }

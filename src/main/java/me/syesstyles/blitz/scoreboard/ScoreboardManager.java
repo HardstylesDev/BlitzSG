@@ -4,7 +4,11 @@ import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.game.Game;
 import me.syesstyles.blitz.game.Game.GameMode;
+import net.minecraft.server.v1_8_R3.ChatComponentText;
+import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -68,8 +72,7 @@ public class ScoreboardManager extends BukkitRunnable {
                             board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(900 - bsgPlayer.getGame().getGameTime()));
                         else
                             board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(1200 - bsgPlayer.getGame().getGameTime()));
-                    }
-                    else{
+                    } else {
                         if (bsgPlayer.getGame().getDeathmatchStartTime() < 45)
                             board.add("&aDeathmatch" + " " + convert(45 - bsgPlayer.getGame().getDeathmatchStartTime()));
                         else
@@ -100,6 +103,11 @@ public class ScoreboardManager extends BukkitRunnable {
                 }
             }
             board.update(p);
+
+            if (bsgPlayer.getNick() != null && bsgPlayer.getNick().isNicked()) {
+                PacketPlayOutChat packet = new PacketPlayOutChat(new ChatComponentText(ChatColor.RED + "You're currently nicked " + ChatColor.GRAY + "(in-game only)"), (byte) 2);
+                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
+            }
         }
     }
 

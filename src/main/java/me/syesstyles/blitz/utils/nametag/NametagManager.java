@@ -38,9 +38,9 @@ public class NametagManager {
             if(bsgPlayer == null || bsgPlayer.getRank() == null || bsgPlayer.getRank().getPrefix() == null || bsgPlayer.getNick() == null)
                 return;
             if (bsgPlayer.isInGame())
-                nametag.setNametag(onlinePlayer, ChatColor.RED + "", bsgPlayer.getNick().isNicked());
+                nametag.setNametag(onlinePlayer, ChatColor.RED + "");
             else
-                nametag.setNametag(onlinePlayer, bsgPlayer.getRank().getPrefix(), bsgPlayer.getNick().isNicked());
+                nametag.setNametag(onlinePlayer, bsgPlayer.getRank().getPrefix());
         }
     }
 }

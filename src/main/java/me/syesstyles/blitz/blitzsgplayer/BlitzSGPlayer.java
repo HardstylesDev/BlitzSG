@@ -174,10 +174,10 @@ public class BlitzSGPlayer {
     }
 
     public Rank getRank(boolean checkNick) {
-        if (nick != null && nick.isNicked())
-            return BlitzSG.getInstance().getRankManager().getRankByName("Default");
-        if (nick == null)
-            this.nick = new Nick("", null, null, false);
+       // if (nick != null && nick.isNicked())
+       //     return BlitzSG.getInstance().getRankManager().getRankByName("Default");
+       // if (nick == null)
+       //     this.nick = new Nick("", null, null, false);
         return rank;
     }
 

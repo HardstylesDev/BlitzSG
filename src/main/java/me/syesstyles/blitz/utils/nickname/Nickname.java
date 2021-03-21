@@ -8,11 +8,11 @@ import com.mojang.authlib.properties.Property;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import net.minecraft.server.v1_8_R3.*;
-import org.bukkit.World;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.BufferedReader;
@@ -33,36 +33,11 @@ public class Nickname {
     }
 
     public void setNick(Player p, String s, boolean onJoin) {
-        if (!onJoin) {
+        Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
             String skin[] = prepareSkinTextures(p, s);
-            System.out.println(skin.length + " >>> " + skin[0]);
 
-            GameProfile gameProfile = ((CraftPlayer) p).getProfile();
-            CraftPlayer craftOfflinePlayer = (CraftPlayer) Bukkit.getOfflinePlayer(p.getUniqueId());
-
-            MinecraftServer server = MinecraftServer.getServer();
-            WorldServer world = server.getWorldServer(0);
-            PlayerInteractManager manager = new PlayerInteractManager(world);
-            EntityPlayer player = new EntityPlayer(server, world, gameProfile, manager);
-
-            EntityPlayer offlineplayer = new EntityPlayer(server, world, craftOfflinePlayer.getProfile(), manager);
-            PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, player);
-            p.kickPlayer(ChatColor.GREEN + "Nickname changed, please rejoin!");
-            for (Player p2 : Bukkit.getOnlinePlayers()) {
-                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-            }
-            for (Player p2 : Bukkit.getOnlinePlayers()) {
-                ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, ((CraftPlayer) p).getHandle()));
-                ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(p.getEntityId()));
-                p2.hidePlayer(p);
-
-                ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, ((CraftPlayer) player.getBukkitEntity()).getHandle()));
-                ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, ((CraftPlayer) offlineplayer.getBukkitEntity()).getHandle()));
-                ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(player.getBukkitEntity().getEntityId()));
-                ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(offlineplayer.getBukkitEntity().getEntityId()));
-            }
             BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-            if(bsgPlayer.getNick() == null){
+            if (bsgPlayer.getNick() == null) {
                 bsgPlayer.setNick(new Nick(s, null, null, true));
 
             }
@@ -72,21 +47,49 @@ public class Nickname {
             bsgPlayer.getNick().setSkinSignature(skin[1]);
             BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer);
             return;
-        }
-        BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-
-        if (bsgPlayer.getNick().getSkinSignature() == null) return;
-        setSkinForSelf(p);
-        refresh(p);
-        setPlayerNameTag(p, s);
-        setPlayerSkin(p, s);
-        //removeOfflinePlayer(p.getDisplayName());
-
-
-        //bsgPlayer.setNickName(s);
-        p.setPlayerListName(bsgPlayer.getRank(true).getPrefix() + p.getName());
+        });
+        //System.out.println(skin.length + " >>> " + skin[0]);
+//
+        //GameProfile gameProfile = ((CraftPlayer) p).getProfile();
+        //CraftPlayer craftOfflinePlayer = (CraftPlayer) Bukkit.getOfflinePlayer(p.getUniqueId());
+//
+        //MinecraftServer server = MinecraftServer.getServer();
+        //WorldServer world = server.getWorldServer(0);
+        //PlayerInteractManager manager = new PlayerInteractManager(world);
+        //EntityPlayer player = new EntityPlayer(server, world, gameProfile, manager);
+//
+        //EntityPlayer offlineplayer = new EntityPlayer(server, world, craftOfflinePlayer.getProfile(), manager);
+        //PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, player);
+        //p.kickPlayer(ChatColor.GREEN + "Nickname changed, please rejoin!");
+        //for (Player p2 : Bukkit.getOnlinePlayers()) {
+        //    ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
+        //}
+        //for (Player p2 : Bukkit.getOnlinePlayers()) {
+        //    ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, ((CraftPlayer) p).getHandle()));
+        //    ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(p.getEntityId()));
+        //    p2.hidePlayer(p);
+//
+        //    ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, ((CraftPlayer) player.getBukkitEntity()).getHandle()));
+        //    ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, ((CraftPlayer) offlineplayer.getBukkitEntity()).getHandle()));
+        //    ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(player.getBukkitEntity().getEntityId()));
+        //    ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(offlineplayer.getBukkitEntity().getEntityId()));
+        //}
 
     }
+    // BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+//
+    // if (bsgPlayer.getNick().getSkinSignature() == null) return;
+    // setSkinForSelf(p);
+    // refresh(p);
+    // setPlayerNameTag(p, s);
+    // setPlayerSkin(p, s);
+    // //removeOfflinePlayer(p.getDisplayName());
+//
+//
+    // //bsgPlayer.setNickName(s);
+    // p.setPlayerListName(bsgPlayer.getRank(true).getPrefix() + p.getName());
+//
+
 
     public void removeOfflinePlayer(String realIGN) {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(realIGN);
@@ -116,7 +119,7 @@ public class Nickname {
 
 
         bsgPlayer.setNick(null);
-        p.kickPlayer(ChatColor.GREEN + "Please rejoin");
+       // p.kickPlayer(ChatColor.GREEN + "Please rejoin");
         BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer);
 
     }
@@ -250,6 +253,7 @@ public class Nickname {
             exception.printStackTrace();
         }
         return null;
+
     }
 
     public boolean setPlayerSkin(Player p, String arg) {
