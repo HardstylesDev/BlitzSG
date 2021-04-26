@@ -62,7 +62,7 @@ public class InventoryHandler implements Listener {
                         return;
                     }
                 }
-                BlitzSG.send((Player) e.getWhoClicked(), BlitzSG.CORE_NAME + "&eYou have chosen the &a" + kit.getName() + " &ekit, You will get your items 60 seconds after the game starts.");
+                BlitzSG.send((Player) e.getWhoClicked(), BlitzSG.CORE_NAME + "&eYou have chosen the &a" + kit.getName() + KitUtils.getKitTag(bsgPlayer.getKitLevel(kit)) + " &ekit, You will get your items 60 seconds after the game starts.");
                 bsgPlayer.setSelectedKit(kit);
                 //if(e.isLeftClick())
                 //	bsgPlayer.getGame().setVote(p, true);
@@ -178,6 +178,14 @@ public class InventoryHandler implements Listener {
             Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer));
 
         } else if (e.getInventory().getName() == "§8Taunts") {
+
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("Connect");
+            out.writeUTF("hub");
+
+            p.sendPluginMessage(BlitzSG.getInstance(), "BungeeCord", out.toByteArray());
+
+
             e.setCancelled(true);
             if (bsgPlayer.isInGame())
                 return;

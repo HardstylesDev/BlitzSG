@@ -27,7 +27,7 @@ public class WolfPackTaunt extends Taunt {
 
     public void go(Player player) {
         villagerShenanigans(player.getLocation());
-        player.getWorld().getPlayers().forEach(player1 -> player1.playSound(player.getLocation(), Sound.WOLF_HOWL, (float) 1, (float) 0.5));
+        player.getWorld().getPlayers().forEach(player1 -> player1.playSound(player.getLocation(), Sound.WOLF_HOWL, (float) 1, (float) 1));
 
     }
 

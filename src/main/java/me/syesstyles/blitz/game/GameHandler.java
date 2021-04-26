@@ -1,5 +1,7 @@
 package me.syesstyles.blitz.game;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.game.Game.GameMode;
@@ -45,7 +47,7 @@ public class GameHandler implements Listener, CommandExecutor {
     public void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        if (bsgPlayer.isInGame()) {
+        if (bsgPlayer.isInGame() && bsgPlayer.getGame().getAlivePlayers().contains(e.getPlayer())) {
             if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME) {
                 bsgPlayer.getGame().killPlayer(p);
                 bsgPlayer.getGame().msgAll(BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + p.getName() + " &ewas killed!");
@@ -74,7 +76,7 @@ public class GameHandler implements Listener, CommandExecutor {
         if (!bsgPlayer.isInGame())
             return;
         //e.setDeathMessage("§c" + e.getDeathMessage());
-        e.setDeathMessage("");
+
         victim.getWorld().strikeLightningEffect(victim.getLocation());
         //bsgPlayer.getGame().msgAll(e.getDeathMessage());
         bsgPlayer.getGameEntities().forEach(entity -> entity.remove());
@@ -88,6 +90,7 @@ public class GameHandler implements Listener, CommandExecutor {
 
             for (Player p : blitzSGPlayer.getGame().getAllPlayers()) {
                 BlitzSG.send(p, BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed by " + blitzSGPlayer.getRank(true).getChatColor() + victim.getKiller().getName() + " &eand everyone got a speed buff!");
+                p.removePotionEffect(PotionEffectType.SPEED);
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 15 * 15, 1));
             }
             bsgPlayer.getGame().killPlayer(victim);
@@ -100,7 +103,11 @@ public class GameHandler implements Listener, CommandExecutor {
                 BlitzSG.send(victim.getKiller(), "§6+" + coins + " Coins (Kill)");
             blitzSGPlayer.addCoins(coins);
             BlitzSG.getInstance().getBlitzSGPlayerManager().handleKillElo(victim, victim.getKiller());
+
             return;
+        } else {
+            BlitzSG.broadcast(BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed and everyone got a speed buff!");
+
         }
         bsgPlayer.getGame().killPlayer(victim);
         BlitzSG.getInstance().getBlitzSGPlayerManager().handleDeathElo(victim);
@@ -110,8 +117,15 @@ public class GameHandler implements Listener, CommandExecutor {
     public void onPlayerRespawn(PlayerRespawnEvent e) {
         Player p = e.getPlayer();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        if (!bsgPlayer.isInGame())
+        if (!bsgPlayer.isInGame()) {
+            BlitzSG.getInstance().getGameManager().getRunningGames().get(0).removePlayer(p);
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("Connect");
+            out.writeUTF("lobby");
+            p.sendPluginMessage(BlitzSG.getInstance(), "BungeeCord", out.toByteArray());
             return;
+        }
+
         if (!bsgPlayer.getGame().isDead(p))
             return;
         p.setGameMode(org.bukkit.GameMode.SPECTATOR);
@@ -129,7 +143,7 @@ public class GameHandler implements Listener, CommandExecutor {
         if (!bsgPlayer.isInGame())
             return;
         if (bsgPlayer.getGame().getGameMode() == GameMode.STARTING)
-            if (e.getTo().getBlockX() != p.getLocation().getBlockX() || e.getTo().getBlockZ() != p.getLocation().getBlockZ()) {
+            if (e.getTo().getBlockX() != e.getFrom().getBlockX() || e.getTo().getBlockZ() != e.getFrom().getBlockZ()) {
                 Location spawn = bsgPlayer.getGameSpawn();
                 if (spawn == null) {
 
@@ -520,7 +534,6 @@ public class GameHandler implements Listener, CommandExecutor {
         }
 
     }
-
 
     @EventHandler
     public void onBlockInteract(PlayerInteractEvent e) {

@@ -80,10 +80,10 @@ public class BlitzSGPlayerManager {
 	
 	public void setLobbyInventoryAndNameTag(Player p) {
 		p.getInventory().clear();
-		p.getInventory().setItem(0, ItemUtils.buildItem(new ItemStack(Material.COMPASS), "&aServer Selector &7(Right-Click)", Arrays.asList("§7Right-Click to do nothing I guess")));
-		p.getInventory().setItem(1, ItemUtils.buildItem(new ItemStack(Material.WATCH), "&aVisibility &7(Right-Click)", Arrays.asList("§7Right-Click to hide players in the lobby")));
-		p.getInventory().setItem(2, ItemUtils.buildItem(new ItemStack(Material.EMERALD), "&aShop &7(Right-Click)", Arrays.asList("§7Right-Click to open the shop")));
-		p.getInventory().setItem(8, ItemUtils.buildItem(new ItemStack(Material.NETHER_STAR), "&aLobby Selector &7(Right-Click)", Arrays.asList("§7Right-Click to switch lobbies")));
+		p.getInventory().setItem(1, ItemUtils.buildItem(new ItemStack(Material.IRON_SWORD), "&b&lJoin a Game &7(Right-Click)", Arrays.asList("§7Right-Click to join a Blitz game")));
+		p.getInventory().setItem(3, ItemUtils.buildItem(new ItemStack(Material.EMERALD), "&aShop &7(Right-Click)", Arrays.asList("§7Right-Click to open the shop")));
+		p.getInventory().setItem(5, ItemUtils.buildItem(new ItemStack(Material.PAINTING), "&e&lYour Stats &7(Right-Click)", Arrays.asList("§7Right-Click to view your stats")));
+		p.getInventory().setItem(7, ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM), "&c???", Arrays.asList("§7Coming soon...")));
 
 		BlitzSG.getInstance().getNametagManager().update();
 
@@ -152,6 +152,7 @@ public class BlitzSGPlayerManager {
 	
 	public void handleWinElo(Game g) {
 		//Get Player
+		try{
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(g.getWinner().getUniqueId());
 		
 		//Calculate ELO
@@ -165,6 +166,9 @@ public class BlitzSGPlayerManager {
 		
 		//Apply ELO + Message Player
 		uhcPlayer.addElo((int) eloChange);
+		}catch (NullPointerException e){
+			System.out.println("elo bug");
+		}
 		//g.getWinner().sendMessage("§a+" + (int)eloChange + " §7ELO §a(\u25b2" + uhcPlayer.getElo() + ")");
 	}
 	

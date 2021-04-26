@@ -113,6 +113,10 @@ public class BlitzSGPlayer {
             this.kitLevels.put(p, 0);
 
 
+
+
+
+
         this.gameKills = 0;
         this.gameTaunt = -1;
         this.gameSpawn = null;
@@ -121,6 +125,7 @@ public class BlitzSGPlayer {
         this.aura = null;
         BlitzSG.getInstance().getBlitzSGPlayerManager().addBsgPlayer(this.uuid, this);
     }
+
 
     public void loadStats(FileConfiguration statsFile) {
         this.rank = BlitzSG.getInstance().getRankManager().getRankByName(statsFile.getString("Rank"));
@@ -232,11 +237,11 @@ public class BlitzSGPlayer {
         return this.name;
     }
 
- // public String getNickName() {
- //     if (this.nick != null)
- //         return this.nick.getNickName();
- //     return null;
- // }
+    // public String getNickName() {
+    //     if (this.nick != null)
+    //         return this.nick.getNickName();
+    //     return null;
+    // }
 
     public void setElo(int elo) {
         this.elo = elo;

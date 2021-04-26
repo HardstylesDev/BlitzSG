@@ -1,17 +1,11 @@
 name: BlitzSG
 version: 1.0
 main: me.syesstyles.blitz.BlitzSG
+depend: [KarhuAPI]
 author: Syes, Hardstyles
 description: BlitzSG Plugin
+
 commands:
-  nick:
-    description: lol
-    aliases:
-      - unnick
-  world:
-    description: lol
-  bsg:
-    description: lol
   fw:
     description: lol
   acban:
@@ -19,11 +13,9 @@ commands:
   unban:
     description: lol
   taunt:
-    description: lolR
-  horsey:
-    description: lolR
-  tag:
-    description: lolR
-  fly:
-    description: lolR
+    description: lol
+  wtfmap:
+    description: lol
+  startdm:
+    description: lol
 

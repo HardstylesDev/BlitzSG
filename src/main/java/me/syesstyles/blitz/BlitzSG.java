@@ -1,13 +1,13 @@
 package me.syesstyles.blitz;
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import com.zaxxer.hikari.HikariDataSource;
-import me.syesstyles.blitz.aaaaa.StatisticsManager;
+import me.liwk.karhu.api.KarhuAPI;
+import me.syesstyles.blitz.statistics.StatisticsManager;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerHandler;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerManager;
-import me.syesstyles.blitz.commands.CommandHandler;
-import me.syesstyles.blitz.commands.HorseCommand;
-import me.syesstyles.blitz.commands.TagCommand;
 import me.syesstyles.blitz.cosmetic.CosmeticsManager;
 import me.syesstyles.blitz.elo.EloManager;
 import me.syesstyles.blitz.game.Game;
@@ -29,21 +29,26 @@ import me.syesstyles.blitz.utils.*;
 import me.syesstyles.blitz.utils.bungee.BungeeMessaging;
 import me.syesstyles.blitz.utils.database.Database;
 import me.syesstyles.blitz.utils.nametag.NametagManager;
-import me.syesstyles.blitz.utils.nickname.NicknameCommand;
 import net.minecraft.server.v1_8_R3.EnumChatFormat;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.io.File;
+
 public class BlitzSG extends JavaPlugin {
 
-    public static String CORE_NAME = EnumChatFormat.GRAY + "[" + EnumChatFormat.RED + "B-SG" + EnumChatFormat.GRAY + "] " + EnumChatFormat.WHITE;
+    public static String CORE_NAME = EnumChatFormat.GRAY + "[" + EnumChatFormat.RED + "B-SG" + EnumChatFormat.GRAY + "]: " + EnumChatFormat.WHITE;
 
     private JedisPool pool;
 
     public static BlitzSG instance;
+    private KarhuAnticheat karhuAnticheat;
     private NametagManager nametagManager;
     private MapManager mapManager;
     private BlitzSGPlayerManager blitzSGPlayerManager;
@@ -56,6 +61,7 @@ public class BlitzSG extends JavaPlugin {
     private StarManager starManager;
     private PunishmentManager punishmentManager;
     private StatisticsManager statisticsManager;
+
     private HikariDataSource hikari;
     public static Location lobbySpawn;
 
@@ -67,18 +73,24 @@ public class BlitzSG extends JavaPlugin {
     }
 
     public void onEnable() {
+        try {
+            new VanillaCommands().remove();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         pool = new JedisPool("127.0.0.1");
-
         Jedis j = null;
         try {
+
             j = pool.getResource();
-            String s = j.get("canJoin");
-            System.out.println("Redis value of key: " + s);
+            j.set("canJoin", "false");
+            System.out.println("Disabled joins, canJoin = false");
         } finally {
             j.close();
         }
 
 
+        karhuAnticheat = new KarhuAnticheat();
         database = new Database();
         blitzSGPlayerManager = new BlitzSGPlayerManager();
         statisticsManager = new StatisticsManager();
@@ -102,26 +114,39 @@ public class BlitzSG extends JavaPlugin {
         this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", new BungeeMessaging());
 
-        this.getCommand("tag").setExecutor(new TagCommand());
-        this.getCommand("bsg").setExecutor(new CommandHandler());
-        this.getCommand("horsey").setExecutor(new HorseCommand());
-        this.getCommand("world").setExecutor(new WorldCommand());
-        this.getCommand("nick").setExecutor(new NicknameCommand());
+
+        // this.getCommand("world").setExecutor(new WorldCommand());
+
         this.getCommand("fw").setExecutor(new FireworkCommand());
         this.getCommand("acban").setExecutor(new ACBan());
         this.getCommand("unban").setExecutor(new Unban());
         this.getCommand("taunt").setExecutor(new GameHandler());
-        this.getCommand("fly").setExecutor(new FlyCommand());
+        this.getCommand("wtfmap").setExecutor(new WTFMapCommand());
+        this.getCommand("startdm").setExecutor(new StartDMCommand());
 
         //Register Handlers:
         getServer().getPluginManager().registerEvents(new MapHandler(), this);
         getServer().getPluginManager().registerEvents(new GameHandler(), this);
-        getServer().getPluginManager().registerEvents(new ImportantCommandModifier(), this);
         getServer().getPluginManager().registerEvents(new GameMobHandler(), this);
         getServer().getPluginManager().registerEvents(new BlitzSGPlayerHandler(), this);
         getServer().getPluginManager().registerEvents(new EnchantListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryHandler(), this);
         getServer().getPluginManager().registerEvents(scoreboardManager.getScoreboardHandler(), this);
+
+        getServer().setWhitelist(false);
+
+        KarhuAPI.getEventRegistry().addListener(karhuAnticheat);
+
+
+
+        World world =  Bukkit.getWorld("world");
+        File playerdataFolder = new File(world.getWorldFolder() + "/playerdata/");
+        File[] contents = playerdataFolder.listFiles();
+        if(contents != null){
+            for (File content : contents) {
+                content.delete();
+            }
+        }
 
         //Load Players:
         //PlayerUtils.loadPlayerData();
@@ -134,11 +159,12 @@ public class BlitzSG extends JavaPlugin {
             blitzSGPlayerManager.addBsgPlayer(p.getUniqueId(), bsgPlayer);
             bsgPlayer.setName(p.getDisplayName());
             bsgPlayer.setIp(p.getAddress().toString().split(":")[0].replaceAll("/", ""));
-            if (bsgPlayer.getCustomTag() != null)
-                p.setPlayerListName(bsgPlayer.getRank(true).getPrefix() + p.getName() + ChatColor.GRAY + " [" + bsgPlayer.getCustomTag() + "]");
-            else
-                p.setPlayerListName(bsgPlayer.getRank(true).getPrefix() + p.getName());
+            // p.setPlayerListName(bsgPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(bsgPlayer.getElo()).getPrefix() + " [" + bsgPlayer.getElo() + "]");
         }
+
+
+        mapManager.loadArena(mapManager.getRandom());
+
         //Load Arena:
         //ArenaUtils.loadArenas();
         // arenaManager.loadArena("aelinstower");
@@ -151,38 +177,40 @@ public class BlitzSG extends JavaPlugin {
         //Load LobbySpawn:
 
         lobbySpawn = new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0);
-        Bukkit.getWorld("world").setDifficulty(Difficulty.PEACEFUL);
         nametagManager.update();
 
-        Bukkit.getScheduler().runTaskLater(this, () -> {
-            try {
-                new VanillaCommands().removeCommands();
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-
-        }, 5L);
 
     }
 
     public void onDisable() {
-
-
+        Jedis jedisResource = pool.getResource();
+        jedisResource.set("canJoin", "false");
+        jedisResource.close();
         //PlayerUtils.savePlayerData();
         //statisticsManager.save();
-
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            ByteArrayDataOutput out = ByteStreams.newDataOutput();
+            out.writeUTF("Connect");
+            out.writeUTF("lobby");
+            onlinePlayer.sendPluginMessage(BlitzSG.getInstance(), "BungeeCord", out.toByteArray());
+        }
         try {
             //new SaveStats().saveAll();
         } catch (Exception e) {
         }
         //Reset Running Games:
-        for (Game g : gameManager.getRunningGames())
+        for (Game g : gameManager.getRunningGames()) {
+
             g.resetGame();
+            mapManager.removeArena(g.getArena());
+
+        }
 
 
-        // pool.close();
+        pool.close();
     }
 
+    public KarhuAnticheat getKarhuAnticheat(){return karhuAnticheat;}
     public Database getData() {
         return database;
     }
@@ -231,12 +259,12 @@ public class BlitzSG extends JavaPlugin {
         return statisticsManager;
     }
 
-    public RankManager getRankManager() {
-        return rankManager;
-    }
-
     public JedisPool getJedisPool() {
         return pool;
+    }
+
+    public RankManager getRankManager() {
+        return rankManager;
     }
 
     public NametagManager getNametagManager() {

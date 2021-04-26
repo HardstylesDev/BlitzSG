@@ -45,7 +45,7 @@ public class GameMobHandler implements Listener {
         BlitzSGPlayer sgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getPlayer().getUniqueId());
         if (!sgPlayer.isInGame())
             return;
-        if (!(sgPlayer.getGame().getGameMode() == GameMode.INGAME))
+        if (!(sgPlayer.getGame().getGameMode() == GameMode.INGAME) && !(sgPlayer.getGame().getGameMode() == GameMode.RESETING)  )
             return;
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem().getType() == Material.MONSTER_EGG) {
             EntityType entityType = ((SpawnEgg) e.getPlayer().getItemInHand().getData()).getSpawnedType();

@@ -1,4 +1,4 @@
-package me.syesstyles.blitz.aaaaa;
+package me.syesstyles.blitz.statistics;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
