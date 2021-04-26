@@ -10,10 +10,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityCombustEvent;
-import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.SpawnEgg;
@@ -25,6 +22,13 @@ import org.bukkit.util.Vector;
 import org.spigotmc.event.entity.EntityMountEvent;
 
 public class GameMobHandler implements Listener {
+
+    @EventHandler
+    public void onHorseDamage(EntityDamageEvent e) {
+        if (e.getCause() == EntityDamageEvent.DamageCause.VOID)
+            if (e.getEntity() instanceof Horse)
+                e.getEntity().remove();
+    }
 
     @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent event) {
