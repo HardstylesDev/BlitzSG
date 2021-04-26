@@ -104,7 +104,10 @@ public class DebugCommand extends SubCommand {
                     p.sendMessage("Unknown player.");
                 else {
                     bsgPlayer.addCoins(Integer.parseInt(args[3]));
+
                     p.sendMessage("Coins given.");
+                    BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer);
+
                 }
             }
 
@@ -132,6 +135,7 @@ public class DebugCommand extends SubCommand {
                 }
                 bsgPlayer.setRank(rank);
                 BlitzSG.send(p, "&aYou've set your rank to " + rank.getPrefix() + rank.getRank());
+                BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer);
                 BlitzSG.getInstance().getNametagManager().update();
             } else
                 BlitzSG.send(p, "" + new RankManager().getRank(p));
@@ -146,6 +150,8 @@ public class DebugCommand extends SubCommand {
                 }
                 bsgPlayer.setRank(rank);
                 BlitzSG.send(p, "&aYou've their your rank to " + rank.getPrefix() + rank.getRank());
+                BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer);
+
                 BlitzSG.getInstance().getNametagManager().update();
             } else
                 BlitzSG.send(p, "" + new RankManager().getRank(p));
