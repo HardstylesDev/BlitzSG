@@ -1,8 +1,10 @@
 name: BlitzSG
 version: 1.0
 main: me.syesstyles.blitz.BlitzSG
+depend: [KarhuAPI]
 author: Syes, Hardstyles
 description: BlitzSG Plugin
+
 commands:
   fw:
     description: lol

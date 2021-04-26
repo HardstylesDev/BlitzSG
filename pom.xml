@@ -71,5 +71,12 @@
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.karhu</groupId>
+            <artifactId>karhuapi</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/KarhuAPI.jar</systemPath>
+        </dependency>
     </dependencies>
 </project>

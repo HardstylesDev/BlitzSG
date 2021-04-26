@@ -47,7 +47,7 @@ public class GameHandler implements Listener, CommandExecutor {
     public void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        if (bsgPlayer.isInGame()) {
+        if (bsgPlayer.isInGame() && bsgPlayer.getGame().getAlivePlayers().contains(e.getPlayer())) {
             if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME) {
                 bsgPlayer.getGame().killPlayer(p);
                 bsgPlayer.getGame().msgAll(BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + p.getName() + " &ewas killed!");
@@ -76,7 +76,7 @@ public class GameHandler implements Listener, CommandExecutor {
         if (!bsgPlayer.isInGame())
             return;
         //e.setDeathMessage("§c" + e.getDeathMessage());
-        e.setDeathMessage("");
+
         victim.getWorld().strikeLightningEffect(victim.getLocation());
         //bsgPlayer.getGame().msgAll(e.getDeathMessage());
         bsgPlayer.getGameEntities().forEach(entity -> entity.remove());
@@ -103,7 +103,11 @@ public class GameHandler implements Listener, CommandExecutor {
                 BlitzSG.send(victim.getKiller(), "§6+" + coins + " Coins (Kill)");
             blitzSGPlayer.addCoins(coins);
             BlitzSG.getInstance().getBlitzSGPlayerManager().handleKillElo(victim, victim.getKiller());
+
             return;
+        } else {
+            BlitzSG.broadcast(BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed and everyone got a speed buff!");
+
         }
         bsgPlayer.getGame().killPlayer(victim);
         BlitzSG.getInstance().getBlitzSGPlayerManager().handleDeathElo(victim);
@@ -113,7 +117,7 @@ public class GameHandler implements Listener, CommandExecutor {
     public void onPlayerRespawn(PlayerRespawnEvent e) {
         Player p = e.getPlayer();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        if (!bsgPlayer.isInGame()){
+        if (!bsgPlayer.isInGame()) {
             BlitzSG.getInstance().getGameManager().getRunningGames().get(0).removePlayer(p);
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("Connect");

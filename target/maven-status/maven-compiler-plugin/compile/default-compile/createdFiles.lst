@@ -35,6 +35,7 @@ me\syesstyles\blitz\rank\Rank.class
 me\syesstyles\blitz\gui\TauntGUI.class
 me\syesstyles\blitz\kit\kits\Archer.class
 me\syesstyles\blitz\rank\ranks\Vip.class
+me\syesstyles\blitz\utils\KarhuAnticheat.class
 me\syesstyles\blitz\game\GameHandler.class
 me\syesstyles\blitz\game\GameManager.class
 me\syesstyles\blitz\gamestar\StarManager.class
@@ -149,6 +150,7 @@ me\syesstyles\blitz\cosmetic\cosmetics\taunt\SheepDanceTaunt.class
 me\syesstyles\blitz\game\Game$4.class
 me\syesstyles\blitz\kit\kits\Blaze.class
 me\syesstyles\blitz\punishments\ACBan$1.class
+me\syesstyles\blitz\utils\VanillaCommands.class
 me\syesstyles\blitz\game\GameManager$1.class
 me\syesstyles\blitz\gamestar\stars\Gremlin.class
 me\syesstyles\blitz\cosmetic\cosmetics\taunt\RichJamesTaunt.class

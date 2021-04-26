@@ -83,7 +83,7 @@ public class Nickname {
 
 
         //bsgPlayer.setNickName(s);
-        p.setPlayerListName(ChatColor.RED + p.getName());
+        p.setPlayerListName(p.getName());
 
     }
     public void removeOfflinePlayer(String realIGN) {

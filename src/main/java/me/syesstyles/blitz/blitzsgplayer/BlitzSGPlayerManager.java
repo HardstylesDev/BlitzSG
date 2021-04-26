@@ -152,6 +152,7 @@ public class BlitzSGPlayerManager {
 	
 	public void handleWinElo(Game g) {
 		//Get Player
+		try{
 		BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(g.getWinner().getUniqueId());
 		
 		//Calculate ELO
@@ -165,6 +166,9 @@ public class BlitzSGPlayerManager {
 		
 		//Apply ELO + Message Player
 		uhcPlayer.addElo((int) eloChange);
+		}catch (NullPointerException e){
+			System.out.println("elo bug");
+		}
 		//g.getWinner().sendMessage("§a+" + (int)eloChange + " §7ELO §a(\u25b2" + uhcPlayer.getElo() + ")");
 	}
 	

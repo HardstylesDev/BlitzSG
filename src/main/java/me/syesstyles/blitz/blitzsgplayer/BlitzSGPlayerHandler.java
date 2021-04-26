@@ -58,6 +58,7 @@ public class BlitzSGPlayerHandler implements Listener {
         p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
         p.getInventory().setLeggings(new ItemStack(Material.AIR, 1));
         p.getInventory().setBoots(new ItemStack(Material.AIR, 1));
+        p.setFoodLevel(20);
         BlitzSGPlayer uhcPlayer;
         if (BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId()) == null)
             uhcPlayer = new BlitzSGPlayer(e.getPlayer().getUniqueId());

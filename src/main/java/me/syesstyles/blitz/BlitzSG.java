@@ -3,7 +3,8 @@ package me.syesstyles.blitz;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.zaxxer.hikari.HikariDataSource;
-import me.syesstyles.blitz.aaaaa.StatisticsManager;
+import me.liwk.karhu.api.KarhuAPI;
+import me.syesstyles.blitz.statistics.StatisticsManager;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerHandler;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayerManager;
@@ -24,14 +25,10 @@ import me.syesstyles.blitz.punishments.PunishmentManager;
 import me.syesstyles.blitz.punishments.commands.Unban;
 import me.syesstyles.blitz.rank.RankManager;
 import me.syesstyles.blitz.scoreboard.ScoreboardManager;
-import me.syesstyles.blitz.utils.EnchantListener;
-import me.syesstyles.blitz.utils.FireworkCommand;
-import me.syesstyles.blitz.utils.StartDMCommand;
-import me.syesstyles.blitz.utils.WTFMapCommand;
+import me.syesstyles.blitz.utils.*;
 import me.syesstyles.blitz.utils.bungee.BungeeMessaging;
 import me.syesstyles.blitz.utils.database.Database;
 import me.syesstyles.blitz.utils.nametag.NametagManager;
-import me.syesstyles.blitz.*;
 import net.minecraft.server.v1_8_R3.EnumChatFormat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -42,6 +39,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.io.File;
+
 public class BlitzSG extends JavaPlugin {
 
     public static String CORE_NAME = EnumChatFormat.GRAY + "[" + EnumChatFormat.RED + "B-SG" + EnumChatFormat.GRAY + "]: " + EnumChatFormat.WHITE;
@@ -49,6 +48,7 @@ public class BlitzSG extends JavaPlugin {
     private JedisPool pool;
 
     public static BlitzSG instance;
+    private KarhuAnticheat karhuAnticheat;
     private NametagManager nametagManager;
     private MapManager mapManager;
     private BlitzSGPlayerManager blitzSGPlayerManager;
@@ -73,9 +73,15 @@ public class BlitzSG extends JavaPlugin {
     }
 
     public void onEnable() {
+        try {
+            new VanillaCommands().remove();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
         pool = new JedisPool("127.0.0.1");
         Jedis j = null;
         try {
+
             j = pool.getResource();
             j.set("canJoin", "false");
             System.out.println("Disabled joins, canJoin = false");
@@ -84,7 +90,7 @@ public class BlitzSG extends JavaPlugin {
         }
 
 
-
+        karhuAnticheat = new KarhuAnticheat();
         database = new Database();
         blitzSGPlayerManager = new BlitzSGPlayerManager();
         statisticsManager = new StatisticsManager();
@@ -128,6 +134,20 @@ public class BlitzSG extends JavaPlugin {
         getServer().getPluginManager().registerEvents(scoreboardManager.getScoreboardHandler(), this);
 
         getServer().setWhitelist(false);
+
+        KarhuAPI.getEventRegistry().addListener(karhuAnticheat);
+
+
+
+        World world =  Bukkit.getWorld("world");
+        File playerdataFolder = new File(world.getWorldFolder() + "/playerdata/");
+        File[] contents = playerdataFolder.listFiles();
+        if(contents != null){
+            for (File content : contents) {
+                content.delete();
+            }
+        }
+
         //Load Players:
         //PlayerUtils.loadPlayerData();
         //new LoadStats().load();
@@ -159,9 +179,7 @@ public class BlitzSG extends JavaPlugin {
         lobbySpawn = new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0);
         nametagManager.update();
 
-        Jedis jedisResource = pool.getResource();
-        jedisResource.set("canJoin", "true");
-        jedisResource.close();
+
     }
 
     public void onDisable() {
@@ -192,6 +210,7 @@ public class BlitzSG extends JavaPlugin {
         pool.close();
     }
 
+    public KarhuAnticheat getKarhuAnticheat(){return karhuAnticheat;}
     public Database getData() {
         return database;
     }
