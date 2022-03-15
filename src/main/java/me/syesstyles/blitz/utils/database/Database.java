@@ -10,7 +10,7 @@ import java.time.Duration;
 
 public class Database {
 
-    private static String host = "104.128.53.75"; // The IP-address of the database host.
+    private static String host = "0.0.0.0"; // The IP-address of the database host.
     private static String database = "s6_server"; // The name of the database.
     private static String user = "u6_hniIbS87Lb"; // The name of the database user.
     private static String pass = "u13wROasTK61@G.pRMqN^+mt"; // The password of the database user.
