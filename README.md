@@ -1,1 +1,1 @@
-# BlitzSG, zo. weet je dat ook weer. Ben je weer helemaal op de hoogte.
+# Full Blitz SG remake
