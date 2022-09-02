@@ -1,1 +1,1 @@
-# Full Blitz SG remake
+# Full Blitz SG remake | Game Server
