@@ -20,19 +20,16 @@ public class ACBan implements CommandExecutor {
         }
         Player player = Bukkit.getPlayer(args[0]);
         BlitzSGPlayer blitzSGPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(player.getUniqueId());
-        BlitzSG.broadcast("&7&m--------------------------------------------------");
-        BlitzSG.broadcast("&c&l✗ &c&lCHEAT DETECTION");
         if (blitzSGPlayer.getNick() == null || !blitzSGPlayer.getNick().isNicked())
-            BlitzSG.broadcast("&cRemoved" + blitzSGPlayer.getRank().getPrefix() + player.getDisplayName() + " &cfrom the server");
+            BlitzSG.broadcast("&8[&c&l!&8] &cRemoved " + blitzSGPlayer.getRank().getPrefix() + player.getDisplayName() + " &cfrom the server");
         else
-            BlitzSG.broadcast("&cRemoved " + blitzSGPlayer.getRank().getPrefix() + player.getDisplayName() + " &7(" + player.getName() +") &cfrom the server");
-        BlitzSG.broadcast("&7&m--------------------------------------------------");
+            BlitzSG.broadcast("&8[&c&l!&8] &cRemoved " + blitzSGPlayer.getRank().getPrefix() + player.getDisplayName() + " &cfrom the server &7(nick: " + player.getName() +")");
 
         Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), new Runnable() {
             @Override
             public void run() {
                 try {
-                    Connection connection = BlitzSG.getInstance().getData().getConnection();
+                    Connection connection = BlitzSG.getInstance().db().getConnection();
                     String command = String.format("REPLACE INTO `bans`(`uuid`, `reason`, `expires`, `executor`) VALUES (?,?,?,?)");
 
                     PreparedStatement preparedStatement = connection.prepareStatement(command);
@@ -53,6 +50,7 @@ public class ACBan implements CommandExecutor {
             }
         });
 
+        System.out.println("Kicking player2 ");
         player.kickPlayer("Unfair Advantage");
         return true;
 

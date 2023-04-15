@@ -4,11 +4,7 @@ import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.game.Game;
 import me.syesstyles.blitz.game.Game.GameMode;
-import net.minecraft.server.v1_8_R3.ChatComponentText;
-import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -58,7 +54,7 @@ public class ScoreboardManager extends BukkitRunnable {
                     board.add("Kills: &a" + bsgPlayer.getGameKills());
                     board.add(separator);
                     board.add("Taunt");
-                    board.add(bsgPlayer.getTaunt() == null ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : (bsgPlayer.getGameTaunt() == 1 ? "&aTAUNTING" : "&cUSED")));
+                    board.add(bsgPlayer.getGameTaunt() == -1 ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : "&cUSED"));
                 } else if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME) {
 
                     board.add(separator);
@@ -72,7 +68,8 @@ public class ScoreboardManager extends BukkitRunnable {
                             board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(900 - bsgPlayer.getGame().getGameTime()));
                         else
                             board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(1200 - bsgPlayer.getGame().getGameTime()));
-                    } else {
+                    }
+                    else{
                         if (bsgPlayer.getGame().getDeathmatchStartTime() < 45)
                             board.add("&aDeathmatch" + " " + convert(45 - bsgPlayer.getGame().getDeathmatchStartTime()));
                         else
@@ -84,7 +81,7 @@ public class ScoreboardManager extends BukkitRunnable {
                     board.add("&fKills: &a" + bsgPlayer.getGameKills());
                     board.add(separator);
                     board.add("Taunt");
-                    board.add(bsgPlayer.getTaunt() == null ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : (bsgPlayer.getGameTaunt() == 1 ? "&aTAUNTING" : "&cUSED")));
+                    board.add(bsgPlayer.getGameTaunt() == -1 ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : "&cUSED"));
 
                 } else if (bsgPlayer.getGame().getGameMode() == GameMode.RESETING) {
                     if (bsgPlayer.getGame().getWinner() == null)
@@ -92,11 +89,7 @@ public class ScoreboardManager extends BukkitRunnable {
                     BlitzSGPlayer winner = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(bsgPlayer.getGame().getWinner().getUniqueId());
                     board.add(separator);
                     board.add("&fWinner");
-                    if (winner.getRank(true).getPrefix() != null)
-                        board.add("&a" + winner.getRank(true).getPrefix() + bsgPlayer.getGame().getWinner().getName());
-                    else
-                        board.add("&a" + winner.getRank().getPrefix() + bsgPlayer.getGame().getWinner().getName());
-
+                    board.add("&a" + winner.getRank(true).getPrefix() + bsgPlayer.getGame().getWinner().getName());
                     board.add(separator);
                     board.add("&fPlayers: &a" + bsgPlayer.getGame().getAlivePlayers().size());
                     board.add("&fKills: &a" + bsgPlayer.getGameKills());
@@ -107,11 +100,6 @@ public class ScoreboardManager extends BukkitRunnable {
                 }
             }
             board.update(p);
-
-            if (bsgPlayer.getNick() != null && bsgPlayer.getNick().isNicked()) {
-                PacketPlayOutChat packet = new PacketPlayOutChat(new ChatComponentText(ChatColor.RED + "You're currently nicked " + ChatColor.GRAY + "(in-game only)"), (byte) 2);
-                ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
-            }
         }
     }
 

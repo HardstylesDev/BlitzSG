@@ -1,7 +1,5 @@
 package me.syesstyles.blitz.game;
 
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 import me.syesstyles.blitz.BlitzSG;
 import me.syesstyles.blitz.blitzsgplayer.BlitzSGPlayer;
 import me.syesstyles.blitz.game.Game.GameMode;
@@ -14,9 +12,6 @@ import me.syesstyles.blitz.utils.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -35,7 +30,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Random;
 
-public class GameHandler implements Listener, CommandExecutor {
+public class GameHandler implements Listener {
     ChestUtils chestUtils = new ChestUtils();
 
     @EventHandler
@@ -47,106 +42,96 @@ public class GameHandler implements Listener, CommandExecutor {
     public void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        if (bsgPlayer.isInGame() && bsgPlayer.getGame().getAlivePlayers().contains(e.getPlayer())) {
+        if (bsgPlayer.isInGame()) {
             if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME) {
                 bsgPlayer.getGame().killPlayer(p);
                 bsgPlayer.getGame().msgAll(BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + p.getName() + " &ewas killed!");
-
-                for (ItemStack i : p.getInventory().getContents()) {
-                    if (i != null)
-                        if (i.getType() != Material.AIR)
-                            p.getWorld().dropItemNaturally(p.getLocation(), i);
-                }
-                for (ItemStack i : p.getInventory().getArmorContents()) {
-                    if (i != null)
-                        if (i.getType() != Material.AIR)
-                            p.getWorld().dropItemNaturally(p.getLocation(), i);
-                }
+                dropInventory(p);
             } else if (bsgPlayer.getGame().getGameMode() == GameMode.WAITING || bsgPlayer.getGame().getGameMode() == GameMode.STARTING) {
                 bsgPlayer.getGame().removePlayer(p);
             }
         }
+        BlitzSG.getInstance().getStatisticsManager().savePlayer(bsgPlayer);
+        BlitzSG.getInstance().getBlitzSGPlayerManager().removePlayer(p.getUniqueId());
     }
 
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent e) {
 
-        Player victim = e.getEntity();
+    public void onPlayerDeath(Player victim, Player killer) {
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(victim.getUniqueId());
-        if (!bsgPlayer.isInGame())
-            return;
-        //e.setDeathMessage("§c" + e.getDeathMessage());
-
-        victim.getWorld().strikeLightningEffect(victim.getLocation());
-        //bsgPlayer.getGame().msgAll(e.getDeathMessage());
-        bsgPlayer.getGameEntities().forEach(entity -> entity.remove());
-        bsgPlayer.getGameEntities().clear();
-
-        bsgPlayer.addDeath();
-        if (victim.getKiller() != null) {
-            //p.getKiller().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 50, 2));
-            BlitzSGPlayer blitzSGPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(victim.getKiller().getUniqueId());
-            blitzSGPlayer.addGameKill();
-
-            for (Player p : blitzSGPlayer.getGame().getAllPlayers()) {
-                BlitzSG.send(p, BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed by " + blitzSGPlayer.getRank(true).getChatColor() + victim.getKiller().getName() + " &eand everyone got a speed buff!");
-                p.removePotionEffect(PotionEffectType.SPEED);
-                p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 15 * 15, 1));
-            }
-            bsgPlayer.getGame().killPlayer(victim);
-            int coins = 7 * blitzSGPlayer.getRank().getMultiplier();
-            if (bsgPlayer.getGameTaunt() == 1) {
-                coins = (int) (coins * 2.4);
-                bsgPlayer.setGameTaunt(2);
-                BlitzSG.send(victim.getKiller(), "§6+" + coins + " Coins (Taunt Kill)");
-            } else
-                BlitzSG.send(victim.getKiller(), "§6+" + coins + " Coins (Kill)");
-            blitzSGPlayer.addCoins(coins);
-            BlitzSG.getInstance().getBlitzSGPlayerManager().handleKillElo(victim, victim.getKiller());
-
-            return;
-        } else {
-            BlitzSG.broadcast(BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed and everyone got a speed buff!");
-
-        }
-        bsgPlayer.getGame().killPlayer(victim);
+        if (!bsgPlayer.isInGame()) return;
+        bsgPlayer.getGame().applyDeathEffects();
         BlitzSG.getInstance().getBlitzSGPlayerManager().handleDeathElo(victim);
-    }
-
-    @EventHandler
-    public void onPlayerRespawn(PlayerRespawnEvent e) {
-        Player p = e.getPlayer();
-        BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        if (!bsgPlayer.isInGame()) {
-            BlitzSG.getInstance().getGameManager().getRunningGames().get(0).removePlayer(p);
-            ByteArrayDataOutput out = ByteStreams.newDataOutput();
-            out.writeUTF("Connect");
-            out.writeUTF("lobby");
-            p.sendPluginMessage(BlitzSG.getInstance(), "BungeeCord", out.toByteArray());
-            return;
+        String deathMessage = BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed and everyone got a speed buff!";
+        if (killer != null) {
+            BlitzSGPlayer killerPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(killer.getUniqueId());
+            deathMessage = BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed by " + killerPlayer.getRank().getChatColor() + killer.getName() + " &eand everyone got a speed buff!";
+            killerPlayer.addGameKill();
+            BlitzSG.getInstance().getBlitzSGPlayerManager().handleKillElo(victim, victim.getKiller());
+        }
+        for (Player p : bsgPlayer.getGame().getAllPlayers()) {
+            BlitzSG.send(p, deathMessage);
         }
 
-        if (!bsgPlayer.getGame().isDead(p))
-            return;
-        p.setGameMode(org.bukkit.GameMode.SPECTATOR);
-        if (p.getKiller() != null)
-            e.setRespawnLocation(p.getKiller().getLocation());
-        else
-            e.setRespawnLocation(bsgPlayer.getGame().getArena().getArenaWorld().getSpawnLocation());
+        if (killer != null) {
+            BlitzSGPlayer killerPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(killer.getUniqueId());
+            int coins = 7 * killerPlayer.getRank().getMultiplier();
+            killer.sendMessage("§6+" + coins + " Coins (Kill)");
+            killerPlayer.addCoins(coins);
+        }
+
+
+        bsgPlayer.getGame().killPlayer(victim);
+        victim.getWorld().strikeLightningEffect(victim.getLocation());
+        bsgPlayer.getGameEntities().forEach(Entity::remove);
+        bsgPlayer.getGameEntities().clear();
+        bsgPlayer.addDeath();
+        BlitzSG.getInstance().getBlitzSGPlayerManager().handleDeathElo(victim);
+
+        victim.setGameMode(org.bukkit.GameMode.SPECTATOR);
+        victim.setAllowFlight(true);
+        victim.setFlying(true);
+        victim.setHealth(20);
+        victim.setFoodLevel(20);
+        victim.setFireTicks(0);
+        victim.setFallDistance(0);
+        victim.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 1));
+        dropInventory(victim);
     }
+
+
+    private void dropInventory(Player victim) {
+        for (ItemStack i : victim.getInventory().getContents()) {
+            if (i != null)
+                if (i.getType() != Material.AIR) victim.getWorld().dropItemNaturally(victim.getLocation(), i);
+        }
+        for (ItemStack i : victim.getInventory().getArmorContents()) {
+            if (i != null) {
+                if (i.getType() != Material.AIR) {
+                    victim.getWorld().dropItemNaturally(victim.getLocation(), i);
+                }
+            }
+        }
+        ExperienceOrb orb = victim.getWorld().spawn(victim.getLocation(), ExperienceOrb.class);
+        orb.setExperience(victim.getTotalExperience());
+        victim.getInventory().clear();
+        victim.getInventory().setArmorContents(null);
+        victim.setTotalExperience(0);
+        victim.setLevel(0);
+    }
+
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 
-        if (!bsgPlayer.isInGame())
+        if (!bsgPlayer.isInGame()) {
             return;
-        if (bsgPlayer.getGame().getGameMode() == GameMode.STARTING)
-            if (e.getTo().getBlockX() != e.getFrom().getBlockX() || e.getTo().getBlockZ() != e.getFrom().getBlockZ()) {
+        }
+        if (bsgPlayer.getGame().getGameMode() == GameMode.STARTING) {
+            if (e.getTo().getBlockX() != p.getLocation().getBlockX() || e.getTo().getBlockZ() != p.getLocation().getBlockZ()) {
                 Location spawn = bsgPlayer.getGameSpawn();
                 if (spawn == null) {
-
                     bsgPlayer.getGame().resetGame();
                     Bukkit.broadcastMessage("Error occured in game " + bsgPlayer.getGame());
                 }
@@ -154,38 +139,20 @@ public class GameHandler implements Listener, CommandExecutor {
                 spawn.setDirection(e.getTo().getDirection());
                 e.getPlayer().teleport(spawn);
             }
+        }
     }
-
-    //@EventHandler
-    //public void onPlayerEat(PlayerItemConsumeEvent e) {
-    //	if(e.getItem().getType().equals(Material.GOLDEN_APPLE) && e.getItem().getDurability() == 1) {
-    //        new BukkitRunnable() {
-    //            public void run() {
-    //    			e.getPlayer().removePotionEffect(PotionEffectType.REGENERATION);
-    //    			e.getPlayer().removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-    //    			e.getPlayer().removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
-    //    	        e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 20 * 10, 3));
-    //    	        e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 20 * 120, 0));
-    //    	        e.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 20 * 120, 0));
-    //            }
-    //        }.runTaskLater(BlitzSG.getInstance(), 1);
-    //	}
-    //}
-
 
     @EventHandler
     public void onBlockExplode(BlockExplodeEvent e) {
         for (Game runningGame : BlitzSG.getInstance().getGameManager().getRunningGames()) {
-            if (runningGame.getArena().getArenaWorld() == e.getBlock().getWorld())
-                e.blockList().clear();
+            if (runningGame.getArena().getArenaWorld() == e.getBlock().getWorld()) e.blockList().clear();
         }
     }
 
     @EventHandler
     public void onBlockExplode(EntityExplodeEvent e) {
         for (Game runningGame : BlitzSG.getInstance().getGameManager().getRunningGames()) {
-            if (runningGame.getArena().getArenaWorld() == e.getEntity().getWorld())
-                e.blockList().clear();
+            if (runningGame.getArena().getArenaWorld() == e.getEntity().getWorld()) e.blockList().clear();
         }
     }
 
@@ -194,8 +161,7 @@ public class GameHandler implements Listener, CommandExecutor {
         Player p = e.getPlayer();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
         if (!bsgPlayer.isInGame()) {
-            if ((bsgPlayer.getRank() instanceof Admin) && (p.getGameMode() == org.bukkit.GameMode.CREATIVE))
-                return;
+            if ((bsgPlayer.getRank() instanceof Admin) && (p.getGameMode() == org.bukkit.GameMode.CREATIVE)) return;
             e.setCancelled(true);
             return;
         }
@@ -203,103 +169,16 @@ public class GameHandler implements Listener, CommandExecutor {
         if (b.getType() == Material.CAKE_BLOCK || b.getType() == Material.WEB) {
             return;
         }
-        if (bsgPlayer.getGame().getGameMode() != GameMode.INGAME)
-            e.setCancelled(true);
+        if (bsgPlayer.getGame().getGameMode() != GameMode.INGAME) e.setCancelled(true);
 
         e.setCancelled(true);
     }
-	
-	/*@EventHandler
-	public void onBlockDestroy(BlockExplodeEvent e) {
-		Block b = e.getBlock();
-		if(b.getType() == Material.DIAMOND_ORE) {
-            e.setCancelled(true);
-            b.setType(Material.AIR);
-            b.getState().update();
-            b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.DIAMOND));
-		}else if(b.getType() == Material.IRON_ORE) {
-            e.setCancelled(true);
-            b.setType(Material.AIR);
-            b.getState().update();
-            b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.IRON_INGOT, 2));
-		}else if(b.getType() == Material.GOLD_ORE) {
-            e.setCancelled(true);
-            b.setType(Material.AIR);
-            b.getState().update();
-            b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.GOLD_INGOT, 2));
-		}else if(b.getType() == Material.COAL_ORE) {
-            e.setCancelled(true);
-            b.setType(Material.AIR);
-            b.getState().update();
-            b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.FIREBALL));
-            b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.FLINT));
-		}else if(b.getType() == Material.LAPIS_ORE) {
-            e.setCancelled(true);
-            b.setType(Material.AIR);
-            b.getState().update();
-            b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.EXP_BOTTLE, 2));
-		}else if(b.getType() == Material.GRAVEL) {
-            e.setCancelled(true);
-            b.setType(Material.AIR);
-            b.getState().update();
-            b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.ARROW, 4));
-		}else if(b.getType() == Material.WEB) {
-            e.setCancelled(true);
-            b.setType(Material.AIR);
-            b.getState().update();
-            b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.STRING, 2));
-		}else if(b.getType() == Material.MELON_BLOCK) {
-            e.setCancelled(true);
-            b.setType(Material.AIR);
-            b.getState().update();
-            b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.SPECKLED_MELON));
-		}else if(b.getType() == Material.SUGAR_CANE_BLOCK) {
-            e.setCancelled(true);
-            Location loc = b.getLocation();
-            while(loc.add(0, 1, 0).getBlock().getType() == Material.SUGAR_CANE_BLOCK) {
-                loc.getBlock().getState().update();
-                loc = loc.getBlock().getLocation();
-            }
-            while(loc.add(0, -1, 0).getBlock().getType() == Material.SUGAR_CANE_BLOCK) {
-                loc.getBlock().setType(Material.AIR);
-                loc.getBlock().getState().update();
-                if(new Random().nextInt(3) == 0)
-                    b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.BOOK));
-                else
-                    b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.SUGAR));
-                loc = loc.getBlock().getLocation();
-            }
-		}else if(b.getType() == Material.SAND) {
-            e.setCancelled(true);
-            b.setType(Material.AIR);
-            b.getState().update();
-            if(new Random().nextInt(3) == 0)
-                b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.TNT));
-            else
-            	b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.POTION, 1, (short) 16));
-		}else if(b.getType() == Material.LEAVES || b.getType() == Material.LEAVES_2) {
-            e.setCancelled(true);
-            b.setType(Material.AIR);
-            b.getState().update();
-            if(new Random().nextInt(10) == 0)
-            	b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.APPLE));
-		}else if(b.getType() == Material.LOG || b.getType() == Material.LOG_2) {
-            e.setCancelled(true);
-            if(b.getType().equals(Material.LOG))
-            	b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.LOG, 1, (short) e.getBlock().getState().getRawData()));
-            else if(b.getType().equals(Material.LOG_2))
-            	b.getWorld().dropItemNaturally(b.getLocation().add(0.5, 0.4, 0.5), new ItemStack(Material.LOG_2, 1, (short) e.getBlock().getState().getRawData()));
-            b.setType(Material.AIR);
-            b.getState().update();
-		}
-	}*/
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
         Player p = e.getPlayer();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB)
-            return;
+        if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB) return;
         if (!bsgPlayer.isInGame()) {
 
             if ((bsgPlayer.getRank() instanceof Admin) && (p.getGameMode() == org.bukkit.GameMode.CREATIVE)) {
@@ -314,8 +193,7 @@ public class GameHandler implements Listener, CommandExecutor {
             e.setCancelled(true);
             return;
         }
-        if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB)
-            return;
+        if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB) return;
         if (e.getBlockPlaced().getType() == Material.TNT) {
             e.getBlockPlaced().setType(Material.AIR);
             Entity tnt = e.getPlayer().getWorld().spawnEntity(e.getBlock().getLocation(), EntityType.PRIMED_TNT);
@@ -336,8 +214,7 @@ public class GameHandler implements Listener, CommandExecutor {
             return;
         }
 
-        if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME)
-            return;
+        if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME) return;
         if (bsgPlayer.getGame().getGameMode() != GameMode.STARTING && bsgPlayer.getGame().getGameMode() != GameMode.WAITING) {
             e.setCancelled(true);
             return;
@@ -351,20 +228,36 @@ public class GameHandler implements Listener, CommandExecutor {
             return;
         }
 
-        if (!(e.getEntity() instanceof Player))
-            return;
+        if (!(e.getEntity() instanceof Player)) return;
         Player p = (Player) e.getEntity();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        if (bsgPlayer == null || bsgPlayer.getGame() == null || bsgPlayer.getGame().getGameMode() == null)
-            return;
+        if (bsgPlayer == null || bsgPlayer.getGame() == null || bsgPlayer.getGame().getGameMode() == null) return;
         if (bsgPlayer.getGame().getGameMode() == GameMode.WAITING || bsgPlayer.getGame().getGameMode() == GameMode.STARTING || bsgPlayer.getGame().getGameMode() == GameMode.RESETING)
             e.setCancelled(true);
         if (!bsgPlayer.isInGame()) {
             e.setCancelled(true);
-            return;
         }
 
-        //e.setCancelled(true);
+        if (bsgPlayer.getGame().getGameMode() == GameMode.INGAME) {
+            if (e instanceof EntityDamageByEntityEvent) {
+                EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
+                if (event.getDamager() instanceof Player) {
+                    Player attacker = (Player) event.getDamager();
+                    bsgPlayer.setLastDamage(System.currentTimeMillis());
+                    bsgPlayer.setLastDamager(attacker);
+                }
+            }
+
+            // check if this damage will kill the player
+            if (p.getHealth() - e.getFinalDamage() <= 0) {
+                e.setCancelled(true);
+                onPlayerDeath(p, bsgPlayer.getLastAttacker());
+
+            }
+
+        }
+
+
     }
 
     @EventHandler
@@ -380,18 +273,16 @@ public class GameHandler implements Listener, CommandExecutor {
 
     @EventHandler
     public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent e) {
-        if (!(e.getEntity() instanceof Player))
-            return;
+        if (!(e.getEntity() instanceof Player)) return;
 
         Player p = (Player) e.getEntity();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        if (!bsgPlayer.isInGame())
-            return;
+        if (!bsgPlayer.isInGame()) return;
         if (bsgPlayer.getGame().getDeathmatchStartTime() >= 45 && bsgPlayer.getGame().getDeathmatchStartTime() <= 60) {
             e.setCancelled(true);
             return;
         }
-        if (bsgPlayer.getWobbuffet()) {
+        if (bsgPlayer.isWobbuffet()) {
             e.setCancelled(true);
             if ((e.getDamager() instanceof Player)) {
                 ((Player) e.getDamager()).damage(e.getDamage());
@@ -410,21 +301,19 @@ public class GameHandler implements Listener, CommandExecutor {
             }
 
             if (!(e.getDamager() instanceof Player)) {
-                if (e.getDamager() instanceof Arrow)
-                    if (((Arrow) e.getDamager()).getShooter() instanceof Player) {
-                        if (BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(((Player) ((Arrow) e.getDamager()).getShooter()).getUniqueId()).getRobinhood()) {
-                            e.setDamage(1000);
-                            e.getEntity().sendMessage("&aYou were taken out in a single shot!");
-                        } else e.setDamage(e.getDamage() / 2);
+                if (e.getDamager() instanceof Arrow) if (((Arrow) e.getDamager()).getShooter() instanceof Player) {
+                    if (BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(((Player) ((Arrow) e.getDamager()).getShooter()).getUniqueId()).isRobinhood()) {
+                        e.setDamage(1000);
+                        e.getEntity().sendMessage("&aYou were taken out in a single shot!");
+                    } else e.setDamage(e.getDamage() / 2);
 
-                        return;
-                    }
+                    return;
+                }
                 e.setDamage(e.getDamage() / 10);
             }
         }
 
-        if (bsgPlayer.getGame().getGameTime() >= 60)
-            return;
+        if (bsgPlayer.getGame().getGameTime() >= 60) return;
         //if(e.getDamager() instanceof Player) { //todo do later!
         //	e.setCancelled(true);
         //	((Player)e.getDamager()).sendMessage("§cYou can't damage other players during the grace period!");
@@ -447,28 +336,23 @@ public class GameHandler implements Listener, CommandExecutor {
 
     @EventHandler
     public void onFoodLevelChange(FoodLevelChangeEvent e) {
-        if (!(e.getEntity() instanceof Player))
-            return;
-        if (((Player) e.getEntity()).getFoodLevel() < e.getFoodLevel())
-            return;
-        if (new Random().nextInt(50) != 0)
-            e.setCancelled(true);
+        if (!(e.getEntity() instanceof Player)) return;
+        if (((Player) e.getEntity()).getFoodLevel() < e.getFoodLevel()) return;
+        if (new Random().nextInt(50) != 0) e.setCancelled(true);
     }
 
     @EventHandler
     public void onWeatherChange(WeatherChangeEvent event) {
 
         boolean rain = event.toWeatherState();
-        if (rain)
-            event.setCancelled(true);
+        if (rain) event.setCancelled(true);
     }
 
     @EventHandler
     public void onThunderChange(ThunderChangeEvent event) {
 
         boolean storm = event.toThunderState();
-        if (storm)
-            event.setCancelled(true);
+        if (storm) event.setCancelled(true);
     }
 	
 	/*@EventHandler
@@ -498,32 +382,28 @@ public class GameHandler implements Listener, CommandExecutor {
     public void playerOpenVotingMenu(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        if (!bsgPlayer.isInGame())
-            return;
+
+        if (bsgPlayer.isSpectating()) {
+            e.setCancelled(true);
+        }
+
+
+        if (!bsgPlayer.isInGame()) return;
         if (bsgPlayer.getGame().getGameMode() != GameMode.WAITING && bsgPlayer.getGame().getGameMode() != GameMode.STARTING)
             return;
-        if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK)
-            return;
-        if (e.getItem() == null)
-            return;
-        if (e.getItem().getType() == Material.BOW)
-            KitGUI.openGUI(p);
-        if (e.getItem().getType() == Material.BARRIER)
-            bsgPlayer.getGame().removePlayer(p);
+        if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if (e.getItem() == null) return;
+        if (e.getItem().getType() == Material.BOW) KitGUI.openGUI(p);
     }
 
     @EventHandler
     public void playerOpenStarMenu(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        if (!bsgPlayer.isInGame())
-            return;
-        if (bsgPlayer.getGame().getGameMode() != GameMode.INGAME)
-            return;
-        if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK)
-            return;
-        if (e.getItem() == null)
-            return;
+        if (!bsgPlayer.isInGame()) return;
+        if (bsgPlayer.getGame().getGameMode() != GameMode.INGAME) return;
+        if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if (e.getItem() == null) return;
         if (e.getItem().getType() == Material.NETHER_STAR) {
             if (bsgPlayer.getGame().getDeathmatchStartTime() >= 15) {
                 p.sendMessage(BlitzSG.CORE_NAME + ChatColor.RED + "The Blitz Star has been disabled!");
@@ -536,20 +416,25 @@ public class GameHandler implements Listener, CommandExecutor {
     }
 
     @EventHandler
+    public void playerEatHead(PlayerInteractEvent e) {
+        Player p = e.getPlayer();
+        if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if (e.getItem() == null) return;
+        if (e.getItem().getType() != Material.SKULL_ITEM) return;
+        if (e.getItem().getDurability() != 3) return;
+        e.setCancelled(true);
+        p.sendMessage("§aYou ate a player head and gained Regeneration III and Speed II for 4 seconds!");
+        p.playSound(p.getLocation(), Sound.EAT, 2, 1);
+        p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 80, 2));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 80, 1));
+        p.getInventory().setItemInHand((ItemStack) null);
+    }
+
+    @EventHandler
     public void onBlockInteract(PlayerInteractEvent e) {
-
-
         BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getPlayer().getUniqueId());
-        if (!bsgPlayer.isInGame())
-            return;
-        if (e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_AIR) {
-            if (e.getPlayer().getItemInHand().getType() == Material.COMPASS && e.getPlayer().isSneaking()) {
-                taunt(e.getPlayer(), false);
-            }
-            return;
-        }
-        if (!(bsgPlayer.getGame().getGameMode() == GameMode.INGAME))
-            return;
+        if (!bsgPlayer.isInGame()) return;
+        if (!(bsgPlayer.getGame().getGameMode() == GameMode.INGAME)) return;
         if (e.getClickedBlock() != null)
             if (e.getClickedBlock().getType() == Material.CHEST || e.getClickedBlock().getType() == Material.TRAPPED_CHEST) {
                 //e.setCancelled(true);
@@ -573,40 +458,5 @@ public class GameHandler implements Listener, CommandExecutor {
                     bsgPlayer.getGame().getStarChests().add(e.getClickedBlock().getLocation());
                 }
             }
-    }
-
-    public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
-        Player p = (Player) sender;
-        taunt(p, true);
-        return true;
-    }
-
-
-    private void taunt(Player p, boolean byCommand) {
-        BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-        if (bsgPlayer.getGame() == null) {
-            if (byCommand)
-                p.sendMessage(ChatColor.RED + "You can't taunt when the game isn't running!");
-            return;
-        }
-        if (bsgPlayer.getGame().getGameMode() != GameMode.INGAME) {
-            if (byCommand)
-                p.sendMessage(ChatColor.RED + "You can't taunt when the game isn't running!");
-            return;
-        }
-        if (bsgPlayer.getTaunt() == null) {
-            p.sendMessage(ChatColor.RED + "You don't have a taunt! Buy it in the shop!");
-            return;
-        }
-        if (bsgPlayer.getGameTaunt() == 0) {
-            bsgPlayer.getGame().msgAll(bsgPlayer.getRank(true).getPrefix() + p.getName() + "&e performed the &l" + bsgPlayer.getTaunt().getName() + " Taunt&r&e!");
-            bsgPlayer.setGameTaunt(1);
-            bsgPlayer.getTaunt().go(p);
-            Bukkit.getScheduler().runTaskLaterAsynchronously(BlitzSG.getInstance(), () -> bsgPlayer.setGameTaunt(2), 15 * 20);
-        }
-        if (bsgPlayer.getGameTaunt() == 2) {
-            p.sendMessage(ChatColor.RED + "You already used your taunt this game.");
-            return;
-        }
     }
 }

@@ -41,7 +41,7 @@ public class Aura {
         this.location = location;
     }
 
-    public void uh(Player p) {
+    public void tick(Player p) {
     }
 
 

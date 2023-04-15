@@ -1,80 +1,105 @@
 package me.syesstyles.blitz.utils.database;
 
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-
-import javax.sql.DataSource;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.Duration;
+import java.util.HashMap;
+
+import javax.sql.DataSource;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
+
+import me.syesstyles.blitz.BlitzSG;
+import org.bukkit.Bukkit;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 public class Database {
 
-    private static String host = "0.0.0.0"; // The IP-address of the database host.
-    private static String database = "s6_server"; // The name of the database.
-    private static String user = "u6_hniIbS87Lb"; // The name of the database user.
-    private static String pass = "u13wROasTK61@G.pRMqN^+mt"; // The password of the database user.
+    private static final HashMap<String, String> config = getDatabaseConfig();
+    private static final String host = config.get("host");
+    private static final String port = config.get("port");
+    private static final String database = config.get("database");
+    private static final String user = config.get("username");
+    private static final String password = config.get("password");
 
+    private static final String jdbcUrl = String.format("jdbc:mysql://%s:%s/%s?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=CET", host, port, database);
 
-    static String jbdcUrl = String.format("jdbc:mysql://%s:3306/%s?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=CET", host, database);
-    //Call the get connection method.
     private static DataSource dataSource;
 
     public Connection getConnection() throws SQLException {
         return getDataSource().getConnection();
     }
 
-    //Get the DataSource. If not available create the new one
-    //It is not threadsafe. I didn't wanted to complicate things.
-    public DataSource getDataSource() {
-        if (null == dataSource) {
-            System.out.println("No DataSource is available. We will create a new one.");
+    private synchronized DataSource getDataSource() {
+        if (dataSource == null) {
             createDataSource();
         }
         return dataSource;
     }
 
-    //To create a DataSource and assigning it to variable dataSource.
-    public void createDataSource() {
-        HikariConfig hikariConfig = getHikariConfig();
-        System.out.println("Configuration is ready.");
-        System.out.println("Creating the HiakriDataSource and assigning it as the global");
+    private void createDataSource() {
+        HikariConfig hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl(jdbcUrl);
+        hikariConfig.setUsername(user);
+        hikariConfig.setPassword(password);
+        hikariConfig.setDriverClassName("com.mysql.jdbc.Driver");
+        hikariConfig.setPoolName("MysqlPool-1");
+        hikariConfig.setMaximumPoolSize(5);
+        hikariConfig.setConnectionTimeout(Duration.ofSeconds(30).toMillis());
+        hikariConfig.setIdleTimeout(Duration.ofMinutes(10).toMillis());
         HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
-
         dataSource = hikariDataSource;
+
+        try (Connection connection = dataSource.getConnection()) {
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `stats` (`uuid` VARCHAR(255) PRIMARY KEY, `coins` INT NOT NULL, `kills` INT NOT NULL, `wins` INT NOT NULL, `deaths` INT NOT NULL, `rank` VARCHAR(255) NOT NULL, `nickname` VARCHAR(255) NULL, `stars` TEXT NULL, `aura` TEXT NULL, `kits` TEXT NULL, `elo` INT NOT NULL, `taunt` VARCHAR(255) NULL, `selectedKit` VARCHAR(255) NULL) ENGINE = InnoDB;").executeUpdate();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `bans` (`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, `reason` VARCHAR(255) NOT NULL, `expires` DOUBLE NOT NULL, `executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
+            Bukkit.getLogger().info("Connected to database.");
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public HikariConfig getHikariConfig() {
-        System.out.println("Creating the config with HikariConfig with maximum pool size of 5");
-        HikariConfig hikaConfig = new HikariConfig();
+    private static void generateConfig() {
+        File file = new File(BlitzSG.getInstance().getDataFolder(), "database.yml");
+        FileConfiguration fc = new YamlConfiguration();
+        fc.set("host", "localhost");
+        fc.set("port", "3306");
+        fc.set("database", "database");
+        fc.set("username", "root");
+        fc.set("password", "password");
+        try {
+            fc.save(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Created database.yml, please edit it and restart the server.");
+        Bukkit.getPluginManager().disablePlugin(BlitzSG.getInstance());
+    }
 
-        //This is same as passing the Connection info to the DriverManager class.
-        //your jdbc url. in my case it is mysql.
-        hikaConfig.setJdbcUrl(jbdcUrl);
-        //username
+    private static HashMap<String, String> getDatabaseConfig() {
+        HashMap<String, String> config = new HashMap<>();
+        File file = new File(BlitzSG.getInstance().getDataFolder(), "database.yml");
+        if (!file.exists()) {
+            generateConfig();
+        }
+        FileConfiguration fc = new YamlConfiguration();
+        try {
+            fc.load(new File(BlitzSG.getInstance().getDataFolder(), "database.yml"));
+        } catch (IOException | InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
 
-        hikaConfig.setUsername(user);
-        //password
-        hikaConfig.setPassword(pass);
-        //driver class name
-        hikaConfig.setDriverClassName("com.mysql.jdbc.Driver");
-
-        // Information about the pool
-        //pool name. This is optional you don't have to do it.
-        hikaConfig.setPoolName("MysqlPool-1");
-
-        //the maximum connection which can be created by or resides in the pool
-        hikaConfig.setMaximumPoolSize(5);
-
-        //how much time a user can wait to get a connection from the pool.
-        //if it exceeds the time limit then a SQlException is thrown
-        hikaConfig.setConnectionTimeout(Duration.ofSeconds(30).toMillis());
-
-        //The maximum time a connection can sit idle in the pool.
-        // If it exceeds the time limit it is removed form the pool.
-        // If you don't want to retire the connections simply put 0.
-        hikaConfig.setIdleTimeout(Duration.ofMinutes(2).toMillis());
-
-        return hikaConfig;
+        config.put("host", fc.getString("host"));
+        config.put("port", fc.getString("port"));
+        config.put("database", fc.getString("database"));
+        config.put("username", fc.getString("username"));
+        config.put("password", fc.getString("password"));
+        return config;
     }
 }

@@ -1,13 +1,13 @@
 package me.syesstyles.blitz.blitzsgplayer;
 
-import com.google.gson.JsonObject;
+import lombok.Getter;
+import lombok.Setter;
 import me.syesstyles.blitz.BlitzSG;
+import me.syesstyles.blitz.arena.Arena;
 import me.syesstyles.blitz.cosmetic.Aura;
-import me.syesstyles.blitz.cosmetic.Taunt;
 import me.syesstyles.blitz.game.Game;
 import me.syesstyles.blitz.gamestar.Star;
 import me.syesstyles.blitz.kit.Kit;
-import me.syesstyles.blitz.map.Map;
 import me.syesstyles.blitz.rank.Rank;
 import me.syesstyles.blitz.utils.nickname.Nick;
 import org.bukkit.Bukkit;
@@ -20,89 +20,46 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.UUID;
 
+@Getter
+@Setter
 public class BlitzSGPlayer {
 
     private Kit selectedKit;
     private int gameTaunt;
     private UUID uuid;
 
-    private String customTag;
-    private boolean robinhood;
-    private boolean wobbuffet;
+    private boolean robinhood, punched, wobbuffet;
     private int gameKills;
-    private boolean punched;
     private Nick nick;
     private HashSet<Entity> gameEntities;
     private HashSet<Star> stars;
     private Location gameSpawn;
     private Rank rank;
-    private int elo;
-    private int wins;
-    private int kills;
-    private int deaths;
-    private boolean hideOthers;
-    private int coins;
-    private Taunt selectedTaunt;
+    private int deaths, coins, kills, wins, elo;
     private Aura aura;
-    private JsonObject jsonObject;
-    private String ip;
 
-    private String name;
     private HashMap<Kit, Integer> kitLevels;
+    private float lastDamage;
+    private Player lastDamager;
 
-    private Map editedMap;
-
-    public void setHideOthers(boolean b){
-        this.hideOthers = b;
-    }
-    public void setUuid(UUID uuid) {
-        this.uuid = uuid;
-    }
-
-    public void setGameKills(int gameKills) {
-        this.gameKills = gameKills;
+    public Player getLastAttacker() {
+        if (lastDamager != null && lastDamager.isOnline()) {
+            if (System.currentTimeMillis() - lastDamage < 15000) {
+                return lastDamager;
+            }
+        }
+        return null;
     }
 
-    public void setNick(Nick nick) {
-        this.nick = nick;
-    }
 
-    public void setGameEntities(HashSet<Entity> gameEntities) {
-        this.gameEntities = gameEntities;
-    }
-
-    public void setWins(int wins) {
-        this.wins = wins;
-    }
-
-    public void setKills(int kills) {
-        this.kills = kills;
-    }
-
-    public void setDeaths(int deaths) {
-        this.deaths = deaths;
-    }
-
-    public void setCoins(int coins) {
-        this.coins = coins;
-    }
-
-    public void setKitLevels(HashMap<Kit, Integer> kitLevels) {
-        this.kitLevels = kitLevels;
-    }
+    private Arena editedArena;
 
     public BlitzSGPlayer(UUID uuid) {
-        this.jsonObject = new JsonObject();
-
-
-
-        this.hideOthers = false;
         this.nick = null;
         this.uuid = uuid;
         this.elo = 0;
         this.wins = 0;
         this.kills = 0;
-        this.customTag = null;
         this.deaths = 0;
         this.coins = 0;
         this.rank = null;
@@ -113,41 +70,13 @@ public class BlitzSGPlayer {
             this.kitLevels.put(p, 0);
 
 
-
-
-
-
         this.gameKills = 0;
         this.gameTaunt = -1;
         this.gameSpawn = null;
         this.selectedKit = null;
-        this.selectedTaunt = null;
         this.aura = null;
-        BlitzSG.getInstance().getBlitzSGPlayerManager().addBsgPlayer(this.uuid, this);
+        BlitzSG.getInstance().getBlitzSGPlayerManager().addPlayer(this.uuid, this);
     }
-
-
-    public void loadStats(FileConfiguration statsFile) {
-        this.rank = BlitzSG.getInstance().getRankManager().getRankByName(statsFile.getString("Rank"));
-        this.elo = statsFile.getInt("ELO");
-        this.wins = statsFile.getInt("Wins");
-        this.kills = statsFile.getInt("Kills");
-        this.deaths = statsFile.getInt("Deaths");
-        if (statsFile.contains("Nickname"))
-            this.nick = new Nick(statsFile.getString("Nickname"), null, null, !statsFile.getString("Nickname").equalsIgnoreCase(""));
-        else this.nick = null;
-        this.coins = statsFile.getInt("Coins");
-        this.selectedKit = BlitzSG.getInstance().getKitManager().getKit(statsFile.getString("SelectedKit"));
-        for (String str : statsFile.getConfigurationSection("Kits").getKeys(false))
-            this.kitLevels.put(BlitzSG.getInstance().getKitManager().getKit(str)
-                    , statsFile.getConfigurationSection("Kits").getInt(str));
-        // for(Object str : statsFile.getList("Stars")){
-        //     System.out.println(str.getClass() + " : " + str);
-        //}
-    }
-
-    //Player Stats
-
 
     public HashMap<Kit, Integer> getKits() {
         return this.kitLevels;
@@ -157,18 +86,11 @@ public class BlitzSGPlayer {
         this.stars.add(star);
     }
 
-    public Rank getRank() {
 
-        return rank;
+    public boolean isSpectating(){
+        return getGame() != null && getGame().getDeadPlayers().contains(Bukkit.getPlayer(getUuid()));
     }
 
-    public void setPunched(boolean b) {
-        this.punched = b;
-    }
-
-    public boolean getPunched() {
-        return this.punched;
-    }
 
     public void setStars(HashSet<Star> stars) {
         this.stars = stars;
@@ -179,76 +101,22 @@ public class BlitzSGPlayer {
     }
 
     public Rank getRank(boolean checkNick) {
-       // if (nick != null && nick.isNicked())
-       //     return BlitzSG.getInstance().getRankManager().getRankByName("Default");
-       // if (nick == null)
-       //     this.nick = new Nick("", null, null, false);
+        if (nick != null && nick.isNicked())
+            return BlitzSG.getInstance().getRankManager().getRankByName("Default");
+        if (nick == null)
+            this.nick = new Nick("", null, null, false);
         return rank;
     }
 
-    public boolean doesHideOthers(){
-        return this.hideOthers;
-    }
-    public Nick getNick() {
-        return nick;
-    }
-
-    public UUID getUuid() {
-        return uuid;
-    }
-
-    public int getElo() {
-        return elo;
-    }
-
-    public Kit getSelectedKit() {
-        return selectedKit;
-    }
-
-    public void setSelectedKit(Kit kit) {
-        this.selectedKit = kit;
-    }
 
     public boolean isNicked() {
         return (nick.isNicked());
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public String getIp() {
-        return this.ip;
-    }
-
-    public void setCustomTag(String tag) {
-        this.customTag = tag;
-    }
-
-    public String getCustomTag() {
-        return this.customTag;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    // public String getNickName() {
-    //     if (this.nick != null)
-    //         return this.nick.getNickName();
-    //     return null;
-    // }
-
-    public void setElo(int elo) {
-        this.elo = elo;
-    }
-
-    public void addElo(int elo) {
-        this.elo += elo;
+    public String getNickName() {
+        if (this.nick != null)
+            return this.nick.getNickName();
+        return null;
     }
 
     public void removeElo(int elo) {
@@ -258,59 +126,24 @@ public class BlitzSGPlayer {
         }
         this.elo += -elo;
     }
-    public void setTaunt(Taunt taunt){
-        this.selectedTaunt = taunt;
-    }
-    public Taunt getTaunt(){
-        return this.selectedTaunt;
-    }
-    public Location getGameSpawn() {
-        return gameSpawn;
-    }
 
-
-    public void setGameSpawn(Location gameSpawn) {
-        this.gameSpawn = gameSpawn;
-    }
 
     public void setAura(Aura aura) {
         this.aura = aura;
-        Player p = Bukkit.getPlayer(getUuid());
-        if (p != null && p.isOnline())
-            if (!BlitzSG.getInstance().getCosmeticsManager().getPlayers().contains(Bukkit.getPlayer(getUuid())))
-                BlitzSG.getInstance().getCosmeticsManager().add(Bukkit.getPlayer(getUuid()));
-    }
-
-    public int getWins() {
-        return this.wins;
+        if (!BlitzSG.getInstance().getCosmeticsManager().getPlayers().contains(Bukkit.getPlayer(getUuid())))
+            BlitzSG.getInstance().getCosmeticsManager().add(Bukkit.getPlayer(getUuid()));
     }
 
     public void addWin() {
         this.wins += 1;
     }
 
-    public int getKills() {
-        return this.kills;
-    }
-
-    public HashSet<Entity> getGameEntities() {
-        return gameEntities;
-    }
-
     public void addKill() {
         this.kills += 1;
     }
 
-    public int getDeaths() {
-        return this.deaths;
-    }
-
     public void addDeath() {
         this.deaths += 1;
-    }
-
-    public int getCoins() {
-        return this.coins;
     }
 
     public void addCoins(int coins) {
@@ -338,23 +171,8 @@ public class BlitzSGPlayer {
         this.kitLevels.put(p, level);
     }
 
-
-    //Game Stats
-
-    public int getGameKills() {
-        return this.gameKills;
-    }
-
-    public int getGameTaunt() {
-        return this.gameTaunt;
-    }
-
     public void resetGameKills() {
         this.gameKills = 0;
-    }
-
-    public void setGameTaunt(int i) {
-        this.gameTaunt = i;
     }
 
     public void addGameKill() {
@@ -362,64 +180,27 @@ public class BlitzSGPlayer {
         this.kills += 1;
     }
 
-
-    //Game Handling Methods
     public boolean isInGame() {
-        if (BlitzSG.getInstance().getBlitzSGPlayerManager().getUhcPlayerGame(this) == null)
-            return false;
-        else
-            return true;
+        return BlitzSG.getInstance().getBlitzSGPlayerManager().getUhcPlayerGame(this) != null;
     }
 
     public Game getGame() {
         return BlitzSG.getInstance().getBlitzSGPlayerManager().getUhcPlayerGame(this);
     }
 
-    public void setWobbuffet(boolean idk) {
-        wobbuffet = idk;
-    }
-
-    public boolean getWobbuffet() {
-        return this.wobbuffet;
-    }
-
-    public void setRobinhood(boolean idk) {
-        robinhood = idk;
-    }
-
-    public boolean getRobinhood() {
-        return this.robinhood;
-    }
-
-
     public void setGame(Game g) {
         BlitzSG.getInstance().getBlitzSGPlayerManager().setUhcPlayerGame(this, g);
     }
 
     public boolean isEditingArena() {
-        if (this.editedMap == null)
-            return false;
-        else
-            return true;
+        return this.editedArena != null;
     }
 
-    public Map getEditedArena() {
-        return this.editedMap;
+    public void addElo(int eloChange) {
+        this.elo += eloChange;
     }
 
-    public void setEditedArena(Map map) {
-        this.editedMap = map;
-    }
-
-    public Aura getAura() {
-        return this.aura;
-    }
-
-    public JsonObject getJsonObject() {
-        return this.jsonObject;
-    }
-
-    public void setJsonObject(JsonObject jsonObject) {
-        this.jsonObject = jsonObject;
+    public void setNickName(String s) {
+        this.nick.setNickName(s);
     }
 }

@@ -20,14 +20,14 @@ public class PunishmentManager {
     }
 
     public void handlePreLogin(AsyncPlayerPreLoginEvent e) {
-        e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, "");
+        //e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, "");
         System.out.println("yup");
 
         Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), new Runnable() {
             @Override
             public void run() {
                 try {
-                    Connection conn = BlitzSG.getInstance().getData().getConnection();
+                    Connection conn = BlitzSG.getInstance().db().getConnection();
                     String sql = "select * from bans;";
                     PreparedStatement ps = conn.prepareStatement(sql);
                     ResultSet rs = ps.executeQuery();
@@ -45,8 +45,10 @@ public class PunishmentManager {
                                 message = "Permanent ban";
                             e.disallow(PlayerPreLoginEvent.Result.KICK_BANNED, message);
                             System.out.println("User connected but is banned.");
-                            if (Bukkit.getPlayer(e.getUniqueId()) != null)
+                            if (Bukkit.getPlayer(e.getUniqueId()) != null) {
+                                System.out.println("Kicking player");
                                 Bukkit.getPlayer(e.getUniqueId()).kickPlayer(message);
+                            }
                         }
                     }
                     rs.close();

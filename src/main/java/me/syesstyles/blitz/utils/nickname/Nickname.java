@@ -31,6 +31,11 @@ public class Nickname {
     public void setNick(Player p, String s) {
         setNick(p, s, false);
     }
+
+    private GameProfile personal = null;
+    private String skinValue = null;
+    private String skinSignature = null;
+
     public void setNick(Player p, String s, boolean onJoin) {
         if (!onJoin) {
             String skin[] = prepareSkinTextures(p, s);
@@ -46,6 +51,7 @@ public class Nickname {
 
             EntityPlayer offlineplayer = new EntityPlayer(server, world, craftOfflinePlayer.getProfile(), manager);
             PacketPlayOutPlayerInfo packet = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, player);
+            System.out.println("Good");
             p.kickPlayer(ChatColor.GREEN + "Nickname changed, please rejoin!");
             for (Player p2 : Bukkit.getOnlinePlayers()) {
                 ((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
@@ -60,21 +66,20 @@ public class Nickname {
                 ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(player.getBukkitEntity().getEntityId()));
                 ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(offlineplayer.getBukkitEntity().getEntityId()));
             }
-            BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-            if(bsgPlayer.getNick() == null){
-                bsgPlayer.setNick(new Nick(s, null, null, true));
+            BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+            if(uhcPlayer.getNick() == null){
+                uhcPlayer.setNick(new Nick(s, null, null, true));
 
             }
-            bsgPlayer.getNick().setNickName(s);
-            bsgPlayer.getNick().setNicked(true);
-            bsgPlayer.getNick().setSkinValue(skin[0]);
-            bsgPlayer.getNick().setSkinSignature(skin[1]);
-            BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer);
+            uhcPlayer.getNick().setNickName(s);
+            uhcPlayer.getNick().setNicked(true);
+            uhcPlayer.getNick().setSkinValue(skin[0]);
+            uhcPlayer.getNick().setSkinSignature(skin[1]);
             return;
         }
-        BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+        BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
 
-        if (bsgPlayer.getNick().getSkinSignature() == null) return;
+        if (uhcPlayer.getNick().getSkinSignature() == null) return;
         setSkinForSelf(p);
         refresh(p);
         setPlayerNameTag(p, s);
@@ -82,10 +87,13 @@ public class Nickname {
         //removeOfflinePlayer(p.getDisplayName());
 
 
-        //bsgPlayer.setNickName(s);
-        p.setPlayerListName(p.getName());
+        uhcPlayer.setNickName(s);
+
+        p.setPlayerListName(uhcPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix()
+                + " [" + uhcPlayer.getElo() + "]");
 
     }
+
     public void removeOfflinePlayer(String realIGN) {
         OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(realIGN);
         GameProfile gameProfile = ((CraftPlayer) offlinePlayer).getProfile();
@@ -110,12 +118,13 @@ public class Nickname {
     }
 
     public void unnick(Player p) {
-        BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
-
-
-        bsgPlayer.setNick(null);
+        BlitzSGPlayer uhcPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(p.getUniqueId());
+        uhcPlayer.setNickName(null);
+        uhcPlayer.getNick().setNicked(false);
+        uhcPlayer.getNick().setNickName(null);
+        uhcPlayer.setNick(null);
+        System.out.println("unnicking " + p.getName());
         p.kickPlayer(ChatColor.GREEN + "Please rejoin");
-        BlitzSG.getInstance().getStatisticsManager().save(bsgPlayer);
 
     }
 
@@ -133,6 +142,7 @@ public class Nickname {
             try {
                 Class.forName("net.minecraft.util.com.mojang.authlib.GameProfile");
                 gameProfileExists = true;
+                this.personal = ((CraftPlayer) player).getHandle().getProfile();
             } catch (ClassNotFoundException ignored) {
 
             }
@@ -304,15 +314,32 @@ public class Nickname {
 
 
     public void refresh(Player p) {
-
         final EntityPlayer ep = ((CraftPlayer) p).getHandle();
         final PacketPlayOutPlayerInfo removeInfo = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, ep);
         final PacketPlayOutPlayerInfo addInfo = new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.ADD_PLAYER, ep);
-       // final Location loc = BlitzSG.getInstance().getGameManager().getAvailableGame().getArena().getLobby().clone();
+        final Location loc = p.getLocation().clone();
         ep.playerConnection.sendPacket(removeInfo);
         ep.playerConnection.sendPacket(addInfo);
-      //     }
-       // }.runTaskLater(BlitzSG.getInstance(), 1);
+        Location otherWorldLocation = null;
+        if (p.getWorld().getName().equalsIgnoreCase("world"))
+            for (World world : Bukkit.getWorlds()) {
+                if (!world.getName().equalsIgnoreCase("world")) {
+                    otherWorldLocation = world.getSpawnLocation();
+                    break;
+                }
+            }
+        else
+            otherWorldLocation = Bukkit.getWorld("world").getSpawnLocation();
+        if (otherWorldLocation != null)
+            p.teleport(otherWorldLocation);
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                p.teleport(loc);
+                ep.playerConnection.sendPacket(new PacketPlayOutRespawn(ep.dimension, ep.getWorld().getDifficulty(), ep.getWorld().getWorldData().getType(), ep.playerInteractManager.getGameMode()));
+                p.updateInventory();
+            }
+        }.runTaskLater(BlitzSG.getInstance(), 1);
     }
 
     public String fetchRealName(Player p) {

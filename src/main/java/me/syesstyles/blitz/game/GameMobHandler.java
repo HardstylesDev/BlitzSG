@@ -10,7 +10,10 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityCombustEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.SpawnEgg;
@@ -24,15 +27,8 @@ import org.spigotmc.event.entity.EntityMountEvent;
 public class GameMobHandler implements Listener {
 
     @EventHandler
-    public void onHorseDamage(EntityDamageEvent e) {
-        if (e.getCause() == EntityDamageEvent.DamageCause.VOID)
-            if (e.getEntity() instanceof Horse)
-                e.getEntity().remove();
-    }
-
-    @EventHandler
     public void onCreatureSpawn(CreatureSpawnEvent event) {
-        if (event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.BREEDING) || event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.SLIME_SPLIT)) {
+        if (event.getSpawnReason().equals(CreatureSpawnEvent.SpawnReason.BREEDING)) {
             event.setCancelled(true);
         }
 
@@ -45,7 +41,7 @@ public class GameMobHandler implements Listener {
         BlitzSGPlayer sgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getPlayer().getUniqueId());
         if (!sgPlayer.isInGame())
             return;
-        if (!(sgPlayer.getGame().getGameMode() == GameMode.INGAME) && !(sgPlayer.getGame().getGameMode() == GameMode.RESETING)  )
+        if (!(sgPlayer.getGame().getGameMode() == GameMode.INGAME))
             return;
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem().getType() == Material.MONSTER_EGG) {
             EntityType entityType = ((SpawnEgg) e.getPlayer().getItemInHand().getData()).getSpawnedType();
@@ -134,23 +130,24 @@ public class GameMobHandler implements Listener {
         if (e.getTarget() instanceof Player) {
             Player target = (Player) e.getTarget();
             BlitzSGPlayer blitzSGPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(target.getUniqueId());
-            if (blitzSGPlayer.getGameEntities().contains(e.getEntity())) {
+            if (blitzSGPlayer.getGameEntities().contains(e.getEntity()) || blitzSGPlayer.isSpectating()) {
                 e.setCancelled(true);
-                for (Entity entity : e.getEntity().getNearbyEntities(15, 15, 15))
+                for (Entity entity : e.getEntity().getNearbyEntities(15, 15, 15)) {
                     if (entity instanceof Player) {
                         Player potentialTarget = (Player) entity;
-                        if (!blitzSGPlayer.getGame().isDead(potentialTarget) && potentialTarget != target)
+                        BlitzSGPlayer potentialBlitzSGPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(potentialTarget.getUniqueId());
+                        if (!potentialBlitzSGPlayer.isSpectating() && !blitzSGPlayer.getGame().isDead(potentialTarget) && potentialTarget != target) {
                             e.setTarget(potentialTarget);
-
+                        }
                     }
+                }
             }
         }
     }
 
     @EventHandler
     public void mobRide(EntityMountEvent e) {
-        if (!(e.getEntity() instanceof Player))
-            return;
+        if (!(e.getEntity() instanceof Player)) return;
         BlitzSGPlayer sgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(e.getEntity().getUniqueId());
         if (!sgPlayer.isInGame())
             return;

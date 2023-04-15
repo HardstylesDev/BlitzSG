@@ -16,7 +16,7 @@ public class GameManager {
 	private HashSet<Game> games;
 	
 	public GameManager() {
-		games = new HashSet<Game>();
+		games = new HashSet<>();
 	}
 	
 	public Game getAvailableGame() {
@@ -50,14 +50,11 @@ public class GameManager {
 	}
     
     public HashMap<Integer, BlitzSGPlayer> getTopKillers(Game g) {
-    	Comparator<BlitzSGPlayer> killSorter = new Comparator<BlitzSGPlayer>() {
-			@Override
-			public int compare(BlitzSGPlayer a, BlitzSGPlayer b) {
-				if(a.getGameKills() > b.getGameKills()) return -1;
-				else if(a.getGameKills() < b.getGameKills()) return 1;
-				return 0;
-			}
-    	};
+    	Comparator<BlitzSGPlayer> killSorter = (a, b) -> {
+			if(a.getGameKills() > b.getGameKills()) return -1;
+			else if(a.getGameKills() < b.getGameKills()) return 1;
+			return 0;
+		};
     	HashMap<Integer, BlitzSGPlayer> map = new HashMap<Integer, BlitzSGPlayer>();
     	ArrayList<BlitzSGPlayer> kitPlayers = new ArrayList<BlitzSGPlayer>();
     	for(Player kp : g.getAllPlayers()) {

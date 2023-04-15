@@ -98,6 +98,7 @@ public class ScoreboardHandler implements Listener
     public void onPlayerQuit(PlayerQuitEvent event) {
         this.boardHelper.remove(event.getPlayer());
         this.helper.remove(event.getPlayer());
+        event.setQuitMessage("");
     }
     
     private void handleScoreboard(Player player) {

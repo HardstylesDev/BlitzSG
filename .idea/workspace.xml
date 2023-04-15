@@ -23,8 +23,102 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7a886556-406b-424f-8316-6290f7bbf82d" name="Default Changelist" comment="Hub changes, ImportantCommandModifier">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/command/Command.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/command/SubCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/command/game/GameCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/command/game/sub/GameStarSpawnCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/command/game/sub/GameStartDeathmatchCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/command/rank/RankCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/command/rank/sub/RankListCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/command/rank/sub/RankSetCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/ChatUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/ReflectionUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/KarhuAPI.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/BlitzSG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/BlitzSG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/blitzsgplayer/BlitzSGPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/blitzsgplayer/BlitzSGPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/blitzsgplayer/BlitzSGPlayerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/blitzsgplayer/BlitzSGPlayerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/blitzsgplayer/BlitzSGPlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/blitzsgplayer/BlitzSGPlayerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/HorseCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/TagCommand.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/DebugCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/commands/subcommands/DebugCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/Aura.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/Aura.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/CosmeticsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/CosmeticsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/Taunt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/BlueParticle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/BlueTrail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/FlowerTrail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/GreenParticle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/GreenTrail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/LavaParticle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/MyceliumTrail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/NetherrackTrail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/PortalParticle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/RainbowDustParticle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/RainbowParticle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/RainbowTrail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/RedParticle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/RedTrail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/SlimeParticle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/SnowParticle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/WaterParticle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/aura/WheatTrail.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/taunt/BatDudeTaunt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/taunt/CookieTaunt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/taunt/DefaultTaunt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/taunt/FireworkTaunt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/taunt/IRefuseTaunt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/taunt/PigDanceTaunt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/taunt/RichJamesTaunt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/taunt/SheepDanceTaunt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/taunt/VillagerDanceTaunt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/cosmetic/cosmetics/taunt/WolfPackTaunt.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/GameHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/GameManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/GameManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/GameMobHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/game/GameMobHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/InventoryHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/InventoryHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/KitsGUI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/ShopGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/ShopGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/ShopKitBasicGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/ShopKitBasicGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/ShopStarGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/ShopStarGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/gui/TauntGUI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/map/Map.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/map/MapHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/map/MapManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/map/MapUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/punishments/ACBan.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/punishments/ACBan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/punishments/PunishmentManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/punishments/PunishmentManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/punishments/commands/Unban.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/punishments/commands/Unban.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/RankManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/rank/RankManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/scoreboard/ScoreboardHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/scoreboard/ScoreboardHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/scoreboard/ScoreboardHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/scoreboard/ScoreboardHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/scoreboard/ScoreboardManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/scoreboard/ScoreboardManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/statistics/StatisticsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/statistics/StatisticsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/ChestUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/ChestUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/FlyCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/ImportantCommandModifier.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/KarhuAnticheat.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/PlayerUtils.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/StartDMCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/VanillaCommands.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/WTFMapCommand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/WorldCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/WorldCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/bungee/BungeeMessaging.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/database/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/database/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/entity/NBT.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/leaderboard/Leaderboard.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/nametag/Nametag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/nametag/Nametag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/nametag/NametagManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/nametag/NametagManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/nickname/Nickname.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/nickname/Nickname.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/nickname/NicknameCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/syesstyles/blitz/utils/nickname/NicknameCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-archiver/pom.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-archiver/pom.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,12 +135,8 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="mavenHome" value="C:\Program Files\JetBrains\IntelliJ IDEA 2020.2.3\plugins\maven\lib\maven3" />
-      </MavenGeneralSettings>
-    </option>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectId" id="1fuswZzG5de3w6JMMOXXYqxHbRI" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -54,41 +144,105 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../BlitzSGGame" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.path.for.package.tslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="SDKs" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="File.Encoding" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "extract.method.default.visibility": "private",
+    "last_opened_file_path": "D:/Java Projects/BSG/BlitzSG",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "MavenSettings",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\resources" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="me.syesstyles" />
       <recent name="me.hardstyles" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="me.syesstyles.blitz.command.game.sub" />
+      <recent name="me.syesstyles.blitz.command.rank" />
       <recent name="me.syesstyles.blitz.utils" />
       <recent name="me.syesstyles.blitz.commands" />
       <recent name="me.syesstyles.blitz.gui" />
-      <recent name="me.syesstyles.blitz.cosmetic.cosmetics.taunt" />
-      <recent name="me.syesstyles.blitz.cosmetic" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\resources" />
-    </key>
+  </component>
+  <component name="RunManager" selected="Maven.SpigotServer [package]">
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SpigotServer [package]" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="mvn" />
+                <option value="package" />
+              </list>
+            </option>
+            <option name="pomFileName" value="pom.xml" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <configuration name="SpigotServer [shade:shade]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="shade:shade" />
+              </list>
+            </option>
+            <option name="pomFileName" value="pom.xml" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Maven.SpigotServer [shade:shade]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
@@ -186,6 +340,11 @@
       <workItem from="1619269167330" duration="787000" />
       <workItem from="1619274544377" duration="602000" />
       <workItem from="1619434469909" duration="3283000" />
+      <workItem from="1681155353522" duration="1729000" />
+      <workItem from="1681239430543" duration="1308000" />
+      <workItem from="1681300357974" duration="10833000" />
+      <workItem from="1681328696967" duration="5013000" />
+      <workItem from="1681552946210" duration="16385000" />
     </task>
     <task id="LOCAL-00001" summary="fff">
       <created>1597086521686</created>
@@ -420,7 +579,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fff" />
@@ -443,84 +601,5 @@
     <MESSAGE value="add taunting" />
     <MESSAGE value="Hub changes, ImportantCommandModifier" />
     <option name="LAST_COMMIT_MESSAGE" value="Hub changes, ImportantCommandModifier" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="726" y="112" key="#Auto_Import" timestamp="1610916160801">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="726" y="112" key="#Auto_Import/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1610916160801" />
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1611325903439">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1611325903439" />
-    <state x="730" y="322" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1611335987714">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="730" y="322" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1611335987714" />
-    <state x="765" y="221" key="#com.intellij.ide.util.MemberChooser" timestamp="1611068178226">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="765" y="221" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1611068178226" />
-    <state x="2065" y="0" width="1374" height="1038" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1612983474945">
-      <screen x="1920" y="0" width="1920" height="1040" />
-    </state>
-    <state x="145" y="0" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1611167137109" />
-    <state x="2065" y="0" width="1374" height="1038" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1612983474945" />
-    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1611434270765">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1611434270765" />
-    <state width="1877" height="239" key="GridCell.Tab.0.bottom" timestamp="1619455612192">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="249" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1611491306200" />
-    <state width="1877" height="239" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1619455612192" />
-    <state width="1877" height="239" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1612983547475" />
-    <state width="1877" height="239" key="GridCell.Tab.0.center" timestamp="1619455612192">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="249" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1611491306200" />
-    <state width="1877" height="239" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1619455612192" />
-    <state width="1877" height="239" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1612983547475" />
-    <state width="1877" height="239" key="GridCell.Tab.0.left" timestamp="1619455612192">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="249" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1611491306200" />
-    <state width="1877" height="239" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1619455612192" />
-    <state width="1877" height="239" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1612983547475" />
-    <state width="1877" height="239" key="GridCell.Tab.0.right" timestamp="1619455612192">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="249" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1611491306200" />
-    <state width="1877" height="239" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1619455612192" />
-    <state width="1877" height="239" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1612983547475" />
-    <state x="490" y="175" key="Maven.ArtifactSearchDialog" timestamp="1611411634232">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="490" y="175" key="Maven.ArtifactSearchDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1611411634232" />
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2" timestamp="1616355050430">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="552" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1616355050430" />
-    <state x="2472" y="253" key="Vcs.Push.Dialog.v2/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1611086712417" />
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1611169060548">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="769" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1611169060548" />
-    <state x="2689" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1611086320777" />
-    <state x="1355" y="102" width="555" height="801" key="find.popup" timestamp="1619455611545">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="-1347" y="158" width="585" height="801" key="find.popup/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@-1920.2.1920.1040" timestamp="1612638847899" />
-    <state x="1355" y="102" width="555" height="801" key="find.popup/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1619455611545" />
-    <state x="3157" y="97" width="683" height="801" key="find.popup/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@1920.0.1920.1040" timestamp="1611086047064" />
-    <state x="660" y="277" key="refactoring.ChangeSignatureDialog" timestamp="1613154690991">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="660" y="277" key="refactoring.ChangeSignatureDialog/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1613154690991" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1612713317728">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040/-1920.2.1920.1040/1920.0.1920.1040@0.0.1920.1040" timestamp="1612713317728" />
   </component>
 </project>

@@ -32,7 +32,7 @@ public class ShopStarGUI {
         int firstItem = 10;
         for (Star star : BlitzSG.getInstance().getStarManager().getStars()) {
             inv.setItem(firstItem, ItemUtils.buildItem(new ItemStack(star.getIcon())
-                    , bsgPlayer.getStars().contains(p) ? ChatColor.GREEN + star.getName() : ChatColor.YELLOW + star.getName()
+                    , star.getName()
                     , getFullDescription(bsgPlayer, star)));
             if ((firstItem + 2) % 9 == 0) {
                 firstItem += 3;

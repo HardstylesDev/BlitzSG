@@ -32,7 +32,7 @@ public class Unban implements CommandExecutor {
             @Override
             public void run() {
                 try {
-                    Connection connection = BlitzSG.getInstance().getData().getConnection();
+                    Connection connection = BlitzSG.getInstance().db().getConnection();
                     String command = String.format("DELETE FROM bans WHERE uuid = ?");
                     PreparedStatement preparedStatement = connection.prepareStatement(command);
                     preparedStatement.setString(1, player.getUniqueId().toString());

@@ -35,10 +35,12 @@ public class NametagManager {
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
 
             BlitzSGPlayer bsgPlayer = BlitzSG.getInstance().getBlitzSGPlayerManager().getBsgPlayer(onlinePlayer.getUniqueId());
-            if (bsgPlayer == null || bsgPlayer.getRank() == null || bsgPlayer.getRank().getPrefix() == null || bsgPlayer.getNick() == null)
+            if(bsgPlayer == null || bsgPlayer.getRank() == null || bsgPlayer.getRank().getPrefix() == null || bsgPlayer.getNick() == null)
                 return;
-            nametag.setNametag(onlinePlayer, ChatColor.WHITE + "", bsgPlayer.getNick().isNicked());
-
+            if (bsgPlayer.isInGame())
+                nametag.setNametag(onlinePlayer, ChatColor.RED + "", bsgPlayer.getNick().isNicked());
+            else
+                nametag.setNametag(onlinePlayer, bsgPlayer.getRank().getPrefix(), bsgPlayer.getNick().isNicked());
         }
     }
 }
