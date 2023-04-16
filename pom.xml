@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>SpigotServer</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>BlitzSG</artifactId>
+    <version>1.0</version>
     <build>
         <plugins>
             <plugin>
@@ -32,7 +32,7 @@
                 </executions>
                 <configuration>
                     <shadedArtifactAttached>true</shadedArtifactAttached>
-                    <shadedClassifierName>shaded</shadedClassifierName>
+                    <shadedClassifierName>SNAPSHOT</shadedClassifierName>
                 </configuration>
 
             </plugin>

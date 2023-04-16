@@ -1,6 +1,6 @@
 name: BlitzSG
 version: 1.0
-main: me.syesstyles.blitz.BlitzSG
+main: me.hardstyles.blitz.BlitzSG
 author: Syes, Hardstyles
 description: BlitzSG Plugin
 commands:
