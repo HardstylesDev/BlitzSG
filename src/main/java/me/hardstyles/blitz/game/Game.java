@@ -24,6 +24,7 @@ public class Game {
     private boolean speedMode = false;
     private NextEvent nextEvent;
     private boolean canFindStar = false;
+    private boolean deathMatchStarted = false;
 
     public void applyDeathEffects() {
         for (Player alivePlayer : alivePlayers) {
@@ -60,14 +61,15 @@ public class Game {
     private double borderSize;
     private double borderShrinkBy;
 
-    public Game(){
+    public Game() {
         Map map = BlitzSG.getInstance().getMapManager().getRandomMap();
-        if(map == null){
+        if (map == null) {
             Bukkit.broadcastMessage(BlitzSG.CORE_NAME + ChatColor.RED + "Couldn't find an available arena!");
             return;
         }
         new Game(map);
     }
+
     public Game(Map toLoad) {
         gameMode = GameMode.LOADING;
         this.map = toLoad;
@@ -132,7 +134,7 @@ public class Game {
         iPlayer.setPrefix(ChatUtil.color("&f"));
 
 
-        if(allPlayers.contains(p)) {
+        if (allPlayers.contains(p)) {
             allPlayers.remove(p);
             alivePlayers.remove(p);
         }
@@ -371,8 +373,11 @@ public class Game {
                 }
                 if (deathmatchStartTime > 54 && deathmatchStartTime < 60)
                     msgAll(BlitzSG.CORE_NAME + "&eYou will be able to damage players in " + (60 - deathmatchStartTime) + " second" + (((60 - deathmatchStartTime) == 1) ? "" : "s") + "!");
-                if (deathmatchStartTime == 60)
+                if (deathmatchStartTime == 60) {
                     msgAll(BlitzSG.CORE_NAME + "&eKill! Kill! Kill!");
+                    deathMatchStarted = true;
+                }
+
                 if (deathmatchStartTime == 240) {
                     this.cancel();
                     endGame(true);
@@ -571,6 +576,10 @@ public class Game {
         return false;
     }
 
+    public boolean hasDeathMatchStarted() {
+        return deathMatchStarted;
+    }
+
     public HashMap<Player, Boolean> getVotes() {
         return votes;
     }
@@ -628,6 +637,7 @@ public class Game {
     public Map getMap() {
         return map;
     }
+
     public boolean isDeathmatchStarting() {
         return isDeathmatchStarting;
     }

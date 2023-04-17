@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.Random;
 
 public class Assassin extends Star {
-    public Assassin(){
-        super("Assassin", Material.BONE,"Teleport to a random player and do 10 hearts damage.", 10000);
+    public Assassin() {
+        super("Assassin", Material.BONE, "Teleport to a random player and do 10 hearts damage.", 10000);
     }
 
     @Override
@@ -27,7 +27,13 @@ public class Assassin extends Star {
         Player target = targets.get(index);
 
         p.teleport(target);
-        target.damage(target.getHealth()/2, p);
+
+        if (target.getHealth() / 2 <= 0) {
+            IPlayer iTarget = BlitzSG.getInstance().getIPlayerManager().getPlayer(target.getUniqueId());
+            BlitzSG.getInstance().getGameHandler().onPlayerDeath(target, iTarget.getLastAttacker());
+        } else {
+            target.damage(target.getHealth() / 2, p);
+        }
         target.sendMessage(ChatColor.RED + "You were assassined by " + p.getName());
         p.sendMessage(ChatColor.RED + "You assassined " + target.getName());
 

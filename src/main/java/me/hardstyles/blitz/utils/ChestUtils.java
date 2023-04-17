@@ -106,9 +106,9 @@ public class ChestUtils {
 
 
         //MISC
-        lootTable.put(new ItemStack(Material.IRON_INGOT, 1), 8);
+        lootTable.put(new ItemStack(Material.IRON_INGOT, 1), 3);
         lootTable.put(new ItemStack(Material.GOLD_INGOT, 8), 8);
-        lootTable.put(new ItemStack(Material.DIAMOND, 1), 4);
+        lootTable.put(new ItemStack(Material.DIAMOND, 1), 1);
         lootTable.put(new ItemStack(Material.STICK, 3), 15);
         lootTable.put(new ItemStack(Material.BOWL, 1), 8);
 

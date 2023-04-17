@@ -172,6 +172,13 @@ public class InventoryHandler implements Listener {
                 BlitzSG.send(p, "&cYou don't have this star unlocked!");
                 return;
             }
+
+            // check if p has a nether star in inventory
+            if (!p.getInventory().contains(Material.NETHER_STAR)) {
+                p.sendMessage(BlitzSG.CORE_NAME + ChatColor.RED + "HELL NAWH! You need a Nether Star to use this star!");
+                return;
+            }
+
             bsgPlayer.getGame().msgAll(BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + p.getName() + " &6BLITZ! &e" + star.getName());
             p.closeInventory();
             star.run(p);

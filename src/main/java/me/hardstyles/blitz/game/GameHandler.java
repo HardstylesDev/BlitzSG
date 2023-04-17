@@ -93,9 +93,6 @@ public class GameHandler implements Listener {
         craftPlayer.getHandle().playerConnection.sendPacket(new net.minecraft.server.v1_8_R3.PacketPlayOutGameStateChange(3, 0));
 
 
-
-
-
         victim.setAllowFlight(true);
         victim.setFlying(true);
         victim.setHealth(20);
@@ -169,7 +166,7 @@ public class GameHandler implements Listener {
         Player p = e.getPlayer();
         IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
         if (!bsgPlayer.isInGame()) {
-            if ((bsgPlayer.getRank().isManager() && (p.getGameMode() == org.bukkit.GameMode.CREATIVE)))return;
+            if ((bsgPlayer.getRank().isManager() && (p.getGameMode() == org.bukkit.GameMode.CREATIVE))) return;
             e.setCancelled(true);
             return;
         }
@@ -254,6 +251,9 @@ public class GameHandler implements Listener {
                     bsgPlayer.setLastDamage(System.currentTimeMillis());
                     bsgPlayer.setLastDamager(attacker);
                 }
+            }
+            if (e.getCause() == EntityDamageEvent.DamageCause.LAVA && bsgPlayer.getGame().hasDeathMatchStarted()) {
+                e.setDamage(99);
             }
 
             // check if this damage will kill the player

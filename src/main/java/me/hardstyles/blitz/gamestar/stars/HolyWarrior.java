@@ -22,14 +22,14 @@ public class HolyWarrior extends Star {
     public void run(Player p) {
         p.getInventory().remove(Material.NETHER_STAR);
         IPlayer user = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 30*20, 2));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 30 * 20, 2));
         for (int t = 0; t < 30; ++t) {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if(user.getGame() == null || user.getGame().getGameMode() == null || user.getGame().getGameMode() != Game.GameMode.INGAME)
+                    if (user.getGame() == null || user.getGame().getGameMode() == null || user.getGame().getGameMode() != Game.GameMode.INGAME)
                         return;
-                    else if(!user.getGame().getAlivePlayers().contains(p))
+                    else if (!user.getGame().getAlivePlayers().contains(p))
                         return;
                     List<Entity> a = p.getNearbyEntities(20, 20, 20);
                     for (Entity entity : a) {
@@ -37,7 +37,13 @@ public class HolyWarrior extends Star {
                             continue;
                         if (user.getGame().getAlivePlayers().contains(entity)) {
                             entity.getWorld().strikeLightningEffect(entity.getLocation());
-                            ((Player) entity).damage(2);
+                            Player target = (Player) entity;
+                            if (target.getHealth() - 2 <= 0) {
+                                IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(target.getUniqueId());
+                                BlitzSG.getInstance().getGameHandler().onPlayerDeath(target, iPlayer.getLastAttacker());
+                            } else {
+                                target.damage(2);
+                            }
                         }
                     }
                 }

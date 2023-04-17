@@ -46,16 +46,21 @@ public class Kamikaze extends Star {
                         p.getWorld().createExplosion(p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 20, true, false);
                         List<Entity> a = p.getNearbyEntities(10, 10, 10);
                         for (Entity entity : a) {
-                            if (!(entity instanceof Player))
+                            if (!(entity instanceof Player)) {
                                 continue;
+                            }
                             if (user.getGame().getAlivePlayers().contains(entity)) {
-                                if (entity != p)
-                                    ((Player) entity).damage(100);
+                                if (entity != p) {
+                                    Player target = (Player) entity;
+                                    IPlayer iTarget = BlitzSG.getInstance().getIPlayerManager().getPlayer(target.getUniqueId());
+                                    BlitzSG.getInstance().getGameHandler().onPlayerDeath(target, iTarget.getLastAttacker());
+                                }
                             }
                         }
                     }
-                    if (time == 30)
-                        p.damage(100);
+                    if (time == 30) {
+                        BlitzSG.getInstance().getGameHandler().onPlayerDeath(p, user.getLastAttacker());
+                    }
                     time++;
                 }
             }.runTaskLater(BlitzSG.getInstance(), t * 20);
