@@ -6,11 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SpigotServer" />
         <module name="Blitz" />
+        <module name="BlitzRemake" />
+        <module name="SpigotServer" />
+        <module name="BlitzSG-Clone" />
         <module name="BlitzSGGame" />
         <module name="KitPVP" />
-        <module name="BlitzRemake" />
         <module name="BlitzSG" />
       </profile>
     </annotationProcessing>
