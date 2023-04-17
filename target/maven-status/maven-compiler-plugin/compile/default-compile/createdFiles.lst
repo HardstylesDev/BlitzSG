@@ -6,16 +6,17 @@ me\hardstyles\blitz\utils\ItemUtils.class
 me\hardstyles\blitz\cosmetic\cosmetics\WheatTrail$1.class
 me\hardstyles\blitz\gamestar\stars\Kamikaze.class
 me\hardstyles\blitz\gamestar\stars\LuckyCharm.class
+me\hardstyles\blitz\punishments\commands\ban\UnbanCommand.class
 me\hardstyles\blitz\scoreboard\ScoreboardHelper.class
 me\hardstyles\blitz\cosmetic\cosmetics\LavaParticle.class
 me\hardstyles\blitz\kit\kits\RedDragon.class
 me\hardstyles\blitz\command\world\sub\WorldCreateSubCommand.class
 me\hardstyles\blitz\elo\EloLevel.class
-me\hardstyles\blitz\punishments\commands\Unban.class
 me\hardstyles\blitz\utils\ChestUtils.class
 me\hardstyles\blitz\cosmetic\cosmetics\MyceliumTrail$1.class
 me\hardstyles\blitz\gui\KitGUI.class
 me\hardstyles\blitz\rank\ranks\Mvp.class
+me\hardstyles\blitz\punishments\PlayerMute.class
 me\hardstyles\blitz\cosmetic\CosmeticsManager.class
 me\hardstyles\blitz\nametag\Nametag.class
 me\hardstyles\blitz\cosmetic\cosmetics\MyceliumTrail.class
@@ -50,9 +51,9 @@ me\hardstyles\blitz\gui\ShopGUI.class
 me\hardstyles\blitz\kit\kits\Astronaut.class
 me\hardstyles\blitz\cosmetic\cosmetics\RainbowDustParticle.class
 me\hardstyles\blitz\game\Game$4.class
+me\hardstyles\blitz\rank\ranks\Owner.class
 me\hardstyles\blitz\cosmetic\cosmetics\FlowerTrail$1.class
 me\hardstyles\blitz\kit\kits\Tim.class
-me\hardstyles\blitz\punishments\PunishmentManager$1.class
 me\hardstyles\blitz\gamestar\stars\Wobbuffet$1.class
 me\hardstyles\blitz\rank\ranks\Vip.class
 me\hardstyles\blitz\command\world\sub\WorldUnloadSubCommand.class
@@ -88,6 +89,7 @@ me\hardstyles\blitz\kit\kits\Archer.class
 me\hardstyles\blitz\cosmetic\cosmetics\PortalParticle.class
 me\hardstyles\blitz\cosmetic\cosmetics\BlueTrail$1.class
 me\hardstyles\blitz\cosmetic\Aura.class
+me\hardstyles\blitz\punishments\commands\mute\MuteCommand.class
 me\hardstyles\blitz\blitzsgplayer\IPlayerHandler.class
 me\hardstyles\blitz\game\Game$2.class
 me\hardstyles\blitz\cosmetic\CosmeticsManager$1.class
@@ -140,6 +142,7 @@ me\hardstyles\blitz\command\game\GameCommand.class
 me\hardstyles\blitz\gamestar\stars\HolyWarrior$1.class
 me\hardstyles\blitz\kit\KitManager.class
 me\hardstyles\blitz\gamestar\stars\WitherWarrior$1.class
+me\hardstyles\blitz\punishments\commands\mute\UnmuteCommand.class
 me\hardstyles\blitz\command\world\WorldCommand.class
 me\hardstyles\blitz\statistics\LeaderboardManager.class
 me\hardstyles\blitz\punishments\ACBan$1.class
@@ -153,6 +156,7 @@ me\hardstyles\blitz\cosmetic\cosmetics\EnchantingParticle.class
 me\hardstyles\blitz\kit\kits\Speleologist.class
 me\hardstyles\blitz\command\rank\sub\RankSetSuffixCommand.class
 me\hardstyles\blitz\kit\kits\Baker.class
+me\hardstyles\blitz\punishments\commands\ban\BanCommand.class
 me\hardstyles\blitz\cosmetic\cosmetics\NetherrackTrail$1.class
 me\hardstyles\blitz\kit\Kit.class
 me\hardstyles\blitz\cosmetic\cosmetics\NetherrackTrail.class
@@ -160,7 +164,6 @@ me\hardstyles\blitz\map\Map.class
 me\hardstyles\blitz\gui\ShopStarGUI.class
 me\hardstyles\blitz\punishments\ACBan.class
 me\hardstyles\blitz\kit\KitUtils.class
-me\hardstyles\blitz\punishments\commands\Unban$1.class
 me\hardstyles\blitz\map\MapManager.class
 me\hardstyles\blitz\cosmetic\cosmetics\RedParticle.class
 me\hardstyles\blitz\nickname\Nickname.class

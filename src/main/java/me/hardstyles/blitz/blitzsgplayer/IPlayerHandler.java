@@ -40,22 +40,17 @@ public class IPlayerHandler implements Listener {
 
         p.setGameMode(GameMode.SURVIVAL);
         p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0)); //todo change back
-        if (!(sgPlayer.getRank() instanceof Default)) {
+        if (sgPlayer.getRank().isVip()) {
             p.setAllowFlight(true);
             p.setFlying(true);
         }
         if (sgPlayer.getNick() != null && sgPlayer.getNick().isNicked()) {
             Nickname nickname = new Nickname();
             if (sgPlayer.getNick().getSkinSignature() == null) {
-
-
                 if (sgPlayer.getRank().getPosition() > 4) {
-
                     for (Player member : Bukkit.getWorld("world").getPlayers()) {
                         member.sendMessage(ChatUtil.color("&e" + sgPlayer.getRank().getPrefix() + p.getName() + "&6 joined the lobby!"));
                     }
-
-
                 }
 
                 sgPlayer.getNick().setNicked(true);
@@ -101,6 +96,14 @@ public class IPlayerHandler implements Listener {
     @EventHandler
     public void onAsyncChat(PlayerChatEvent e) {
         IPlayer sgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
+        if(sgPlayer.getMute() != null) {
+            if(sgPlayer.getMute().isMuted()) {
+                e.getPlayer().sendMessage(ChatUtil.color("&cYou are currently muted for \"" + sgPlayer.getMute().getReason() + "\""));
+                e.getPlayer().sendMessage(ChatUtil.color("&cThis mute will expire in " + ChatUtil.formatDate(sgPlayer.getMute().getEndTime())));
+                e.setCancelled(true);
+                return;
+            }
+        }
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.getWorld().equals(e.getPlayer().getWorld())) {
                 p.sendMessage(ChatUtil.color("&r[&7" + sgPlayer.getKills() + "&r] " + sgPlayer.getRank(true).getPrefix() + e.getPlayer().getName() + (sgPlayer.getRank(true).getPrefix().equalsIgnoreCase(ChatColor.GRAY + "") ? ChatColor.GRAY + ": " : ChatColor.WHITE + ": ") + e.getMessage()));
@@ -127,7 +130,7 @@ public class IPlayerHandler implements Listener {
         if (uhcPlayer.isInGame()) return;
         if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (e.getItem() == null) return;
-        if (uhcPlayer.getRank() instanceof Admin && p.getGameMode() == GameMode.CREATIVE) return;
+        if (uhcPlayer.getRank().isManager() && p.getGameMode() == GameMode.CREATIVE) return;
         e.setCancelled(true);
         if (e.getItem().getType() == Material.EMERALD) ShopGUI.openGUI(p);
         else if (e.getItem().getType() == Material.IRON_SWORD) {
@@ -169,8 +172,9 @@ public class IPlayerHandler implements Listener {
         if (victim.getGame() != null) return;
         if (!(e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK)) return;
 
-        if (!(victim.getRank() instanceof Admin) && !(victim.getRank() instanceof Moderator) && !(victim.getRank() instanceof Helper))
+        if (!(victim.getRank().isStaff())) {
             return;
+        }
 
         IPlayer attacker = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getDamager().getUniqueId());
 

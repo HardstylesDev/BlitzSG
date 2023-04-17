@@ -17,11 +17,14 @@ import me.hardstyles.blitz.gui.InventoryHandler;
 import me.hardstyles.blitz.kit.KitManager;
 import me.hardstyles.blitz.map.MapManager;
 import me.hardstyles.blitz.punishments.ACBan;
+import me.hardstyles.blitz.punishments.commands.ban.BanCommand;
+import me.hardstyles.blitz.punishments.commands.ban.UnbanCommand;
+import me.hardstyles.blitz.punishments.commands.mute.MuteCommand;
+import me.hardstyles.blitz.punishments.commands.mute.UnmuteCommand;
 import me.hardstyles.blitz.statistics.LeaderboardManager;
 import me.hardstyles.blitz.statistics.StatisticsManager;
 import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.utils.EnchantListener;
-import me.hardstyles.blitz.nickname.NicknameCommand;
 import me.hardstyles.blitz.command.game.GameCommand;
 import me.hardstyles.blitz.cosmetic.CosmeticsManager;
 import me.hardstyles.blitz.elo.EloManager;
@@ -29,7 +32,6 @@ import me.hardstyles.blitz.game.GameHandler;
 import me.hardstyles.blitz.game.GameManager;
 import me.hardstyles.blitz.game.GameMobHandler;
 import me.hardstyles.blitz.punishments.PunishmentManager;
-import me.hardstyles.blitz.punishments.commands.Unban;
 import me.hardstyles.blitz.rank.RankManager;
 import me.hardstyles.blitz.scoreboard.ScoreboardManager;
 import me.hardstyles.blitz.database.Database;
@@ -113,12 +115,15 @@ public class BlitzSG extends JavaPlugin {
         new MessageCommand();
         new ReplyCommand();
         new WorldCommand();
+        new BanCommand();
+        new UnbanCommand();
+        new MuteCommand();
+        new UnmuteCommand();
 
         //Register Commands::
 
 //        getCommand("nick").setExecutor(new NicknameCommand());
         getCommand("acban").setExecutor(new ACBan());
-        getCommand("unban").setExecutor(new Unban());
 
         //Register Handlers:
         getServer().getPluginManager().registerEvents(this.gameHandler = new GameHandler(), this);

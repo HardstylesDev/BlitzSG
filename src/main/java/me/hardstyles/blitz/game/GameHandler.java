@@ -5,7 +5,6 @@ import me.hardstyles.blitz.blitzsgplayer.IPlayer;
 import me.hardstyles.blitz.command.fireworks.FireworkCommand;
 import me.hardstyles.blitz.gui.KitGUI;
 import me.hardstyles.blitz.gui.StarGUI;
-import me.hardstyles.blitz.rank.ranks.Admin;
 import me.hardstyles.blitz.utils.ChestUtils;
 import me.hardstyles.blitz.utils.ItemBuilder;
 import org.bukkit.*;
@@ -66,7 +65,7 @@ public class GameHandler implements Listener {
             IPlayer killerPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(killer.getUniqueId());
             deathMessage = BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed by " + killerPlayer.getRank().getChatColor() + killer.getName() + " &eand everyone got a speed buff!";
             killerPlayer.addGameKill();
-            BlitzSG.getInstance().getIPlayerManager().handleKillElo(victim, victim.getKiller());
+            BlitzSG.getInstance().getIPlayerManager().handleKillElo(victim, killer);
         }
         for (Player p : bsgPlayer.getGame().getAllPlayers()) {
             BlitzSG.send(p, deathMessage);
@@ -169,7 +168,7 @@ public class GameHandler implements Listener {
         Player p = e.getPlayer();
         IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
         if (!bsgPlayer.isInGame()) {
-            if ((bsgPlayer.getRank() instanceof Admin) && (p.getGameMode() == org.bukkit.GameMode.CREATIVE)) return;
+            if ((bsgPlayer.getRank().isManager() && (p.getGameMode() == org.bukkit.GameMode.CREATIVE)))return;
             e.setCancelled(true);
             return;
         }
@@ -189,7 +188,7 @@ public class GameHandler implements Listener {
         if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB) return;
         if (!bsgPlayer.isInGame()) {
 
-            if ((bsgPlayer.getRank() instanceof Admin) && (p.getGameMode() == org.bukkit.GameMode.CREATIVE)) {
+            if ((bsgPlayer.getRank().isManager()) && (p.getGameMode() == org.bukkit.GameMode.CREATIVE)) {
                 return;
             }
             e.setCancelled(true);
@@ -217,7 +216,7 @@ public class GameHandler implements Listener {
         Player p = e.getPlayer();
         IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
         if (!bsgPlayer.isInGame()) {
-            if (!(bsgPlayer.getRank() instanceof Admin) && !(p.getGameMode() == org.bukkit.GameMode.CREATIVE))
+            if (!(bsgPlayer.getRank().isManager()) && !(p.getGameMode() == org.bukkit.GameMode.CREATIVE))
                 e.setCancelled(true);
             return;
         }

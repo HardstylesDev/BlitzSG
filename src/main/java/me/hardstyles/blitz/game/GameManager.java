@@ -1,9 +1,7 @@
 package me.hardstyles.blitz.game;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.blitzsgplayer.IPlayer;
@@ -12,23 +10,25 @@ import org.bukkit.entity.Player;
 
 public class GameManager {
 
-    private HashSet<Game> games;
+    private CopyOnWriteArrayList<Game> games;
 
     public GameManager() {
-        games = new HashSet<>();
+        games = new CopyOnWriteArrayList<>();
 
-       Bukkit.getScheduler().scheduleSyncRepeatingTask(BlitzSG.getInstance(), () -> {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(BlitzSG.getInstance(), () -> {
             for (Game g : games) {
                 if (g.getGameMode() == Game.GameMode.WAITING) {
                     if (g.getAllPlayers().size() == 0) {
                         Bukkit.getLogger().info("Game " + g.getMap().getMapName() + " has been reset due to no players.");
                         g.resetGame();
+                        games.remove(g);
                     }
                 }
             }
-           if (games.size() == 0) {
-               new Game();
-           }
+
+            if (games.size() == 0) {
+                new Game();
+            }
         }, 100, 20 * 60 * 5);
 
     }
@@ -60,29 +60,36 @@ public class GameManager {
         g.setGameMode(Game.GameMode.WAITING);
 
         if (games.size() == 0) {
-
-
-
+            Bukkit.getScheduler().runTaskLater(BlitzSG.getInstance(), Game::new, 50);
         }
     }
 
 
-    public HashMap<Integer, IPlayer> getTopKillers(Game g) {
+    public LinkedHashMap<Integer, IPlayer> getTopKillers(Game g) {
         Comparator<IPlayer> killSorter = (a, b) -> {
-            if (a.getGameKills() > b.getGameKills()) return -1;
-            else if (a.getGameKills() < b.getGameKills()) return 1;
-            return 0;
+            return Integer.compare(b.getGameKills(), a.getGameKills());
         };
-        HashMap<Integer, IPlayer> map = new HashMap<Integer, IPlayer>();
-        ArrayList<IPlayer> kitPlayers = new ArrayList<IPlayer>();
-        for (Player kp : g.getAllPlayers()) {
-            kitPlayers.add(BlitzSG.getInstance().getIPlayerManager().getPlayer(kp.getUniqueId()));
+
+        List<IPlayer> players = new ArrayList<>();
+        for (Player p : g.getAllPlayers()) {
+            players.add(BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId()));
         }
-        kitPlayers.sort(killSorter);
-        for (IPlayer kp : kitPlayers) {
-            map.put(kitPlayers.indexOf(kp) + 1, kp);
+
+        players.sort(killSorter);
+
+        LinkedHashMap<Integer, IPlayer> map = new LinkedHashMap<>();
+        int rank = 1;
+        for (IPlayer p : players) {
+            map.put(rank++, p);
         }
+
         return map;
     }
+
+
+
+
+
+
 
 }

@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 public class NicknameCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
-        if ((BlitzSG.getInstance().getRankManager().getRank((Player) sender) instanceof Default)) {
+        if ((BlitzSG.getInstance().getRankManager().getRank((Player) sender).isVip())) {
             sender.sendMessage(BlitzSG.CORE_NAME + "missing permission.");
 
             return true;

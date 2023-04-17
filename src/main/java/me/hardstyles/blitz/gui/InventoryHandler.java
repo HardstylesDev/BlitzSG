@@ -30,7 +30,7 @@ public class InventoryHandler implements Listener {
 
         IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
         if (!bsgPlayer.isInGame())
-            if (!(bsgPlayer.getRank() instanceof Admin))
+            if (!(bsgPlayer.getRank().isManager()))
                 e.setCancelled(true);
         if (BlitzSG.getInstance().getGuiManager().isInGUI(p))
             e.setCancelled(true);

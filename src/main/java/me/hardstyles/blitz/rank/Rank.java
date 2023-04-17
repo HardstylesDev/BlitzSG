@@ -16,6 +16,22 @@ public class Rank {
         this.position = position;
     }
 
+    public boolean isStaff(){
+        return this.position >= 6;
+    }
+
+    public boolean isVip(){
+        return this.position >= 1;
+    }
+
+    public boolean isManager(){
+        return this.position >= 8;
+    }
+
+    public boolean canBan(){
+        return this.position >= 7;
+    }
+
     public int getMultiplier(){
         return multiplier;
     }

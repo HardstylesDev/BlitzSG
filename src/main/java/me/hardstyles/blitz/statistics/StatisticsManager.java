@@ -8,6 +8,7 @@ import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.blitzsgplayer.IPlayer;
 import me.hardstyles.blitz.cosmetic.Aura;
 import me.hardstyles.blitz.gamestar.Star;
+import me.hardstyles.blitz.punishments.PlayerMute;
 import me.hardstyles.blitz.rank.Rank;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -241,9 +242,47 @@ public class StatisticsManager {
             } else {
                 BlitzSG.getInstance().getIPlayerManager().addPlayer(uuid, new IPlayer(uuid));
             }
+            muteCheck(uuid);
 
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void muteCheck(UUID uuid) {
+        try {
+            Connection conn = BlitzSG.getInstance().db().getConnection();
+            String banSql = "SELECT * FROM mutes WHERE uuid = ?;";
+            PreparedStatement banPs = conn.prepareStatement(banSql);
+            banPs.setString(1, uuid.toString());
+            ResultSet banRs = banPs.executeQuery();
+            while (banRs.next()) {
+                System.out.println("Mute found for " + uuid);
+                if (banRs.getDouble("expires") != -1) {
+                    double expireDate = banRs.getDouble("expires");
+                    if (System.currentTimeMillis() > expireDate) {
+                        String deleteCommand = "DELETE FROM bans WHERE uuid = ?";
+                        PreparedStatement deletePs = conn.prepareStatement(deleteCommand);
+                        deletePs.setString(1, uuid.toString());
+                        deletePs.execute();
+                        return;
+                    }
+                    String reason = banRs.getString("reason");
+
+                    IPlayer player = BlitzSG.getInstance().getIPlayerManager().getPlayer(uuid);
+                    player.setMute(new PlayerMute((long) expireDate, reason));
+                    System.out.println("Muted " + player.getUuid() + " for " + reason + " until " + expireDate);
+                }
+                banRs.close();
+                banPs.close();
+                conn.close();
+                return;
+            }
+            banRs.close();
+            banPs.close();
+            conn.close();
+        } catch (SQLException e1) {
+            e1.printStackTrace();
         }
     }
 }
