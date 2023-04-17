@@ -171,7 +171,7 @@ public class GameHandler implements Listener {
             return;
         }
         Block b = e.getBlock();
-        if (b.getType() == Material.CAKE_BLOCK || b.getType() == Material.WEB) {
+        if (b.getType() == Material.CAKE_BLOCK || b.getType() == Material.WEB || b.getType() == Material.FIRE) {
             return;
         }
         if (bsgPlayer.getGame().getGameMode() != Game.GameMode.INGAME) e.setCancelled(true);
@@ -179,11 +179,17 @@ public class GameHandler implements Listener {
         e.setCancelled(true);
     }
 
+    // prevent slimes from splitting
+    @EventHandler
+    public void onSlimeSplit(SlimeSplitEvent e) {
+        e.setCancelled(true);
+    }
+
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
         Player p = e.getPlayer();
         IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB) return;
+        if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB || e.getBlockPlaced().getType() == Material.FIRE) return;
         if (!bsgPlayer.isInGame()) {
 
             if ((bsgPlayer.getRank().isManager()) && (p.getGameMode() == org.bukkit.GameMode.CREATIVE)) {
@@ -193,18 +199,17 @@ public class GameHandler implements Listener {
             return;
         }
         if (bsgPlayer.getGame().getGameMode() != Game.GameMode.INGAME) {
-            if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB)
+            if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB || e.getBlockPlaced().getType() == Material.FIRE)
                 return;
             e.setCancelled(true);
             return;
         }
-        if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB) return;
+        if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB || e.getBlockPlaced().getType() == Material.FIRE) return;
         if (e.getBlockPlaced().getType() == Material.TNT) {
             e.getBlockPlaced().setType(Material.AIR);
             Entity tnt = e.getPlayer().getWorld().spawnEntity(e.getBlock().getLocation(), EntityType.PRIMED_TNT);
-            //Entity horse = e.getPlayer().getWorld().spawn(e.getBlock().getLocation(), Horse.class);
             return;
-        } else if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB)
+        } else if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB || e.getBlockPlaced().getType() == Material.FIRE)
             return;
         e.setCancelled(true);
     }

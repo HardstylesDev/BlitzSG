@@ -33,8 +33,9 @@ public class HolyWarrior extends Star {
                         return;
                     List<Entity> a = p.getNearbyEntities(20, 20, 20);
                     for (Entity entity : a) {
-                        if (!(entity instanceof Player))
+                        if (!(entity instanceof Player)) {
                             continue;
+                        }
                         if (user.getGame().getAlivePlayers().contains(entity)) {
                             entity.getWorld().strikeLightningEffect(entity.getLocation());
                             Player target = (Player) entity;

@@ -66,13 +66,14 @@ public class Rogue extends Kit {
                 new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rRogue's Leather Chestplate (IX)").color(Color.fromRGB(0, 0, 0)).make(),
                 new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rRogue's Leather Leggings (IX)").color(Color.fromRGB(0, 0, 0)).make(),
                 new ItemBuilder(Material.LEATHER_BOOTS).name("&rRogue's Leather Boots (IX)").color(Color.fromRGB(0, 0, 0)).make());
-        X =Arrays.asList(new ItemBuilder(Material.WOOD_SWORD).name("&rRogue's Wooden Sword (IX)").enchantment(Enchantment.KNOCKBACK, 5).durability(Material.WOOD_SWORD.getMaxDurability() - 2).make(),
-                new ItemBuilder(Material.DIAMOND_SWORD).name("&rRogue's Diamond Sword (IX)").enchantment(Enchantment.KNOCKBACK, 3).durability(Material.DIAMOND_SWORD.getMaxDurability() - 2).make(),
-                new ItemBuilder(Material.LEATHER_HELMET).name("&rRogue's Leather Helmet (IX)").color(Color.fromRGB(0, 0, 0)).make(),
-                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rRogue's Leather Chestplate (IX)").color(Color.fromRGB(0, 0, 0)).make(),
-                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rRogue's Leather Leggings (IX)").color(Color.fromRGB(0, 0, 0)).make(),
-                new ItemBuilder(Material.LEATHER_BOOTS).name("&rRogue's Leather Boots (IX)").color(Color.fromRGB(0, 0, 0)).make(),
-                new ItemBuilder(Material.BOW).name("&rRogue's Bow (X)").enchantment(Enchantment.ARROW_KNOCKBACK, 3).enchantment(Enchantment.ARROW_DAMAGE, 3).make());
+        X =Arrays.asList(new ItemBuilder(Material.WOOD_SWORD).name("&rRogue's Wooden Sword (X)").enchantment(Enchantment.KNOCKBACK, 5).durability(Material.WOOD_SWORD.getMaxDurability() - 2).make(),
+                new ItemBuilder(Material.DIAMOND_SWORD).name("&rRogue's Diamond Sword (X)").enchantment(Enchantment.KNOCKBACK, 3).durability(Material.DIAMOND_SWORD.getMaxDurability() - 2).make(),
+                new ItemBuilder(Material.LEATHER_HELMET).name("&rRogue's Leather Helmet (X)").color(Color.fromRGB(0, 0, 0)).make(),
+                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rRogue's Leather Chestplate (X)").color(Color.fromRGB(0, 0, 0)).make(),
+                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rRogue's Leather Leggings (X)").color(Color.fromRGB(0, 0, 0)).make(),
+                new ItemBuilder(Material.LEATHER_BOOTS).name("&rRogue's Leather Boots (X)").color(Color.fromRGB(0, 0, 0)).make(),
+                new ItemBuilder(Material.BOW).name("&rRogue's Bow (X)").enchantment(Enchantment.ARROW_KNOCKBACK, 3).enchantment(Enchantment.ARROW_DAMAGE, 3).durability(Material.BOW.getMaxDurability() - 2).make());
+                new ItemBuilder(Material.ARROW).amount(3).make();
 
         //5 x potion slowness 4 15 seconds
         setKitItems(Arrays.asList(I, II, III, IV, V, VI, VII, VIII, IX, X));
