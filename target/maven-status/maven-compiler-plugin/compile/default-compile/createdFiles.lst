@@ -20,7 +20,6 @@ me\hardstyles\blitz\punishments\PlayerMute.class
 me\hardstyles\blitz\cosmetic\CosmeticsManager.class
 me\hardstyles\blitz\nametag\Nametag.class
 me\hardstyles\blitz\cosmetic\cosmetics\MyceliumTrail.class
-me\hardstyles\blitz\blitzsgplayer\IPlayerHandler$1.class
 me\hardstyles\blitz\command\rank\sub\RankSetPrefixCommand.class
 me\hardstyles\blitz\scoreboard\ScoreboardHelper$ScoreboardText.class
 me\hardstyles\blitz\kit\kits\Wolftamer.class
@@ -76,7 +75,6 @@ me\hardstyles\blitz\utils\PrepareItemEnchant.class
 me\hardstyles\blitz\utils\VoidGenerator.class
 me\hardstyles\blitz\command\SubCommand.class
 me\hardstyles\blitz\nickname\Nickname$1.class
-me\hardstyles\blitz\blitzsgplayer\IPlayer.class
 me\hardstyles\blitz\command\rank\sub\RankSetSubCommand.class
 me\hardstyles\blitz\game\Game.class
 me\hardstyles\blitz\gamestar\stars\HolyWarrior.class
@@ -90,7 +88,6 @@ me\hardstyles\blitz\cosmetic\cosmetics\PortalParticle.class
 me\hardstyles\blitz\cosmetic\cosmetics\BlueTrail$1.class
 me\hardstyles\blitz\cosmetic\Aura.class
 me\hardstyles\blitz\punishments\commands\mute\MuteCommand.class
-me\hardstyles\blitz\blitzsgplayer\IPlayerHandler.class
 me\hardstyles\blitz\game\Game$2.class
 me\hardstyles\blitz\cosmetic\CosmeticsManager$1.class
 me\hardstyles\blitz\kit\kits\Creepertamer.class
@@ -105,6 +102,7 @@ me\hardstyles\blitz\gamestar\StarManager.class
 me\hardstyles\blitz\scoreboard\ScoreboardHandler.class
 me\hardstyles\blitz\game\Game$5.class
 me\hardstyles\blitz\punishments\PunishmentManager.class
+me\hardstyles\blitz\player\IPlayerHandler.class
 me\hardstyles\blitz\cosmetic\cosmetics\GreenTrail.class
 me\hardstyles\blitz\kit\kits\Scout.class
 me\hardstyles\blitz\rank\ranks\VipPlus.class
@@ -125,9 +123,9 @@ me\hardstyles\blitz\command\game\sub\GameStartDeathmatchSubCommand.class
 me\hardstyles\blitz\cosmetic\cosmetics\GreenTrail$1.class
 me\hardstyles\blitz\statistics\StatisticsManager$1.class
 me\hardstyles\blitz\gamestar\stars\DarkKnight.class
+me\hardstyles\blitz\player\IPlayer.class
 me\hardstyles\blitz\command\game\sub\GameStartSubCommand.class
 me\hardstyles\blitz\cosmetic\cosmetics\SlimeParticle.class
-me\hardstyles\blitz\rank\ranks\Champion.class
 me\hardstyles\blitz\database\Database.class
 me\hardstyles\blitz\gamestar\stars\Robinhood.class
 me\hardstyles\blitz\gamestar\stars\Robinhood$1.class
@@ -136,6 +134,7 @@ me\hardstyles\blitz\statistics\StatisticsManager$2.class
 me\hardstyles\blitz\cosmetic\cosmetics\GreenParticle.class
 me\hardstyles\blitz\gui\AuraGUI.class
 me\hardstyles\blitz\gamestar\stars\Vampire.class
+me\hardstyles\blitz\player\IPlayerHandler$1.class
 me\hardstyles\blitz\cosmetic\cosmetics\RedTrail.class
 me\hardstyles\blitz\utils\ChatUtil.class
 me\hardstyles\blitz\command\game\GameCommand.class
@@ -143,13 +142,13 @@ me\hardstyles\blitz\gamestar\stars\HolyWarrior$1.class
 me\hardstyles\blitz\kit\KitManager.class
 me\hardstyles\blitz\gamestar\stars\WitherWarrior$1.class
 me\hardstyles\blitz\punishments\commands\mute\UnmuteCommand.class
+me\hardstyles\blitz\player\IPlayerManager.class
 me\hardstyles\blitz\command\world\WorldCommand.class
 me\hardstyles\blitz\statistics\LeaderboardManager.class
 me\hardstyles\blitz\punishments\ACBan$1.class
 me\hardstyles\blitz\kit\kits\Troll.class
 me\hardstyles\blitz\utils\ItemBuilder.class
 me\hardstyles\blitz\scoreboard\ScoreboardManager.class
-me\hardstyles\blitz\blitzsgplayer\IPlayerManager.class
 me\hardstyles\blitz\gamestar\stars\Explosion$1.class
 me\hardstyles\blitz\cosmetic\cosmetics\RainbowTrail$1.class
 me\hardstyles\blitz\cosmetic\cosmetics\EnchantingParticle.class

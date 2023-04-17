@@ -85,7 +85,6 @@ public class BlitzSG extends JavaPlugin {
 
         //delete all directories in the /worlds folder except for the world folder
 
-        deleteWorlds();
 
         db = new Database();
         statisticsManager = new StatisticsManager();
@@ -93,6 +92,7 @@ public class BlitzSG extends JavaPlugin {
         rankManager = new RankManager();
         kitManager = new KitManager();
         mapManager = new MapManager();
+        BlitzSG.getInstance().getMapManager().deleteWorlds();
 
         gameManager = new GameManager();
         scoreboardManager = new ScoreboardManager();
@@ -105,22 +105,11 @@ public class BlitzSG extends JavaPlugin {
         cosmeticsManager.init();
         leaderboardManager = new LeaderboardManager();
 
-        Bukkit.getConsoleSender().sendMessage(ChatUtil.color(" "));
-        Bukkit.getConsoleSender().sendMessage(ChatUtil.color("&d&lLoading Commands"));
-        Bukkit.getConsoleSender().sendMessage(ChatUtil.color(" "));
-        new RankCommand();
-        new GameCommand();
-        new HubCommand();
-        new FireworkCommand();
-        new MessageCommand();
-        new ReplyCommand();
-        new WorldCommand();
-        new BanCommand();
-        new UnbanCommand();
-        new MuteCommand();
-        new UnmuteCommand();
+
+
 
         //Register Commands::
+        registerCommands();
 
 //        getCommand("nick").setExecutor(new NicknameCommand());
         getCommand("acban").setExecutor(new ACBan());
@@ -142,15 +131,34 @@ public class BlitzSG extends JavaPlugin {
         scoreboardManager.runTaskTimer(this, 20, 20);
     }
 
+
+    private void registerCommands(){
+        Bukkit.getConsoleSender().sendMessage(ChatUtil.color(" "));
+        Bukkit.getConsoleSender().sendMessage(ChatUtil.color("&d&lLoading Commands..."));
+        Bukkit.getConsoleSender().sendMessage(ChatUtil.color(" "));
+        new RankCommand();
+        new GameCommand();
+        new HubCommand();
+        new FireworkCommand();
+        new MessageCommand();
+        new ReplyCommand();
+        new WorldCommand();
+        new BanCommand();
+        new UnbanCommand();
+        new MuteCommand();
+        new UnmuteCommand();
+        Bukkit.getConsoleSender().sendMessage(ChatUtil.color("&d&lFinished Loading Commands!"));
+
+    }
+
     public void onDisable() {
-        //Save Arenas:
         BlitzSG.getInstance().getStatisticsManager().saveAll();
         for (Game g : gameManager.getRunningGames()) {
             g.resetGame();
         }
 
         BlitzSG.getInstance().getStatisticsManager().saveAll();
-        deleteWorlds();
+        BlitzSG.getInstance().getMapManager().deleteWorlds();
     }
 
     public static void broadcast(String message, World world) {
@@ -174,20 +182,6 @@ public class BlitzSG extends JavaPlugin {
 
 
 
-    private void deleteWorlds() {
-        File worlds = new File("worlds");
-        if (worlds.exists()) {
-            for (File f : worlds.listFiles()) {
-                if (!f.getName().equalsIgnoreCase("world")) {
-                    try {
-                        FileUtils.forceDelete(f);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    Bukkit.getLogger().info("Deleted " + f.getName() + " from " + f.getAbsolutePath() + " ");
-                }
-            }
-        }
-    }
+
 
 }

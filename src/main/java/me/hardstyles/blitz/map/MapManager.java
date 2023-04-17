@@ -2,6 +2,7 @@ package me.hardstyles.blitz.map;
 
 import lombok.SneakyThrows;
 import me.hardstyles.blitz.BlitzSG;
+import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -10,6 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,5 +68,21 @@ public class MapManager {
             }
         }
         return maps.get((int) (Math.random() * maps.size()));
+    }
+
+    public void deleteWorlds() {
+        File worlds = new File("worlds");
+        if (worlds.exists()) {
+            for (File f : worlds.listFiles()) {
+                if (!f.getName().equalsIgnoreCase("world")) {
+                    try {
+                        FileUtils.forceDelete(f);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Bukkit.getLogger().info("Deleted " + f.getName() + " from " + f.getAbsolutePath() + " ");
+                }
+            }
+        }
     }
 }

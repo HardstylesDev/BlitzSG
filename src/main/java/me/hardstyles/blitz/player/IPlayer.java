@@ -11,6 +11,7 @@ import me.hardstyles.blitz.punishments.PlayerMute;
 import me.hardstyles.blitz.rank.Rank;
 import me.hardstyles.blitz.nametag.Nametag;
 import me.hardstyles.blitz.nickname.Nick;
+import me.hardstyles.blitz.rank.ranks.Default;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -63,7 +64,7 @@ public class IPlayer {
         this.kills = 0;
         this.deaths = 0;
         this.coins = 0;
-        this.rank = null;
+        this.rank = new Default();
         this.gameEntities = new HashSet<Entity>();
         this.stars = new HashSet<Star>();
         this.kitLevels = new HashMap<Kit, Integer>();

@@ -81,10 +81,7 @@ public class CosmeticsManager {
                         playerIterator.remove();
                     } else {
                         if (p.isSpectating()) {
-
-
                             continue;
-
                         }
                         p.getAura().tick(player);
                     }
