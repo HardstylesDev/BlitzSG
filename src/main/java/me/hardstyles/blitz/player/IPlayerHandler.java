@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.blitzsgplayer;
+package me.hardstyles.blitz.player;
 
 import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.gui.ShopGUI;

@@ -2,8 +2,8 @@ package me.hardstyles.blitz;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
-import me.hardstyles.blitz.blitzsgplayer.IPlayerHandler;
-import me.hardstyles.blitz.blitzsgplayer.IPlayerManager;
+import me.hardstyles.blitz.player.IPlayerHandler;
+import me.hardstyles.blitz.player.IPlayerManager;
 import me.hardstyles.blitz.command.fireworks.FireworkCommand;
 import me.hardstyles.blitz.command.hub.HubCommand;
 import me.hardstyles.blitz.command.message.MessageCommand;

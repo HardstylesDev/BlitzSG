@@ -2,7 +2,7 @@ package me.hardstyles.blitz.punishments.commands.ban;
 
 import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.blitzsgplayer.IPlayer;
+import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
 import me.hardstyles.blitz.utils.ChatUtil;
@@ -16,7 +16,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class UnbanCommand extends Command {
     private final List<SubCommand> subcommands = new ArrayList<>();

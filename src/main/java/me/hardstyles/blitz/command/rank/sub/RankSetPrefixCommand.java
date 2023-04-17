@@ -2,7 +2,7 @@ package me.hardstyles.blitz.command.rank.sub;
 
 import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.blitzsgplayer.IPlayer;
+import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.SubCommand;
 import me.hardstyles.blitz.rank.Rank;
 import me.hardstyles.blitz.utils.ChatUtil;

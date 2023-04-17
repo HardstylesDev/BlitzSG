@@ -1,7 +1,7 @@
 package me.hardstyles.blitz.game;
 
-import me.hardstyles.blitz.blitzsgplayer.IPlayer;
-import me.hardstyles.blitz.blitzsgplayer.IPlayerManager;
+import me.hardstyles.blitz.player.IPlayer;
+import me.hardstyles.blitz.player.IPlayerManager;
 import me.hardstyles.blitz.map.Map;
 import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.utils.ItemBuilder;

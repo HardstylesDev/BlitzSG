@@ -1,7 +1,7 @@
 package me.hardstyles.blitz.game;
 
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.blitzsgplayer.IPlayer;
+import me.hardstyles.blitz.player.IPlayer;
 import org.bukkit.DyeColor;
 import org.bukkit.Location;
 import org.bukkit.Material;

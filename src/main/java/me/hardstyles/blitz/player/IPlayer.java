@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.blitzsgplayer;
+package me.hardstyles.blitz.player;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,10 +1,7 @@
 package me.hardstyles.blitz.command.world.sub;
 
 import com.google.common.collect.ImmutableList;
-import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.blitzsgplayer.IPlayer;
 import me.hardstyles.blitz.command.SubCommand;
-import me.hardstyles.blitz.rank.Rank;
 import me.hardstyles.blitz.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;

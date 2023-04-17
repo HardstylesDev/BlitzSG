@@ -1,7 +1,7 @@
 package me.hardstyles.blitz.game;
 
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.blitzsgplayer.IPlayer;
+import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.fireworks.FireworkCommand;
 import me.hardstyles.blitz.gui.KitGUI;
 import me.hardstyles.blitz.gui.StarGUI;

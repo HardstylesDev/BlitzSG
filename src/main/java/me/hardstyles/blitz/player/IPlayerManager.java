@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.blitzsgplayer;
+package me.hardstyles.blitz.player;
 
 import java.util.Arrays;
 import java.util.HashMap;

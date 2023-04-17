@@ -1,7 +1,7 @@
 package me.hardstyles.blitz.gui;
 
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.blitzsgplayer.IPlayer;
+import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.gamestar.Star;
 import me.hardstyles.blitz.utils.ItemUtils;
 import org.bukkit.Bukkit;

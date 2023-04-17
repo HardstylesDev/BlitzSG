@@ -1,7 +1,7 @@
 package me.hardstyles.blitz.scoreboard;
 
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.blitzsgplayer.IPlayer;
+import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.game.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

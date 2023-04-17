@@ -1,7 +1,7 @@
 package me.hardstyles.blitz.cosmetic;
 
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.blitzsgplayer.IPlayer;
+import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.cosmetic.cosmetics.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;

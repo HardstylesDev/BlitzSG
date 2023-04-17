@@ -5,12 +5,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import me.hardstyles.blitz.kit.Kit;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.blitzsgplayer.IPlayer;
+import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.cosmetic.Aura;
 import me.hardstyles.blitz.gamestar.Star;
 import me.hardstyles.blitz.punishments.PlayerMute;
 import me.hardstyles.blitz.rank.Rank;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Type;

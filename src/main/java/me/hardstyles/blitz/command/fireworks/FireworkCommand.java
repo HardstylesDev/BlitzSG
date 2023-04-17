@@ -3,7 +3,7 @@ package me.hardstyles.blitz.command.fireworks;
 
 import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.blitzsgplayer.IPlayer;
+import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
 import me.hardstyles.blitz.game.Game;

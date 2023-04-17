@@ -2,17 +2,13 @@ package me.hardstyles.blitz.command.message;
 
 import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.blitzsgplayer.IPlayer;
+import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
-import me.hardstyles.blitz.command.rank.sub.RankListSubCommand;
-import me.hardstyles.blitz.command.rank.sub.RankSetPrefixCommand;
-import me.hardstyles.blitz.command.rank.sub.RankSetSubCommand;
 import me.hardstyles.blitz.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;

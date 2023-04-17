@@ -1,6 +1,6 @@
 package me.hardstyles.blitz.punishments;
 
-import me.hardstyles.blitz.blitzsgplayer.IPlayer;
+import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.BlitzSG;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

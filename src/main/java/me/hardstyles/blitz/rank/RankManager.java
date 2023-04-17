@@ -1,7 +1,7 @@
 package me.hardstyles.blitz.rank;
 
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.blitzsgplayer.IPlayer;
+import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.rank.ranks.*;
 import org.bukkit.entity.Player;
 
