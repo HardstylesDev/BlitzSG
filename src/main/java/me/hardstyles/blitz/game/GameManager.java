@@ -33,6 +33,26 @@ public class GameManager {
 
     }
 
+
+    public ArrayList<Game> getAllWaitingGames(){
+        ArrayList<Game> waitingGames = new ArrayList<Game>();
+        for (Game g : games) {
+            if (g.getGameMode() == Game.GameMode.WAITING) {
+                waitingGames.add(g);
+            }
+        }
+        return waitingGames;
+    }
+
+    public void stopWaitingGames() {
+        for (Game g : games) {
+            if (g.getGameMode() == Game.GameMode.WAITING) {
+                g.resetGame();
+                games.remove(g);
+            }
+        }
+    }
+
     public Game getAvailableGame() {
         for (Game g : games) {
             if (g.getGameMode() == Game.GameMode.WAITING) {

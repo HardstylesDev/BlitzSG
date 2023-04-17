@@ -7,15 +7,14 @@ import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.map.Map;
 import me.hardstyles.blitz.utils.ChatUtil;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.List;
 
 
-public class GameStartSubCommand extends SubCommand {
+public class GameStopAllSubCommand extends SubCommand {
 
-    public GameStartSubCommand() {
-        super("start", ImmutableList.of("new"), "blood.game.startgame", "/game start");
+    public GameStopAllSubCommand() {
+        super("stopall", ImmutableList.of("stopallgames"), "blood.game.startgame", "/game stopall");
     }
 
     @Override
@@ -25,19 +24,7 @@ public class GameStartSubCommand extends SubCommand {
 
     @Override
     public void onExecute(CommandSender sender, String[] args) {
-        if (args.length == 1){
-            new Game();
-            sender.sendMessage(ChatUtil.color("&aStarted a new game!"));
-            return;
-        }
-
-        new Game(new Map(args[1]));
-        sender.sendMessage(ChatUtil.color("&aStarted a new game! Name: " + args[1] + ""));
-
-
-
-
-
-
+        BlitzSG.getInstance().getGameManager().stopWaitingGames();
+        sender.sendMessage(ChatUtil.color("&aStopped all games!"));
     }
 }

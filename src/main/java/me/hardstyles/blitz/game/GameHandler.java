@@ -75,6 +75,7 @@ public class GameHandler implements Listener {
             IPlayer killerPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(killer.getUniqueId());
             int coins = 7 * killerPlayer.getRank().getMultiplier();
             killer.sendMessage("§6+" + coins + " Coins (Kill)");
+            killer.playSound(killer.getLocation(), Sound.ORB_PICKUP, 1, 1);
             killerPlayer.addCoins(coins);
         }
 

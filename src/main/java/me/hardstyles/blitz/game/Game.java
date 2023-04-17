@@ -60,9 +60,17 @@ public class Game {
     private double borderSize;
     private double borderShrinkBy;
 
-    public Game() {
+    public Game(){
+        Map map = BlitzSG.getInstance().getMapManager().getRandomMap();
+        if(map == null){
+            Bukkit.broadcastMessage(BlitzSG.CORE_NAME + ChatColor.RED + "Couldn't find an available arena!");
+            return;
+        }
+        new Game(map);
+    }
+    public Game(Map toLoad) {
         gameMode = GameMode.LOADING;
-        this.map = BlitzSG.getInstance().getMapManager().getRandomMap();
+        this.map = toLoad;
 
         this.map.copy();
         this.map.load();
@@ -168,7 +176,7 @@ public class Game {
         spawnUsed.remove(map.getSpawns().get(alivePlayers.indexOf(p)));
         alivePlayers.remove(p);
         allPlayers.remove(p);
-        msgAll(BlitzSG.CORE_NAME + "&7" + p.getName() + " &ehas left (&b" + alivePlayers.size() + "&e/&b" + map.getSpawns().size() + "&e)!");
+        msgAll(BlitzSG.CORE_NAME + uhcPlayer.getRank().getChatColor() + p.getName() + " &ehas left (&b" + alivePlayers.size() + "&e/&b" + map.getSpawns().size() + "&e)!");
         BlitzSG.getInstance().getIPlayerManager().toLobby(p);
         BlitzSG.send(p, BlitzSG.CORE_NAME + "&cYou have left the game!");
     }

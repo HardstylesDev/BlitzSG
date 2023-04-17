@@ -33,6 +33,8 @@ public class HubCommand extends Command {
         if (iPlayer.isInGame()) {
             if (iPlayer.getGame().getGameMode() == Game.GameMode.INGAME || iPlayer.getGame().getGameMode() == Game.GameMode.STARTING) {
                 BlitzSG.getInstance().getGameHandler().onPlayerDeath(player, iPlayer.getLastAttacker());
+            } else if(iPlayer.getGame().getGameMode() == Game.GameMode.WAITING) {
+                iPlayer.getGame().removePlayer(player);
             }
         }
 
