@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.utils.nickname;
+package me.hardstyles.blitz.nickname;
 
 public class Nick {
     private String nickName;

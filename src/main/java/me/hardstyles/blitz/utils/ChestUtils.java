@@ -49,43 +49,8 @@ public class ChestUtils {
                 random = r.nextInt(inventory.getSize());
             inventory.setItem(random, is);
         }
-		/*for(ItemStack is : selectedItems)
-			inventory.setItem(r.nextInt(inventory.getSize()), is);*/
-    }
+	  }
 
-    //ALGORITHM #2
-    //ISSUES: Chances are not fully correct, item amount in chests vary
-
-	/*public void generateChestLoot(Inventory inventory, int minAmount) {
-		Random r = new Random();
-		int amt = new Random().nextInt(2) + minAmount;
-		List<ItemStack> selectedItems = new ArrayList<ItemStack>();
-		for(ItemStack is : lootTable.keySet())
-			if(r.nextInt(101) < lootTable.get(is))
-				selectedItems.add(is);
-		while(selectedItems.size() > amt)
-			selectedItems.remove(r.nextInt(selectedItems.size()));
-		for(ItemStack is : selectedItems)
-			inventory.setItem(r.nextInt(inventory.getSize()), is);
-	}*/
-
-    //ALGORITHM #1
-    //ISSUES: All Items have the same chance
-
-	/*public void generateChestLoot(Inventory inventory) {
-		int i = 0;
-		while(i < 5) {
-			int random = new Random().nextInt(26);
-			if(inventory.getItem(random) == null) {
-				int item = new Random().nextInt(lootTable.size());
-				Material mat = (Material) lootTable.keySet().toArray()[item];
-				if(inventory.contains(mat))
-					continue;
-				inventory.setItem(random, new ItemStack(mat, lootTable.get(lootTable.keySet().toArray()[item])));
-			}
-			i++;
-		}
-	}*/
 
     private void loadLootTable() {
         lootTable = new HashMap<ItemStack, Integer>();
@@ -151,7 +116,8 @@ public class ChestUtils {
         lootTable.put(new ItemStack(Material.EXP_BOTTLE, 2), 5);
 
         //Calculate total chance
-        for(int i : lootTable.values())
+        for(int i : lootTable.values()) {
             totalChance += i;
+        }
     }
 }

@@ -67,8 +67,9 @@ public class CosmeticsManager {
         new BukkitRunnable() {
             @Override
             public void run() {
-                if (players.isEmpty())
+                if (players.isEmpty()) {
                     return;
+                }
 
                 Iterator<Player> playerIterator = players.iterator();
 
@@ -80,7 +81,10 @@ public class CosmeticsManager {
                         playerIterator.remove();
                     } else {
                         if (p.isSpectating()) {
+
+
                             continue;
+
                         }
                         p.getAura().tick(player);
                     }

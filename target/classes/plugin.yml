@@ -1,22 +1,12 @@
 name: BlitzSG
 version: 1.0
 main: me.hardstyles.blitz.BlitzSG
-author: Syes, Hardstyles
+author: Hardstyles
 description: BlitzSG Plugin
 commands:
-  nick:
-    description: lol
-  world:
-    description: lol
-  bsg:
-    description: lol
-  fw:
-    description: lol
   acban:
     description: lol
   unban:
-    description: lol
-  debug:
     description: lol
 
 

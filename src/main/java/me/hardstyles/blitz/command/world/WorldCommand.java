@@ -1,11 +1,14 @@
-package me.hardstyles.blitz.command.game;
+package me.hardstyles.blitz.command.world;
 
 import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
-import me.hardstyles.blitz.command.game.sub.GameListSubCommand;
-import me.hardstyles.blitz.command.game.sub.GameStartDeathmatchSubCommand;
-import me.hardstyles.blitz.command.game.sub.GameStartSubCommand;
+import me.hardstyles.blitz.command.rank.sub.RankListSubCommand;
+import me.hardstyles.blitz.command.rank.sub.RankSetPrefixCommand;
+import me.hardstyles.blitz.command.rank.sub.RankSetSubCommand;
+import me.hardstyles.blitz.command.world.sub.WorldCreateSubCommand;
+import me.hardstyles.blitz.command.world.sub.WorldListSubCommand;
+import me.hardstyles.blitz.command.world.sub.WorldUnloadSubCommand;
 import me.hardstyles.blitz.utils.ChatUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.StringUtil;
@@ -14,15 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class GameCommand extends Command {
+public class WorldCommand extends Command {
     private final List<SubCommand> subcommands = new ArrayList<>();
 
-    public GameCommand() {
-        super("game", ImmutableList.of(), "blood.command.game");
-        subcommands.add(new GameStartDeathmatchSubCommand());
-        subcommands.add(new GameStartSubCommand());
-        subcommands.add(new GameListSubCommand());
-
+    public WorldCommand() {
+        super("worlds", ImmutableList.of("world"), "blood.command.world");
+        subcommands.add(new WorldListSubCommand());
+        subcommands.add(new WorldUnloadSubCommand());
+        subcommands.add(new WorldCreateSubCommand());
     }
 
     @Override
@@ -60,7 +62,7 @@ public class GameCommand extends Command {
             if (sub != null) {
                 sub.execute(sender, args);
             } else {
-                sender.sendMessage(ChatUtil.color("&7Unknown sub-command, use &c/rank help &7for help."));
+                sender.sendMessage(ChatUtil.color("&cUnknown sub-command, use &c/rank help &cfor help."));
             }
         } else {
             help(sender);
@@ -73,9 +75,9 @@ public class GameCommand extends Command {
         if (subs.isEmpty()) {
             sender.sendMessage(ChatUtil.color("&eYou don't have permission to use any subcommands."));
         } else {
-            StringBuilder help = new StringBuilder("&6&lRank Commands &7»");
+            StringBuilder help = new StringBuilder("&World Commands &7»");
             for (SubCommand sub : getAvailableSubs(sender)) {
-                help.append("\n&6» &e").append(sub.getUsage());
+                help.append("\n&e» &e").append(sub.getUsage());
             }
             sender.sendMessage(ChatUtil.color(help.toString()));
         }

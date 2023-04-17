@@ -30,7 +30,7 @@ public abstract class Command extends org.bukkit.command.Command {
             CommandMap map = (CommandMap) ReflectionUtil.getField(Bukkit.getServer().getClass(), "commandMap").get(Bukkit.getServer());
             ReflectionUtil.unregisterCommands(map, getName());
             ReflectionUtil.unregisterCommands(map, getAliases());
-            map.register(getName(), "bloodcore", this);
+            map.register(getName(), "blitzsg", this);
             registeredCommands.add(name);
             registeredCommands.addAll(aliases);
             Bukkit.getConsoleSender().sendMessage(ChatUtil.color("&aLoaded command: &f" + name));

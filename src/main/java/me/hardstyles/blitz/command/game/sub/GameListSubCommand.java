@@ -27,12 +27,12 @@ public class GameListSubCommand extends SubCommand {
 
         Player player = (Player) sender;
         BlitzSG.getInstance().getGameManager().getRunningGames().forEach(game -> {
-            player.sendMessage(ChatUtil.color("&7- &a" + game.getArena().getName() + " &7- &aPlayers: " + game.getAlivePlayers().size() + "/" + game.getArena().getSpawns().size()));
+            player.sendMessage(ChatUtil.color("&7- &a" + game.getMap().getMapName() + "&8(" + game.getMap().getMapId())  + ") &7- &aPlayers: " + game.getAlivePlayers().size() + "/" + game.getMap().getSpawns().size());
         });
 
         Game availableGame = BlitzSG.getInstance().getGameManager().getAvailableGame();
         if(availableGame != null) {
-            player.sendMessage(ChatUtil.color("&7- &a" + availableGame.getArena().getName() + " &7- &aPlayers: " + availableGame.getAlivePlayers().size() + "/" + availableGame.getArena().getSpawns().size()));
+            player.sendMessage(ChatUtil.color("&7- &a" + availableGame.getMap().getMapName() + " &7- &aPlayers: " + availableGame.getAlivePlayers().size() + "/" + availableGame.getMap().getSpawns().size()));
         } else {
             player.sendMessage(ChatUtil.color("&7- &cNo new available games."));
         }

@@ -1,12 +1,13 @@
 package me.hardstyles.blitz.game;
 
-import me.hardstyles.blitz.arena.Arena;
 import me.hardstyles.blitz.blitzsgplayer.IPlayer;
+import me.hardstyles.blitz.blitzsgplayer.IPlayerManager;
+import me.hardstyles.blitz.map.Map;
+import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.utils.ItemBuilder;
 import me.hardstyles.blitz.utils.ItemUtils;
 import me.hardstyles.blitz.BlitzSG;
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Golem;
 import org.bukkit.entity.Monster;
@@ -30,12 +31,12 @@ public class Game {
         }
     }
 
-    public static enum GameMode {
+    public enum GameMode {
         LOADING, INACTIVE, WAITING,
         STARTING, INGAME, RESETING
     }
 
-    public static enum NextEvent {
+    public enum NextEvent {
         STAR, REFILL, DEATHMATCH, ENDING
     }
 
@@ -45,7 +46,7 @@ public class Game {
 
     private GameMode gameMode;
 
-    private Arena arena;
+    private Map map;
     private Player winner;
 
     private HashMap<Player, Boolean> votes;
@@ -61,30 +62,38 @@ public class Game {
 
     public Game() {
         gameMode = GameMode.LOADING;
-        arena = BlitzSG.getInstance().getArenaManager().getRandomArena();
+        this.map = BlitzSG.getInstance().getMapManager().getRandomMap();
 
-        if (arena == null) {
-            Bukkit.broadcastMessage(BlitzSG.CORE_NAME + ChatColor.RED + "Couldn't find an available arena!");
-            return;
-        }
+        this.map.copy();
+        this.map.load();
 
-        this.openedChests = new ArrayList<>();
-        this.starChests = new ArrayList<>();
+        Bukkit.getScheduler().runTaskLater(BlitzSG.getInstance(), () -> {
+            BlitzSG.getInstance().getMapManager().populateMap(this.map);
 
-        BlitzSG.getInstance().getArenaManager().fixSpawns(arena);
-        if (arena == null || arena.getSpawns().get(0).getWorld() == null) {
-            return;
-        }
-        arena.setInUse(true);
-        BlitzSG.getInstance().getGameManager().addGame(this);
+            if (map == null) {
+                Bukkit.broadcastMessage(BlitzSG.CORE_NAME + ChatColor.RED + "Couldn't find an available arena!");
+                return;
+            }
+
+            this.openedChests = new ArrayList<>();
+            this.starChests = new ArrayList<>();
+
+            if (map.getSpawns().get(0).getWorld() == null) {
+                return;
+            }
+            map.setInUse(true);
+            BlitzSG.getInstance().getGameManager().addGame(this);
 
 
-        allPlayers = new ArrayList<Player>();
-        alivePlayers = new ArrayList<Player>();
-        deadPlayers = new ArrayList<Player>();
-        votes = new HashMap<Player, Boolean>();
-        spawnUsed = new HashSet<Location>();
-        gameMode = GameMode.WAITING;
+            allPlayers = new ArrayList<>();
+            alivePlayers = new ArrayList<>();
+            deadPlayers = new ArrayList<>();
+            votes = new HashMap<>();
+            spawnUsed = new HashSet<>();
+            gameMode = GameMode.WAITING;
+        }, 50L);
+
+
     }
 
     public void addPlayer(Player p) {
@@ -92,34 +101,40 @@ public class Game {
             p.sendMessage(BlitzSG.CORE_NAME + ChatColor.RED + "This game already started!");
             return;
         }
-        if (arena == null || arena.getSpawns().get(0).getWorld() == null) {
+        if (map == null || map.getSpawns().get(0).getWorld() == null) {
             p.sendMessage(BlitzSG.CORE_NAME + ChatColor.YELLOW + "Couldn't find an available arena!");
             return;
         }
-        IPlayer uhcPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        uhcPlayer.getGameEntities().clear();
-        if (uhcPlayer.isInGame()) {
-
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        iPlayer.getGameEntities().clear();
+        if (iPlayer.isInGame()) {
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&cYou are already in a game!");
-
             return;
         }
-        if (arena.getSpawns().size() < alivePlayers.size() + 1) {
+        if (map.getSpawns().size() < alivePlayers.size() + 1) {
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&cThe game is already full!");
             return;
         }
 
-        uhcPlayer.setGame(this);
-        //BlitzSG.getInstance().getNametagManager().update();
+        iPlayer.setGame(this);
+        p.getInventory().clear();
+        p.getInventory().setArmorContents(null);
+        IPlayerManager.get().resetPlayerStatus(p);
 
+        iPlayer.setPrefix(ChatUtil.color("&f"));
+
+
+        if(allPlayers.contains(p)) {
+            allPlayers.remove(p);
+            alivePlayers.remove(p);
+        }
         allPlayers.add(p);
         alivePlayers.add(p);
-        p.teleport(arena.getLobby().clone().add(0.5, 0, 0.5));
-        msgAll(BlitzSG.CORE_NAME + "&7" + uhcPlayer.getRank(true).getChatColor() + p.getName() + " &ehas joined (&b" + alivePlayers.size() + "&e/&b" + arena.getSpawns().size() + "&e)!");
+        p.teleport(map.getLobby().clone().add(0.5, 0, 0.5));
+        msgAll(BlitzSG.CORE_NAME + "&7" + iPlayer.getRank(true).getChatColor() + p.getName() + " &ehas joined (&b" + alivePlayers.size() + "&e/&b" + map.getSpawns().size() + "&e)!");
         if (alivePlayers.size() >= 2 && gameMode.equals(GameMode.WAITING)) {
             startLobbyCountdown();
         }
-        resetPlayer(p);
         p.setFlying(false);
         p.setAllowFlight(false);
 
@@ -127,7 +142,7 @@ public class Game {
 
     public void teleportSpawn(Player p) {
         Location playerSpawn = null;
-        for (Location l : arena.getSpawns())
+        for (Location l : map.getSpawns())
             if (!spawnUsed.contains(l)) {
                 playerSpawn = l;
                 break;
@@ -146,16 +161,14 @@ public class Game {
     public void removePlayer(Player p) {
         if (gameMode == GameMode.INGAME) {
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&cYou can't leave while the game is running!");
-            //killPlayer(p);
             return;
         }
         IPlayer uhcPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
         uhcPlayer.setGame(null);
-        spawnUsed.remove(arena.getSpawns().get(alivePlayers.indexOf(p)));
+        spawnUsed.remove(map.getSpawns().get(alivePlayers.indexOf(p)));
         alivePlayers.remove(p);
         allPlayers.remove(p);
-        msgAll(BlitzSG.CORE_NAME + "&7" + p.getName() + " &ehas left (&b" + alivePlayers.size() + "&e/&b" + arena.getSpawns().size() + "&e)!");
-        resetPlayer(p);
+        msgAll(BlitzSG.CORE_NAME + "&7" + p.getName() + " &ehas left (&b" + alivePlayers.size() + "&e/&b" + map.getSpawns().size() + "&e)!");
         BlitzSG.getInstance().getIPlayerManager().toLobby(p);
         BlitzSG.send(p, BlitzSG.CORE_NAME + "&cYou have left the game!");
     }
@@ -244,16 +257,15 @@ public class Game {
     public void startGame() {
         nextEvent = NextEvent.STAR;
         gameMode = GameMode.INGAME;
-        arena.getArenaWorld().setTime(0);
+        map.getWorld().setTime(0);
         for (Player p : alivePlayers) {
             p.closeInventory();
-            resetPlayer(p);
-
             p.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 2, 1);
-            // p.sendMessage("&aThe game has started, Good Luck!");
             IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-            if (bsgPlayer.getSelectedKit() == null)
+            if (bsgPlayer.getSelectedKit() == null) {
                 bsgPlayer.setSelectedKit(BlitzSG.getInstance().getKitManager().getKit("Knight"));
+            }
+            BlitzSG.getInstance().getIPlayerManager().resetPlayerStatus(p);
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&eYou will get the items for your " + bsgPlayer.getSelectedKit().getName() + " kit in 60 seconds.");
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&6The Blitz Star will be released in 5 minutes!");
             p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60 * 20, 2));
@@ -263,7 +275,7 @@ public class Game {
 
 
         }
-        for (Location l : arena.getSpawns())
+        for (Location l : map.getSpawns())
             if (spawnUsed.contains(l))
                 //removeCage(l);
                 gameTime = 0;
@@ -366,14 +378,14 @@ public class Game {
     }
 
     private void startDeathmatch() {
-        if (arena.getDeathmatch() == null)
+        if (map.getDeathmatch() == null)
             return;
-        Location dm = arena.getDeathmatch();
-        if (arena.getDeathmatchDistance() == 0) {
+        Location dm = map.getDeathmatch();
+        if (map.getDeatchmatchSpead() == 0) {
             alivePlayers.forEach(player -> player.teleport(dm));
             return;
         }
-        int dist = arena.getDeathmatchDistance();
+        int dist = (int) map.getDeatchmatchSpead();
         Location[] locations = new Location[]{dm.clone().add(dist, 0, 0), dm.clone().add(-dist, 0, 0), dm.clone().add(0, 0, dist), dm.clone().add(0, 0, -dist)};
         int a = 0;
         for (Player alivePlayer : alivePlayers) {
@@ -507,17 +519,12 @@ public class Game {
         for (Player p : allPlayers) {
             IPlayer uhcPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
             uhcPlayer.setGame(null);
-            resetPlayer(p);
-            p.teleport(BlitzSG.lobbySpawn);
-
             BlitzSG.getInstance().getIPlayerManager().toLobby(p);
-            p.setPlayerListName(uhcPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix()
-                    + " [" + uhcPlayer.getElo() + "]");
         }
         allPlayers.clear();
         alivePlayers.clear();
         deadPlayers.clear();
-        arena.resetArena();
+        map.destroy();
         BlitzSG.getInstance().getGameManager().getRunningGames().remove(this);
     }
 
@@ -527,12 +534,11 @@ public class Game {
     }
 
     private void setPregameInventory(Player p) {
-        p.getInventory().setItem(0, ItemUtils.buildItem(new ItemStack(Material.BOW), "&aKit Selector &7(Right Click)", Arrays.asList("&7Right Click to vote for the game settings")));
+        p.getInventory().clear();
+        p.getInventory().setArmorContents(null);
+        p.getInventory().setItem(0, ItemUtils.buildItem(new ItemStack(Material.BOW), "&aKit Selector &7(Right Click)", Arrays.asList("&7Pick a kit to use in the game!")));
     }
 
-    private void resetPlayer(Player p) {
-
-    }
 
     public void msgAll(String msg) {
         for (Player p : allPlayers)
@@ -611,10 +617,9 @@ public class Game {
         canFindStar = false;
     }
 
-    public Arena getArena() {
-        return arena;
+    public Map getMap() {
+        return map;
     }
-
     public boolean isDeathmatchStarting() {
         return isDeathmatchStarting;
     }

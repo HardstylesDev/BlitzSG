@@ -6,7 +6,6 @@ import me.hardstyles.blitz.blitzsgplayer.IPlayer;
 import me.hardstyles.blitz.command.SubCommand;
 import me.hardstyles.blitz.rank.Rank;
 import me.hardstyles.blitz.utils.ChatUtil;
-import me.hardstyles.blitz.utils.nametag.Nametag;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

@@ -2,18 +2,15 @@ package me.hardstyles.blitz.blitzsgplayer;
 
 import lombok.Getter;
 import lombok.Setter;
-import me.hardstyles.blitz.arena.Arena;
 import me.hardstyles.blitz.kit.Kit;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.cosmetic.Aura;
 import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.gamestar.Star;
 import me.hardstyles.blitz.rank.Rank;
-import me.hardstyles.blitz.utils.nametag.Nametag;
-import me.hardstyles.blitz.utils.nickname.Nick;
-import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardTeam;
+import me.hardstyles.blitz.nametag.Nametag;
+import me.hardstyles.blitz.nickname.Nick;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -28,7 +25,7 @@ public class IPlayer {
 
     private Kit selectedKit;
     private int gameTaunt;
-    private UUID uuid;
+    private UUID uuid, lastMessaged;
 
     private long lastFirework = System.currentTimeMillis();
 
@@ -56,8 +53,6 @@ public class IPlayer {
         return null;
     }
 
-
-    private Arena editedArena;
 
     public IPlayer(UUID uuid) {
         this.nick = null;
@@ -213,10 +208,6 @@ public class IPlayer {
 
     public void setGame(Game g) {
         BlitzSG.getInstance().getIPlayerManager().setUhcPlayerGame(this, g);
-    }
-
-    public boolean isEditingArena() {
-        return this.editedArena != null;
     }
 
     public void addElo(int eloChange) {

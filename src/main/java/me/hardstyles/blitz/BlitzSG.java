@@ -2,25 +2,26 @@ package me.hardstyles.blitz;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
-import me.hardstyles.blitz.arena.ArenaHandler;
-import me.hardstyles.blitz.arena.ArenaManager;
 import me.hardstyles.blitz.blitzsgplayer.IPlayerHandler;
 import me.hardstyles.blitz.blitzsgplayer.IPlayerManager;
 import me.hardstyles.blitz.command.fireworks.FireworkCommand;
 import me.hardstyles.blitz.command.hub.HubCommand;
+import me.hardstyles.blitz.command.message.MessageCommand;
+import me.hardstyles.blitz.command.message.ReplyCommand;
 import me.hardstyles.blitz.command.rank.RankCommand;
-import me.hardstyles.blitz.commands.CommandHandler;
+import me.hardstyles.blitz.command.world.WorldCommand;
 import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.gamestar.StarManager;
 import me.hardstyles.blitz.gui.GUIManager;
 import me.hardstyles.blitz.gui.InventoryHandler;
 import me.hardstyles.blitz.kit.KitManager;
+import me.hardstyles.blitz.map.MapManager;
 import me.hardstyles.blitz.punishments.ACBan;
 import me.hardstyles.blitz.statistics.LeaderboardManager;
 import me.hardstyles.blitz.statistics.StatisticsManager;
 import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.utils.EnchantListener;
-import me.hardstyles.blitz.utils.nickname.NicknameCommand;
+import me.hardstyles.blitz.nickname.NicknameCommand;
 import me.hardstyles.blitz.command.game.GameCommand;
 import me.hardstyles.blitz.cosmetic.CosmeticsManager;
 import me.hardstyles.blitz.elo.EloManager;
@@ -31,8 +32,7 @@ import me.hardstyles.blitz.punishments.PunishmentManager;
 import me.hardstyles.blitz.punishments.commands.Unban;
 import me.hardstyles.blitz.rank.RankManager;
 import me.hardstyles.blitz.scoreboard.ScoreboardManager;
-import me.hardstyles.blitz.utils.WorldCommand;
-import me.hardstyles.blitz.utils.database.Database;
+import me.hardstyles.blitz.database.Database;
 import net.minecraft.server.v1_8_R3.EnumChatFormat;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
@@ -54,7 +54,7 @@ public class BlitzSG extends JavaPlugin {
 
     public static BlitzSG instance;
     private StatisticsManager statisticsManager;
-    private ArenaManager arenaManager;
+    private MapManager mapManager;
     private IPlayerManager iPlayerManager;
     private GameManager gameManager;
     private LeaderboardManager leaderboardManager;
@@ -90,7 +90,7 @@ public class BlitzSG extends JavaPlugin {
         iPlayerManager = new IPlayerManager();
         rankManager = new RankManager();
         kitManager = new KitManager();
-        arenaManager = new ArenaManager();
+        mapManager = new MapManager();
 
         gameManager = new GameManager();
         scoreboardManager = new ScoreboardManager();
@@ -110,18 +110,17 @@ public class BlitzSG extends JavaPlugin {
         new GameCommand();
         new HubCommand();
         new FireworkCommand();
-
+        new MessageCommand();
+        new ReplyCommand();
+        new WorldCommand();
 
         //Register Commands::
 
-        getCommand("bsg").setExecutor(new CommandHandler());
-        getCommand("world").setExecutor(new WorldCommand());
-        getCommand("nick").setExecutor(new NicknameCommand());
+//        getCommand("nick").setExecutor(new NicknameCommand());
         getCommand("acban").setExecutor(new ACBan());
         getCommand("unban").setExecutor(new Unban());
 
         //Register Handlers:
-        getServer().getPluginManager().registerEvents(new ArenaHandler(), this);
         getServer().getPluginManager().registerEvents(this.gameHandler = new GameHandler(), this);
         getServer().getPluginManager().registerEvents(new GameMobHandler(), this);
         getServer().getPluginManager().registerEvents(new IPlayerHandler(), this);

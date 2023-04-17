@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.utils.nickname;
+package me.hardstyles.blitz.nickname;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -87,8 +87,7 @@ public class Nickname {
 
         uhcPlayer.setNickName(s);
 
-        p.setPlayerListName(uhcPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(uhcPlayer.getElo()).getPrefix()
-                + " [" + uhcPlayer.getElo() + "]");
+        p.setPlayerListName(uhcPlayer.getRank(true).getPrefix() + p.getName());
 
     }
 

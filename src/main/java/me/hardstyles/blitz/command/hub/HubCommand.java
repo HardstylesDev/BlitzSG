@@ -5,8 +5,11 @@ import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.blitzsgplayer.IPlayer;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
+import me.hardstyles.blitz.game.Game;
+import org.bukkit.GameMode;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,7 +32,9 @@ public class HubCommand extends Command {
 
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
         if (iPlayer.isInGame()) {
-            BlitzSG.getInstance().getGameHandler().onPlayerDeath(player, iPlayer.getLastAttacker());
+            if (iPlayer.getGame().getGameMode() == Game.GameMode.INGAME || iPlayer.getGame().getGameMode() == Game.GameMode.STARTING) {
+                BlitzSG.getInstance().getGameHandler().onPlayerDeath(player, iPlayer.getLastAttacker());
+            }
         }
 
         BlitzSG.getInstance().getIPlayerManager().toLobby(player);

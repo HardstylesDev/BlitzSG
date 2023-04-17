@@ -33,6 +33,7 @@
                 <configuration>
                     <shadedArtifactAttached>true</shadedArtifactAttached>
                     <shadedClassifierName>SNAPSHOT</shadedClassifierName>
+                    <outputDirectory>I:\Blitz-SG\plugins</outputDirectory>
                 </configuration>
 
             </plugin>

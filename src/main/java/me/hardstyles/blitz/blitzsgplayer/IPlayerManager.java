@@ -44,6 +44,10 @@ public class IPlayerManager {
         return playerGames.get(uhcPlayer);
     }
 
+    public static IPlayerManager get(){
+        return BlitzSG.getInstance().getIPlayerManager();
+    }
+
     public void setUhcPlayerGame(IPlayer uhcPlayer, Game game) {
         playerGames.put(uhcPlayer, game);
     }
@@ -51,13 +55,33 @@ public class IPlayerManager {
 
     public void toLobby(Player p) {
         p.getInventory().clear();
+        p.getInventory().setArmorContents(null);
         p.getInventory().setItem(1, ItemUtils.buildItem(new ItemStack(Material.IRON_SWORD), "&b&lJoin a Game &7(Right-Click)", Arrays.asList("§7Right-Click to join a Blitz game")));
         p.getInventory().setItem(3, ItemUtils.buildItem(new ItemStack(Material.EMERALD), "&a&lOpen the Shop &7(Right-Click)", Arrays.asList("§7Right-Click to open the shop")));
         p.getInventory().setItem(5, ItemUtils.buildItem(new ItemStack(Material.PAINTING), "&e&lYour Stats &7(Right-Click)", Arrays.asList("§7Right-Click to view your stats")));
         p.getInventory().setItem(7, ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM), "&c???", Arrays.asList("§7Coming soon...")));
 
+        resetPlayerStatus(p);
+        IPlayer iPlayer = this.getPlayer(p.getUniqueId());
+        iPlayer.setGame(null);
+        iPlayer.resetGameKills();
+        p.teleport(BlitzSG.lobbySpawn);
+        if(iPlayer.getRank().getPosition() > 0) {
+            p.setAllowFlight(true);
+            p.setFlying(true);
+        }
+
+        iPlayer.setPrefix(iPlayer.getRank().getPrefix());
+        p.setPlayerListName(iPlayer.getRank().getPrefix() + p.getName());
+    }
+
+    public void resetPlayerStatus(Player p){
+
         p.setGameMode(org.bukkit.GameMode.SURVIVAL);
-        p.setHealth(20);
+        p.setMaxHealth(21);
+        p.setHealth(p.getMaxHealth());
+        p.setMaxHealth(20);
+        p.setHealth(p.getMaxHealth());
         p.setFoodLevel(20);
         p.setSaturation(20);
         p.setFireTicks(0);
@@ -67,21 +91,9 @@ public class IPlayerManager {
 
         p.getActivePotionEffects().forEach(e -> p.removePotionEffect(e.getType()));
 
-        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
 
-        iPlayer.setGame(null);
-        iPlayer.resetGameKills();
         ((CraftPlayer) p).getHandle().getDataWatcher().watch(9, (byte) 0);
-
-        p.teleport(BlitzSG.lobbySpawn);
-        if(iPlayer.getRank().getPosition() > 0) {
-            p.setAllowFlight(true);
-            p.setFlying(true);
-        }
-
-        iPlayer.setPrefix(iPlayer.getRank().getPrefix());
     }
-
 
     public void handleKillElo(Player victim, Player killer) {
         IPlayer victimBsg = this.getPlayer(victim.getUniqueId());

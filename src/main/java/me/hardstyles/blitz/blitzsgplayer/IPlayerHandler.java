@@ -1,10 +1,11 @@
 package me.hardstyles.blitz.blitzsgplayer;
 
+import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.gui.ShopGUI;
 import me.hardstyles.blitz.rank.ranks.*;
 import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.utils.nickname.Nickname;
+import me.hardstyles.blitz.nickname.Nickname;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,9 +38,6 @@ public class IPlayerHandler implements Listener {
         p.getInventory().setBoots(new ItemStack(Material.AIR, 1));
         IPlayer sgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
 
-        System.out.println(sgPlayer.getRank().getPosition());
-
-
         p.setGameMode(GameMode.SURVIVAL);
         p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0)); //todo change back
         if (!(sgPlayer.getRank() instanceof Default)) {
@@ -71,7 +69,7 @@ public class IPlayerHandler implements Listener {
             }
         } else {
             Bukkit.getScheduler().runTaskLater(BlitzSG.getInstance(), () -> {
-                p.setPlayerListName(sgPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(sgPlayer.getElo()).getPrefix() + " [" + sgPlayer.getElo() + "]");
+                p.setPlayerListName(sgPlayer.getRank(true).getPrefix() + p.getName());
                 if (sgPlayer.getRank().getPosition() > 4) {
                     for (Player member : Bukkit.getWorld("world").getPlayers()) {
                         member.sendMessage(ChatUtil.color("&e" + sgPlayer.getRank(true).getPrefix() + p.getName() + "&6 joined the lobby!"));
@@ -80,11 +78,10 @@ public class IPlayerHandler implements Listener {
             }, 10L);
 
         }
-        if (sgPlayer.getRank() == null)
+        if (sgPlayer.getRank() == null) {
             sgPlayer.setRank(BlitzSG.getInstance().getRankManager().getRankByName("Default"));
-
-        p.setPlayerListName(sgPlayer.getRank(true).getPrefix() + p.getName() + BlitzSG.getInstance().getEloManager().getEloLevel(sgPlayer.getElo()).getPrefix() + " [" + sgPlayer.getElo() + "]");
-
+        }
+        p.setPlayerListName(sgPlayer.getRank(true).getPrefix() + p.getName());
         BlitzSG.getInstance().getIPlayerManager().toLobby(p);
 
         p.getActivePotionEffects().forEach(potionEffect -> p.removePotionEffect(potionEffect.getType()));
@@ -93,6 +90,10 @@ public class IPlayerHandler implements Listener {
             IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
             iPlayer.getNametag().sendPacket(p);
         });
+
+        if(BlitzSG.getInstance().getGameManager().getAvailableGame() == null) {
+            new Game();
+        }
 
     }
 

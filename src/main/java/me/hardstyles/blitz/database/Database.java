@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.utils.database;
+package me.hardstyles.blitz.database;
 
 import java.io.File;
 import java.io.IOException;

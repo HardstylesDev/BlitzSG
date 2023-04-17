@@ -11,6 +11,7 @@ import me.hardstyles.blitz.utils.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -87,6 +88,14 @@ public class GameHandler implements Listener {
         BlitzSG.getInstance().getIPlayerManager().handleDeathElo(victim);
 
         victim.setGameMode(org.bukkit.GameMode.SPECTATOR);
+
+        CraftPlayer craftPlayer = (CraftPlayer) victim;
+        craftPlayer.getHandle().playerConnection.sendPacket(new net.minecraft.server.v1_8_R3.PacketPlayOutGameStateChange(3, 0));
+
+
+
+
+
         victim.setAllowFlight(true);
         victim.setFlying(true);
         victim.setHealth(20);
@@ -144,14 +153,14 @@ public class GameHandler implements Listener {
     @EventHandler
     public void onBlockExplode(BlockExplodeEvent e) {
         for (Game runningGame : BlitzSG.getInstance().getGameManager().getRunningGames()) {
-            if (runningGame.getArena().getArenaWorld() == e.getBlock().getWorld()) e.blockList().clear();
+            if (runningGame.getMap().getWorld() == e.getBlock().getWorld()) e.blockList().clear();
         }
     }
 
     @EventHandler
     public void onBlockExplode(EntityExplodeEvent e) {
         for (Game runningGame : BlitzSG.getInstance().getGameManager().getRunningGames()) {
-            if (runningGame.getArena().getArenaWorld() == e.getEntity().getWorld()) e.blockList().clear();
+            if (runningGame.getMap().getWorld() == e.getEntity().getWorld()) e.blockList().clear();
         }
     }
 

@@ -34,7 +34,7 @@ public class LeaderboardManager {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(BlitzSG.getInstance(), () -> {
             update();
             updateBlocks();
-        }, 0, 20 * 60 * 1);
+        }, 0, 20 * 60 * 5);
         blocks.put(3, new Location(Bukkit.getWorld("world"), -42, 104, 15));
         blocks.put(2, new Location(Bukkit.getWorld("world"), -44, 104, 15));
         blocks.put(1, new Location(Bukkit.getWorld("world"), -43, 105, 15));
@@ -56,11 +56,6 @@ public class LeaderboardManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        System.out.println(leaderboard.get(1).getName() + " " + leaderboard.get(1).getWins());
-        System.out.println(leaderboard.get(2).getName() + " " + leaderboard.get(2).getWins());
-        System.out.println(leaderboard.get(3).getName() + " " + leaderboard.get(3).getWins());
-
     }
 
 

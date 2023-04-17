@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.utils.nickname;
+package me.hardstyles.blitz.nickname;
 
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.rank.ranks.Default;

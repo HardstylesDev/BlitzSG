@@ -24,7 +24,7 @@ D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\rank\Rank.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\gamestar\stars\Apocalypse.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\cosmetic\cosmetics\BlueParticle.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\elo\EloManager.java
-D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\arena\ArenaUtils.java
+D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\map\Map.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\cosmetic\cosmetics\WheatTrail.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\kit\kits\Necromancer.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\statistics\LeaderboardManager.java
@@ -32,13 +32,13 @@ D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\kit\kits\Arachnologist
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\gamestar\stars\Explosion.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\kit\kits\Meatmaster.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\scoreboard\ScoreboardHelper.java
-D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\arena\ArenaManager.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\cosmetic\cosmetics\RainbowTrail.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\command\rank\sub\RankSetPrefixCommand.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\blitzsgplayer\IPlayerHandler.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\commands\subcommands\setDeathmatchCommand.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\gamestar\stars\Dragonborn.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\command\rank\sub\RankSetSuffixCommand.java
+D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\command\game\sub\GameStartSubCommand.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\statistics\StatisticsManager.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\rank\ranks\MvpPlus.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\utils\nickname\NicknameCommand.java
@@ -47,6 +47,7 @@ D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\game\GameHandler.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\cosmetic\cosmetics\NetherrackTrail.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\commands\subcommands\WandCommand.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\utils\ChestUtils.java
+D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\command\message\ReplyCommand.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\kit\kits\Rogue.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\utils\ChatUtil.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\cosmetic\cosmetics\PortalParticle.java
@@ -80,7 +81,6 @@ D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\gamestar\stars\Kamikaz
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\cosmetic\cosmetics\RainbowDustParticle.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\gamestar\stars\Gremlin.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\kit\kits\Tim.java
-D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\arena\Arena.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\rank\ranks\Champion.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\utils\ItemUtils.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\gui\InventoryHandler.java
@@ -108,6 +108,7 @@ D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\cosmetic\cosmetics\Gre
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\rank\ranks\Vip.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\rank\ranks\Default.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\scoreboard\ScoreboardHandler.java
+D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\map\MapManager.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\gui\StarGUI.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\blitzsgplayer\IPlayer.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\cosmetic\cosmetics\EnchantingParticle.java
@@ -128,11 +129,11 @@ D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\kit\kits\Baker.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\gamestar\stars\LuckyCharm.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\kit\kits\Armorer.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\gamestar\stars\Firebreather.java
-D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\arena\ArenaHandler.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\rank\ranks\Mvp.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\commands\CommandHandler.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\commands\subcommands\CreateCommand.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\gamestar\stars\Timelord.java
+D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\command\message\MessageCommand.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\gamestar\Star.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\gui\KitGUI.java
 D:\Blitz-Remake\BlitzSG\src\main\java\me\hardstyles\blitz\command\game\sub\GameStartDeathmatchSubCommand.java

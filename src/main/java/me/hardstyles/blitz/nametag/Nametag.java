@@ -1,11 +1,10 @@
-package me.hardstyles.blitz.utils.nametag;
+package me.hardstyles.blitz.nametag;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Random;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
