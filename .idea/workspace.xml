@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="7a886556-406b-424f-8316-6290f7bbf82d" name="Default Changelist" comment="Issue fixed">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/hardstyles/blitz/BlitzSG.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/hardstyles/blitz/BlitzSG.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/hardstyles/blitz/cosmetic/CosmeticsManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/hardstyles/blitz/cosmetic/CosmeticsManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/hardstyles/blitz/map/MapManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/hardstyles/blitz/map/MapManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/hardstyles/blitz/player/IPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/hardstyles/blitz/player/IPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/hardstyles/blitz/rank/RankManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/me/hardstyles/blitz/rank/RankManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/me/hardstyles/blitz/rank/ranks/Champion.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectId" id="1fuswZzG5de3w6JMMOXXYqxHbRI" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;extract.method.default.visibility&quot;: &quot;private&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Java Projects/BSG/BlitzSG&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;MavenSettings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Java Projects\Spigot 1.8.8\BlitzSG\src\main\resources" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="me.hardstyles.blitz.punishments.commands.mute" />
+      <recent name="me.hardstyles.blitz" />
+      <recent name="me.syesstyles" />
+      <recent name="me.hardstyles" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="me.hardstyles.blitz.punishments.commands.mute" />
+      <recent name="me.hardstyles.blitz.punishments.commands.ban" />
+      <recent name="me.hardstyles.blitz.rank.ranks" />
+      <recent name="me.hardstyles.blitz.command.world.sub" />
+      <recent name="me.hardstyles.blitz.command.world" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Maven.SpigotServer [package]">
+    <configuration default="true" type="JetRunConfigurationType">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="SpigotServer [package]" type="MavenRunConfiguration" factoryName="Maven">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="mvn" />
+                <option value="package" />
+              </list>
+            </option>
+            <option name="pomFileName" value="pom.xml" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <configuration name="SpigotServer [shade:shade]" type="MavenRunConfiguration" factoryName="Maven" temporary="true">
+      <MavenSettings>
+        <option name="myGeneralSettings" />
+        <option name="myRunnerSettings" />
+        <option name="myRunnerParameters">
+          <MavenRunnerParameters>
+            <option name="profiles">
+              <set />
+            </option>
+            <option name="goals">
+              <list>
+                <option value="shade:shade" />
+              </list>
+            </option>
+            <option name="pomFileName" value="pom.xml" />
+            <option name="profilesMap">
+              <map />
+            </option>
+            <option name="resolveToWorkspace" value="false" />
+            <option name="workingDirPath" value="$PROJECT_DIR$" />
+          </MavenRunnerParameters>
+        </option>
+      </MavenSettings>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Maven.SpigotServer [shade:shade]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7a886556-406b-424f-8316-6290f7bbf82d" name="Default Changelist" comment="" />
+      <created>1597079550323</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1597079550323</updated>
+      <workItem from="1607715909799" duration="1888000" />
+      <workItem from="1607783986041" duration="13000" />
+      <workItem from="1607795232729" duration="10955000" />
+      <workItem from="1607808358416" duration="14000" />
+      <workItem from="1607812189702" duration="8000" />
+      <workItem from="1608223104718" duration="4157000" />
+      <workItem from="1608558420006" duration="4984000" />
+      <workItem from="1608731174157" duration="1264000" />
+      <workItem from="1608748329682" duration="654000" />
+      <workItem from="1608896065442" duration="13340000" />
+      <workItem from="1608922791604" duration="11149000" />
+      <workItem from="1608944629638" duration="2261000" />
+      <workItem from="1609019575967" duration="448000" />
+      <workItem from="1609020038853" duration="71000" />
+      <workItem from="1609020140975" duration="673000" />
+      <workItem from="1609020920186" duration="515000" />
+      <workItem from="1609021446127" duration="3722000" />
+      <workItem from="1609067095850" duration="12163000" />
+      <workItem from="1609156605963" duration="28322000" />
+      <workItem from="1609609556182" duration="8891000" />
+      <workItem from="1609689581342" duration="3041000" />
+      <workItem from="1609700581093" duration="453000" />
+      <workItem from="1609701682721" duration="7000" />
+      <workItem from="1609767556713" duration="6864000" />
+      <workItem from="1609782174608" duration="6430000" />
+      <workItem from="1609847943000" duration="8000" />
+      <workItem from="1609850175542" duration="284000" />
+      <workItem from="1609850733316" duration="2501000" />
+      <workItem from="1609853593121" duration="2141000" />
+      <workItem from="1610023533461" duration="32354000" />
+      <workItem from="1610099190930" duration="52432000" />
+      <workItem from="1610187930939" duration="3130000" />
+      <workItem from="1610276741167" duration="20329000" />
+      <workItem from="1610371225675" duration="13127000" />
+      <workItem from="1610456343600" duration="13000" />
+      <workItem from="1610463287649" duration="12118000" />
+      <workItem from="1610545306468" duration="7058000" />
+      <workItem from="1610627813154" duration="22403000" />
+      <workItem from="1610721752962" duration="1226000" />
+      <workItem from="1610738888742" duration="7749000" />
+      <workItem from="1610803875251" duration="2270000" />
+      <workItem from="1610827679291" duration="12106000" />
+      <workItem from="1610891312825" duration="11718000" />
+      <workItem from="1610970148954" duration="154000" />
+      <workItem from="1610981090504" duration="5033000" />
+      <workItem from="1610997785991" duration="1914000" />
+      <workItem from="1611064314953" duration="19106000" />
+      <workItem from="1611147614631" duration="17533000" />
+      <workItem from="1611233285358" duration="7963000" />
+      <workItem from="1611245203845" duration="4895000" />
+      <workItem from="1611323725457" duration="18294000" />
+      <workItem from="1611353343229" duration="110000" />
+      <workItem from="1611409638242" duration="11060000" />
+      <workItem from="1611437889494" duration="1127000" />
+      <workItem from="1611491152515" duration="154000" />
+      <workItem from="1611492660207" duration="14343000" />
+      <workItem from="1611579439028" duration="1773000" />
+      <workItem from="1611583119722" duration="1743000" />
+      <workItem from="1611597829943" duration="191000" />
+      <workItem from="1611761638946" duration="3245000" />
+      <workItem from="1611774007667" duration="1202000" />
+      <workItem from="1611833729099" duration="17000" />
+      <workItem from="1612627388108" duration="325000" />
+      <workItem from="1612638834435" duration="356000" />
+      <workItem from="1612640354814" duration="682000" />
+      <workItem from="1612650191784" duration="481000" />
+      <workItem from="1612713209658" duration="1485000" />
+      <workItem from="1612717045616" duration="7910000" />
+      <workItem from="1612802769170" duration="147000" />
+      <workItem from="1612803780971" duration="614000" />
+      <workItem from="1612811823748" duration="614000" />
+      <workItem from="1612892330086" duration="98000" />
+      <workItem from="1612982078454" duration="3968000" />
+      <workItem from="1613068620964" duration="18000" />
+      <workItem from="1613137406207" duration="33000" />
+      <workItem from="1613145990942" duration="31000" />
+      <workItem from="1613152737128" duration="21000" />
+      <workItem from="1613154456573" duration="1768000" />
+      <workItem from="1613217162687" duration="367000" />
+      <workItem from="1616186452433" duration="58000" />
+      <workItem from="1616355016474" duration="43000" />
+      <workItem from="1619268880139" duration="56000" />
+      <workItem from="1619269167330" duration="787000" />
+      <workItem from="1619274544377" duration="602000" />
+      <workItem from="1619434469909" duration="3283000" />
+      <workItem from="1681155353522" duration="1729000" />
+      <workItem from="1681239430543" duration="1308000" />
+      <workItem from="1681300357974" duration="10833000" />
+      <workItem from="1681328696967" duration="5013000" />
+      <workItem from="1681552946210" duration="31774000" />
+      <workItem from="1681602790344" duration="25000" />
+      <workItem from="1681609149111" duration="45246000" />
+    </task>
+    <task id="LOCAL-00001" summary="fff">
+      <created>1597086521686</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1597086521686</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fff">
+      <created>1597260777428</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1597260777428</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fff">
+      <created>1597435938641</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1597435938641</updated>
+    </task>
+    <task id="LOCAL-00004" summary="fff">
+      <created>1602968597213</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1602968597213</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fff">
+      <created>1603041398441</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1603041398441</updated>
+    </task>
+    <task id="LOCAL-00006" summary="fff">
+      <created>1603486710906</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1603486710906</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Initial upload">
+      <created>1609020580048</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1609020580048</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Initial upload">
+      <created>1609020978529</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1609020978529</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Initial upload">
+      <created>1609021499745</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1609021499745</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Initial upload">
+      <created>1609026379208</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1609026379208</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Change spawn to static location">
+      <created>1609067232924</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1609067232924</updated>
+    </task>
+    <task id="LOCAL-00012" summary="World command om te koekeloeren">
+      <created>1609080036742</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1609080036742</updated>
+    </task>
+    <task id="LOCAL-00013" summary="World command om te koekeloeren">
+      <created>1609100070759</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1609100070759</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Rank systeem + nick test">
+      <created>1609186581472</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1609186581472</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fix">
+      <created>1609186630854</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1609186630854</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Added ranks">
+      <created>1609186719838</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1609186719838</updated>
+    </task>
+    <task id="LOCAL-00017" summary="nick issue resolved, still one more though">
+      <created>1609190657061</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1609190657061</updated>
+    </task>
+    <task id="LOCAL-00018" summary="nick issue resolved, still one more though">
+      <created>1609625175964</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1609625175964</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Scoreboard done, spawn + prelobby done">
+      <created>1609790643862</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1609790643862</updated>
+    </task>
+    <task id="LOCAL-00020" summary="uhc &gt; bsg replacer">
+      <created>1610025241092</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1610025241092</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Added 90% of all kits&#10;Implemented blitz star">
+      <created>1610306374039</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1610306374039</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Added 100% of the kits&#10;Added deathmatches&#10;Added connection pool for future">
+      <created>1610480671426</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1610480671426</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Remove .yml saving for player and using database controls.">
+      <created>1610746702539</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1610746702539</updated>
+    </task>
+    <task id="LOCAL-00024" summary="add banmanager">
+      <created>1610924784452</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1610924784452</updated>
+    </task>
+    <task id="LOCAL-00025" summary="add banmanager">
+      <created>1610999686514</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1610999686514</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Added basic shop, advanced shop, auras, blitz shop">
+      <created>1611086699879</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1611086699879</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Super fancy database (uses json)&#10;New shop interface (categories for kits, stars, auras)&#10;Total stat saving overhaul (3rd time)&#10;Fixed slime splitting">
+      <created>1611175030388</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1611175030388</updated>
+    </task>
+    <task id="LOCAL-00028" summary="swag">
+      <created>1611253283028</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1611253283028</updated>
+    </task>
+    <task id="LOCAL-00029" summary="add taunting">
+      <created>1611344371731</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1611344371732</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Hub changes, ImportantCommandModifier">
+      <created>1612728024449</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1612728024449</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Hub changes, ImportantCommandModifier">
+      <created>1616355037971</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1616355037971</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Hub changes, ImportantCommandModifier">
+      <created>1681570960570</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1681570960570</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Hub changes, ImportantCommandModifier">
+      <created>1681649185886</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1681649185886</updated>
+    </task>
+    <task id="LOCAL-00034" summary="New map implementations">
+      <created>1681727364576</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1681727364576</updated>
+    </task>
+    <task id="LOCAL-00035" summary="Issue fixed">
+      <created>1681735577248</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1681735577248</updated>
+    </task>
+    <task id="LOCAL-00036" summary="Issue fixed">
+      <created>1681735694747</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1681735694747</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fff" />
+    <MESSAGE value="Initial upload" />
+    <MESSAGE value="Change spawn to static location" />
+    <MESSAGE value="World command om te koekeloeren" />
+    <MESSAGE value="Rank systeem + nick test" />
+    <MESSAGE value="fix" />
+    <MESSAGE value="Added ranks" />
+    <MESSAGE value="nick issue resolved, still one more though" />
+    <MESSAGE value="Scoreboard done, spawn + prelobby done" />
+    <MESSAGE value="uhc &gt; bsg replacer" />
+    <MESSAGE value="Added 90% of all kits&#10;Implemented blitz star" />
+    <MESSAGE value="Added 100% of the kits&#10;Added deathmatches&#10;Added connection pool for future" />
+    <MESSAGE value="Remove .yml saving for player and using database controls." />
+    <MESSAGE value="add banmanager" />
+    <MESSAGE value="Added basic shop, advanced shop, auras, blitz shop" />
+    <MESSAGE value="Super fancy database (uses json)&#10;New shop interface (categories for kits, stars, auras)&#10;Total stat saving overhaul (3rd time)&#10;Fixed slime splitting" />
+    <MESSAGE value="swag" />
+    <MESSAGE value="add taunting" />
+    <MESSAGE value="Hub changes, ImportantCommandModifier" />
+    <MESSAGE value="New map implementations" />
+    <MESSAGE value="Issue fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Issue fixed" />
+  </component>
+</project>
