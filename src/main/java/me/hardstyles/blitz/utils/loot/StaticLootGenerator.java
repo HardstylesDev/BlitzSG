@@ -22,12 +22,15 @@ public class StaticLootGenerator {
          *  The itemstack is the item that will be in the chest.
          *
          *  Example:
-         *  chests.add(new StaticLoot("winter", -2385, 15, 663, new ItemBuilder(Material.IRON_CHESTPLATE).make()));
+         *     chests.add(new StaticLoot("winter", -2385, 15, 663, new ItemBuilder(Material.IRON_CHESTPLATE).make()));
+         *  Example 2:
+         *     chests.add(new StaticLoot("winter", -2385, 15, 663, new ItemStack(Material.IRON_CHESTPLATE, 1))); // Winter Iron Chestplate chest
+         *
          *  Don't hesitate to make a pull request if you know of any static loot chests,
          *  Even if you don't know how to code, you can still & I will fix any errors.
          */
 
-        chests.add(new StaticLoot("winter", -2385, 15, 663, new ItemBuilder(Material.IRON_CHESTPLATE).make())); // Winter Iron Chestplate chest
+        chests.add(new StaticLoot("winter", -2385, 15, 663, new ItemStack(Material.IRON_CHESTPLATE, 1))); // Winter Iron Chestplate chest
     }
 
     public ItemStack isStatic(Location location) {
