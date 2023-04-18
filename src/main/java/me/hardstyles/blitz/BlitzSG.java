@@ -73,9 +73,11 @@ public class BlitzSG extends JavaPlugin {
     public static Location lobbySpawn;
     private Database db;
     private CosmeticsManager cosmeticsManager;
+    private long startTime;
 
     public BlitzSG() {
         instance = this;
+        startTime = System.currentTimeMillis();
     }
     public Database db(){
         return db;

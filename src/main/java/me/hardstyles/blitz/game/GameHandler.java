@@ -5,7 +5,7 @@ import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.fireworks.FireworkCommand;
 import me.hardstyles.blitz.gui.KitGUI;
 import me.hardstyles.blitz.gui.StarGUI;
-import me.hardstyles.blitz.utils.ChestUtils;
+import me.hardstyles.blitz.utils.loot.ChestUtils;
 import me.hardstyles.blitz.utils.ItemBuilder;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -456,7 +456,7 @@ public class GameHandler implements Listener {
                 if (!bsgPlayer.getGame().getOpenedChests().contains(e.getClickedBlock().getLocation())) {
                     Chest chest = (Chest) e.getClickedBlock().getState();
                     chest.getInventory().clear();
-                    chestUtils.generateChestLoot(chest.getInventory(), 3);
+                    chestUtils.generateChestLoot(chest.getInventory(), 3, e.getClickedBlock().getLocation());
                     chest.update();
                     bsgPlayer.getGame().getOpenedChests().add(e.getClickedBlock().getLocation());
                 }

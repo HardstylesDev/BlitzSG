@@ -86,8 +86,11 @@ public class IPlayerHandler implements Listener {
             iPlayer.getNametag().sendPacket(p);
         });
 
-        if(BlitzSG.getInstance().getGameManager().getAvailableGame() == null) {
-            new Game();
+        if(BlitzSG.getInstance().getGameManager().getAllWaitingGames().size() == 0) {
+            if(BlitzSG.getInstance().getStartTime() + 30000 > System.currentTimeMillis()) {
+                new Game();
+            }
+
         }
 
     }

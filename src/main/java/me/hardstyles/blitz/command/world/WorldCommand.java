@@ -8,6 +8,7 @@ import me.hardstyles.blitz.command.rank.sub.RankSetPrefixCommand;
 import me.hardstyles.blitz.command.rank.sub.RankSetSubCommand;
 import me.hardstyles.blitz.command.world.sub.WorldCreateSubCommand;
 import me.hardstyles.blitz.command.world.sub.WorldListSubCommand;
+import me.hardstyles.blitz.command.world.sub.WorldTeleportSubCommand;
 import me.hardstyles.blitz.command.world.sub.WorldUnloadSubCommand;
 import me.hardstyles.blitz.utils.ChatUtil;
 import org.bukkit.command.CommandSender;
@@ -25,6 +26,7 @@ public class WorldCommand extends Command {
         subcommands.add(new WorldListSubCommand());
         subcommands.add(new WorldUnloadSubCommand());
         subcommands.add(new WorldCreateSubCommand());
+        subcommands.add(new WorldTeleportSubCommand());
     }
 
     @Override

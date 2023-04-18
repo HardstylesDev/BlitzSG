@@ -1,8 +1,11 @@
-package me.hardstyles.blitz.utils;
+package me.hardstyles.blitz.utils.loot;
 
+import me.hardstyles.blitz.utils.ItemBuilder;
 import org.bukkit.Color;
+import org.bukkit.Location;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,44 +15,48 @@ import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 
 public class ChestUtils {
-
+    private StaticLootGenerator staticLootGenerator;
     private HashMap<ItemStack, Integer> lootTable;
 
     private int totalChance;
 
     public ChestUtils() {
         loadLootTable();
+        staticLootGenerator = new StaticLootGenerator();
+
     }
 
 
-    //ALGORITHM #3
-    //NO ISSUES
-
-    public void generateChestLoot(Inventory inventory, int minAmount) {
+    public void generateChestLoot(Inventory inventory, int minAmount, Location loc) {
         Random r = new Random();
         int amt = new Random().nextInt(2) + minAmount;
         List<ItemStack> selectedItems = new ArrayList<ItemStack>();
-        for(int a = 0; a <= amt; a++) {
+        for (int a = 0; a <= amt; a++) {
             int index = r.nextInt(totalChance);
             int counter = 0;
-            for(ItemStack is : lootTable.keySet())
-                if(lootTable.get(is) + counter > index) {
-                    if(selectedItems.contains(is)) {
+            for (ItemStack is : lootTable.keySet())
+                if (lootTable.get(is) + counter > index) {
+                    if (selectedItems.contains(is)) {
                         a--;
                         break;
                     }
                     selectedItems.add(is);
                     break;
-                }else
+                } else
                     counter += lootTable.get(is);
         }
-        for(ItemStack is : selectedItems) {
+        ItemStack staticLoot = staticLootGenerator.isStatic(loc);
+        if (staticLoot != null) {
+            selectedItems.add(staticLoot);
+        }
+        for (ItemStack is : selectedItems) {
             int random = r.nextInt(inventory.getSize());
-            while(inventory.getItem(random) != null)
+            while (inventory.getItem(random) != null)
                 random = r.nextInt(inventory.getSize());
             inventory.setItem(random, is);
         }
-	  }
+
+    }
 
 
     private void loadLootTable() {
@@ -70,8 +77,8 @@ public class ChestUtils {
         //ARMOUR
         lootTable.put(new ItemStack(Material.LEATHER_BOOTS, 1), 45);
 
-        lootTable.put(new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rBig Boy Pants").color(Color.fromRGB(0,255,255)).enchantment(Enchantment.WATER_WORKER, 10).make(), 20);
-        lootTable.put(new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rSexy Pants").color(Color.fromRGB(125,0,255)).enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1).make(), 15);
+        lootTable.put(new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rBig Boy Pants").color(Color.fromRGB(0, 255, 255)).enchantment(Enchantment.WATER_WORKER, 10).make(), 20);
+        lootTable.put(new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rSexy Pants").color(Color.fromRGB(125, 0, 255)).enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1).make(), 15);
 
         lootTable.put(new ItemStack(Material.LEATHER_CHESTPLATE, 1), 25);
         lootTable.put(new ItemStack(Material.LEATHER_HELMET, 1), 45);
@@ -102,9 +109,6 @@ public class ChestUtils {
         lootTable.put(new ItemStack(Material.ROTTEN_FLESH, 3), 9);
 
 
-
-
-
         //MISC
         lootTable.put(new ItemStack(Material.IRON_INGOT, 1), 3);
         lootTable.put(new ItemStack(Material.GOLD_INGOT, 8), 8);
@@ -116,7 +120,7 @@ public class ChestUtils {
         lootTable.put(new ItemStack(Material.EXP_BOTTLE, 2), 5);
 
         //Calculate total chance
-        for(int i : lootTable.values()) {
+        for (int i : lootTable.values()) {
             totalChance += i;
         }
     }
