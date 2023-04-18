@@ -6,10 +6,12 @@ import me.hardstyles.blitz.command.SubCommand;
 import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.map.Map;
 import me.hardstyles.blitz.utils.ChatUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.logging.Level;
 
 
 public class GameStartSubCommand extends SubCommand {
@@ -28,6 +30,8 @@ public class GameStartSubCommand extends SubCommand {
         if (args.length == 1){
             new Game();
             sender.sendMessage(ChatUtil.color("&aStarted a new game!"));
+            Bukkit.getLogger().log(Level.FINEST, "New Game instance created through command");
+
             return;
         }
 

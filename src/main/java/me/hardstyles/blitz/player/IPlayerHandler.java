@@ -18,6 +18,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.logging.Level;
+
 public class IPlayerHandler implements Listener {
 
     @EventHandler
@@ -89,6 +91,7 @@ public class IPlayerHandler implements Listener {
         if(BlitzSG.getInstance().getGameManager().getAllWaitingGames().size() == 0) {
             if(BlitzSG.getInstance().getStartTime() + 30000 > System.currentTimeMillis()) {
                 new Game();
+                Bukkit.getLogger().log(Level.FINEST, "New Game instance created by IPlayerHandler");
             }
 
         }

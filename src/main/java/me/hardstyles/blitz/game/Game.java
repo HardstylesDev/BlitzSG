@@ -8,6 +8,7 @@ import me.hardstyles.blitz.utils.ItemBuilder;
 import me.hardstyles.blitz.utils.ItemUtils;
 import me.hardstyles.blitz.BlitzSG;
 import org.bukkit.*;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Golem;
 import org.bukkit.entity.Monster;
@@ -152,11 +153,15 @@ public class Game {
 
     public void teleportSpawn(Player p) {
         Location playerSpawn = null;
-        for (Location l : map.getSpawns())
+
+        for (Location l : map.getSpawns()) {
+
+
             if (!spawnUsed.contains(l)) {
                 playerSpawn = l;
                 break;
             }
+        }
         //createCage(playerSpawn);
 
         spawnUsed.add(playerSpawn);
@@ -164,6 +169,10 @@ public class Game {
         iPlayer.setGameSpawn(playerSpawn.clone().add(0.5, 1.0, 0.5));
 
         p.teleport(playerSpawn.clone().add(0.5, 1.0, 0.5));
+        // if there is a sign at the location, above the location or below the location, remove it
+
+
+
 
 
     }
@@ -205,7 +214,14 @@ public class Game {
                     return;
                 }
                 if (countdownTime == 0) {
-
+                    for (Location l : map.getSpawns()) {
+                        for(int i = 0; i < 3; i++) {
+                            Location signLocation = l.clone().add(0, i - 1, 0);
+                            if(signLocation.getBlock().getType() == Material.SIGN_POST || signLocation.getBlock().getType() == Material.WALL_SIGN) {
+                                signLocation.getBlock().setType(Material.AIR);
+                            }
+                        }
+                    }
                     for (Player alivePlayer : alivePlayers) {
                         setPregameInventory(alivePlayer);
                         teleportSpawn(alivePlayer);

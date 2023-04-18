@@ -2,6 +2,7 @@ package me.hardstyles.blitz.game;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Level;
 
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.player.IPlayer;
@@ -28,13 +29,15 @@ public class GameManager {
 
             if (games.size() == 0) {
                 new Game();
+                Bukkit.getLogger().log(Level.FINEST, "New Game instance created through scheduler (no games running)");
+
             }
-        }, 100, 20 * 60 * 5);
+        }, 20 * 60 * 3, 20 * 60 * 5);
 
     }
 
 
-    public ArrayList<Game> getAllWaitingGames(){
+    public ArrayList<Game> getAllWaitingGames() {
         ArrayList<Game> waitingGames = new ArrayList<Game>();
         for (Game g : games) {
             if (g.getGameMode() == Game.GameMode.WAITING) {
@@ -105,11 +108,6 @@ public class GameManager {
 
         return map;
     }
-
-
-
-
-
 
 
 }

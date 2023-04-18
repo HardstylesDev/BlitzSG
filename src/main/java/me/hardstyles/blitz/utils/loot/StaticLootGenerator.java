@@ -15,7 +15,7 @@ public class StaticLootGenerator {
         chests = new HashSet<>();
 
         /*
-         *   StaticLoot(String worldName, int x, int y, int z, ItemStack itemStack)
+         *   StaticLoot(String worldName, int x, int y, int z, ItemStack item)
          *   Please add any static loot chests that you know of to this list.
          *   The world name is the name of the world that the chest is in, in lowercase.
          *  The x, y, and z are the coordinates of the chest.
