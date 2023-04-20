@@ -143,6 +143,11 @@ public class Game {
         alivePlayers.add(p);
         p.teleport(map.getLobby().clone().add(0.5, 0, 0.5));
         msgAll(BlitzSG.CORE_NAME + "&7" + iPlayer.getRank(true).getChatColor() + p.getName() + " &ehas joined (&b" + alivePlayers.size() + "&e/&b" + map.getSpawns().size() + "&e)!");
+        for (Player allPlayer : allPlayers) {
+            allPlayer.showPlayer(p);
+            p.showPlayer(allPlayer);
+        }
+        p.setGameMode(org.bukkit.GameMode.SURVIVAL);
         if (alivePlayers.size() >= 2 && gameMode.equals(GameMode.WAITING)) {
             startLobbyCountdown();
         }
@@ -170,9 +175,6 @@ public class Game {
 
         p.teleport(playerSpawn.clone().add(0.5, 1.0, 0.5));
         // if there is a sign at the location, above the location or below the location, remove it
-
-
-
 
 
     }
@@ -215,9 +217,9 @@ public class Game {
                 }
                 if (countdownTime == 0) {
                     for (Location l : map.getSpawns()) {
-                        for(int i = 0; i < 3; i++) {
+                        for (int i = 0; i < 3; i++) {
                             Location signLocation = l.clone().add(0, i - 1, 0);
-                            if(signLocation.getBlock().getType() == Material.SIGN_POST || signLocation.getBlock().getType() == Material.WALL_SIGN) {
+                            if (signLocation.getBlock().getType() == Material.SIGN_POST || signLocation.getBlock().getType() == Material.WALL_SIGN) {
                                 signLocation.getBlock().setType(Material.AIR);
                             }
                         }
@@ -360,7 +362,6 @@ public class Game {
                 gameTime++;
                 if (alivePlayers.size() > 1) {
                     for (Player alivePlayer : alivePlayers) {
-
                         compassTarget(alivePlayer);
                         mobTeleport(alivePlayer);
                     }
@@ -464,6 +465,8 @@ public class Game {
 
         for (Player pl : p.getWorld().getPlayers()) {
             if (pl == p) continue;
+            if(pl.getAllowFlight()) continue;
+            if(pl.getGameMode() == org.bukkit.GameMode.SPECTATOR) continue;
             double distance = pl.getLocation().distance(p.getLocation());
             if (distance < lastDistance) {
                 lastDistance = distance;
@@ -547,6 +550,7 @@ public class Game {
         BlitzSG.getInstance().getGameManager().removeGame(this);
         for (Player p : allPlayers) {
             IPlayer uhcPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+            if(uhcPlayer == null) continue;
             uhcPlayer.setGame(null);
             BlitzSG.getInstance().getIPlayerManager().toLobby(p);
         }

@@ -44,7 +44,7 @@ public class IPlayerManager {
         return playerGames.get(uhcPlayer);
     }
 
-    public static IPlayerManager get(){
+    public static IPlayerManager get() {
         return BlitzSG.getInstance().getIPlayerManager();
     }
 
@@ -60,13 +60,14 @@ public class IPlayerManager {
         p.getInventory().setItem(3, ItemUtils.buildItem(new ItemStack(Material.EMERALD), "&a&lOpen the Shop &7(Right-Click)", Arrays.asList("§7Right-Click to open the shop")));
         p.getInventory().setItem(5, ItemUtils.buildItem(new ItemStack(Material.PAINTING), "&e&lYour Stats &7(Right-Click)", Arrays.asList("§7Right-Click to view your stats")));
         p.getInventory().setItem(7, ItemUtils.buildItem(new ItemStack(Material.SKULL_ITEM), "&c???", Arrays.asList("§7Coming soon...")));
+        p.getInventory().setItem(8, ItemUtils.buildItem(new ItemStack(Material.WATCH), "&a&lHide/Show players", Arrays.asList("§7Right-Click to hide or show players")));
 
         resetPlayerStatus(p);
         IPlayer iPlayer = this.getPlayer(p.getUniqueId());
         iPlayer.setGame(null);
         iPlayer.resetGameKills();
         p.teleport(BlitzSG.lobbySpawn);
-        if(iPlayer.getRank().getPosition() > 0) {
+        if (iPlayer.getRank().getPosition() > 0) {
             p.setAllowFlight(true);
             p.setFlying(true);
         }
@@ -75,7 +76,7 @@ public class IPlayerManager {
         p.setPlayerListName(iPlayer.getRank().getPrefix() + p.getName());
     }
 
-    public void resetPlayerStatus(Player p){
+    public void resetPlayerStatus(Player p) {
 
         p.setGameMode(org.bukkit.GameMode.SURVIVAL);
         p.setMaxHealth(21);
@@ -110,6 +111,10 @@ public class IPlayerManager {
     }
 
     public void handleDeathElo(Player victim) {
+        if (victim == null) {
+            return;
+        }
+
         IPlayer blitzVictim = this.getPlayer(victim.getUniqueId());
         Game g = blitzVictim.getGame();
 

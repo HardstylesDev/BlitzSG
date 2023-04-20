@@ -96,11 +96,20 @@ public class IPlayerHandler implements Listener {
 
         }
 
+        World world = Bukkit.getWorld("world");
+        for (Player player : world.getPlayers()) {
+            IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
+            if(iPlayer.isVisibilityEnabled()){
+                continue;
+            }
+            player.hidePlayer(p);
+        }
+
     }
 
 
     @EventHandler
-    public void onAsyncChat(PlayerChatEvent e) {
+    public void onAsyncChat(AsyncPlayerChatEvent e) {
         IPlayer sgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
         if(sgPlayer.getMute() != null) {
             if(sgPlayer.getMute().isMuted()) {
@@ -139,6 +148,27 @@ public class IPlayerHandler implements Listener {
         if (uhcPlayer.getRank().isManager() && p.getGameMode() == GameMode.CREATIVE) return;
         e.setCancelled(true);
         if (e.getItem().getType() == Material.EMERALD) ShopGUI.openGUI(p);
+        if(e.getItem().getType() == Material.WATCH) {
+            if(uhcPlayer.isVisibilityEnabled()) {
+                uhcPlayer.setVisibilityEnabled(false);
+                p.sendMessage(ChatUtil.color("&cYou have disabled visibility"));
+                World world = Bukkit.getWorld("world");
+                for(Player player : world.getPlayers()) {
+                    if(player.getUniqueId() != p.getUniqueId()) {
+                        p.hidePlayer(player);
+                    }
+                }
+            } else {
+                uhcPlayer.setVisibilityEnabled(true);
+                p.sendMessage(ChatUtil.color("&aYou have enabled visibility"));
+                World world = Bukkit.getWorld("world");
+                for(Player player : world.getPlayers()) {
+                    if(player.getUniqueId() != p.getUniqueId()) {
+                        p.showPlayer(player);
+                    }
+                }
+            }
+        }
         else if (e.getItem().getType() == Material.IRON_SWORD) {
             if (BlitzSG.getInstance().getGameManager().getAvailableGame() == null) {
                 p.sendMessage("§cCouldn't find any available games (0x1)");

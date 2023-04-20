@@ -25,6 +25,7 @@ import java.util.UUID;
 @Setter
 public class IPlayer {
 
+    private boolean visibilityEnabled = true;
     private Kit selectedKit;
     private int gameTaunt;
     private UUID uuid, lastMessaged;

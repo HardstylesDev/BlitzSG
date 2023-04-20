@@ -56,10 +56,10 @@ public class GameHandler implements Listener {
 
 
     public void onPlayerDeath(Player victim, Player killer) {
+
         IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(victim.getUniqueId());
         if (!bsgPlayer.isInGame()) return;
         bsgPlayer.getGame().applyDeathEffects();
-        BlitzSG.getInstance().getIPlayerManager().handleDeathElo(victim);
         String deathMessage = BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed and everyone got a speed buff!";
         if (killer != null) {
             IPlayer killerPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(killer.getUniqueId());
