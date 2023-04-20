@@ -27,11 +27,11 @@ public class GameManager {
                 }
             }
 
-            if (games.size() == 0) {
-                new Game();
-                Bukkit.getLogger().log(Level.FINEST, "New Game instance created through scheduler (no games running)");
-
-            }
+            //if (games.size() == 0) {
+            //    new Game();
+            //    Bukkit.getLogger().log(Level.FINEST, "New Game instance created through scheduler (no games running)");
+//
+            //}
         }, 20 * 60 * 3, 20 * 60 * 5);
 
     }

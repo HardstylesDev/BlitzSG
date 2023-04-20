@@ -49,6 +49,15 @@ public class StaticLootGenerator {
         chests.add(new StaticLoot("egypt", 346, 19, 302, new ArrayList<ItemStack>() {{
             add(new ItemStack(Material.DIAMOND, 2));
         }})); // Egypt Secret Diamonds chest
+        chests.add(new StaticLoot("citadel", -1494, 57, 825, new ArrayList<ItemStack>() {{
+            add (new ItemStack(Material.SNOW_BALL, 2));
+        }})); // Citadel Spawn Snowball chest
+        chests.add(new StaticLoot("winter", -2390, 23, 664, new ArrayList<ItemStack>() {{
+            add (new ItemStack(Material.LEATHER_CHESTPLATE, 1));
+            add (new ItemStack(Material.LEATHER_BOOTS, 1));
+            add (new ItemStack(Material.LEATHER_HELMET, 1));
+        }})); // Winter Hillside Leather Gear chest
+
     }
 
     public ArrayList<ItemStack> isStatic(Location location) {

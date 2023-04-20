@@ -41,7 +41,7 @@ public class BroadcastCommand extends Command {
                 sb.append(args[i]).append(" ");
             }
             String message = sb.toString();
-            String finalMessage = ChatUtil.color("&6[BROADCAST]: " + iPlayer.getRank().getPrefix() + " " + player.getName() + "&f: " + message);
+            String finalMessage = ChatUtil.color("&6[BROADCAST]: " + iPlayer.getRank().getPrefix() + player.getName() + "&f: " + message);
             Bukkit.broadcastMessage(finalMessage);
             return;
         }

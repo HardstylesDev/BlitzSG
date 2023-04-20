@@ -28,6 +28,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Random;
+import java.util.Set;
 
 public class GameHandler implements Listener {
     ChestUtils chestUtils = new ChestUtils();
@@ -162,6 +163,23 @@ public class GameHandler implements Listener {
     }
 
     @EventHandler
+    public void onPlayerInteractFire(PlayerInteractEvent event) {
+        Player player = event.getPlayer();
+        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
+        if (!bsgPlayer.isInGame()) {
+            if ((bsgPlayer.getRank().isManager() && (player.getGameMode() == org.bukkit.GameMode.CREATIVE))) return;
+            if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+                if (player.getTargetBlock((Set<Material>) null, 5).getType() == Material.FIRE) {
+                    event.setCancelled(true);
+                }
+                if ((event.getClickedBlock().equals(Material.FIRE)) && (event.getAction() == Action.LEFT_CLICK_AIR)) { //If the "block/material" which has been interacted with is fire (flame)
+                    event.setCancelled(true);
+                }
+            }
+        }
+    }
+
+    @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
         IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
@@ -189,7 +207,8 @@ public class GameHandler implements Listener {
     public void onBlockPlace(BlockPlaceEvent e) {
         Player p = e.getPlayer();
         IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB || e.getBlockPlaced().getType() == Material.FIRE) return;
+        if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB || e.getBlockPlaced().getType() == Material.FIRE)
+            return;
         if (!bsgPlayer.isInGame()) {
 
             if ((bsgPlayer.getRank().isManager()) && (p.getGameMode() == org.bukkit.GameMode.CREATIVE)) {
@@ -204,7 +223,8 @@ public class GameHandler implements Listener {
             e.setCancelled(true);
             return;
         }
-        if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB || e.getBlockPlaced().getType() == Material.FIRE) return;
+        if (e.getBlockPlaced().getType() == Material.CAKE_BLOCK || e.getBlockPlaced().getType() == Material.WEB || e.getBlockPlaced().getType() == Material.FIRE)
+            return;
         if (e.getBlockPlaced().getType() == Material.TNT) {
             e.getBlockPlaced().setType(Material.AIR);
             Entity tnt = e.getPlayer().getWorld().spawnEntity(e.getBlock().getLocation(), EntityType.PRIMED_TNT);
@@ -369,28 +389,28 @@ public class GameHandler implements Listener {
         boolean storm = event.toThunderState();
         if (storm) event.setCancelled(true);
     }
-	
-	/*@EventHandler
-	public void onPotionInv(InventoryClickEvent e) {
-		Player p = (Player) e.getWhoClicked();
-		p.sendMessage("TEST");
-		if(!(e.getInventory() instanceof BrewerInventory))
-			return;
-		BrewerInventory inv = (BrewerInventory) e.getInventory();
-		if(inv.getIngredient() == null)
-			return;
-		for(int slot = 0; slot <= 2; slot++)
-			if(inv.getItem(slot) != null)
-				if(inv.getItem(slot).getType() == Material.POTION)
-					if(inv.getItem(slot).getDurability() == (short) 16) {
-						p.sendMessage("UPDATE 1");
-						if(inv.getIngredient().getType() == Material.SUGAR)
-							inv.setItem(slot, ItemUtils.buildPotion(PotionEffectType.SPEED, 24 * 20, 2, (short) 16418));
-						if(inv.getIngredient().getType() == Material.SPECKLED_MELON)
-							inv.setItem(slot, ItemUtils.buildPotion(PotionEffectType.HEAL, 1, 1, (short) 16453));
-						p.sendMessage("UPDATE 2");
-					}	
-	}*/
+
+    /*@EventHandler
+    public void onPotionInv(InventoryClickEvent e) {
+        Player p = (Player) e.getWhoClicked();
+        p.sendMessage("TEST");
+        if(!(e.getInventory() instanceof BrewerInventory))
+            return;
+        BrewerInventory inv = (BrewerInventory) e.getInventory();
+        if(inv.getIngredient() == null)
+            return;
+        for(int slot = 0; slot <= 2; slot++)
+            if(inv.getItem(slot) != null)
+                if(inv.getItem(slot).getType() == Material.POTION)
+                    if(inv.getItem(slot).getDurability() == (short) 16) {
+                        p.sendMessage("UPDATE 1");
+                        if(inv.getIngredient().getType() == Material.SUGAR)
+                            inv.setItem(slot, ItemUtils.buildPotion(PotionEffectType.SPEED, 24 * 20, 2, (short) 16418));
+                        if(inv.getIngredient().getType() == Material.SPECKLED_MELON)
+                            inv.setItem(slot, ItemUtils.buildPotion(PotionEffectType.HEAL, 1, 1, (short) 16453));
+                        p.sendMessage("UPDATE 2");
+                    }
+    }*/
 
 
     @EventHandler

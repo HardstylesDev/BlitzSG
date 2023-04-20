@@ -89,14 +89,12 @@ public class IPlayerHandler implements Listener {
             IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
             iPlayer.getNametag().sendPacket(p);
         });
-
-        if (BlitzSG.getInstance().getGameManager().getAllWaitingGames().size() == 0) {
-            if (BlitzSG.getInstance().getStartTime() + 30000 > System.currentTimeMillis()) {
-                new Game();
-                Bukkit.getLogger().log(Level.FINEST, "New Game instance created by IPlayerHandler");
-            }
-
-        }
+        //if (BlitzSG.getInstance().getGameManager().getAllWaitingGames().size() == 0) {
+            //if (BlitzSG.getInstance().getStartTime() + 30000 > System.currentTimeMillis()) {
+                //new Game();
+                //Bukkit.getLogger().log(Level.FINEST, "New Game instance created by IPlayerHandler");
+            //}//
+        //}
 
         World world = Bukkit.getWorld("world");
         for (Player player : world.getPlayers()) {

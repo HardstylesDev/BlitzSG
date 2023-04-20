@@ -68,7 +68,7 @@ public class Game {
             Bukkit.broadcastMessage(BlitzSG.CORE_NAME + ChatColor.RED + "Couldn't find an available arena!");
             return;
         }
-        new Game(map);
+        //new Game(map);
     }
 
     public Game(Map toLoad) {
@@ -465,8 +465,8 @@ public class Game {
 
         for (Player pl : p.getWorld().getPlayers()) {
             if (pl == p) continue;
-            if(pl.getAllowFlight()) continue;
-            if(pl.getGameMode() == org.bukkit.GameMode.SPECTATOR) continue;
+            if (pl.getAllowFlight()) continue;
+            if (pl.getGameMode() == org.bukkit.GameMode.SPECTATOR) continue;
             double distance = pl.getLocation().distance(p.getLocation());
             if (distance < lastDistance) {
                 lastDistance = distance;
@@ -550,7 +550,7 @@ public class Game {
         BlitzSG.getInstance().getGameManager().removeGame(this);
         for (Player p : allPlayers) {
             IPlayer uhcPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-            if(uhcPlayer == null) continue;
+            if (uhcPlayer == null) continue;
             uhcPlayer.setGame(null);
             BlitzSG.getInstance().getIPlayerManager().toLobby(p);
         }
