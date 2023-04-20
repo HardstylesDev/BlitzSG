@@ -3,6 +3,8 @@ package me.hardstyles.blitz.utils.loot;
 import lombok.Getter;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+
 @Getter
 
 public class StaticLoot {
@@ -10,9 +12,9 @@ public class StaticLoot {
     private final int x;
     private final int y;
     private final int z;
-    private final ItemStack itemStack;
+    private final ArrayList<ItemStack> itemStack;
 
-    public StaticLoot(String worldName, int x, int y, int z, ItemStack itemStack) {
+    public StaticLoot(String worldName, int x, int y, int z, ArrayList<ItemStack> itemStack) {
         this.worldName = worldName;
         this.x = x;
         this.y = y;

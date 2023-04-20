@@ -1,11 +1,13 @@
-package me.hardstyles.blitz.command.hub;
+package me.hardstyles.blitz.command.broadcast;
 
 import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
-import me.hardstyles.blitz.game.Game;
+import me.hardstyles.blitz.player.IPlayer;
+import me.hardstyles.blitz.utils.ChatUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -13,11 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class HubCommand extends Command {
+public class BroadcastCommand extends Command {
     private final List<SubCommand> subcommands = new ArrayList<>();
 
-    public HubCommand() {
-        super("hub", ImmutableList.of("spawn", "l", "lobby"), null);
+    public BroadcastCommand() {
+        super("bc", ImmutableList.of("broadcast"), null);
     }
 
     @Override
@@ -28,19 +30,22 @@ public class HubCommand extends Command {
     @Override
     public void onExecute(CommandSender sender, String[] args) {
         Player player = (Player) sender;
-
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
-        if (iPlayer.isInGame()) {
-            if (iPlayer.getGame().getGameMode() == Game.GameMode.INGAME || iPlayer.getGame().getGameMode() == Game.GameMode.STARTING) {
-                if(!iPlayer.isSpectating()){
-                    BlitzSG.getInstance().getGameHandler().onPlayerDeath(player, iPlayer.getLastAttacker());
-                }
-            } else if(iPlayer.getGame().getGameMode() == Game.GameMode.WAITING) {
-                iPlayer.getGame().removePlayer(player);
+        if(iPlayer.getRank().canBan()){
+            if(args.length == 0){
+                sender.sendMessage(ChatColor.RED + "Usage: /bc <message>");
+                return;
             }
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < args.length; i++) {
+                sb.append(args[i]).append(" ");
+            }
+            String message = sb.toString();
+            String finalMessage = ChatUtil.color("&6[BROADCAST]: " + iPlayer.getRank().getPrefix() + " " + player.getName() + "&f: " + message);
+            Bukkit.broadcastMessage(finalMessage);
+            return;
         }
-
-        BlitzSG.getInstance().getIPlayerManager().toLobby(player);
+        sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
     }
 
 

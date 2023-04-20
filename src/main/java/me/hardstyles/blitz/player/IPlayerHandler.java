@@ -3,6 +3,7 @@ package me.hardstyles.blitz.player;
 import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.gui.ShopGUI;
 import me.hardstyles.blitz.rank.ranks.*;
+import me.hardstyles.blitz.utils.BookUtility;
 import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.nickname.Nickname;
@@ -18,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 
 public class IPlayerHandler implements Listener {
@@ -154,6 +156,36 @@ public class IPlayerHandler implements Listener {
         if (uhcPlayer.getRank().isManager() && p.getGameMode() == GameMode.CREATIVE) return;
         e.setCancelled(true);
         if (e.getItem().getType() == Material.EMERALD) ShopGUI.openGUI(p);
+        if(e.getItem().getType() == Material.PAINTING) {
+            BookUtility bookUtility = new BookUtility();
+            bookUtility.title("" + uhcPlayer.getRank(true).getPrefix() + p.getName() + "'s Profile");
+            bookUtility.author("BlitzSG");
+            ArrayList<String> pages = new ArrayList<>();
+            StringBuilder sb = new StringBuilder();
+            sb.append("&7Kills: &a" + uhcPlayer.getKills());
+            sb.append("\n&7Wins: &a" + uhcPlayer.getWins());
+            sb.append("\n&7Deaths: &a" + uhcPlayer.getDeaths());
+            double kdr = (double) uhcPlayer.getKills() / uhcPlayer.getDeaths();
+            kdr = Math.round(kdr * 100.0) / 100.0;
+            sb.append("\n&7K/D: &a" + kdr);
+            sb.append("\n");
+            sb.append("\n&7Coins: &a" + uhcPlayer.getCoins());
+            sb.append("\n");
+            sb.append("\n&7Rank: &a" + uhcPlayer.getRank(true).getPrefix());
+            sb.append("\n&7Kit: &a" + (uhcPlayer.getSelectedKit() == null ? "None" : uhcPlayer.getSelectedKit().getName()));
+            sb.append("\n&7Aura: &a" + (uhcPlayer.getAura() == null ? "None" : uhcPlayer.getAura().getName()));
+            if(uhcPlayer.getMute() != null) {
+                if(uhcPlayer.getMute().isMuted()) {
+                    sb.append("\n");
+                    sb.append("\n&7Mute: &cMuted");
+                    sb.append("\n&7Reason: &c" + uhcPlayer.getMute().getReason());
+                    sb.append("\n&7Expires: &c" + ChatUtil.formatDate(uhcPlayer.getMute().getEndTime()));
+                }
+            }
+            pages.add(ChatUtil.color(sb.toString()));
+            bookUtility.pages(pages);
+            bookUtility.open(p);
+        }
         if (e.getItem().getType() == Material.WATCH) {
             if (uhcPlayer.isVisibilityEnabled()) {
                 uhcPlayer.setVisibilityEnabled(false);

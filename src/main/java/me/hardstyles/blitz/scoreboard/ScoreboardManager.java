@@ -7,7 +7,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.text.NumberFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class ScoreboardManager extends BukkitRunnable {
     private final ScoreboardHandler scoreboardHandler;
@@ -28,15 +30,15 @@ public class ScoreboardManager extends BukkitRunnable {
             Date now = new Date();
             if (!bsgPlayer.isInGame()) {
                 board.add(separator);
-                board.add("Kills: &a" + bsgPlayer.getKills());
-                board.add("Wins: &a" + bsgPlayer.getWins());
-                board.add("Blitz Score: &c" + bsgPlayer.getElo());
+                board.add("Kills: &a" + f(bsgPlayer.getKills()));
+                board.add("Wins: &a" + f(bsgPlayer.getWins()));
+                board.add("Blitz Score: &c" + f(bsgPlayer.getElo()));
                 board.add("Blitz Rank: &cN/A");
 
 
                 board.add(separator);
 
-                board.add("Coins: &a" + bsgPlayer.getCoins());
+                board.add("Coins: &a" + f(bsgPlayer.getCoins()));
                 board.add("Unlocks: &cN/A");
 
                 board.add(separator);
@@ -138,6 +140,10 @@ public class ScoreboardManager extends BukkitRunnable {
         if (nextEvent == Game.NextEvent.ENDING)
             return "Ending";
         return "" + nextEvent;
+    }
+
+    private String f(int i) {
+        return NumberFormat.getNumberInstance(Locale.US).format(i);
     }
 
     public ScoreboardHandler getScoreboardHandler() {

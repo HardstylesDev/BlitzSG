@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class StaticLootGenerator {
@@ -22,22 +23,35 @@ public class StaticLootGenerator {
          *  The itemstack is the item that will be in the chest.
          *
          *  Example:
-         *     chests.add(new StaticLoot("winter", -2385, 15, 663, new ItemBuilder(Material.IRON_CHESTPLATE).make()));
-         *  Example 2:
-         *     chests.add(new StaticLoot("winter", -2385, 15, 663, new ItemStack(Material.IRON_CHESTPLATE, 1))); // Winter Iron Chestplate chest
+         *             chests.add(new StaticLoot("winter", -2385, 15, 663, new ArrayList<ItemStack>() {{
+         *                add(new ItemStack(Material.IRON_CHESTPLATE, 1));
+         *             }})); // Winter Iron Chestplate chest
          *
          *  Don't hesitate to make a pull request if you know of any static loot chests,
          *  Even if you don't know how to code, you can still & I will fix any errors.
          */
 
-        chests.add(new StaticLoot("winter", -2385, 15, 663, new ItemStack(Material.IRON_CHESTPLATE, 1))); // Winter Iron Chestplate chest
-        chests.add(new StaticLoot("winter", -2639, 12, 783, new ItemStack(Material.CHAINMAIL_LEGGINGS, 1))); // Winter Chain Leggings chest
-        chests.add(new StaticLoot("citadel", -2341, 67, 730, new ItemStack(Material.GOLD_LEGGINGS, 1))); // Citadel Gold Leggings chest
-        chests.add(new StaticLoot("citadel", -2358, 59, 694, new ItemStack(Material.LEATHER_LEGGINGS, 1))); // Citadel Gold Leggings chest
-        chests.add(new StaticLoot("docks", -2308, 94, 953, new ItemStack(Material.CHAINMAIL_CHESTPLATE, 1))); // Docks Chain Chestplate chest
+        chests.add(new StaticLoot("winter", -2385, 15, 663, new ArrayList<ItemStack>() {{
+            add(new ItemStack(Material.IRON_CHESTPLATE, 1));
+        }})); // Winter Iron Chestplate chest
+        chests.add(new StaticLoot("winter", -2639, 12, 783, new ArrayList<ItemStack>() {{
+            add(new ItemStack(Material.CHAINMAIL_LEGGINGS, 1));
+        }})); // Winter Chain Leggings chest
+        chests.add(new StaticLoot("citadel", -2341, 67, 730, new ArrayList<ItemStack>() {{
+            add(new ItemStack(Material.GOLD_LEGGINGS, 1));
+        }})); // Citadel Gold Leggings chest
+        chests.add(new StaticLoot("citadel", -2358, 59, 694, new ArrayList<ItemStack>() {{
+            add(new ItemStack(Material.LEATHER_LEGGINGS, 1));
+        }})); // Citadel Gold Leggings chest
+        chests.add(new StaticLoot("docks", -2308, 94, 953, new ArrayList<ItemStack>() {{
+            add(new ItemStack(Material.CHAINMAIL_CHESTPLATE, 1));
+        }})); // Docks Chain Chestplate chest
+        chests.add(new StaticLoot("egypt", 346, 19, 302, new ArrayList<ItemStack>() {{
+            add(new ItemStack(Material.DIAMOND, 2));
+        }})); // Egypt Secret Diamonds chest
     }
 
-    public ItemStack isStatic(Location location) {
+    public ArrayList<ItemStack> isStatic(Location location) {
         for (StaticLoot chest : chests) {
             boolean worldMatch = location.getWorld().getName().contains(chest.getWorldName());
 
@@ -49,7 +63,6 @@ public class StaticLootGenerator {
             boolean zMatch = location.getBlockZ() == chest.getZ();
             if (worldMatch && xMatch && yMatch && zMatch) {
                 return chest.getItemStack();
-
             }
         }
         return null;

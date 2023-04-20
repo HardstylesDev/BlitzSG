@@ -2,6 +2,7 @@ package me.hardstyles.blitz;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
+import me.hardstyles.blitz.command.broadcast.BroadcastCommand;
 import me.hardstyles.blitz.command.coins.SetCoinsCommand;
 import me.hardstyles.blitz.player.IPlayerHandler;
 import me.hardstyles.blitz.player.IPlayerManager;
@@ -151,6 +152,7 @@ public class BlitzSG extends JavaPlugin {
         new MuteCommand();
         new UnmuteCommand();
         new SetCoinsCommand();
+        new BroadcastCommand();
         Bukkit.getConsoleSender().sendMessage(ChatUtil.color("&d&lFinished Loading Commands!"));
 
     }

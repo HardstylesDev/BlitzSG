@@ -45,9 +45,9 @@ public class ChestUtils {
                 } else
                     counter += lootTable.get(is);
         }
-        ItemStack staticLoot = staticLootGenerator.isStatic(loc);
+        ArrayList<ItemStack> staticLoot = staticLootGenerator.isStatic(loc);
         if (staticLoot != null) {
-            selectedItems.add(staticLoot);
+            selectedItems.addAll(staticLoot);
         }
         for (ItemStack is : selectedItems) {
             int random = r.nextInt(inventory.getSize());
@@ -60,7 +60,7 @@ public class ChestUtils {
 
 
     private void loadLootTable() {
-        lootTable = new HashMap<ItemStack, Integer>();
+        lootTable = new HashMap<>();
         //WEAPONRY
         lootTable.put(new ItemStack(Material.WOOD_AXE, 1), 30);
         lootTable.put(new ItemStack(Material.STONE_AXE, 1), 20);
