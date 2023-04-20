@@ -57,7 +57,6 @@ public class StaticLootGenerator {
             add (new ItemStack(Material.LEATHER_BOOTS, 1));
             add (new ItemStack(Material.LEATHER_HELMET, 1));
         }})); // Winter Hillside Leather Gear chest
-
     }
 
     public ArrayList<ItemStack> isStatic(Location location) {
