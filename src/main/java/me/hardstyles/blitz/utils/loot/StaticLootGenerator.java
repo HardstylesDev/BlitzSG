@@ -31,8 +31,9 @@ public class StaticLootGenerator {
          */
 
         chests.add(new StaticLoot("winter", -2385, 15, 663, new ItemStack(Material.IRON_CHESTPLATE, 1))); // Winter Iron Chestplate chest
-        chests.add(new StaticLoot("citadel", -2341, 67, 730, new ItemStack(Material.GOLD_LEGGINGS, 1))); // Citadel Gold Leggings
-        chests.add(new StaticLoot("citadel", -2358, 59, 694, new ItemStack(Material.LEATHER_LEGGINGS, 1))); // Citadel Gold Leggings
+        chests.add(new StaticLoot("winter", -2639, 12, 783, new ItemStack(Material.CHAINMAIL_LEGGINGS, 1))); // Winter Chain Leggings chest
+        chests.add(new StaticLoot("citadel", -2341, 67, 730, new ItemStack(Material.GOLD_LEGGINGS, 1))); // Citadel Gold Leggings chest
+        chests.add(new StaticLoot("citadel", -2358, 59, 694, new ItemStack(Material.LEATHER_LEGGINGS, 1))); // Citadel Gold Leggings chest
     }
 
     public ItemStack isStatic(Location location) {
