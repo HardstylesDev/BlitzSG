@@ -88,8 +88,8 @@ public class IPlayerHandler implements Listener {
             iPlayer.getNametag().sendPacket(p);
         });
 
-        if(BlitzSG.getInstance().getGameManager().getAllWaitingGames().size() == 0) {
-            if(BlitzSG.getInstance().getStartTime() + 30000 > System.currentTimeMillis()) {
+        if (BlitzSG.getInstance().getGameManager().getAllWaitingGames().size() == 0) {
+            if (BlitzSG.getInstance().getStartTime() + 30000 > System.currentTimeMillis()) {
                 new Game();
                 Bukkit.getLogger().log(Level.FINEST, "New Game instance created by IPlayerHandler");
             }
@@ -99,7 +99,7 @@ public class IPlayerHandler implements Listener {
         World world = Bukkit.getWorld("world");
         for (Player player : world.getPlayers()) {
             IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
-            if(iPlayer.isVisibilityEnabled()){
+            if (iPlayer.isVisibilityEnabled()) {
                 continue;
             }
             player.hidePlayer(p);
@@ -111,21 +111,27 @@ public class IPlayerHandler implements Listener {
     @EventHandler
     public void onAsyncChat(AsyncPlayerChatEvent e) {
         IPlayer sgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
-        if(sgPlayer.getMute() != null) {
-            if(sgPlayer.getMute().isMuted()) {
+        if (sgPlayer.getMute() != null) {
+            if (sgPlayer.getMute().isMuted()) {
                 e.getPlayer().sendMessage(ChatUtil.color("&cYou are currently muted for \"" + sgPlayer.getMute().getReason() + "\""));
                 e.getPlayer().sendMessage(ChatUtil.color("&cThis mute will expire in " + ChatUtil.formatDate(sgPlayer.getMute().getEndTime())));
                 e.setCancelled(true);
                 return;
             }
         }
+        String format = ChatUtil.color("&r[&7" + sgPlayer.getKills() + "&r] " + sgPlayer.getRank(true).getPrefix() + e.getPlayer().getName() + (sgPlayer.getRank(true).getPrefix().equalsIgnoreCase(ChatColor.GRAY + "") ? ChatColor.GRAY + ": " : ChatColor.WHITE + ": ") + e.getMessage());
+        if(sgPlayer.isSpectating()){
+            format = ChatUtil.color("&7[SPECTATOR] &r[&7" + sgPlayer.getKills() + "&r] " + sgPlayer.getRank(true).getPrefix() + e.getPlayer().getName() + (sgPlayer.getRank(true).getPrefix().equalsIgnoreCase(ChatColor.GRAY + "") ? ChatColor.GRAY + ": " : ChatColor.WHITE + ": ") + e.getMessage());
+
+        }
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (p.getWorld().equals(e.getPlayer().getWorld())) {
-                p.sendMessage(ChatUtil.color("&r[&7" + sgPlayer.getKills() + "&r] " + sgPlayer.getRank(true).getPrefix() + e.getPlayer().getName() + (sgPlayer.getRank(true).getPrefix().equalsIgnoreCase(ChatColor.GRAY + "") ? ChatColor.GRAY + ": " : ChatColor.WHITE + ": ") + e.getMessage()));
+                p.sendMessage(format);
             }
         }
         e.setCancelled(true);
     }
+
     @EventHandler
     public void voidDamage(EntityDamageEvent e) {
         if (!e.getEntity().getWorld().getName().equalsIgnoreCase("world")) {
@@ -148,13 +154,13 @@ public class IPlayerHandler implements Listener {
         if (uhcPlayer.getRank().isManager() && p.getGameMode() == GameMode.CREATIVE) return;
         e.setCancelled(true);
         if (e.getItem().getType() == Material.EMERALD) ShopGUI.openGUI(p);
-        if(e.getItem().getType() == Material.WATCH) {
-            if(uhcPlayer.isVisibilityEnabled()) {
+        if (e.getItem().getType() == Material.WATCH) {
+            if (uhcPlayer.isVisibilityEnabled()) {
                 uhcPlayer.setVisibilityEnabled(false);
                 p.sendMessage(ChatUtil.color("&cYou have disabled visibility"));
                 World world = Bukkit.getWorld("world");
-                for(Player player : world.getPlayers()) {
-                    if(player.getUniqueId() != p.getUniqueId()) {
+                for (Player player : world.getPlayers()) {
+                    if (player.getUniqueId() != p.getUniqueId()) {
                         p.hidePlayer(player);
                     }
                 }
@@ -162,14 +168,13 @@ public class IPlayerHandler implements Listener {
                 uhcPlayer.setVisibilityEnabled(true);
                 p.sendMessage(ChatUtil.color("&aYou have enabled visibility"));
                 World world = Bukkit.getWorld("world");
-                for(Player player : world.getPlayers()) {
-                    if(player.getUniqueId() != p.getUniqueId()) {
+                for (Player player : world.getPlayers()) {
+                    if (player.getUniqueId() != p.getUniqueId()) {
                         p.showPlayer(player);
                     }
                 }
             }
-        }
-        else if (e.getItem().getType() == Material.IRON_SWORD) {
+        } else if (e.getItem().getType() == Material.IRON_SWORD) {
             if (BlitzSG.getInstance().getGameManager().getAvailableGame() == null) {
                 p.sendMessage("§cCouldn't find any available games (0x1)");
                 return;
