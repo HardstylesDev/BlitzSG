@@ -31,6 +31,7 @@ public class IPlayer {
     private UUID uuid, lastMessaged;
     private PlayerMute mute;
     private long lastFirework = System.currentTimeMillis();
+    private long lastGameRequested = System.currentTimeMillis();
 
     private boolean robinhood, punched, wobbuffet;
     private int gameKills;

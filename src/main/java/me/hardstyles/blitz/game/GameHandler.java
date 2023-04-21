@@ -283,6 +283,10 @@ public class GameHandler implements Listener {
 
             // check if this damage will kill the player
             if (p.getHealth() - e.getFinalDamage() <= 0) {
+                if(bsgPlayer.isSpectating()){
+                    e.setCancelled(true);
+                    return;
+                }
                 if (!e.isCancelled()) {
                     e.setCancelled(true);
                     onPlayerDeath(p, bsgPlayer.getLastAttacker());

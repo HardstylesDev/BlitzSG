@@ -100,5 +100,6 @@ public class Map {
 
     public void load() {
         this.world = new WorldCreator(mapId).generator(new VoidGenerator()).createWorld();
+        this.world.setKeepSpawnInMemory(false);
     }
 }

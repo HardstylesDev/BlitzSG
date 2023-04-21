@@ -260,6 +260,9 @@ public class Game {
                     this.cancel();
                     gameMode = GameMode.WAITING;
                     msgAll("&cWe don't have enough players! Countdown cancelled.");
+                    for (Player alivePlayer : alivePlayers) {
+                        resetGame();
+                    }
                     return;
                 }
                 if (countdownTime == 0) {
