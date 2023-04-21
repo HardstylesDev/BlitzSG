@@ -1,15 +1,12 @@
-package me.hardstyles.blitz.command.anticheat.impl;
+package me.hardstyles.blitz.anticheat.impl;
 
-import me.hardstyles.blitz.command.anticheat.AntiCheatProvider;
-import me.liwk.karhu.api.KarhuAPI;
+import me.hardstyles.blitz.anticheat.AntiCheatProvider;
 import me.liwk.karhu.api.event.KarhuEvent;
 import me.liwk.karhu.api.event.KarhuListener;
 import me.liwk.karhu.api.event.impl.KarhuAlertEvent;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class KarhuAnticheat implements AntiCheatProvider, KarhuListener {

@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class GreenParticle extends Aura {
     public GreenParticle() {
-        super("GreenParticle", "Green Particle Aura", "Show that you support going green!", BlitzSG.getInstance().getRankManager().getRankByName("VIP"), new ItemStack(Material.WOOL, 1, (byte) 13),3);
+        super("GreenParticle", "Green Particle Aura", "Show that you support going green!", BlitzSG.getInstance().getRankManager().getRankByName("VIP"), new ItemStack(Material.WOOL, 1, (byte) 13), 3);
     }
 
     @Override
@@ -20,7 +20,7 @@ public class GreenParticle extends Aura {
 
         //p.playEffect(p.getLocation(),Effect.TILE_DUST, Material.WOOL.getId(),3,4,2);
 
-        Bukkit.getOnlinePlayers().forEach(player1 ->         p.spigot().playEffect(loc, Effect.TILE_DUST, Material.WOOL.getId(), 13, (float) .2, (float) 0.5, (float) .2, 0, 3, 64));
+        Bukkit.getOnlinePlayers().forEach(player1 -> player1.spigot().playEffect(loc, Effect.TILE_DUST, Material.WOOL.getId(), 13, (float) .2, (float) 0.5, (float) .2, 0, 3, 64));
 
 
     }

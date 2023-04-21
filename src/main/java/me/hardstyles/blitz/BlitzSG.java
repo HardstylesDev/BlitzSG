@@ -2,7 +2,7 @@ package me.hardstyles.blitz;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
-import me.hardstyles.blitz.command.anticheat.impl.KarhuAnticheat;
+import me.hardstyles.blitz.anticheat.impl.KarhuAnticheat;
 import me.hardstyles.blitz.command.broadcast.BroadcastCommand;
 import me.hardstyles.blitz.command.coins.SetCoinsCommand;
 import me.hardstyles.blitz.command.join.JoinCommand;
@@ -40,9 +40,7 @@ import me.hardstyles.blitz.punishments.PunishmentManager;
 import me.hardstyles.blitz.rank.RankManager;
 import me.hardstyles.blitz.scoreboard.ScoreboardManager;
 import me.hardstyles.blitz.database.Database;
-import me.liwk.karhu.api.KarhuAPI;
 import net.minecraft.server.v1_8_R3.EnumChatFormat;
-import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -50,9 +48,6 @@ import org.bukkit.World;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.io.File;
-import java.io.IOException;
 
 @Getter
 public class BlitzSG extends JavaPlugin {

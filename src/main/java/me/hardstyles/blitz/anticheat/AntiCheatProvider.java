@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.command.anticheat;
+package me.hardstyles.blitz.anticheat;
 
 import org.bukkit.entity.Player;
 

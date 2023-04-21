@@ -58,7 +58,7 @@ public class ListCommand extends Command {
             if (p.getGame() == null) {
                 sender.sendMessage(ChatUtil.color("&7- &f" + p.getRank().getPrefix() + p.getName()));
             } else {
-                sender.sendMessage(ChatUtil.color("&7- &f" + p.getRank().getPrefix() + p.getName() + " &r- &e" + p.getGame().getMap().getMapName()));
+                sender.sendMessage(ChatUtil.color("&7- &f" + p.getRank().getPrefix() + p.getName() + " &r- &e" + p.getGame().getMap().getMapName() + "&7(&f" + p.getGame().getAlivePlayers().size() + "/" + p.getGame().getMap().getSpawns().size() + ")"));
             }
         }
         sender.sendMessage(ChatUtil.color("&e&m----------------------------------------"));

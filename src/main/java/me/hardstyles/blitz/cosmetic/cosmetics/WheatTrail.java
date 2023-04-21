@@ -14,14 +14,14 @@ import java.util.Random;
 
 public class WheatTrail extends Aura {
     public WheatTrail() {
-        super("WheatTrail", "Wheat Crop Trail", "Mooooooooooooooooo.", BlitzSG.getInstance().getRankManager().getRankByName("MVP"),new ItemStack(Material.WHEAT, 1),19);
+        super("WheatTrail", "Wheat Crop Trail", "Mooooooooooooooooo.", BlitzSG.getInstance().getRankManager().getRankByName("MVP"), new ItemStack(Material.WHEAT, 1), 19);
     }
 
     @Override
     public void tick(Player p) {
         Location loc = p.getLocation().clone().subtract(0, 0, 0);
         Block b = loc.getBlock();
-        if (b.getType() == Material.AIR && b.getLocation().clone().subtract(0,1,0).getBlock().getType().isOccluding()) {
+        if (b.getType() == Material.AIR && b.getLocation().clone().subtract(0, 1, 0).getBlock().getType().isOccluding()) {
 
             Bukkit.getOnlinePlayers().forEach(player1 -> player1.sendBlockChange(loc, Material.CROPS, (byte) (new Random().nextInt(7 - 1 + 1) + 1)));
             new BukkitRunnable() {

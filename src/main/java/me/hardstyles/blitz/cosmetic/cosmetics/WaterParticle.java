@@ -20,7 +20,7 @@ public class WaterParticle extends Aura {
 
         //p.playEffect(p.getLocation(),Effect.TILE_DUST, Material.WOOL.getId(),3,4,2);
 
-        Bukkit.getOnlinePlayers().forEach(player1 -> p.spigot().playEffect(loc, Effect.SPLASH, 0, 0, (float) .2, (float) 0.5, (float) .2, 0, 2, 64));
+        Bukkit.getOnlinePlayers().forEach(player1 -> player1.spigot().playEffect(loc, Effect.SPLASH, 0, 0, (float) .2, (float) 0.5, (float) .2, 0, 2, 64));
 
 
     }
