@@ -277,16 +277,17 @@ public class GameHandler implements Listener {
                     bsgPlayer.setLastDamager(attacker);
                 }
             }
-            if (e.getCause() == EntityDamageEvent.DamageCause.LAVA && bsgPlayer.getGame().hasDeathMatchStarted()) {
-                e.setDamage(99);
+            if ((e.getCause() == EntityDamageEvent.DamageCause.LAVA || e.getCause() == EntityDamageEvent.DamageCause.VOID) && bsgPlayer.getGame().hasDeathMatchStarted()) {
+                onPlayerDeath(p, bsgPlayer.getLastAttacker());
             }
 
             // check if this damage will kill the player
+            if(bsgPlayer.isSpectating()){
+                e.setCancelled(true);
+                return;
+            }
             if (p.getHealth() - e.getFinalDamage() <= 0) {
-                if(bsgPlayer.isSpectating()){
-                    e.setCancelled(true);
-                    return;
-                }
+
                 if (!e.isCancelled()) {
                     e.setCancelled(true);
                     onPlayerDeath(p, bsgPlayer.getLastAttacker());

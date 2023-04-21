@@ -26,7 +26,7 @@ public class ShopStarGUI {
         int firstItem = 10;
         for (Star star : BlitzSG.getInstance().getStarManager().getStars()) {
             inv.setItem(firstItem, ItemUtils.buildItem(new ItemStack(star.getIcon())
-                    , star.getName()
+                    , ChatColor.GREEN + star.getName()
                     , getFullDescription(bsgPlayer, star)));
             if ((firstItem + 2) % 9 == 0) {
                 firstItem += 3;
@@ -49,12 +49,18 @@ public class ShopStarGUI {
             desc.add("§aUNLOCKED!");
             return desc;
         }
-        desc.add("§7Price: §6" + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice()));
-        desc.add("");
-        if (p.getPrice() <= uhcPlayer.getCoins())
-            desc.add("§eClick to unlock!");
-        else
-            desc.add("§cNot enough coins!");
+        if (p.getPrice() == 0) {
+            desc.add("§aUNLOCKED!");
+        } else {
+            desc.add("§7Price: §6" + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice()));
+            desc.add("");
+            if (p.getPrice() <= uhcPlayer.getCoins()) {
+                desc.add("§eClick to unlock!");
+            } else {
+                desc.add("§cNot enough coins!");
+            }
+        }
+
         return desc;
     }
 

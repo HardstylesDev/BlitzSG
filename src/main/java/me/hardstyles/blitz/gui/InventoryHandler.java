@@ -29,12 +29,16 @@ public class InventoryHandler implements Listener {
 
         IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
         if (!bsgPlayer.isInGame())
-            if (!(bsgPlayer.getRank().isManager()))
+            if (!(bsgPlayer.getRank().isManager())) {
                 e.setCancelled(true);
-        if (BlitzSG.getInstance().getGuiManager().isInGUI(p))
+            }
+        if (BlitzSG.getInstance().getGuiManager().isInGUI(p)) {
             e.setCancelled(true);
-        //if(e.getInventory().getName() != "§7Kit Selector")
-        //return;
+        }
+        if (e.getSlot() == 39 && p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.TNT) {
+            e.setCancelled(true);
+            return;
+        }
 
         if (e.getRawSlot() >= e.getInventory().getSize() || e.getRawSlot() <= -1)
             return;
@@ -63,13 +67,13 @@ public class InventoryHandler implements Listener {
             e.setCancelled(true);
             if (bsgPlayer.isInGame())
                 return;
-            if(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().contains("Basic Kit"))
+            if (e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().contains("Basic Kit"))
                 ShopKitBasicGUI.openGUI(p);
-            if(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().contains("Auras"))
+            if (e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().contains("Auras"))
                 AuraGUI.openGUI(p);
-            if(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().contains("Advanced Kit"))
+            if (e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().contains("Advanced Kit"))
                 ShopKitAdvancedGUI.openGUI(p);
-            if(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().contains("Blitz Powerups"))
+            if (e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName().contains("Blitz Powerups"))
                 ShopStarGUI.openGUI(p);
             return;
         } else if (e.getInventory().getName().contains("Kit Upgrades")) {
@@ -79,20 +83,20 @@ public class InventoryHandler implements Listener {
             if (BlitzSG.getInstance().getKitManager().getKit(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName()) == null)
                 return;
             Kit kit = BlitzSG.getInstance().getKitManager().getKit(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName());
-            if(bsgPlayer.getKitLevel(kit) == 0 && e.getInventory().getName() == "§8Basic Kit Upgrades"){
-                if (bsgPlayer.getCoins() < kit.getPrice(bsgPlayer.getKitLevel(kit)+1)) {
+            if (bsgPlayer.getKitLevel(kit) == 0 && e.getInventory().getName() == "§8Basic Kit Upgrades") {
+                if (bsgPlayer.getCoins() < kit.getPrice(bsgPlayer.getKitLevel(kit) + 1)) {
                     p.sendMessage("§cYou don't have enough coins to purchase this upgrade!");
                     return;
                 }
                 p.sendMessage(ChatColor.GOLD + "You purchased " + ChatColor.GREEN + kit.getName() + KitUtils.getKitTag(bsgPlayer.getKitLevel(kit) + 2) + "");
                 p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
 
-                bsgPlayer.removeCoins(kit.getPrice(bsgPlayer.getKitLevel(kit)+1));
+                bsgPlayer.removeCoins(kit.getPrice(bsgPlayer.getKitLevel(kit) + 1));
                 bsgPlayer.setKitLevel(kit, bsgPlayer.getKitLevel(kit) + 2);
                 p.closeInventory();
                 return;
             }
-            if(bsgPlayer.getKitLevel(kit) == 0 && kit.getRequiredRank().getPosition() <= bsgPlayer.getRank().getPosition()){
+            if (bsgPlayer.getKitLevel(kit) == 0 && kit.getRequiredRank().getPosition() <= bsgPlayer.getRank().getPosition()) {
                 p.sendMessage(ChatColor.GOLD + "You unlocked the " + ChatColor.GREEN + kit.getName() + ChatColor.GOLD + " kit!");
                 p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
 
@@ -168,7 +172,7 @@ public class InventoryHandler implements Listener {
                 return;
             }
             Star star = BlitzSG.getInstance().getStarManager().getStar(ChatColor.stripColor(e.getInventory().getItem(e.getSlot()).getItemMeta().getDisplayName()));
-            if(star.getPrice() != 0 && !(bsgPlayer.getStars().contains(star))){
+            if (star.getPrice() > 0 && !(bsgPlayer.getStars().contains(star))) {
                 BlitzSG.send(p, "&cYou don't have this star unlocked!");
                 return;
             }

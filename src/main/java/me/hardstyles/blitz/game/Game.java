@@ -179,6 +179,11 @@ public class Game {
 
     }
 
+    public void exit(Player p){
+        alivePlayers.remove(p);
+        allPlayers.remove(p);
+        deadPlayers.remove(p);
+    }
     public void removePlayer(Player p) {
         if (gameMode == GameMode.INGAME) {
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&cYou can't leave while the game is running!");
