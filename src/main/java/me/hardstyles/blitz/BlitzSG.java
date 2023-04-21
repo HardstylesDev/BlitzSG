@@ -2,9 +2,11 @@ package me.hardstyles.blitz;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
+import me.hardstyles.blitz.command.anticheat.impl.KarhuAnticheat;
 import me.hardstyles.blitz.command.broadcast.BroadcastCommand;
 import me.hardstyles.blitz.command.coins.SetCoinsCommand;
 import me.hardstyles.blitz.command.join.JoinCommand;
+import me.hardstyles.blitz.command.list.ListCommand;
 import me.hardstyles.blitz.player.IPlayerHandler;
 import me.hardstyles.blitz.player.IPlayerManager;
 import me.hardstyles.blitz.command.fireworks.FireworkCommand;
@@ -38,6 +40,7 @@ import me.hardstyles.blitz.punishments.PunishmentManager;
 import me.hardstyles.blitz.rank.RankManager;
 import me.hardstyles.blitz.scoreboard.ScoreboardManager;
 import me.hardstyles.blitz.database.Database;
+import me.liwk.karhu.api.KarhuAPI;
 import net.minecraft.server.v1_8_R3.EnumChatFormat;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
@@ -55,7 +58,7 @@ import java.io.IOException;
 public class BlitzSG extends JavaPlugin {
 
     public static String CORE_NAME = EnumChatFormat.GRAY + "[" + EnumChatFormat.RED + "B-SG" + EnumChatFormat.GRAY + "]: " + EnumChatFormat.WHITE;
-
+    private KarhuAnticheat anticheat;
 
     public static BlitzSG instance;
     private StatisticsManager statisticsManager;
@@ -93,6 +96,7 @@ public class BlitzSG extends JavaPlugin {
 
         db = new Database();
         statisticsManager = new StatisticsManager();
+        anticheat = new KarhuAnticheat();
         iPlayerManager = new IPlayerManager();
         rankManager = new RankManager();
         kitManager = new KitManager();
@@ -134,6 +138,8 @@ public class BlitzSG extends JavaPlugin {
             iPlayerManager.toLobby(p);
         }
         scoreboardManager.runTaskTimer(this, 20, 20);
+
+        //KarhuAPI.getEventRegistry().addListener(anticheat);
     }
 
 
@@ -155,6 +161,7 @@ public class BlitzSG extends JavaPlugin {
         new SetCoinsCommand();
         new BroadcastCommand();
         new JoinCommand();
+        new ListCommand();
         Bukkit.getConsoleSender().sendMessage(ChatUtil.color("&d&lFinished Loading Commands!"));
 
     }

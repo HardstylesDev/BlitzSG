@@ -7,6 +7,7 @@ import java.util.UUID;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.utils.ItemUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -74,6 +75,33 @@ public class IPlayerManager {
 
         iPlayer.setPrefix(iPlayer.getRank().getPrefix());
         p.setPlayerListName(iPlayer.getRank().getPrefix() + p.getName());
+
+        applyVisibility(p);
+
+
+    }
+
+
+    public void applyVisibility(Player p){
+        IPlayer iPlayer = this.getPlayer(p.getUniqueId());
+        Bukkit.getServer().getOnlinePlayers().stream().filter(player -> player.getWorld().getName().equalsIgnoreCase("world")).forEach(player -> {
+            IPlayer iLobby = this.getPlayer(player.getUniqueId());
+            if (!iLobby.isVisibilityEnabled()) {
+                player.hidePlayer(p);
+            } else {
+                player.showPlayer(p);
+            }
+            if (!iPlayer.isVisibilityEnabled()) {
+                p.hidePlayer(player);
+            } else {
+                p.showPlayer(player);
+            }
+        });
+        Bukkit.getServer().getOnlinePlayers().stream().filter(player -> !player.getWorld().getName().equalsIgnoreCase("world")).forEach(player -> {
+            p.hidePlayer(player);
+            player.hidePlayer(p);
+
+        });
     }
 
     public void resetPlayerStatus(Player p) {

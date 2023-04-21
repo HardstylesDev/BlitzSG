@@ -32,7 +32,7 @@ public class Assassin extends Star {
             IPlayer iTarget = BlitzSG.getInstance().getIPlayerManager().getPlayer(target.getUniqueId());
             BlitzSG.getInstance().getGameHandler().onPlayerDeath(target, iTarget.getLastAttacker());
         } else {
-            target.damage(target.getHealth() / 2, p);
+            target.setHealth(target.getHealth() / 2);
         }
         target.sendMessage(ChatColor.RED + "You were assassined by " + p.getName());
         p.sendMessage(ChatColor.RED + "You assassined " + target.getName());

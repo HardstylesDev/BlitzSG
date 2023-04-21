@@ -154,6 +154,20 @@ public class Game {
         p.setFlying(false);
         p.setAllowFlight(false);
 
+
+        Bukkit.getServer().getOnlinePlayers().stream().filter(player -> player.getWorld().getName().equalsIgnoreCase(map.getMapId())).forEach(player -> {
+            p.showPlayer(player);
+            player.showPlayer(p);
+        });
+
+        Bukkit.getServer().getOnlinePlayers().stream().filter(player -> !player.getWorld().getName().equalsIgnoreCase(map.getMapId())).forEach(player -> {
+            player.hidePlayer(p);
+            p.hidePlayer(player);
+        });
+
+
+
+
     }
 
     public void teleportSpawn(Player p) {

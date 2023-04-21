@@ -83,6 +83,14 @@ public class IPlayer {
         BlitzSG.getInstance().getIPlayerManager().addPlayer(this.uuid, this);
     }
 
+    public String getName(){
+        Player p = Bukkit.getPlayer(getUuid());
+        if(p != null){
+            return p.getName();
+        }
+        return Bukkit.getOfflinePlayer(getUuid()).getName();
+    }
+
     public HashMap<Kit, Integer> getKits() {
         return this.kitLevels;
     }

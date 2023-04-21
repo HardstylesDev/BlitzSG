@@ -95,7 +95,9 @@ public class GameManager {
 
         List<IPlayer> players = new ArrayList<>();
         for (Player p : g.getAllPlayers()) {
-            players.add(BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId()));
+            if (p.isOnline()) {
+                players.add(BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId()));
+            }
         }
 
         players.sort(killSorter);

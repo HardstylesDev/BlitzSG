@@ -89,22 +89,6 @@ public class IPlayerHandler implements Listener {
             IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
             iPlayer.getNametag().sendPacket(p);
         });
-        //if (BlitzSG.getInstance().getGameManager().getAllWaitingGames().size() == 0) {
-            //if (BlitzSG.getInstance().getStartTime() + 30000 > System.currentTimeMillis()) {
-                //new Game();
-                //Bukkit.getLogger().log(Level.FINEST, "New Game instance created by IPlayerHandler");
-            //}//
-        //}
-
-        World world = Bukkit.getWorld("world");
-        for (Player player : world.getPlayers()) {
-            IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
-            if (iPlayer.isVisibilityEnabled()) {
-                continue;
-            }
-            player.hidePlayer(p);
-        }
-
     }
 
 
@@ -188,21 +172,11 @@ public class IPlayerHandler implements Listener {
             if (uhcPlayer.isVisibilityEnabled()) {
                 uhcPlayer.setVisibilityEnabled(false);
                 p.sendMessage(ChatUtil.color("&cYou have disabled visibility"));
-                World world = Bukkit.getWorld("world");
-                for (Player player : world.getPlayers()) {
-                    if (player.getUniqueId() != p.getUniqueId()) {
-                        p.hidePlayer(player);
-                    }
-                }
+                BlitzSG.getInstance().getIPlayerManager().applyVisibility(p);
             } else {
                 uhcPlayer.setVisibilityEnabled(true);
                 p.sendMessage(ChatUtil.color("&aYou have enabled visibility"));
-                World world = Bukkit.getWorld("world");
-                for (Player player : world.getPlayers()) {
-                    if (player.getUniqueId() != p.getUniqueId()) {
-                        p.showPlayer(player);
-                    }
-                }
+                BlitzSG.getInstance().getIPlayerManager().applyVisibility(p);
             }
         } else if (e.getItem().getType() == Material.IRON_SWORD) {
             if (BlitzSG.getInstance().getGameManager().getAvailableGame() == null) {
@@ -249,8 +223,9 @@ public class IPlayerHandler implements Listener {
 
         IPlayer attacker = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getDamager().getUniqueId());
 
-        if (!(attacker.getRank() instanceof Admin) && !(attacker.getRank() instanceof Moderator) && !(attacker.getRank() instanceof Helper) && !(attacker.getRank() instanceof MvpPlus) && !(attacker.getRank() instanceof Youtuber))
+        if (!(attacker.getRank() instanceof Admin) && !(attacker.getRank() instanceof Moderator) && !(attacker.getRank() instanceof Helper) && !(attacker.getRank() instanceof MvpPlus) && !(attacker.getRank() instanceof Youtuber) && !(attacker.getRank() instanceof Mvp) && !(attacker.getRank() instanceof Owner)) {
             return;
+        }
         if (victim.isPunched()) return;
         victim.setPunched(true);
         BlitzSG.broadcast(attacker.getRank().getPrefix() + e.getDamager().getName() + " &7punched " + victim.getRank().getChatColor() + e.getEntity().getName() + " &7into the sky!", e.getDamager().getWorld());
@@ -264,4 +239,8 @@ public class IPlayerHandler implements Listener {
             }
         }.runTaskLater(BlitzSG.getInstance(), 20 * 20);
     }
+
+
+
+
 }

@@ -17,6 +17,7 @@
                     <target>8</target>
                 </configuration>
             </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -57,8 +58,15 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>6.0.6</version>
+            <version>8.0.28</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.liwk</groupId>
+            <artifactId>KarhuAPI</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/KarhuAPI.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>

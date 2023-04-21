@@ -101,6 +101,9 @@ public class GameHandler implements Listener {
         victim.setFireTicks(0);
         victim.setFallDistance(0);
         victim.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 1));
+
+        bsgPlayer.getGame().getAlivePlayers().forEach(p -> p.hidePlayer(victim));
+
         dropInventory(victim);
     }
 
