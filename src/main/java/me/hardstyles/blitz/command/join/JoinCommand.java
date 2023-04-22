@@ -33,6 +33,8 @@ public class JoinCommand extends Command {
 
     }
 
+    private boolean canStart = true;
+
     @Override
     public List<String> onTabComplete(CommandSender sender, String[] args) {
         List<String> completions = new ArrayList<>();
@@ -87,9 +89,14 @@ public class JoinCommand extends Command {
         }
         iPlayer.setLastGameRequested(System.currentTimeMillis());
 
+        if(!canStart){
+            sender.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&cThere is already a game being created."));
+            return;
+        }
 
         sender.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&aRequest successful. &eCreating a new game..."));
         Game game = new Game(new Map(gameName));
+        canStart = false;
         new BukkitRunnable() {
             int attempts = 10;
             public void run() {
@@ -104,6 +111,7 @@ public class JoinCommand extends Command {
                 } else {
                     game.addPlayer((Player) sender);
                     cancel();
+                    canStart = true;
                 }
             }
         }.runTaskTimer(BlitzSG.getInstance(), 0, 20);

@@ -79,7 +79,7 @@ public class GameHandler implements Listener {
             killer.playSound(killer.getLocation(), Sound.ORB_PICKUP, 1, 1);
             String coinMessage = ChatUtil.color("&6+" + coins + " Coins (Kill)");
 
-            if(killerPlayer.isTauntActive()){
+            if (killerPlayer.isTauntActive()) {
                 coins = coins * 2;
                 coinMessage = ChatUtil.color("&6+" + coins + " Coins (Kill) (Taunt)");
             }
@@ -99,7 +99,6 @@ public class GameHandler implements Listener {
 
         CraftPlayer craftPlayer = (CraftPlayer) victim;
 
-        victim.teleport(bsgPlayer.getGame().getMap().getLobby());
 
         victim.setAllowFlight(true);
         victim.setFlying(true);
@@ -112,6 +111,9 @@ public class GameHandler implements Listener {
         bsgPlayer.getGame().getAlivePlayers().forEach(p -> p.hidePlayer(victim));
 
         dropInventory(victim);
+
+        victim.teleport(bsgPlayer.getGame().getMap().getLobby());
+
     }
 
 
@@ -254,7 +256,13 @@ public class GameHandler implements Listener {
             return;
         }
 
-        if (bsgPlayer.getGame().getGameMode() == Game.GameMode.INGAME) return;
+        if (bsgPlayer.getGame().getGameMode() == Game.GameMode.INGAME) {
+            if(bsgPlayer.isSpectating()){
+                e.setCancelled(true);
+                return;
+            }
+            return;
+        }
         if (bsgPlayer.getGame().getGameMode() != Game.GameMode.STARTING && bsgPlayer.getGame().getGameMode() != Game.GameMode.WAITING) {
             e.setCancelled(true);
             return;
@@ -277,12 +285,22 @@ public class GameHandler implements Listener {
         if (!bsgPlayer.isInGame()) {
             e.setCancelled(true);
         }
+        if (bsgPlayer.isSpectating()) {
+            e.setCancelled(true);
+            return;
+        }
 
         if (bsgPlayer.getGame().getGameMode() == Game.GameMode.INGAME) {
             if (e instanceof EntityDamageByEntityEvent) {
                 EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
                 if (event.getDamager() instanceof Player) {
+
                     Player attacker = (Player) event.getDamager();
+                    IPlayer bsgAttacker = BlitzSG.getInstance().getIPlayerManager().getPlayer(attacker.getUniqueId());
+                    if (bsgAttacker.isSpectating()) {
+                        e.setCancelled(true);
+                        return;
+                    }
                     bsgPlayer.setLastDamage(System.currentTimeMillis());
                     bsgPlayer.setLastDamager(attacker);
                 }
@@ -292,7 +310,7 @@ public class GameHandler implements Listener {
             }
 
             // check if this damage will kill the player
-            if(bsgPlayer.isSpectating()){
+            if (bsgPlayer.isSpectating()) {
                 e.setCancelled(true);
                 return;
             }

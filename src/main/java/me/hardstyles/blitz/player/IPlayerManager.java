@@ -85,7 +85,7 @@ public class IPlayerManager {
     }
 
 
-    public void applyVisibility(Player p){
+    public void applyVisibility(Player p) {
         IPlayer iPlayer = this.getPlayer(p.getUniqueId());
         Bukkit.getServer().getOnlinePlayers().stream().filter(player -> player.getWorld().getName().equalsIgnoreCase("world")).forEach(player -> {
             IPlayer iLobby = this.getPlayer(player.getUniqueId());
@@ -148,11 +148,18 @@ public class IPlayerManager {
 
         IPlayer blitzVictim = this.getPlayer(victim.getUniqueId());
         Game g = blitzVictim.getGame();
+        if (g == null) {
+            return;
+        }
 
         double allPlayerElo = 0;
-        for (Player pl : g.getAllPlayers())
-            if (pl.getUniqueId() != victim.getUniqueId())
-                allPlayerElo += BlitzSG.getInstance().getIPlayerManager().getPlayer(pl.getUniqueId()).getElo();
+        for (Player pl : g.getAllPlayers()) {
+            if (pl.isOnline()) {
+                if (pl.getUniqueId() != victim.getUniqueId()) {
+                    allPlayerElo += BlitzSG.getInstance().getIPlayerManager().getPlayer(pl.getUniqueId()).getElo();
+                }
+            }
+        }
         double eloChange = 0;
         if (allPlayerElo > 0)
             eloChange = ((blitzVictim.getElo() * 0.1) / ((allPlayerElo / (g.getAllPlayers().size() - 1)))) * 4 + 1;

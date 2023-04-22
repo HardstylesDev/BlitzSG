@@ -504,7 +504,7 @@ public class Game {
     public void killPlayer(Player p) {
 
         alivePlayers.remove(p);
-        if (alivePlayers.size() <= 3) {
+        if (alivePlayers.size() <= 3 && !isDeathmatchStarting) {
             isDeathmatchStarting = true;
             startDeathmatchCounter(gameTime);
         }
