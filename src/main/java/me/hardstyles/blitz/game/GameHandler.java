@@ -257,7 +257,7 @@ public class GameHandler implements Listener {
         }
 
         if (bsgPlayer.getGame().getGameMode() == Game.GameMode.INGAME) {
-            if(bsgPlayer.isSpectating()){
+            if (bsgPlayer.isSpectating()) {
                 e.setCancelled(true);
                 return;
             }
@@ -370,10 +370,12 @@ public class GameHandler implements Listener {
 
             if (!(e.getDamager() instanceof Player)) {
                 if (e.getDamager() instanceof Arrow) if (((Arrow) e.getDamager()).getShooter() instanceof Player) {
+                    bsgPlayer.setLastDamager((Player) ((Arrow) e.getDamager()).getShooter());
                     if (BlitzSG.getInstance().getIPlayerManager().getPlayer(((Player) ((Arrow) e.getDamager()).getShooter()).getUniqueId()).isRobinhood()) {
                         e.setDamage(1000);
                         e.getEntity().sendMessage("&aYou were taken out in a single shot!");
                     } else e.setDamage(e.getDamage() / 2);
+
 
                     return;
                 }
