@@ -20,6 +20,10 @@ public class Rank {
         return this.position >= 6;
     }
 
+    public boolean isMvpPlus(){
+        return this.position >= 4;
+    }
+
     public boolean isVip(){
         return this.position >= 1;
     }

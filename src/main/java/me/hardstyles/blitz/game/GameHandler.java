@@ -5,6 +5,7 @@ import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.fireworks.FireworkCommand;
 import me.hardstyles.blitz.gui.KitGUI;
 import me.hardstyles.blitz.gui.StarGUI;
+import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.utils.loot.ChestUtils;
 import me.hardstyles.blitz.utils.ItemBuilder;
 import org.bukkit.*;
@@ -75,8 +76,14 @@ public class GameHandler implements Listener {
         if (killer != null) {
             IPlayer killerPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(killer.getUniqueId());
             int coins = 7 * killerPlayer.getRank().getMultiplier();
-            killer.sendMessage("§6+" + coins + " Coins (Kill)");
             killer.playSound(killer.getLocation(), Sound.ORB_PICKUP, 1, 1);
+            String coinMessage = ChatUtil.color("&6+" + coins + " Coins (Kill)");
+
+            if(killerPlayer.isTauntActive()){
+                coins = coins * 2;
+                coinMessage = ChatUtil.color("&6+" + coins + " Coins (Kill) (Taunt)");
+            }
+            killer.sendMessage(coinMessage);
             killerPlayer.addCoins(coins);
         }
 
@@ -477,6 +484,12 @@ public class GameHandler implements Listener {
     public void onBlockInteract(PlayerInteractEvent e) {
         IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
         if (!bsgPlayer.isInGame()) return;
+        if (e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_AIR) {
+            if (e.getPlayer().getItemInHand().getType() == Material.COMPASS && e.getPlayer().isSneaking()) {
+                BlitzSG.getInstance().getGameManager().taunt(e.getPlayer());
+            }
+            return;
+        }
         if (!(bsgPlayer.getGame().getGameMode() == Game.GameMode.INGAME)) return;
         if (e.getClickedBlock() != null)
             if (e.getClickedBlock().getType() == Material.CHEST || e.getClickedBlock().getType() == Material.TRAPPED_CHEST) {

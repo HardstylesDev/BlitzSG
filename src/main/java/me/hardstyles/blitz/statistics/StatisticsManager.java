@@ -3,6 +3,7 @@ package me.hardstyles.blitz.statistics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import me.hardstyles.blitz.cosmetic.Taunt;
 import me.hardstyles.blitz.kit.Kit;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.player.IPlayer;
@@ -52,7 +53,11 @@ public class StatisticsManager {
             preparedStatement.setString(8, starsToString(p));
             preparedStatement.setString(9, kitsToJson(p));
             preparedStatement.setInt(10, p.getElo());
-            preparedStatement.setInt(11, 0);
+            if(p.getTaunt() != null) {
+                preparedStatement.setString(11, p.getTaunt().getName());
+            } else {
+                preparedStatement.setNull(11, java.sql.Types.VARCHAR);
+            }
 
             Kit selectedKit = p.getSelectedKit();
             if (selectedKit != null) {
@@ -91,85 +96,7 @@ public class StatisticsManager {
             }
         });
         return new GsonBuilder().setPrettyPrinting().create().toJson(kits);
-    }
 
-    public void loadAll() {
-        try (Connection connection = BlitzSG.getInstance().getDb().getConnection();
-             Statement statement = connection.createStatement()) {
-
-            ResultSet result = statement.executeQuery("SELECT * FROM `stats`");
-
-            while (result.next()) {
-                UUID uuid = UUID.fromString(result.getString("uuid"));
-                int coins = result.getInt("coins");
-                int kills = result.getInt("kills");
-                int deaths = result.getInt("deaths");
-                int wins = result.getInt("wins");
-
-                String rankName = result.getString("rank");
-                Rank rank = (rankName != null) ? BlitzSG.getInstance().getRankManager().getRankByName(rankName) : null;
-
-                String nickName = result.getString("nickname");
-
-                String starsString = result.getString("stars");
-                HashSet<Star> stars = new HashSet<>();
-                if (starsString != null) {
-                    String[] starNames = starsString.split("\\|");
-                    for (String starName : starNames) {
-                        Star star = BlitzSG.getInstance().getStarManager().getStar(starName);
-                        if (star != null) {
-                            stars.add(star);
-                        }
-                    }
-                }
-
-                String kitsJson = result.getString("kits");
-                Aura aura = null;
-                String auraName = result.getString("aura");
-                if (auraName != null) {
-                    Aura a = BlitzSG.getInstance().getCosmeticsManager().getAuraByName(auraName);
-                    if (a != null) {
-                        aura = a;
-                    }
-                }
-
-
-                HashMap<Kit, Integer> kits = new HashMap<>();
-                if (kitsJson != null) {
-                    Type type = new TypeToken<HashMap<String, Integer>>() {
-                    }.getType();
-                    Map<String, Integer> map = new Gson().fromJson(kitsJson, type);
-                    map.forEach((kitName, level) -> {
-                        Kit kit = BlitzSG.getInstance().getKitManager().getKit(kitName);
-                        if (kit != null) {
-                            kits.put(kit, level);
-                        }
-                    });
-                }
-
-                int elo = result.getInt("elo");
-
-                String selectedKitName = result.getString("selectedKit");
-                Kit selectedKit = (selectedKitName != null) ? BlitzSG.getInstance().getKitManager().getKit(selectedKitName) : null;
-
-                IPlayer player = BlitzSG.getInstance().getIPlayerManager().getPlayer(uuid);
-                if (player != null) {
-                    player.setCoins(coins);
-                    player.setKills(kills);
-                    player.setDeaths(deaths);
-                    player.setWins(wins);
-                    player.setRank(rank);
-                    player.setStars(stars);
-                    player.setKitLevels(kits);
-                    player.setElo(elo);
-                    player.setSelectedKit(selectedKit);
-                    player.setAura(aura);
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
 
@@ -231,6 +158,14 @@ public class StatisticsManager {
                     Kit selectedKit = BlitzSG.getInstance().getKitManager().getKit(selectedKitName);
                     if (selectedKit != null) {
                         player.setSelectedKit(selectedKit);
+                    }
+                }
+
+                String tauntName = resultSet.getString("taunt");
+                if(tauntName != null) {
+                    Taunt t = BlitzSG.getInstance().getCosmeticsManager().getTauntByName(tauntName);
+                    if(t != null) {
+                        player.setTaunt(t);
                     }
                 }
 

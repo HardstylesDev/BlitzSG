@@ -23,26 +23,19 @@ public class ShopKitBasicGUI {
 
     public static void openGUI(Player p) {
         IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-
-        //Create GUI
         Inventory inv = Bukkit.createInventory(null, (int) (((BlitzSG.getInstance().getKitManager().getKits().size() + 1) / 9) + 3) * 9 + 9, "§8Basic Kit Upgrades");
-
-        //Add Items
         int firstItem = 10;
         for (Kit kit : BlitzSG.getInstance().getKitManager().getKits()) {
-            if (!(kit.getPrice(0) == 0))
+            if (!(kit.getPrice(0) == 0)) {
                 continue;
-            inv.setItem(firstItem, ItemUtils.buildItem(new ItemStack(kit.getIcon())
-                    , getName(bsgPlayer, kit)
-                    , getFullDescription(bsgPlayer, kit)));
+            }
+            inv.setItem(firstItem, ItemUtils.buildItem(new ItemStack(kit.getIcon()), getName(bsgPlayer, kit), getFullDescription(bsgPlayer, kit)));
             if ((firstItem + 2) % 9 == 0) {
                 firstItem += 3;
                 continue;
             }
             firstItem++;
         }
-
-        //Open the GUI
         BlitzSG.getInstance().getGuiManager().setInGUI(p, true);
         p.openInventory(inv);
     }

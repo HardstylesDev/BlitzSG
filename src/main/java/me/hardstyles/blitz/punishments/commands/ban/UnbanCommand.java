@@ -31,9 +31,9 @@ public class UnbanCommand extends Command {
 
     @Override
     public void onExecute(CommandSender sender, String[] args) {
-        if(sender instanceof Player) {
+        if (sender instanceof Player) {
             IPlayer p = BlitzSG.getInstance().getIPlayerManager().getPlayer(((Player) sender).getUniqueId());
-            if(!(p.getRank().canBan())) {
+            if (!(p.getRank().canBan())) {
                 sender.sendMessage(ChatUtil.color("&cYou do not have permission to use this command!"));
                 return;
             }
@@ -52,10 +52,10 @@ public class UnbanCommand extends Command {
 
         Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
             try (Connection connection = BlitzSG.getInstance().getDb().getConnection();
-                    PreparedStatement statement = connection.prepareStatement("DELETE FROM bans WHERE uuid = ?")) {
-                    statement.setString(1, target.getUniqueId().toString());
-                    statement.executeUpdate();
-                    sender.sendMessage(ChatUtil.color("&aSuccessfully unbanned " + target.getName() + "!"));
+                 PreparedStatement statement = connection.prepareStatement("DELETE FROM bans WHERE uuid = ?")) {
+                statement.setString(1, target.getUniqueId().toString());
+                statement.executeUpdate();
+                sender.sendMessage(ChatUtil.color("&aSuccessfully unbanned " + target.getName() + "!"));
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }

@@ -2,6 +2,7 @@ package me.hardstyles.blitz.player;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.hardstyles.blitz.cosmetic.Taunt;
 import me.hardstyles.blitz.kit.Kit;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.cosmetic.Aura;
@@ -12,6 +13,7 @@ import me.hardstyles.blitz.rank.Rank;
 import me.hardstyles.blitz.nametag.Nametag;
 import me.hardstyles.blitz.nickname.Nick;
 import me.hardstyles.blitz.rank.ranks.Default;
+import me.hardstyles.blitz.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -25,13 +27,12 @@ import java.util.UUID;
 @Setter
 public class IPlayer {
 
-    private boolean visibilityEnabled = true;
+    private boolean visibilityEnabled = true, tauntUsed = false;
     private Kit selectedKit;
     private int gameTaunt;
     private UUID uuid, lastMessaged;
     private PlayerMute mute;
-    private long lastFirework = System.currentTimeMillis();
-    private long lastGameRequested = System.currentTimeMillis();
+    private long lastFirework = System.currentTimeMillis(), lastGameRequested = System.currentTimeMillis(), usedTauntAt = System.currentTimeMillis();
 
     private boolean robinhood, punched, wobbuffet;
     private int gameKills;
@@ -42,6 +43,7 @@ public class IPlayer {
     private Rank rank;
     private int deaths, coins, kills, wins, elo;
     private Aura aura;
+    private Taunt taunt;
     private Nametag nametag;
 
     private HashMap<Kit, Integer> kitLevels;
@@ -83,13 +85,41 @@ public class IPlayer {
         BlitzSG.getInstance().getIPlayerManager().addPlayer(this.uuid, this);
     }
 
-    public String getName(){
+    public String getName() {
         Player p = Bukkit.getPlayer(getUuid());
-        if(p != null){
+        if (p != null) {
             return p.getName();
         }
         return Bukkit.getOfflinePlayer(getUuid()).getName();
     }
+
+    public void setTauntUsed(boolean result) {
+        this.tauntUsed = result;
+        if (result) {
+            this.usedTauntAt = System.currentTimeMillis();
+        } else {
+            this.usedTauntAt = 0;
+        }
+    }
+
+    public String getTauntStatus(){
+        if(taunt == null) {
+            return ChatUtil.color("&cUNAVAILABLE");
+        }
+        if (tauntUsed){
+            return ChatUtil.color("&cUSED");
+        }else{
+            return ChatUtil.color("&aREADY");
+        }
+    }
+
+    public boolean isTauntActive(){
+        // check 15 seconds
+        boolean active = System.currentTimeMillis() - usedTauntAt < 15000;
+        return active;
+
+    }
+
 
     public HashMap<Kit, Integer> getKits() {
         return this.kitLevels;
@@ -159,9 +189,6 @@ public class IPlayer {
             BlitzSG.getInstance().getCosmeticsManager().add(Bukkit.getPlayer(getUuid()));
         }
     }
-
-
-
 
 
     public void addWin() {

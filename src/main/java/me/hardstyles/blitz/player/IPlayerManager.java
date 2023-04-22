@@ -76,6 +76,8 @@ public class IPlayerManager {
         iPlayer.setPrefix(iPlayer.getRank().getPrefix());
         p.setPlayerListName(iPlayer.getRank().getPrefix() + p.getName());
 
+        iPlayer.setTauntUsed(false);
+
         applyVisibility(p);
 
 

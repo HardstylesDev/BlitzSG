@@ -1,8 +1,9 @@
 package me.hardstyles.blitz.cosmetic;
 
 import me.hardstyles.blitz.BlitzSG;
+import me.hardstyles.blitz.cosmetic.cosmetics.aura.*;
+import me.hardstyles.blitz.cosmetic.cosmetics.taunt.*;
 import me.hardstyles.blitz.player.IPlayer;
-import me.hardstyles.blitz.cosmetic.cosmetics.*;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -13,8 +14,11 @@ import java.util.Set;
 
 public class CosmeticsManager {
 
-    public static final Class<? extends Aura>[] AURAS = new Class[]{RainbowTrail.class, RedTrail.class, BlueTrail.class, GreenTrail.class, MyceliumTrail.class, NetherrackTrail.class, FlowerTrail.class, WheatTrail.class, RedParticle.class, GreenParticle.class, BlueParticle.class, RainbowParticle.class, SlimeParticle.class, PortalParticle.class, EnchantingParticle.class, WaterParticle.class, LavaParticle.class, RainbowDustParticle.class, SnowParticle.class};
+    public static final Class<? extends Aura>[] AURAS = new Class[]{HeartParticle.class, RainbowTrail.class, RedTrail.class, BlueTrail.class, GreenTrail.class, MyceliumTrail.class, NetherrackTrail.class, FlowerTrail.class, WheatTrail.class, RedParticle.class, GreenParticle.class, BlueParticle.class, RainbowParticle.class, SlimeParticle.class, PortalParticle.class, EnchantingParticle.class, WaterParticle.class, LavaParticle.class, RainbowDustParticle.class, SnowParticle.class};
     private final ArrayList<Aura> auras = new ArrayList<>();
+
+    public static final Class<? extends Taunt>[] TAUNTS = new Class[]{DefaultTaunt.class, RichJamesTaunt.class, CookieTaunt.class, VillagerDanceTaunt.class, FireworkTaunt.class, IRefuseTaunt.class, PigDanceTaunt.class, SheepDanceTaunt.class, BatDudeTaunt.class, WolfPackTaunt.class};
+    private final ArrayList<Taunt> taunts = new ArrayList<>();
 
 
     public Aura getAura(Player p) {
@@ -25,9 +29,17 @@ public class CosmeticsManager {
     }
 
     public CosmeticsManager() {
-        for (Class<? extends Aura> rankClass : AURAS) {
+        for (Class<? extends Aura> r : AURAS) {
             try {
-                this.auras.add(rankClass.getConstructor().newInstance());
+                this.auras.add(r.getConstructor().newInstance());
+
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+        }
+        for (Class<? extends Taunt> t : TAUNTS) {
+            try {
+                this.taunts.add(t.getConstructor().newInstance());
 
             } catch (Throwable e) {
                 e.printStackTrace();
@@ -41,6 +53,22 @@ public class CosmeticsManager {
             return r;
         }
         return null;
+    }
+
+    public Taunt getTauntByName(String name) {
+        for (Taunt r : this.taunts) {
+            if (!r.getName().equalsIgnoreCase(name) && !r.getId().equalsIgnoreCase(name)) {
+                System.out.println("not equal to " + r.getName() + " or " + r.getId() + " (name: " + name + " ) ");
+                continue;
+            };
+            return r;
+        }
+        return null;
+    }
+
+    public Set<Taunt> getTaunts() {
+        HashSet<Taunt> allModules = new HashSet<>(this.taunts);
+        return allModules;
     }
 
     ArrayList<Player> players = new ArrayList<>();

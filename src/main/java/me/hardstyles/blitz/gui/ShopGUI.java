@@ -33,6 +33,10 @@ public class ShopGUI {
                 , ChatColor.GREEN + "Auras"
                 , Arrays.asList(ChatColor.GRAY + "Cosmetic particle auras that make you stand out!")));
 
+        inv.setItem(13 + 9 + 9 + 9 + 9, ItemUtils.buildItem(new ItemStack(Material.MAGMA_CREAM, 1)
+                , ChatColor.GREEN + "Taunts"
+                , Arrays.asList(ChatColor.GRAY + "Unlock and customize your taunts.")));
+
 
         //Open the GUI
         BlitzSG.getInstance().getGuiManager().setInGUI(p, true);

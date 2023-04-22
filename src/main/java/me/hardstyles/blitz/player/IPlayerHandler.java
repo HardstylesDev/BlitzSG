@@ -223,7 +223,7 @@ public class IPlayerHandler implements Listener {
 
         IPlayer attacker = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getDamager().getUniqueId());
 
-        if (!(attacker.getRank() instanceof Admin) && !(attacker.getRank() instanceof Moderator) && !(attacker.getRank() instanceof Helper) && !(attacker.getRank() instanceof MvpPlus) && !(attacker.getRank() instanceof Youtuber) && !(attacker.getRank() instanceof Mvp) && !(attacker.getRank() instanceof Owner)) {
+        if (!(attacker.getRank().isMvpPlus())) {
             return;
         }
         if (victim.isPunched()) return;

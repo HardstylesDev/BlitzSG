@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.cosmetic.cosmetics;
+package me.hardstyles.blitz.cosmetic.cosmetics.aura;
 
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.cosmetic.Aura;

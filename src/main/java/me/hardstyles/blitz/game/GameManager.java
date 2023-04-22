@@ -5,7 +5,9 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 
 import me.hardstyles.blitz.BlitzSG;
+import me.hardstyles.blitz.cosmetic.Taunt;
 import me.hardstyles.blitz.player.IPlayer;
+import me.hardstyles.blitz.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -112,4 +114,42 @@ public class GameManager {
     }
 
 
+    public void taunt(Player player) {
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
+        if (iPlayer.getTaunt() == null) {
+            player.sendMessage(ChatUtil.color("&cYou don't have a taunt selected!"));
+            return;
+        }
+
+        if (iPlayer.isTauntUsed()) {
+            player.sendMessage(ChatUtil.color("&cYou have already used your taunt!"));
+            return;
+        }
+
+        Game g = iPlayer.getGame();
+
+        if (g == null) {
+            player.sendMessage(ChatUtil.color("&cYou must be in a game to use a taunt!"));
+            return;
+        }
+
+        if(iPlayer.isSpectating()){
+            player.sendMessage(ChatUtil.color("&cYou can't use a taunt while spectating!"));
+            return;
+        }
+
+        if (g.getGameMode() != Game.GameMode.INGAME && !iPlayer.getRank().isManager()) {
+            player.sendMessage(ChatUtil.color("&cThe taunt can only be used in a game!"));
+            return;
+        }
+
+        iPlayer.setTauntUsed(true);
+        Taunt taunt = iPlayer.getTaunt();
+        for (Player allPlayer : iPlayer.getGame().getAllPlayers()) {
+            allPlayer.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&e" + iPlayer.getRank().getPrefix() + player.getName() + " &eperformed the &l" + taunt.getName() + " Taunt&r&e!"));
+        }
+        taunt.run(player);
+
+        Bukkit.getScheduler().runTaskLater(BlitzSG.getInstance(), () -> player.sendMessage(ChatUtil.color("&eYour Taunt effect has worn off!")), 20 * 15);
+    }
 }

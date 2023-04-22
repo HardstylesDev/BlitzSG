@@ -42,7 +42,7 @@ public class ScoreboardManager extends BukkitRunnable {
                 board.add("Unlocks: &cN/A");
 
                 board.add(separator);
-                board.add("&ewww.hypixel.net");
+                board.add("&eblitzsg.lol");
             } else if (bsgPlayer.isInGame()) {
                 if (bsgPlayer.getGame().getGameMode() == Game.GameMode.WAITING) {
                     board.clear();
@@ -55,7 +55,7 @@ public class ScoreboardManager extends BukkitRunnable {
                     board.add("Kills: &a" + bsgPlayer.getGameKills());
                     board.add(separator);
                     board.add("Taunt");
-                    board.add(bsgPlayer.getGameTaunt() == -1 ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : "&cUSED"));
+                    board.add(bsgPlayer.getTauntStatus());
                 } else if (bsgPlayer.getGame().getGameMode() == Game.GameMode.INGAME) {
 
                     board.add(separator);
@@ -82,7 +82,7 @@ public class ScoreboardManager extends BukkitRunnable {
                     board.add("&fKills: &a" + bsgPlayer.getGameKills());
                     board.add(separator);
                     board.add("Taunt");
-                    board.add(bsgPlayer.getGameTaunt() == -1 ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : "&cUSED"));
+                    board.add(bsgPlayer.getTauntStatus());
 
                 } else if (bsgPlayer.getGame().getGameMode() == Game.GameMode.RESETING) {
                     if (bsgPlayer.getGame().getWinner() == null)
@@ -96,7 +96,7 @@ public class ScoreboardManager extends BukkitRunnable {
                     board.add("&fKills: &a" + bsgPlayer.getGameKills());
                     board.add(separator);
                     board.add("Taunt");
-                    board.add(bsgPlayer.getGameTaunt() == -1 ? "&cUnavailable" : (bsgPlayer.getGameTaunt() == 0 ? "&aREADY" : "&cUSED"));
+                    board.add(bsgPlayer.getTauntStatus());
 
                 }
             }

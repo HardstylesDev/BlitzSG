@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.cosmetic.cosmetics;
+package me.hardstyles.blitz.cosmetic.cosmetics.aura;
 
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.cosmetic.Aura;
@@ -10,9 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class RedTrail extends Aura {
-    public RedTrail() {
-        super("RedTrail", "Red Tron Trail", "The trail of blood!", BlitzSG.getInstance().getRankManager().getRankByName("VIP+"),new ItemStack(Material.STAINED_GLASS, 1, (byte) 14), 15);
+public class NetherrackTrail extends Aura {
+    public NetherrackTrail() {
+        super("NetherrackTrail", "Netherrack Trail", "You're officially a demon.", BlitzSG.getInstance().getRankManager().getRankByName("VIP+"),new ItemStack(Material.NETHERRACK, 1),13);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class RedTrail extends Aura {
         Block b = loc.getBlock();
         if (!b.getType().isTransparent() && b.getType().isSolid() && b.getType().isOccluding()) {
 
-            Bukkit.getOnlinePlayers().forEach(player1 -> player1.sendBlockChange(loc, Material.STAINED_GLASS, (byte) 14));
+            Bukkit.getOnlinePlayers().forEach(player1 -> player1.sendBlockChange(loc, Material.NETHERRACK, (byte) 0));
             new BukkitRunnable() {
                 @Override
                 public void run() {

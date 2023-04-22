@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.cosmetic.cosmetics;
+package me.hardstyles.blitz.cosmetic.cosmetics.aura;
 
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.cosmetic.Aura;
@@ -10,9 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class MyceliumTrail extends Aura {
-    public MyceliumTrail() {
-        super("MyceliumTrail", "Mycelium Trail", "Now just some red and white colored cows and we're all set!", BlitzSG.getInstance().getRankManager().getRankByName("VIP+"),new ItemStack(Material.MYCEL, 1),12);
+public class BlueTrail extends Aura {
+    public BlueTrail() {
+        super("BlueTrail", "Blue Tron Trail", "The trail of blue?", BlitzSG.getInstance().getRankManager().getRankByName("VIP+"), new ItemStack(Material.STAINED_GLASS, 1, (byte) 11),16);
     }
 
     @Override
@@ -21,7 +21,7 @@ public class MyceliumTrail extends Aura {
         Block b = loc.getBlock();
         if (!b.getType().isTransparent() && b.getType().isSolid() && b.getType().isOccluding()) {
 
-            Bukkit.getOnlinePlayers().forEach(player1 -> player1.sendBlockChange(loc, Material.MYCEL, (byte) 0));
+            Bukkit.getOnlinePlayers().forEach(player1 -> player1.sendBlockChange(loc, Material.STAINED_GLASS, (byte) 11));
             new BukkitRunnable() {
                 @Override
                 public void run() {
