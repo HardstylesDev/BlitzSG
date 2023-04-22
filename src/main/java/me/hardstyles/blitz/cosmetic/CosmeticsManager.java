@@ -58,7 +58,6 @@ public class CosmeticsManager {
     public Taunt getTauntByName(String name) {
         for (Taunt r : this.taunts) {
             if (!r.getName().equalsIgnoreCase(name) && !r.getId().equalsIgnoreCase(name)) {
-                System.out.println("not equal to " + r.getName() + " or " + r.getId() + " (name: " + name + " ) ");
                 continue;
             };
             return r;

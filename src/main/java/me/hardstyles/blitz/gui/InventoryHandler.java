@@ -7,6 +7,7 @@ import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.cosmetic.Aura;
 import me.hardstyles.blitz.gamestar.Star;
+import me.hardstyles.blitz.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -218,9 +219,10 @@ public class InventoryHandler implements Listener {
                 if (target != null) {
                     // teleport the player to the target
                     p.teleport(target);
-                    p.sendMessage("§aYou have been teleported to §e" + target.getName());
+                    p.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&eYou teleported to &f" + target.getName() + "&e!"));
+
                 } else {
-                    p.sendMessage("§cThat player is not online!");
+                    p.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&cThat player is no longer online!"));
                 }
             }
             p.closeInventory();

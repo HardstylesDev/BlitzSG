@@ -61,7 +61,12 @@ public class ShopKitBasicGUI {
             return desc;
         }
 
-        desc.add("§7Price: §6" + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice(uhcPlayer.getKitLevel(p))));
+        if(uhcPlayer.getKitLevel(p) == 0){
+            desc.add("§7Price: §6" + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice(uhcPlayer.getKitLevel(p) + 1)));
+        }
+        else {
+            desc.add("§7Price: §6" + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice(uhcPlayer.getKitLevel(p))));
+        }
         desc.add("");
         if (p.getPrice(uhcPlayer.getKitLevel(p)) <= uhcPlayer.getCoins())
             desc.add("§eClick to unlock!");

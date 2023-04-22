@@ -32,9 +32,14 @@ public class SpectatorGUI {
         Game game = iPlayer.getGame();
         Inventory inv = Bukkit.createInventory(null, 27, "§8Spectator Menu");
         for (Player alivePlayer : game.getAlivePlayers()) {
+            IPlayer iAlive = BlitzSG.getInstance().getIPlayerManager().getPlayer(alivePlayer.getUniqueId());
             ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
             SkullMeta meta = (SkullMeta) skull.getItemMeta();
-            meta.setDisplayName(alivePlayer.getName());
+            meta.setDisplayName(iAlive.getRank().getPrefix() + alivePlayer.getName());
+            ArrayList<String> lore = new ArrayList<>();
+            lore.add("§eHealth: §f" + alivePlayer.getHealth() + "§4❤");
+            lore.add("§eKills: §f" + iAlive.getGameKills());
+            meta.setLore(lore);
             meta.setOwner(alivePlayer.getName());
             skull.setItemMeta(meta);
             inv.addItem(skull);
