@@ -42,7 +42,7 @@ public class ScoreboardManager extends BukkitRunnable {
                 board.add("Unlocks: &cN/A");
 
                 board.add(separator);
-                board.add("&eblitzsg.lol");
+                board.add("&ewww.blitzsg.lol");
             } else if (bsgPlayer.isInGame()) {
                 if (bsgPlayer.getGame().getGameMode() == Game.GameMode.WAITING) {
                     board.clear();

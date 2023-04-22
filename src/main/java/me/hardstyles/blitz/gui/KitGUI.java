@@ -21,11 +21,27 @@ public class KitGUI {
 
         ArrayList<Kit> kits = BlitzSG.getInstance().getKitManager().getKits();
         int index = 0;
-        for (Kit kit : kits) {
-            inv.setItem(index, ItemUtils.buildItem(kit.getIcon(), ChatColor.GOLD + kit.getName(), Arrays.asList(ChatColor.GRAY + kit.getDescription())));
-            index++;
+        for (int row = 0; row < 3; row++) {
+            for (int col = 0; col < 8; col++) {
+                if (index >= kits.size()) {
+                    break;
+                }
+                Kit kit = kits.get(index);
+                inv.setItem(row * 9 + col, ItemUtils.buildItem(kit.getIcon(), ChatColor.GOLD + kit.getName(), Arrays.asList(ChatColor.GRAY + kit.getDescription())));
+                index++;
+            }
         }
-        //Open the GUI
+        // Add the remaining kit on the last row if any
+        if (index < kits.size()) {
+            for (int col = 0; col < 6; col++) {
+                if (index >= kits.size()) {
+                    break;
+                }
+                Kit kit = kits.get(index);
+                inv.setItem(18 + col, ItemUtils.buildItem(kit.getIcon(), ChatColor.GOLD + kit.getName(), Arrays.asList(ChatColor.GRAY + kit.getDescription())));
+                index++;
+            }
+        }
         BlitzSG.getInstance().getGuiManager().setInGUI(p, true);
         p.openInventory(inv);
     }

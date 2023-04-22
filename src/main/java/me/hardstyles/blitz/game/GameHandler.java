@@ -95,11 +95,11 @@ public class GameHandler implements Listener {
         bsgPlayer.addDeath();
         BlitzSG.getInstance().getIPlayerManager().handleDeathElo(victim);
 
-        victim.setGameMode(org.bukkit.GameMode.SPECTATOR);
+        victim.setGameMode(GameMode.ADVENTURE);
 
         CraftPlayer craftPlayer = (CraftPlayer) victim;
-        craftPlayer.getHandle().playerConnection.sendPacket(new net.minecraft.server.v1_8_R3.PacketPlayOutGameStateChange(3, 0));
 
+        victim.teleport(bsgPlayer.getGame().getMap().getLobby());
 
         victim.setAllowFlight(true);
         victim.setFlying(true);
@@ -427,6 +427,28 @@ public class GameHandler implements Listener {
                     }
     }*/
 
+
+    @EventHandler
+    public void onPickUp(PlayerPickupItemEvent e) {
+
+        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
+
+        if (bsgPlayer.isSpectating()) {
+            e.setCancelled(true);
+        }
+
+        if (!(e.getItem().getItemStack().getType() == Material.POTION)) {
+            return;
+        }
+        if (e.getPlayer().getInventory().firstEmpty() == -1) {
+            return;
+        }
+        e.setCancelled(true);
+        e.getPlayer().getInventory().addItem(e.getItem().getItemStack());
+        e.getItem().remove();
+        e.getPlayer().playSound(e.getItem().getLocation(), Sound.ITEM_PICKUP, (float) 0.1, (float) 1.5);
+
+    }
 
     @EventHandler
     public void playerOpenVotingMenu(PlayerInteractEvent e) {

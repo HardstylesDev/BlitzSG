@@ -77,7 +77,7 @@ public class Astronaut extends Kit {
     public Astronaut() {
 
         super(
-                "Astronaut", "One mini step for man.", new ItemBuilder(Material.CHAINMAIL_BOOTS).enchantment(Enchantment.PROTECTION_FALL, 2).amount(1).make()
+                "Astronaut", "One small step for man.", new ItemBuilder(Material.CHAINMAIL_BOOTS).enchantment(Enchantment.PROTECTION_FALL, 2).amount(1).make()
                 , Arrays.asList(96000, 100, 1000, 2000, 4000, 16000, 50000, 100000, 250000, 1000000)
                 , Arrays.asList(Arrays.asList("§7Start the game with 3x TNT.")
                         , Arrays.asList("§7Start the game with some bullshit.")

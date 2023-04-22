@@ -189,21 +189,6 @@ public class IPlayerHandler implements Listener {
     }
 
     @EventHandler
-    public void onPickUp(PlayerPickupItemEvent e) {
-        if (!(e.getItem().getItemStack().getType() == Material.POTION)) {
-            return;
-        }
-        if (e.getPlayer().getInventory().firstEmpty() == -1) {
-            return;
-        }
-        e.setCancelled(true);
-        e.getPlayer().getInventory().addItem(e.getItem().getItemStack());
-        e.getItem().remove();
-        e.getPlayer().playSound(e.getItem().getLocation(), Sound.ITEM_PICKUP, (float) 0.1, (float) 1.5);
-
-    }
-
-    @EventHandler
     public void onLobbyPunch(EntityDamageByEntityEvent e) {
         if (!e.getEntity().getWorld().getName().equalsIgnoreCase("world")) {
             return;

@@ -133,6 +133,7 @@ public class Game {
         IPlayerManager.get().resetPlayerStatus(p);
 
         iPlayer.setPrefix(ChatUtil.color("&f"));
+        p.setPlayerListName(iPlayer.getRank(true).getChatColor() + p.getName());
 
 
         if (allPlayers.contains(p)) {
@@ -142,7 +143,7 @@ public class Game {
         allPlayers.add(p);
         alivePlayers.add(p);
         p.teleport(map.getLobby().clone().add(0.5, 0, 0.5));
-        msgAll(BlitzSG.CORE_NAME + "&7" + iPlayer.getRank(true).getChatColor() + p.getName() + " &ehas joined (&b" + alivePlayers.size() + "&e/&b" + map.getSpawns().size() + "&e)!");
+        msgAll(BlitzSG.CORE_NAME + "&7" + iPlayer.getRank(true).getChatColor() + p.getName() + " &ehas joined (&d" + alivePlayers.size() + "&e/&d" + map.getSpawns().size() + "&e)!");
         for (Player allPlayer : allPlayers) {
             allPlayer.showPlayer(p);
             p.showPlayer(allPlayer);
@@ -518,42 +519,19 @@ public class Game {
             return;
         gameMode = GameMode.RESETING;
         try {
-            msgAll("&7&m------------------------------");
-            msgAll("                   &f&lBlitz SG     ");
-            msgAll("&7");
+            msgAll("&6#&7------------------&6#");
             if (draw) {
-                msgAll("                  &e&lDRAW! ");
+                msgAll("    &aDRAW! ");
             } else {
                 winner = alivePlayers.get(0);
-
                 IPlayer winnerSGPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(winner.getUniqueId());
                 winnerSGPlayer.addWin();
-                msgAll("           &e&lWinner &7- " + winnerSGPlayer.getRank(true).getChatColor() + winner.getName());
+                msgAll("    " + winnerSGPlayer.getRank(true).getChatColor() + winner.getName() + " &ahas won the Blitz Survival Games!");
             }
-            msgAll("&7");
-
-            IPlayer firstKiller = BlitzSG.getInstance().getGameManager().getTopKillers(this).get(1);
-
-            msgAll("      &e&l1st Killer &7- " + firstKiller.getRank(true).getChatColor() + Bukkit.getOfflinePlayer(BlitzSG.getInstance().getGameManager().getTopKillers(this).get(1).getUuid()).getName() + " &7- "
-                    + firstKiller.getGameKills());
-
-            if (BlitzSG.getInstance().getGameManager().getTopKillers(this).size() >= 2) {
-                IPlayer secondKiller = BlitzSG.getInstance().getGameManager().getTopKillers(this).get(2);
-
-                msgAll("      &6&l2nd Killer &7- " + secondKiller.getRank(true).getChatColor() + Bukkit.getOfflinePlayer(BlitzSG.getInstance().getGameManager().getTopKillers(this).get(2).getUuid()).getName() + " &7- "
-                        + secondKiller.getGameKills());
-            }
-            if (BlitzSG.getInstance().getGameManager().getTopKillers(this).size() >= 3) {
-                IPlayer thirdKiller = BlitzSG.getInstance().getGameManager().getTopKillers(this).get(3);
-
-                msgAll("      &c&l3rd Killer &7- " + thirdKiller.getRank(true).getChatColor() + Bukkit.getOfflinePlayer(BlitzSG.getInstance().getGameManager().getTopKillers(this).get(3).getUuid()).getName() + " &7- "
-                        + thirdKiller.getGameKills());
-            }
-            msgAll("&7&m------------------------------");
+            msgAll("&6#&7------------------&6#");
             if (!draw) {
                 BlitzSG.getInstance().getIPlayerManager().handleWinElo(this);
                 IPlayer blitzSGWinner = BlitzSG.getInstance().getIPlayerManager().getPlayer(winner.getUniqueId());
-
                 int coins = 75 * blitzSGWinner.getRank().getMultiplier();
                 blitzSGWinner.addCoins(coins);
                 winner.sendMessage(ChatColor.GOLD + "+" + coins + " Coins (Win)");
