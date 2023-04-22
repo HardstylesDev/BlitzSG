@@ -1,6 +1,7 @@
 package me.hardstyles.blitz.game;
 
 import me.hardstyles.blitz.BlitzSG;
+import me.hardstyles.blitz.gui.SpectatorGUI;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.fireworks.FireworkCommand;
 import me.hardstyles.blitz.gui.KitGUI;
@@ -113,6 +114,7 @@ public class GameHandler implements Listener {
         dropInventory(victim);
 
         victim.teleport(bsgPlayer.getGame().getMap().getLobby());
+        victim.getInventory().setItem(0, new ItemBuilder(Material.COMPASS).name("&aSpectate Menu").make());
 
     }
 
@@ -256,6 +258,10 @@ public class GameHandler implements Listener {
             return;
         }
 
+        if (bsgPlayer.getGame().getGameMode() == Game.GameMode.WAITING || bsgPlayer.getGame().getGameMode() == Game.GameMode.STARTING) {
+            e.setCancelled(true);
+            return;
+        }
         if (bsgPlayer.getGame().getGameMode() == Game.GameMode.INGAME) {
             if (bsgPlayer.isSpectating()) {
                 e.setCancelled(true);
@@ -485,7 +491,9 @@ public class GameHandler implements Listener {
             return;
         if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (e.getItem() == null) return;
-        if (e.getItem().getType() == Material.BOW) KitGUI.openGUI(p);
+        if (e.getItem().getType() == Material.BOW) {
+            KitGUI.openGUI(p);
+        }
     }
 
     @EventHandler
@@ -503,8 +511,11 @@ public class GameHandler implements Listener {
                 return;
             }
             StarGUI.openGUI(p);
+        } else if (e.getItem().getType() == Material.COMPASS) {
+            if (bsgPlayer.isSpectating()) {
+                SpectatorGUI.openGUI(p);
+            }
         }
-
     }
 
     @EventHandler

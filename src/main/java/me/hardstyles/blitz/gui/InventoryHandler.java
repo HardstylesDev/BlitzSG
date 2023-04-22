@@ -16,6 +16,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.Objects;
 
 public class InventoryHandler implements Listener {
 
@@ -48,7 +52,7 @@ public class InventoryHandler implements Listener {
         if (e.getInventory().getItem(e.getSlot()) == null) {
             return;
         }
-        if (e.getInventory().getName() == "§8Kit Selector") {
+        if (Objects.equals(e.getInventory().getName(), "§8Kit Selector")) {
             e.setCancelled(true);
             if (e.getInventory().getItem(e.getSlot()).getType() != Material.AIR) {
                 if (!iPlayer.isInGame())
@@ -197,6 +201,28 @@ public class InventoryHandler implements Listener {
             p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
 
             iPlayer.setTaunt(aura);
+            p.closeInventory();
+
+        } else if (e.getInventory().getName() == "§8Spectator Menu") {
+            e.setCancelled(true);
+            ItemStack clickedItem = e.getInventory().getItem(e.getSlot());
+            // check if item is a skull and if it is a player skull
+            if (clickedItem.getType() == Material.SKULL_ITEM && clickedItem.getDurability() == 3) {
+                // get the skull meta
+                SkullMeta skullMeta = (SkullMeta) clickedItem.getItemMeta();
+                // get the owner of the skull
+                String owner = skullMeta.getOwner();
+                // get the player from the owner
+                Player target = Bukkit.getPlayer(owner);
+                // check if the player is online
+                if (target != null) {
+                    // teleport the player to the target
+                    p.teleport(target);
+                    p.sendMessage("§aYou have been teleported to §e" + target.getName());
+                } else {
+                    p.sendMessage("§cThat player is not online!");
+                }
+            }
             p.closeInventory();
         }
         if (e.getInventory().getName() == "§8Star Selector") {
