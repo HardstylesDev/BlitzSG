@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.hardstyles.blitz.BlitzSG;
+import me.hardstyles.blitz.utils.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -58,7 +59,6 @@ public class LeaderboardManager {
         }
     }
 
-
     public void updateBlocks() {
         for (int i = 1; i <= 3; i++) {
             Location blockLoc = blocks.get(i);
@@ -71,19 +71,11 @@ public class LeaderboardManager {
                         LeaderboardPlayer player = leaderboard.get(i);
                         skull.setOwner(player.getName());
                         skull.update(true);
-                        String displayName = String.format("&a#%d &7%s", player.getPosition(), player.getName());
-                        String[] lines = {displayName};
-                        for (int j = 0; j < lines.length; j++) {
-                            String line = lines[j];
-                            if (line.length() > 15) {
-                                line = line.substring(0, 15);
-                            }
-                            signLoc.clone().add(0, j, 0).getBlock().setType(Material.WALL_SIGN);
-                            Sign sign = (Sign) signLoc.clone().add(0, j, 0).getBlock().getState();
-                            sign.setLine(1, ChatColor.translateAlternateColorCodes('&', player.getName()));
-                            sign.setLine(2, ChatColor.translateAlternateColorCodes('&', "" + player.getWins()));
-                            sign.update();
-                        }
+                        signLoc.clone().getBlock().setType(Material.WALL_SIGN);
+                        Sign sign = (Sign) signLoc.clone().add(0, 0, 0).getBlock().getState();
+                        sign.setLine(1, ChatUtil.color(player.getName()));
+                        sign.setLine(2, ChatUtil.color(String.valueOf(player.getWins())));
+                        sign.update();
                     } else {
                         skull.setOwner(null);
                         skull.update(true);
@@ -95,11 +87,11 @@ public class LeaderboardManager {
     }
 
 
-    class LeaderboardPlayer {
-        private int wins;
-        private String name;
-        private UUID uuid;
-        private int position;
+    static class LeaderboardPlayer {
+        private final int wins;
+        private final String name;
+        private final UUID uuid;
+        private final int position;
 
         public LeaderboardPlayer(int wins, UUID uuid, int position) {
             this.wins = wins;
@@ -126,8 +118,7 @@ public class LeaderboardManager {
 
                 Gson gson = new Gson();
                 JsonObject json = new JsonParser().parse(response.toString()).getAsJsonObject();
-                String name = json.get("name").getAsString();
-                return name;
+                return json.get("name").getAsString();
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;

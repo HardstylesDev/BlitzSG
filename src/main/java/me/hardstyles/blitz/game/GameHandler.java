@@ -1,11 +1,11 @@
 package me.hardstyles.blitz.game;
 
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.gui.impl.game.SpectatorGUI;
+import me.hardstyles.blitz.menu.impl.game.SpectatorGUI;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.fireworks.FireworkCommand;
-import me.hardstyles.blitz.gui.impl.game.KitGUI;
-import me.hardstyles.blitz.gui.impl.shop.StarGUI;
+import me.hardstyles.blitz.menu.impl.game.KitGUI;
+import me.hardstyles.blitz.menu.impl.shop.StarGUI;
 import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.utils.loot.ChestUtils;
 import me.hardstyles.blitz.utils.ItemBuilder;
@@ -20,6 +20,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
@@ -374,6 +375,28 @@ public class GameHandler implements Listener {
         if (storm) event.setCancelled(true);
     }
 
+
+    @EventHandler
+    public void onInventoryClick(InventoryClickEvent e){
+        Player p = (Player) e.getWhoClicked();
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        if (!iPlayer.isInGame())
+            if (!(iPlayer.getRank().isManager())) {
+                e.setCancelled(true);
+            }
+        if (e.getSlot() == 39 && p.getInventory().getHelmet() != null && p.getInventory().getHelmet().getType() == Material.TNT) {
+            e.setCancelled(true);
+            return;
+        }
+
+        if (e.getRawSlot() >= e.getInventory().getSize() || e.getRawSlot() <= -1) {
+            return;
+        }
+        if (e.getInventory().getName().contains("Kit Upgrades")) {
+            e.setCancelled(true);
+        }
+    }
+
     @EventHandler
     public void onPickUp(PlayerPickupItemEvent e) {
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
@@ -453,10 +476,9 @@ public class GameHandler implements Listener {
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
         if (!iPlayer.isInGame()) return;
         if (e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_AIR) {
-            if (e.getPlayer().getItemInHand().getType() == Material.COMPASS && e.getPlayer().isSneaking()) {
+            if (e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType() == Material.COMPASS && e.getPlayer().isSneaking()) {
                 BlitzSG.getInstance().getGameManager().taunt(e.getPlayer());
             }
-            return;
         }
         if (!(iPlayer.getGame().getGameMode() == Game.GameMode.INGAME)) return;
         if (e.getClickedBlock() != null) {

@@ -3,12 +3,11 @@ package me.hardstyles.blitz.command.world.sub;
 import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.command.SubCommand;
 import me.hardstyles.blitz.utils.ChatUtil;
-import me.hardstyles.blitz.utils.VoidGenerator;
+import me.hardstyles.blitz.utils.EmptyWorldGenerator;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class WorldCreateSubCommand extends SubCommand {
                 sender.sendMessage(ChatUtil.color("&cWorld already exists! Type /world tp " + args[1]));
                 return;
             }
-            new WorldCreator(args[1]).generator(new VoidGenerator()).createWorld();
+            new WorldCreator(args[1]).generator(new EmptyWorldGenerator()).createWorld();
             sender.sendMessage(ChatUtil.color("&aWorld created! Type /world tp " + args[1]));
         }
     }

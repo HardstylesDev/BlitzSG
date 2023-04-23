@@ -1,8 +1,8 @@
-package me.hardstyles.blitz.gui.impl.shop;
+package me.hardstyles.blitz.menu.impl.shop;
 
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.gui.MenuContainer;
-import me.hardstyles.blitz.gui.MenuItem;
+import me.hardstyles.blitz.menu.MenuContainer;
+import me.hardstyles.blitz.menu.MenuItem;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.kit.Kit;
 import me.hardstyles.blitz.kit.KitUtils;
@@ -10,6 +10,7 @@ import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.utils.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -79,7 +80,10 @@ public class ShopKitGUI {
             }
             firstItem++;
         }
-        BlitzSG.getInstance().getGuiManager().setInGUI(p, true);
+
+        MenuItem back = new MenuItem(new ItemBuilder(new ItemStack(Material.ARROW)).name("&aBack").make(), e -> ShopGUI.openGUI(p));
+        gui.setItem(gui.getBottomLeft(), back);
+
         gui.show(p);
     }
 

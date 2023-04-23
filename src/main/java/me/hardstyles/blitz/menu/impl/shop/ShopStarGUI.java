@@ -1,19 +1,19 @@
-package me.hardstyles.blitz.gui.impl.shop;
+package me.hardstyles.blitz.menu.impl.shop;
 
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.gamestar.Star;
 import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.utils.ItemBuilder;
-import me.hardstyles.blitz.gui.MenuItem;
-import me.hardstyles.blitz.gui.MenuContainer;
+import me.hardstyles.blitz.menu.MenuItem;
+import me.hardstyles.blitz.menu.MenuContainer;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class ShopStarGUI {
@@ -61,33 +61,35 @@ public class ShopStarGUI {
             firstItem++;
         }
 
-        // Open the GUI
-        BlitzSG.getInstance().getGuiManager().setInGUI(p, true);
+        MenuItem back = new MenuItem(new ItemBuilder(new ItemStack(Material.ARROW)).name("&aBack").make(), e -> ShopGUI.openGUI(p));
+        gui.setItem(gui.getBottomLeft(), back);
         gui.show(p);
     }
 
 
-    public static ArrayList<String> getFullDescription(IPlayer iPlayer, Star p) {
-        ArrayList<String> desc = new ArrayList<String>();
-        desc.add(ChatColor.RESET + p.getDescription());
-        desc.add("");
+    public static String[] getFullDescription(IPlayer iPlayer, Star p) {
+        StringBuilder builder = new StringBuilder();
+        builder.append(ChatColor.RESET).append(p.getDescription()).append("\n\n");
+
         if (iPlayer.getStars().contains(p)) {
-            desc.add("§aUNLOCKED!");
-            return desc;
+            builder.append(ChatColor.GREEN).append("UNLOCKED!");
+            return builder.toString().split("\n");
         }
+
         if (p.getPrice() == 0) {
-            desc.add("§aUNLOCKED!");
+            builder.append(ChatColor.GREEN).append("UNLOCKED!");
         } else {
-            desc.add("§7Price: §6" + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice()));
-            desc.add("");
+            builder.append(ChatColor.GRAY).append("Price: ")
+                    .append(ChatColor.GOLD).append(NumberFormat.getNumberInstance(Locale.US).format(p.getPrice()))
+                    .append("\n\n");
             if (p.getPrice() <= iPlayer.getCoins()) {
-                desc.add("§eClick to unlock!");
+                builder.append(ChatColor.YELLOW).append("Click to unlock!");
             } else {
-                desc.add("§cNot enough coins!");
+                builder.append(ChatColor.RED).append("Not enough coins!");
             }
         }
 
-        return desc;
+        return builder.toString().split("\n");
     }
 
 

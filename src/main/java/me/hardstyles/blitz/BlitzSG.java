@@ -8,6 +8,7 @@ import me.hardstyles.blitz.command.coins.SetCoinsCommand;
 import me.hardstyles.blitz.command.join.JoinCommand;
 import me.hardstyles.blitz.command.list.ListCommand;
 import me.hardstyles.blitz.command.taunt.TauntCommand;
+import me.hardstyles.blitz.command.vote.VoteCommand;
 import me.hardstyles.blitz.player.IPlayerHandler;
 import me.hardstyles.blitz.player.IPlayerManager;
 import me.hardstyles.blitz.command.fireworks.FireworkCommand;
@@ -18,8 +19,6 @@ import me.hardstyles.blitz.command.rank.RankCommand;
 import me.hardstyles.blitz.command.world.WorldCommand;
 import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.gamestar.StarManager;
-import me.hardstyles.blitz.gui.GUIManager;
-import me.hardstyles.blitz.gui.InventoryHandler;
 import me.hardstyles.blitz.kit.KitManager;
 import me.hardstyles.blitz.map.MapManager;
 import me.hardstyles.blitz.punishments.commands.ban.BanCommand;
@@ -40,7 +39,7 @@ import me.hardstyles.blitz.punishments.PunishmentManager;
 import me.hardstyles.blitz.rank.RankManager;
 import me.hardstyles.blitz.scoreboard.ScoreboardManager;
 import me.hardstyles.blitz.database.Database;
-import me.hardstyles.blitz.gui.MenuListener;
+import me.hardstyles.blitz.menu.MenuListener;
 import net.minecraft.server.v1_8_R3.EnumChatFormat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -65,7 +64,6 @@ public class BlitzSG extends JavaPlugin {
     private ScoreboardManager scoreboardManager;
     private RankManager rankManager;
     private EloManager eloManager;
-    private GUIManager guiManager;
     private GameHandler gameHandler;
     private KitManager kitManager;
     private StarManager starManager;
@@ -102,7 +100,6 @@ public class BlitzSG extends JavaPlugin {
         gameManager = new GameManager();
         scoreboardManager = new ScoreboardManager();
         eloManager = new EloManager();
-        guiManager = new GUIManager();
         starManager = new StarManager();
 
         punishmentManager = new PunishmentManager();
@@ -123,7 +120,6 @@ public class BlitzSG extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new GameMobHandler(), this);
         getServer().getPluginManager().registerEvents(new IPlayerHandler(), this);
         getServer().getPluginManager().registerEvents(new EnchantListener(), this);
-        getServer().getPluginManager().registerEvents(new InventoryHandler(), this);
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
         getServer().getPluginManager().registerEvents(scoreboardManager.getScoreboardHandler(), this);
 
@@ -159,6 +155,7 @@ public class BlitzSG extends JavaPlugin {
         new JoinCommand();
         new ListCommand();
         new TauntCommand();
+        new VoteCommand();
         Bukkit.getConsoleSender().sendMessage(ChatUtil.color("&d&lFinished Loading Commands!"));
 
     }
@@ -178,10 +175,6 @@ public class BlitzSG extends JavaPlugin {
             Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', message));
         else
             world.getPlayers().forEach(player -> player.sendMessage(ChatColor.translateAlternateColorCodes('&', message)));
-    }
-
-    public static void broadcast(String message) {
-        broadcast(message, null);
     }
 
     public static void send(Player p, String message) {

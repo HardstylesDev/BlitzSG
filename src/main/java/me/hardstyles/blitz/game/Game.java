@@ -20,6 +20,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
+import java.util.logging.Level;
 
 @Getter
 @Setter
@@ -51,7 +52,7 @@ public class Game {
     private Map map;
     private Player winner;
 
-    private HashMap<Player, Boolean> votes;
+    private HashMap<UUID, Boolean> votes;
     private ArrayList<Location> openedChests, starChests;
     private HashSet<Location> spawnUsed;
     private boolean isDeathmatchStarting = false;
@@ -144,22 +145,32 @@ public class Game {
             p.showPlayer(allPlayer);
         }
         p.setGameMode(org.bukkit.GameMode.SURVIVAL);
-        if (alivePlayers.size() >= 2 && gameMode.equals(GameMode.WAITING)) {
+        int requiredPlayers = 0;
+        // set required players to 3/4 of the map size
+        if (map.getSpawns().size() >= 4) {
+            requiredPlayers = (int) Math.ceil(map.getSpawns().size() * 0.75);
+        } else {
+            requiredPlayers = 2;
+        }
+        if (alivePlayers.size() >= requiredPlayers && gameMode.equals(GameMode.WAITING)) {
             startLobbyCountdown();
         }
         p.setFlying(false);
         p.setAllowFlight(false);
+        try {
+            Bukkit.getServer().getOnlinePlayers().stream().filter(player -> player.getWorld().getName().equalsIgnoreCase(map.getMapId())).forEach(player -> {
+                p.showPlayer(player);
+                player.showPlayer(p);
+            });
 
+            Bukkit.getServer().getOnlinePlayers().stream().filter(player -> !player.getWorld().getName().equalsIgnoreCase(map.getMapId())).forEach(player -> {
+                player.hidePlayer(p);
+                p.hidePlayer(player);
+            });
+        } catch (ConcurrentModificationException e){
+            Bukkit.getLogger().log(Level.WARNING, "ConcurrentModificationException in Game.addPlayer(Player p)");
+        }
 
-        Bukkit.getServer().getOnlinePlayers().stream().filter(player -> player.getWorld().getName().equalsIgnoreCase(map.getMapId())).forEach(player -> {
-            p.showPlayer(player);
-            player.showPlayer(p);
-        });
-
-        Bukkit.getServer().getOnlinePlayers().stream().filter(player -> !player.getWorld().getName().equalsIgnoreCase(map.getMapId())).forEach(player -> {
-            player.hidePlayer(p);
-            p.hidePlayer(player);
-        });
 
 
     }
@@ -178,6 +189,42 @@ public class Game {
         iPlayer.setGameSpawn(playerSpawn.clone().add(0.5, 1.0, 0.5));
 
         p.teleport(playerSpawn.clone().add(0.5, 1.0, 0.5));
+    }
+
+
+    public void castVote(Player p, boolean vote) {
+        if (allPlayers.size() < 2) {
+            p.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&cThere must be at least 2 players to start the game!"));
+            return;
+        }
+        if (votes.containsKey(p.getUniqueId())) {
+            p.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&cYou have already voted!"));
+            return;
+        }
+        votes.put(p.getUniqueId(), vote);
+        p.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&eYou have voted to " + (vote ? "&a&lSTART &ethe game!" : "&c&lWAIT &efor more players!")));
+
+        int requiredVotes = (int) Math.ceil(allPlayers.size() * 0.75);
+        int yesVotes = 0;
+        int noVotes = 0;
+        for (boolean b : votes.values()) {
+            if (b) {
+                yesVotes++;
+            } else {
+                noVotes++;
+            }
+        }
+        if (yesVotes - noVotes >= requiredVotes) {
+            startLobbyCountdown();
+        } else {
+            String voteMessage;
+            if (noVotes > 0) {
+                voteMessage = BlitzSG.CORE_NAME + "&6" + yesVotes + " &evotes to start the game, &c" + noVotes + " &evotes to wait!";
+            } else {
+                voteMessage = BlitzSG.CORE_NAME + "&6" + yesVotes + "&e/&6" + requiredVotes + " &evotes to start the game!";
+            }
+            p.sendMessage(ChatUtil.color(voteMessage));
+        }
     }
 
     public void exit(Player p) {

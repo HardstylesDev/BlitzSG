@@ -1,18 +1,17 @@
-package me.hardstyles.blitz.gui.impl.cosmetics;
+package me.hardstyles.blitz.menu.impl.cosmetics;
 
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.gui.MenuContainer;
-import me.hardstyles.blitz.gui.MenuItem;
+import me.hardstyles.blitz.menu.MenuContainer;
+import me.hardstyles.blitz.menu.MenuItem;
+import me.hardstyles.blitz.menu.impl.shop.ShopGUI;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.cosmetic.Aura;
 import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.utils.ItemBuilder;
-import me.hardstyles.blitz.utils.ItemUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -57,6 +56,8 @@ public class AuraGUI {
             }
             index++;
         }
+        MenuItem back = new MenuItem(new ItemBuilder(new ItemStack(Material.ARROW)).name("&aBack").make(), e -> ShopGUI.openGUI(p));
+        gui.setItem(gui.getBottomLeft(), back);
 
         gui.show(p);
     }

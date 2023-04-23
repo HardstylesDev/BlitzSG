@@ -1,6 +1,6 @@
 package me.hardstyles.blitz.player;
 
-import me.hardstyles.blitz.gui.impl.shop.ShopGUI;
+import me.hardstyles.blitz.menu.impl.shop.ShopGUI;
 import me.hardstyles.blitz.utils.BookUtility;
 import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.BlitzSG;
@@ -141,24 +141,24 @@ public class IPlayerHandler implements Listener {
             bookUtility.author("BlitzSG");
             ArrayList<String> pages = new ArrayList<>();
             StringBuilder sb = new StringBuilder();
-            sb.append("&7Kills: &a" + iPlayer.getKills());
-            sb.append("\n&7Wins: &a" + iPlayer.getWins());
-            sb.append("\n&7Deaths: &a" + iPlayer.getDeaths());
+            sb.append("&7Kills: &a").append(iPlayer.getKills());
+            sb.append("\n&7Wins: &a").append(iPlayer.getWins());
+            sb.append("\n&7Deaths: &a").append(iPlayer.getDeaths());
             double kdr = (double) iPlayer.getKills() / iPlayer.getDeaths();
             kdr = Math.round(kdr * 100.0) / 100.0;
-            sb.append("\n&7K/D: &a" + kdr);
+            sb.append("\n&7K/D: &a").append(kdr);
             sb.append("\n");
-            sb.append("\n&7Coins: &a" + iPlayer.getCoins());
+            sb.append("\n&7Coins: &a").append(iPlayer.getCoins());
             sb.append("\n");
-            sb.append("\n&7Rank: &a" + iPlayer.getRank(true).getPrefix());
-            sb.append("\n&7Kit: &a" + (iPlayer.getSelectedKit() == null ? "None" : iPlayer.getSelectedKit().getName()));
-            sb.append("\n&7Aura: &a" + (iPlayer.getAura() == null ? "None" : iPlayer.getAura().getName()));
+            sb.append("\n&7Rank: &a").append(iPlayer.getRank(true).getPrefix());
+            sb.append("\n&7Kit: &a").append(iPlayer.getSelectedKit() == null ? "None" : iPlayer.getSelectedKit().getName());
+            sb.append("\n&7Aura: &a").append(iPlayer.getAura() == null ? "None" : iPlayer.getAura().getName());
             if(iPlayer.getMute() != null) {
                 if(iPlayer.getMute().isMuted()) {
                     sb.append("\n");
                     sb.append("\n&7Mute: &cMuted");
-                    sb.append("\n&7Reason: &c" + iPlayer.getMute().getReason());
-                    sb.append("\n&7Expires: &c" + ChatUtil.formatDate(iPlayer.getMute().getEndTime()));
+                    sb.append("\n&7Reason: &c").append(iPlayer.getMute().getReason());
+                    sb.append("\n&7Expires: &c").append(ChatUtil.formatDate(iPlayer.getMute().getEndTime()));
                 }
             }
             pages.add(ChatUtil.color(sb.toString()));

@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.gui;
+package me.hardstyles.blitz.menu;
 
 
 import org.bukkit.ChatColor;
@@ -19,6 +19,7 @@ public class MenuContainer {
     private Map<Integer, MenuItem> items;
     private Consumer<InventoryOpenEvent> onOpen = null;
     private Consumer<InventoryCloseEvent> onClose = null;
+    private int rows;
 
     private boolean registered;
 
@@ -27,6 +28,7 @@ public class MenuContainer {
 
         this.inv = Bukkit.createInventory(null, rows * 9, name);
         this.items = new HashMap<>(rows * 9);
+        this.rows = rows;
 
 
         windows.put(name, this);
@@ -35,18 +37,17 @@ public class MenuContainer {
     }
 
     public void setItem(int slot, MenuItem item) {
-
         this.items.put(slot, item);
         this.inv.setItem(slot, item.getBukkitItem());
     }
 
     public void setItem(int x, int y, MenuItem item) {
-        setItem(x + y*9, item);
+        setItem(x + y * 9, item);
     }
 
     public void addItem(MenuItem menuItem) {
-        for(int i = 0; i < this.inv.getSize(); i++) {
-            if(this.inv.getItem(i) == null) {
+        for (int i = 0; i < this.inv.getSize(); i++) {
+            if (this.inv.getItem(i) == null) {
                 setItem(i, menuItem);
                 return;
             }
@@ -59,31 +60,28 @@ public class MenuContainer {
     }
 
     public MenuItem getItem(int x, int y) {
-        return getItem(x*9 + y);
+        return getItem(x * 9 + y);
     }
 
-    public void setOpenEvent(Consumer<InventoryOpenEvent> e) {
+    public void onOpen(Consumer<InventoryOpenEvent> e) {
         this.onOpen = e;
     }
 
     @Deprecated
     void callOpen(InventoryOpenEvent e) {
-        if(onOpen != null) onOpen.accept(e);
+        if (onOpen != null) onOpen.accept(e);
     }
 
-    public void setCloseEvent(Consumer<InventoryCloseEvent> e) {
+    public void onClose(Consumer<InventoryCloseEvent> e) {
         this.onClose = e;
     }
 
     @Deprecated
     void callClosed(InventoryCloseEvent e) {
-        if(onClose != null) onClose.accept(e);
+        if (onClose != null) onClose.accept(e);
     }
 
     @Deprecated
-    /**
-     * @deprecated only use if you know what you're doing
-     */
     public Inventory getBukkitInventory() {
         return this.inv;
     }
@@ -92,6 +90,10 @@ public class MenuContainer {
         Inventory inv = Bukkit.createInventory(h, getBukkitInventory().getSize(), getBukkitInventory().getTitle());
         inv.setContents(getBukkitInventory().getContents());
         h.openInventory(inv);
+    }
+
+    public void open(HumanEntity h) {
+        show(h);
     }
 
     public void unregister() {
@@ -105,9 +107,15 @@ public class MenuContainer {
     }
 
     private String getValidName(String name) {
-        if(windows.containsKey(name)) return getValidName(name + ChatColor.RESET);
+        if (windows.containsKey(name)) return getValidName(name + ChatColor.RESET);
         else return name;
     }
 
+    public int getRows() {
+        return rows;
+    }
 
+    public int getBottomLeft() {
+        return rows * 9 - 9;
+    }
 }

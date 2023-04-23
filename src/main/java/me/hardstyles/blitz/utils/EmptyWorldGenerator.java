@@ -1,12 +1,13 @@
 package me.hardstyles.blitz.utils;
 
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.generator.ChunkGenerator;
 
 import java.util.Arrays;
 import java.util.Random;
 
-public class VoidGenerator extends ChunkGenerator {
+public class EmptyWorldGenerator extends ChunkGenerator {
     @Override
     public byte[][] generateBlockSections(World world, Random random, int cx, int cz, ChunkGenerator.BiomeGrid biomes)
     {
@@ -19,5 +20,15 @@ public class VoidGenerator extends ChunkGenerator {
             chunk[4][0] = (byte) 1;
 
         return chunk;
+    }
+
+    @Override
+    public boolean canSpawn(World world, int x, int z) {
+        return true;
+    }
+
+    @Override
+    public Location getFixedSpawnLocation(World world, Random random) {
+        return new Location(world, 0, 100, 0);
     }
 }

@@ -1,11 +1,11 @@
-package me.hardstyles.blitz.gui.impl.shop;
+package me.hardstyles.blitz.menu.impl.shop;
 
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.gamestar.Star;
 import me.hardstyles.blitz.utils.ItemBuilder;
-import me.hardstyles.blitz.gui.MenuItem;
-import me.hardstyles.blitz.gui.MenuContainer;
+import me.hardstyles.blitz.menu.MenuItem;
+import me.hardstyles.blitz.menu.MenuContainer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -35,13 +35,14 @@ public class StarGUI {
                     return;
                 }
                 if (star.getPrice() > 0 && !(iPlayer.getStars().contains(star))) {
-                    BlitzSG.send(p, "&cYou don't have this star unlocked!");
+                    p.sendMessage(ChatColor.RED + "You don't have this star unlocked!");
                     return;
                 }
                 if (!p.getInventory().contains(Material.NETHER_STAR)) {
-                    p.sendMessage(BlitzSG.CORE_NAME + ChatColor.RED + "HELL NAWH! You need a Nether Star to use this star!");
+                    p.sendMessage(BlitzSG.CORE_NAME + ChatColor.RED + "You need a Nether Star to use this star! " + ChatColor.GRAY + "(Nice try though)");
                     return;
                 }
+
                 iPlayer.getGame().message(BlitzSG.CORE_NAME + iPlayer.getRank(true).getChatColor() + p.getName() + " &6BLITZ! &e" + star.getName());
 
                 star.run(p);
@@ -51,6 +52,8 @@ public class StarGUI {
             gui.setItem(index, 1, menuItem);
             index++;
         }
+        MenuItem back = new MenuItem(new ItemBuilder(new ItemStack(Material.ARROW)).name("&aBack").make(), e -> ShopGUI.openGUI(p));
+        gui.setItem(gui.getBottomLeft(), back);
         gui.show(p);
 
     }

@@ -116,7 +116,7 @@ public class ItemBuilder {
         if (lores == null) {
             lores = new ArrayList<>();
         }
-        lores.add(lore);
+        lores.add(ChatColor.translateAlternateColorCodes('&', lore));
         meta().setLore(lores);
         make().setItemMeta(meta());
         return this;

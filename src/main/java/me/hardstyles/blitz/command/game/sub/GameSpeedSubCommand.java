@@ -41,16 +41,16 @@ public class GameSpeedSubCommand extends SubCommand {
         }
 
         long interval = 10L;
-        if (args.length == 1) {
+        if (args.length == 2) {
             try {
-                interval = Long.parseLong(args[0]);
+                interval = Long.parseLong(args[1]);
             } catch (NumberFormatException e) {
                 p.sendMessage(ChatUtil.color("&cInvalid number!"));
                 return;
             }
         }
         game.setINTERVAL(interval);
-        p.sendMessage(ChatUtil.color("&eSet the game speed to &6" + interval + " &aticks!"));
+        p.sendMessage(ChatUtil.color("&eSet the game speed to &6" + interval + " &aticks! &7or &6" + (interval / 20) + " &7seconds!"));
 
 
 

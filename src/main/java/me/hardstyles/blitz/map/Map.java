@@ -5,12 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.utils.VoidGenerator;
+import me.hardstyles.blitz.utils.EmptyWorldGenerator;
 import org.apache.commons.io.FileUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 import java.io.File;
@@ -99,7 +96,7 @@ public class Map {
     }
 
     public void load() {
-        this.world = new WorldCreator(mapId).generator(new VoidGenerator()).createWorld();
+        this.world = new WorldCreator(mapId).generator(new EmptyWorldGenerator()).type(WorldType.FLAT).createWorld();
         this.world.setKeepSpawnInMemory(false);
     }
 }

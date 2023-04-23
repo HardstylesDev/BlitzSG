@@ -1,9 +1,9 @@
-package me.hardstyles.blitz.gui.impl.shop;
+package me.hardstyles.blitz.menu.impl.shop;
 
-import me.hardstyles.blitz.gui.MenuContainer;
-import me.hardstyles.blitz.gui.MenuItem;
-import me.hardstyles.blitz.gui.impl.cosmetics.AuraGUI;
-import me.hardstyles.blitz.gui.impl.cosmetics.TauntGUI;
+import me.hardstyles.blitz.menu.MenuContainer;
+import me.hardstyles.blitz.menu.MenuItem;
+import me.hardstyles.blitz.menu.impl.cosmetics.AuraGUI;
+import me.hardstyles.blitz.menu.impl.cosmetics.TauntGUI;
 import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.utils.ItemBuilder;
 import org.bukkit.Material;
@@ -20,11 +20,14 @@ public class ShopGUI {
         MenuItem taunts = new MenuItem(new ItemBuilder(new ItemStack(Material.MAGMA_CREAM)).name("&aTaunt Selector").make(), e -> TauntGUI.openGUI(p));
         MenuItem auras = new MenuItem(new ItemBuilder(new ItemStack(Material.BLAZE_POWDER)).name("&aAura Selector").make(), e -> AuraGUI.openGUI(p));
 
+        MenuItem close = new MenuItem(new ItemBuilder(new ItemStack(Material.REDSTONE_BLOCK)).name("&cClose").make(), e -> p.closeInventory());
+
         gui.setItem(11, basic);
         gui.setItem(13, stars);
         gui.setItem(15, advanced);
         gui.setItem(30, auras);
         gui.setItem(32, taunts);
+        gui.setItem(49, close);
 
         gui.show(p);
     }

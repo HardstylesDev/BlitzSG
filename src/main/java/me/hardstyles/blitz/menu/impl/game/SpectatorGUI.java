@@ -1,9 +1,9 @@
-package me.hardstyles.blitz.gui.impl.game;
+package me.hardstyles.blitz.menu.impl.game;
 
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.game.Game;
-import me.hardstyles.blitz.gui.MenuContainer;
-import me.hardstyles.blitz.gui.MenuItem;
+import me.hardstyles.blitz.menu.MenuContainer;
+import me.hardstyles.blitz.menu.MenuItem;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.utils.ChatUtil;
 import org.bukkit.ChatColor;
