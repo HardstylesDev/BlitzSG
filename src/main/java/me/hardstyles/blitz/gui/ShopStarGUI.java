@@ -41,11 +41,11 @@ public class ShopStarGUI {
     }
 
 
-    public static ArrayList<String> getFullDescription(IPlayer uhcPlayer, Star p) {
+    public static ArrayList<String> getFullDescription(IPlayer iPlayer, Star p) {
         ArrayList<String> desc = new ArrayList<String>();
         desc.add(ChatColor.RESET + p.getDescription());
         desc.add("");
-        if (uhcPlayer.getStars().contains(p)) {
+        if (iPlayer.getStars().contains(p)) {
             desc.add("§aUNLOCKED!");
             return desc;
         }
@@ -54,7 +54,7 @@ public class ShopStarGUI {
         } else {
             desc.add("§7Price: §6" + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice()));
             desc.add("");
-            if (p.getPrice() <= uhcPlayer.getCoins()) {
+            if (p.getPrice() <= iPlayer.getCoins()) {
                 desc.add("§eClick to unlock!");
             } else {
                 desc.add("§cNot enough coins!");

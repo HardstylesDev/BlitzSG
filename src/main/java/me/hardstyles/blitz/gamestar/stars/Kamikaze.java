@@ -40,9 +40,9 @@ public class Kamikaze extends Star {
                         return;
                     }
                     if (time >= 24 && time < 29)
-                        user.getGame().msgAll(BlitzSG.CORE_NAME + "&eExploding in " + (29 - time) + " second" + (((29 - time) == 1) ? "" : "s") + "!");
+                        user.getGame().message(BlitzSG.CORE_NAME + "&eExploding in " + (29 - time) + " second" + (((29 - time) == 1) ? "" : "s") + "!");
                     if (time == 29) {
-                        user.getGame().msgAll(BlitzSG.CORE_NAME + "&6BOOM!");
+                        user.getGame().message(BlitzSG.CORE_NAME + "&6BOOM!");
                         p.getWorld().createExplosion(p.getLocation().getX(), p.getLocation().getY(), p.getLocation().getZ(), 20, true, false);
                         List<Entity> a = p.getNearbyEntities(10, 10, 10);
                         for (Entity entity : a) {

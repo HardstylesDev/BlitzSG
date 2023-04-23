@@ -209,15 +209,10 @@ public class InventoryHandler implements Listener {
             ItemStack clickedItem = e.getInventory().getItem(e.getSlot());
             // check if item is a skull and if it is a player skull
             if (clickedItem.getType() == Material.SKULL_ITEM && clickedItem.getDurability() == 3) {
-                // get the skull meta
                 SkullMeta skullMeta = (SkullMeta) clickedItem.getItemMeta();
-                // get the owner of the skull
                 String owner = skullMeta.getOwner();
-                // get the player from the owner
                 Player target = Bukkit.getPlayer(owner);
-                // check if the player is online
                 if (target != null) {
-                    // teleport the player to the target
                     p.teleport(target);
                     p.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&eYou teleported to &f" + target.getName() + "&e!"));
 
@@ -245,14 +240,11 @@ public class InventoryHandler implements Listener {
                 BlitzSG.send(p, "&cYou don't have this star unlocked!");
                 return;
             }
-
-            // check if p has a nether star in inventory
             if (!p.getInventory().contains(Material.NETHER_STAR)) {
                 p.sendMessage(BlitzSG.CORE_NAME + ChatColor.RED + "HELL NAWH! You need a Nether Star to use this star!");
                 return;
             }
-
-            iPlayer.getGame().msgAll(BlitzSG.CORE_NAME + iPlayer.getRank(true).getChatColor() + p.getName() + " &6BLITZ! &e" + star.getName());
+            iPlayer.getGame().message(BlitzSG.CORE_NAME + iPlayer.getRank(true).getChatColor() + p.getName() + " &6BLITZ! &e" + star.getName());
             p.closeInventory();
             star.run(p);
         }

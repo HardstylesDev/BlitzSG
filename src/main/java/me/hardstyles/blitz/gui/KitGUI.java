@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class KitGUI {
 
     public static void openGUI(Player p) {
-        IPlayer uhcPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
 
         Inventory inv = Bukkit.createInventory(null, 27, "§8Kit Selector");
 

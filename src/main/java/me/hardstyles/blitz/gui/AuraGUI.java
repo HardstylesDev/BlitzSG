@@ -52,11 +52,11 @@ public class AuraGUI {
     }
 
 
-    public static ArrayList<String> getFullDescription(IPlayer uhcPlayer, Aura p) {
+    public static ArrayList<String> getFullDescription(IPlayer iPlayer, Aura p) {
         ArrayList<String> desc = new ArrayList<String>();
         desc.add(ChatColor.GRAY + p.getDescription());
         desc.add("");
-        if (uhcPlayer.getAura() == p) {
+        if (iPlayer.getAura() == p) {
             desc.add("§aSELECTED!");
             return desc;
         }

@@ -131,37 +131,37 @@ public class IPlayerHandler implements Listener {
     @EventHandler
     public void playerLobbyInteractEvent(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        IPlayer uhcPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        if (uhcPlayer.isInGame()) return;
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        if (iPlayer.isInGame()) return;
         if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (e.getItem() == null) return;
-        if (uhcPlayer.getRank().isManager() && p.getGameMode() == GameMode.CREATIVE) return;
+        if (iPlayer.getRank().isManager() && p.getGameMode() == GameMode.CREATIVE) return;
         e.setCancelled(true);
         if (e.getItem().getType() == Material.EMERALD) ShopGUI.openGUI(p);
         if(e.getItem().getType() == Material.PAINTING) {
             BookUtility bookUtility = new BookUtility();
-            bookUtility.title("" + uhcPlayer.getRank(true).getPrefix() + p.getName() + "'s Profile");
+            bookUtility.title("" + iPlayer.getRank(true).getPrefix() + p.getName() + "'s Profile");
             bookUtility.author("BlitzSG");
             ArrayList<String> pages = new ArrayList<>();
             StringBuilder sb = new StringBuilder();
-            sb.append("&7Kills: &a" + uhcPlayer.getKills());
-            sb.append("\n&7Wins: &a" + uhcPlayer.getWins());
-            sb.append("\n&7Deaths: &a" + uhcPlayer.getDeaths());
-            double kdr = (double) uhcPlayer.getKills() / uhcPlayer.getDeaths();
+            sb.append("&7Kills: &a" + iPlayer.getKills());
+            sb.append("\n&7Wins: &a" + iPlayer.getWins());
+            sb.append("\n&7Deaths: &a" + iPlayer.getDeaths());
+            double kdr = (double) iPlayer.getKills() / iPlayer.getDeaths();
             kdr = Math.round(kdr * 100.0) / 100.0;
             sb.append("\n&7K/D: &a" + kdr);
             sb.append("\n");
-            sb.append("\n&7Coins: &a" + uhcPlayer.getCoins());
+            sb.append("\n&7Coins: &a" + iPlayer.getCoins());
             sb.append("\n");
-            sb.append("\n&7Rank: &a" + uhcPlayer.getRank(true).getPrefix());
-            sb.append("\n&7Kit: &a" + (uhcPlayer.getSelectedKit() == null ? "None" : uhcPlayer.getSelectedKit().getName()));
-            sb.append("\n&7Aura: &a" + (uhcPlayer.getAura() == null ? "None" : uhcPlayer.getAura().getName()));
-            if(uhcPlayer.getMute() != null) {
-                if(uhcPlayer.getMute().isMuted()) {
+            sb.append("\n&7Rank: &a" + iPlayer.getRank(true).getPrefix());
+            sb.append("\n&7Kit: &a" + (iPlayer.getSelectedKit() == null ? "None" : iPlayer.getSelectedKit().getName()));
+            sb.append("\n&7Aura: &a" + (iPlayer.getAura() == null ? "None" : iPlayer.getAura().getName()));
+            if(iPlayer.getMute() != null) {
+                if(iPlayer.getMute().isMuted()) {
                     sb.append("\n");
                     sb.append("\n&7Mute: &cMuted");
-                    sb.append("\n&7Reason: &c" + uhcPlayer.getMute().getReason());
-                    sb.append("\n&7Expires: &c" + ChatUtil.formatDate(uhcPlayer.getMute().getEndTime()));
+                    sb.append("\n&7Reason: &c" + iPlayer.getMute().getReason());
+                    sb.append("\n&7Expires: &c" + ChatUtil.formatDate(iPlayer.getMute().getEndTime()));
                 }
             }
             pages.add(ChatUtil.color(sb.toString()));
@@ -169,12 +169,12 @@ public class IPlayerHandler implements Listener {
             bookUtility.open(p);
         }
         if (e.getItem().getType() == Material.WATCH) {
-            if (uhcPlayer.isVisibilityEnabled()) {
-                uhcPlayer.setVisibilityEnabled(false);
+            if (iPlayer.isVisibilityEnabled()) {
+                iPlayer.setVisibilityEnabled(false);
                 p.sendMessage(ChatUtil.color("&cYou have disabled visibility"));
                 BlitzSG.getInstance().getIPlayerManager().applyVisibility(p);
             } else {
-                uhcPlayer.setVisibilityEnabled(true);
+                iPlayer.setVisibilityEnabled(true);
                 p.sendMessage(ChatUtil.color("&aYou have enabled visibility"));
                 BlitzSG.getInstance().getIPlayerManager().applyVisibility(p);
             }

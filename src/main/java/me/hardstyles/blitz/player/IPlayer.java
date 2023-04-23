@@ -238,15 +238,15 @@ public class IPlayer {
     }
 
     public boolean isInGame() {
-        return BlitzSG.getInstance().getIPlayerManager().getUhcPlayerGame(this) != null;
+        return BlitzSG.getInstance().getIPlayerManager().getGame(this) != null;
     }
 
     public Game getGame() {
-        return BlitzSG.getInstance().getIPlayerManager().getUhcPlayerGame(this);
+        return BlitzSG.getInstance().getIPlayerManager().getGame(this);
     }
 
     public void setGame(Game g) {
-        BlitzSG.getInstance().getIPlayerManager().setUhcPlayerGame(this, g);
+        BlitzSG.getInstance().getIPlayerManager().setGame(this, g);
     }
 
     public void addElo(int eloChange) {

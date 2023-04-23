@@ -64,20 +64,20 @@ public class Nickname {
                 ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(player.getBukkitEntity().getEntityId()));
                 ((CraftPlayer) p2).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(offlineplayer.getBukkitEntity().getEntityId()));
             }
-            IPlayer uhcPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-            if(uhcPlayer.getNick() == null){
-                uhcPlayer.setNick(new Nick(s, null, null, true));
+            IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+            if(iPlayer.getNick() == null){
+                iPlayer.setNick(new Nick(s, null, null, true));
 
             }
-            uhcPlayer.getNick().setNickName(s);
-            uhcPlayer.getNick().setNicked(true);
-            uhcPlayer.getNick().setSkinValue(skin[0]);
-            uhcPlayer.getNick().setSkinSignature(skin[1]);
+            iPlayer.getNick().setNickName(s);
+            iPlayer.getNick().setNicked(true);
+            iPlayer.getNick().setSkinValue(skin[0]);
+            iPlayer.getNick().setSkinSignature(skin[1]);
             return;
         }
-        IPlayer uhcPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
 
-        if (uhcPlayer.getNick().getSkinSignature() == null) return;
+        if (iPlayer.getNick().getSkinSignature() == null) return;
         setSkinForSelf(p);
         refresh(p);
         setPlayerNameTag(p, s);
@@ -85,9 +85,9 @@ public class Nickname {
         //removeOfflinePlayer(p.getDisplayName());
 
 
-        uhcPlayer.setNickName(s);
+        iPlayer.setNickName(s);
 
-        p.setPlayerListName(uhcPlayer.getRank(true).getPrefix() + p.getName());
+        p.setPlayerListName(iPlayer.getRank(true).getPrefix() + p.getName());
 
     }
 
@@ -114,11 +114,11 @@ public class Nickname {
     }
 
     public void unnick(Player p) {
-        IPlayer uhcPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        uhcPlayer.setNickName(null);
-        uhcPlayer.getNick().setNicked(false);
-        uhcPlayer.getNick().setNickName(null);
-        uhcPlayer.setNick(null);
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        iPlayer.setNickName(null);
+        iPlayer.getNick().setNicked(false);
+        iPlayer.getNick().setNickName(null);
+        iPlayer.setNick(null);
         p.kickPlayer(ChatColor.GREEN + "Please rejoin");
 
     }

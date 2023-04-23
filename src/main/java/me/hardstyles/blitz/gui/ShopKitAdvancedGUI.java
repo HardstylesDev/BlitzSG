@@ -61,27 +61,27 @@ public class ShopKitAdvancedGUI {
             return "§c" + p.getName() + KitUtils.getKitTag(iPlayer.getKitLevel(p) + 1);
     }
 
-    public static ArrayList<String> getFullDescription(IPlayer uhcPlayer, Kit p) {
+    public static ArrayList<String> getFullDescription(IPlayer iPlayer, Kit p) {
         ArrayList<String> desc = new ArrayList<String>();
 
-        getItemDescription(p, uhcPlayer.getKitLevel(p)).forEach(s -> desc.add(ChatColor.GRAY + s.replaceAll("" + ChatColor.RESET, "")));
+        getItemDescription(p, iPlayer.getKitLevel(p)).forEach(s -> desc.add(ChatColor.GRAY + s.replaceAll("" + ChatColor.RESET, "")));
         desc.add("");
-        if (p.getPrice(uhcPlayer.getKitLevel(p)) == -1) {
+        if (p.getPrice(iPlayer.getKitLevel(p)) == -1) {
             desc.add("§aMAX LEVEL!");
             return desc;
         }
-        if (uhcPlayer.getKitLevel(p) == 0 && p.getPrice(0) > 0) {
-            if (uhcPlayer.getRank().getPosition() >= p.getRequiredRank().getPosition()) {
+        if (iPlayer.getKitLevel(p) == 0 && p.getPrice(0) > 0) {
+            if (iPlayer.getRank().getPosition() >= p.getRequiredRank().getPosition()) {
                 desc.add("§eCick to unlock!");
                 desc.add("");
-                desc.add("§7This is free because you are a " + uhcPlayer.getRank().getRankFormatted());
+                desc.add("§7This is free because you are a " + iPlayer.getRank().getRankFormatted());
             } else
-                desc.add("§7Requires " + p.getRequiredRank().getRankFormatted() + " §7or unlock it for §6" + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice(uhcPlayer.getKitLevel(p))) + " §7coins.");
+                desc.add("§7Requires " + p.getRequiredRank().getRankFormatted() + " §7or unlock it for §6" + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice(iPlayer.getKitLevel(p))) + " §7coins.");
             return desc;
         }
-        desc.add("§7Price: §6" + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice(uhcPlayer.getKitLevel(p))));
+        desc.add("§7Price: §6" + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice(iPlayer.getKitLevel(p))));
         desc.add("");
-        if (p.getPrice(uhcPlayer.getKitLevel(p)) <= uhcPlayer.getCoins())
+        if (p.getPrice(iPlayer.getKitLevel(p)) <= iPlayer.getCoins())
             desc.add("§eClick to unlock!");
         else
             desc.add("§cNot enough coins!");

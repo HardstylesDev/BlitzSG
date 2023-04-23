@@ -31,26 +31,26 @@ public class IPlayerManager {
         return blitzPlayers.get(uuid);
     }
 
-    public void addPlayer(UUID uuid, IPlayer uhcPlayer) {
-        blitzPlayers.put(uuid, uhcPlayer);
+    public void addPlayer(UUID uuid, IPlayer iPlayer) {
+        blitzPlayers.put(uuid, iPlayer);
     }
 
     public void removePlayer(UUID uuid) {
         blitzPlayers.remove(uuid);
     }
 
-    public Game getUhcPlayerGame(IPlayer uhcPlayer) {
-        if (playerGames.get(uhcPlayer) == null)
+    public Game getGame(IPlayer iPlayer) {
+        if (playerGames.get(iPlayer) == null)
             return null;
-        return playerGames.get(uhcPlayer);
+        return playerGames.get(iPlayer);
     }
 
     public static IPlayerManager get() {
         return BlitzSG.getInstance().getIPlayerManager();
     }
 
-    public void setUhcPlayerGame(IPlayer uhcPlayer, Game game) {
-        playerGames.put(uhcPlayer, game);
+    public void setGame(IPlayer iPlayer, Game game) {
+        playerGames.put(iPlayer, game);
     }
 
 

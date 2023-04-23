@@ -3,10 +3,7 @@ package me.hardstyles.blitz.command.game;
 import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
-import me.hardstyles.blitz.command.game.sub.GameListSubCommand;
-import me.hardstyles.blitz.command.game.sub.GameStartDeathmatchSubCommand;
-import me.hardstyles.blitz.command.game.sub.GameStartSubCommand;
-import me.hardstyles.blitz.command.game.sub.GameStopAllSubCommand;
+import me.hardstyles.blitz.command.game.sub.*;
 import me.hardstyles.blitz.utils.ChatUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.StringUtil;
@@ -24,7 +21,7 @@ public class GameCommand extends Command {
         subcommands.add(new GameStartSubCommand());
         subcommands.add(new GameListSubCommand());
         subcommands.add(new GameStopAllSubCommand());
-
+        subcommands.add(new GameSpeedSubCommand());
     }
 
     @Override
