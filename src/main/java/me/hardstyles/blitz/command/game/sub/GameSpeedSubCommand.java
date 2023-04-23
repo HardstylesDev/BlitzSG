@@ -18,7 +18,7 @@ import java.util.logging.Level;
 public class GameSpeedSubCommand extends SubCommand {
 
     public GameSpeedSubCommand() {
-        super("start", ImmutableList.of("new"), "blood.game.startgame", "/game start");
+        super("speed", ImmutableList.of("speedup"), "blood.game.speedup", "/game start");
     }
 
     @Override

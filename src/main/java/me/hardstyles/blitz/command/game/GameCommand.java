@@ -59,7 +59,7 @@ public class GameCommand extends Command {
             if (sub != null) {
                 sub.execute(sender, args);
             } else {
-                sender.sendMessage(ChatUtil.color("&7Unknown sub-command, use &c/rank help &7for help."));
+                sender.sendMessage(ChatUtil.color("&7Unknown sub-command, use &c/game help &7for help."));
             }
         } else {
             help(sender);

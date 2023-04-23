@@ -473,7 +473,7 @@ public class GameHandler implements Listener {
                     if (foo < 12) {
                         Chest chest = (Chest) e.getClickedBlock().getState();
                         chest.getInventory().addItem(new ItemBuilder(Material.NETHER_STAR).name("&6Blitz Star").lores(new String[]{"&7Please in hotbar and right click", "&7to activate your Blitz!", "&7A Blitz is a super-powerful", "&7ability that can change the", "&7course of the game.", "&7Unlock more in the shop", "&7with coins."}).enchantment(Enchantment.LOOT_BONUS_BLOCKS, 1).make());
-                        bsgPlayer.getGame().message(String.format("%s%s%s &found the &6Blitz Star&e!", BlitzSG.CORE_NAME, bsgPlayer.getRank(true).getChatColor(), e.getPlayer().getName()));
+                        bsgPlayer.getGame().message(String.format("%s%s%s &efound the &6Blitz Star&e!", BlitzSG.CORE_NAME, bsgPlayer.getRank(true).getChatColor(), e.getPlayer().getName()));
                         bsgPlayer.getGame().setStarAvailable(false);
                         new FireworkCommand().launchFirework(chest.getLocation());
                         bsgPlayer.getGame().getStarChests().clear();
