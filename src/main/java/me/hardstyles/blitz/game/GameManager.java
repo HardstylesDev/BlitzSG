@@ -2,7 +2,6 @@ package me.hardstyles.blitz.game;
 
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.logging.Level;
 
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.cosmetic.Taunt;
@@ -70,7 +69,7 @@ public class GameManager {
     public ArrayList<Game> getRunningGames() {
         ArrayList<Game> runningGames = new ArrayList<Game>();
         for (Game g : games) {
-            if (g.getGameMode() != Game.GameMode.RESETING)
+            if (g.getGameMode() != Game.GameMode.RESETTING)
                 runningGames.add(g);
         }
         return runningGames;

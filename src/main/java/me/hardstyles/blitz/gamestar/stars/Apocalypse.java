@@ -75,7 +75,7 @@ public class Apocalypse extends Star {
 
     List<Entity> fireballs = new ArrayList<>();
 
-    public void updateVelocity() {
+    private void updateVelocity() {
         if (fireballs.isEmpty())
             return;
         List<Entity> clear = new ArrayList<>();
@@ -90,7 +90,7 @@ public class Apocalypse extends Star {
         clear.forEach(entity -> fireballs.remove(entity));
     }
 
-    public void spawnMeteor(Player p) {
+    private void spawnMeteor(Player p) {
         int randomX = (int) (Math.random() * 20 + 1);
         int randomZ = (int) (Math.random() * 20 + 1);
 
@@ -99,7 +99,7 @@ public class Apocalypse extends Star {
 
         Entity fireball = p.getWorld().spawnEntity(loc.clone().add(randomX - 10, 0, randomZ - 10), EntityType.FIREBALL);
 
-        fireball.setVelocity(new Vector(0, -1, 0));
+        fireball.setVelocity(new Vector(0, -0.5, 0));
         ((Fireball) fireball).setDirection(new Vector(0, -1, 0));
         fireballs.add(fireball);
 

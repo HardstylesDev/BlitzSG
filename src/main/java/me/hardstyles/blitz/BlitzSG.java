@@ -22,7 +22,6 @@ import me.hardstyles.blitz.gui.GUIManager;
 import me.hardstyles.blitz.gui.InventoryHandler;
 import me.hardstyles.blitz.kit.KitManager;
 import me.hardstyles.blitz.map.MapManager;
-import me.hardstyles.blitz.punishments.ACBan;
 import me.hardstyles.blitz.punishments.commands.ban.BanCommand;
 import me.hardstyles.blitz.punishments.commands.ban.UnbanCommand;
 import me.hardstyles.blitz.punishments.commands.mute.MuteCommand;
@@ -41,6 +40,7 @@ import me.hardstyles.blitz.punishments.PunishmentManager;
 import me.hardstyles.blitz.rank.RankManager;
 import me.hardstyles.blitz.scoreboard.ScoreboardManager;
 import me.hardstyles.blitz.database.Database;
+import me.hardstyles.blitz.gui.MenuListener;
 import net.minecraft.server.v1_8_R3.EnumChatFormat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -117,7 +117,6 @@ public class BlitzSG extends JavaPlugin {
         registerCommands();
 
 //        getCommand("nick").setExecutor(new NicknameCommand());
-        getCommand("acban").setExecutor(new ACBan());
 
         //Register Handlers:
         getServer().getPluginManager().registerEvents(this.gameHandler = new GameHandler(), this);
@@ -125,6 +124,7 @@ public class BlitzSG extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new IPlayerHandler(), this);
         getServer().getPluginManager().registerEvents(new EnchantListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryHandler(), this);
+        getServer().getPluginManager().registerEvents(new MenuListener(), this);
         getServer().getPluginManager().registerEvents(scoreboardManager.getScoreboardHandler(), this);
 
         lobbySpawn = new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0);

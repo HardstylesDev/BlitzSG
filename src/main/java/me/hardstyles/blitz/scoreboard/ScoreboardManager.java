@@ -25,78 +25,78 @@ public class ScoreboardManager extends BukkitRunnable {
     public void run() {
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             ScoreboardHelper board = this.scoreboardHandler.getScoreboard(p);
-            IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+            IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
             board.clear();
             Date now = new Date();
-            if (!bsgPlayer.isInGame()) {
+            if (!iPlayer.isInGame()) {
                 board.add(separator);
-                board.add("Kills: &a" + f(bsgPlayer.getKills()));
-                board.add("Wins: &a" + f(bsgPlayer.getWins()));
-                board.add("Blitz Score: &c" + f(bsgPlayer.getElo()));
+                board.add("Kills: &a" + f(iPlayer.getKills()));
+                board.add("Wins: &a" + f(iPlayer.getWins()));
+                board.add("Blitz Score: &c" + f(iPlayer.getElo()));
                 board.add("Blitz Rank: &cN/A");
 
 
                 board.add(separator);
 
-                board.add("Coins: &a" + f(bsgPlayer.getCoins()));
+                board.add("Coins: &a" + f(iPlayer.getCoins()));
                 board.add("Unlocks: &cN/A");
 
                 board.add(separator);
                 board.add("&ewww.blitzsg.lol");
-            } else if (bsgPlayer.isInGame()) {
-                if (bsgPlayer.getGame().getGameMode() == Game.GameMode.WAITING) {
+            } else if (iPlayer.isInGame()) {
+                if (iPlayer.getGame().getGameMode() == Game.GameMode.WAITING) {
                     board.clear();
-                } else if (bsgPlayer.getGame().getGameMode() == Game.GameMode.STARTING) {
+                } else if (iPlayer.getGame().getGameMode() == Game.GameMode.STARTING) {
                     board.add(separator);
                     board.add("&fNext Event");
                     board.add("&aBlitz Star 05:00");
                     board.add(separator);
-                    board.add("Players: &a" + bsgPlayer.getGame().getAlivePlayers().size());
-                    board.add("Kills: &a" + bsgPlayer.getGameKills());
+                    board.add("Players: &a" + iPlayer.getGame().getAlivePlayers().size());
+                    board.add("Kills: &a" + iPlayer.getGameKills());
                     board.add(separator);
                     board.add("Taunt");
-                    board.add(bsgPlayer.getTauntStatus());
-                } else if (bsgPlayer.getGame().getGameMode() == Game.GameMode.INGAME) {
+                    board.add(iPlayer.getTauntStatus());
+                } else if (iPlayer.getGame().getGameMode() == Game.GameMode.INGAME) {
 
                     board.add(separator);
                     board.add("&fNext Event");
-                    if (!bsgPlayer.getGame().isDeathmatchStarting()) {
-                        if (bsgPlayer.getGame().getNextEvent() == Game.NextEvent.STAR)
-                            board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(300 - bsgPlayer.getGame().getGameTime()));
-                        else if (bsgPlayer.getGame().getNextEvent() == Game.NextEvent.REFILL)
-                            board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(600 - bsgPlayer.getGame().getGameTime()));
-                        else if (bsgPlayer.getGame().getNextEvent() == Game.NextEvent.DEATHMATCH)
-                            board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(900 - bsgPlayer.getGame().getGameTime()));
+                    if (!iPlayer.getGame().isDeathmatchStarting()) {
+                        if (iPlayer.getGame().getNextEvent() == Game.NextEvent.STAR)
+                            board.add("&a" + nextEvent(iPlayer.getGame().getNextEvent()) + " " + convert(300 - iPlayer.getGame().getGameTime()));
+                        else if (iPlayer.getGame().getNextEvent() == Game.NextEvent.REFILL)
+                            board.add("&a" + nextEvent(iPlayer.getGame().getNextEvent()) + " " + convert(600 - iPlayer.getGame().getGameTime()));
+                        else if (iPlayer.getGame().getNextEvent() == Game.NextEvent.DEATHMATCH)
+                            board.add("&a" + nextEvent(iPlayer.getGame().getNextEvent()) + " " + convert(900 - iPlayer.getGame().getGameTime()));
                         else
-                            board.add("&a" + nextEvent(bsgPlayer.getGame().getNextEvent()) + " " + convert(1200 - bsgPlayer.getGame().getGameTime()));
+                            board.add("&a" + nextEvent(iPlayer.getGame().getNextEvent()) + " " + convert(1200 - iPlayer.getGame().getGameTime()));
                     }
                     else{
-                        if (bsgPlayer.getGame().getDeathmatchStartTime() < 45)
-                            board.add("&aDeathmatch" + " " + convert(45 - bsgPlayer.getGame().getDeathmatchStartTime()));
+                        if (iPlayer.getGame().getDeathmatchStartTime() < 45)
+                            board.add("&aDeathmatch" + " " + convert(45 - iPlayer.getGame().getDeathmatchStartTime()));
                         else
-                            board.add("&aEnding" + " " + convert(255 - bsgPlayer.getGame().getDeathmatchStartTime()));
+                            board.add("&aEnding" + " " + convert(255 - iPlayer.getGame().getDeathmatchStartTime()));
 
                     }
                     board.add(separator);
-                    board.add("&fPlayers: &a" + bsgPlayer.getGame().getAlivePlayers().size());
-                    board.add("&fKills: &a" + bsgPlayer.getGameKills());
+                    board.add("&fPlayers: &a" + iPlayer.getGame().getAlivePlayers().size());
+                    board.add("&fKills: &a" + iPlayer.getGameKills());
                     board.add(separator);
                     board.add("Taunt");
-                    board.add(bsgPlayer.getTauntStatus());
+                    board.add(iPlayer.getTauntStatus());
 
-                } else if (bsgPlayer.getGame().getGameMode() == Game.GameMode.RESETING) {
-                    if (bsgPlayer.getGame().getWinner() == null)
+                } else if (iPlayer.getGame().getGameMode() == Game.GameMode.RESETTING) {
+                    if (iPlayer.getGame().getWinner() == null)
                         continue;
-                    IPlayer winner = BlitzSG.getInstance().getIPlayerManager().getPlayer(bsgPlayer.getGame().getWinner().getUniqueId());
+                    IPlayer winner = BlitzSG.getInstance().getIPlayerManager().getPlayer(iPlayer.getGame().getWinner().getUniqueId());
                     board.add(separator);
                     board.add("&fWinner");
-                    board.add("&a" + winner.getRank(true).getPrefix() + bsgPlayer.getGame().getWinner().getName());
+                    board.add("&a" + winner.getRank(true).getPrefix() + iPlayer.getGame().getWinner().getName());
                     board.add(separator);
-                    board.add("&fPlayers: &a" + bsgPlayer.getGame().getAlivePlayers().size());
-                    board.add("&fKills: &a" + bsgPlayer.getGameKills());
+                    board.add("&fPlayers: &a" + iPlayer.getGame().getAlivePlayers().size());
+                    board.add("&fKills: &a" + iPlayer.getGameKills());
                     board.add(separator);
                     board.add("Taunt");
-                    board.add(bsgPlayer.getTauntStatus());
+                    board.add(iPlayer.getTauntStatus());
 
                 }
             }

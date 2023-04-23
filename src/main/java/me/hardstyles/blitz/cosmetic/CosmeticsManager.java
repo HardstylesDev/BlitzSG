@@ -22,10 +22,10 @@ public class CosmeticsManager {
 
 
     public Aura getAura(Player p) {
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        if (bsgPlayer.getAura() == null)
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        if (iPlayer.getAura() == null)
             return null;
-        return bsgPlayer.getAura();
+        return iPlayer.getAura();
     }
 
     public CosmeticsManager() {

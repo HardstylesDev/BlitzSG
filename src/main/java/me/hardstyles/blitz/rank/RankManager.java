@@ -16,10 +16,10 @@ public class RankManager {
 
 
     public Rank getRank(Player p) {
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        if (bsgPlayer.getRank() == null)
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        if (iPlayer.getRank() == null)
             return getRankByName("Default");
-        return bsgPlayer.getRank();
+        return iPlayer.getRank();
     }
 
     public Rank getRank(Player p, boolean hideNick) {
@@ -32,9 +32,9 @@ public class RankManager {
 
 
     public void setRank(Player p, Rank rank) {
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        bsgPlayer.setRank(rank);
-        BlitzSG.getInstance().getStatisticsManager().savePlayer(bsgPlayer);
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        iPlayer.setRank(rank);
+        BlitzSG.getInstance().getStatisticsManager().savePlayer(iPlayer);
     }
 
     public RankManager() {

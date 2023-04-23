@@ -170,15 +170,15 @@ public class IPlayerManager {
     }
 
     public void handleWinElo(Game g) {
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(g.getWinner().getUniqueId());
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(g.getWinner().getUniqueId());
         double allPlayerElo = 0;
         for (Player pl : g.getAllPlayers())
             if (pl.getUniqueId() != g.getWinner().getUniqueId())
                 allPlayerElo += BlitzSG.getInstance().getIPlayerManager().getPlayer(pl.getUniqueId()).getElo();
-        double eloChange = (((allPlayerElo * 0.5) / (g.getAllPlayers().size() - 1)) / bsgPlayer.getElo()) * 4 + 1;
-        if (bsgPlayer.getElo() == 0)
+        double eloChange = (((allPlayerElo * 0.5) / (g.getAllPlayers().size() - 1)) / iPlayer.getElo()) * 4 + 1;
+        if (iPlayer.getElo() == 0)
             eloChange = 1;
-        bsgPlayer.addElo((int) eloChange);
+        iPlayer.addElo((int) eloChange);
     }
 
 }

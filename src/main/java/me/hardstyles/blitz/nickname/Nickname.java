@@ -232,8 +232,8 @@ public class Nickname {
     public String[] prepareSkinTextures(Player p, String arg) {
         OfflinePlayer op = Bukkit.getServer().getOfflinePlayer(arg);
         if (op.getUniqueId().toString().equalsIgnoreCase(p.getUniqueId().toString())) {
-            IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-            String skin[] = new String[]{bsgPlayer.getNick().getSkinValue(), bsgPlayer.getNick().getSkinSignature()};
+            IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+            String skin[] = new String[]{iPlayer.getNick().getSkinValue(), iPlayer.getNick().getSkinSignature()};
             return skin;
         }
         try {

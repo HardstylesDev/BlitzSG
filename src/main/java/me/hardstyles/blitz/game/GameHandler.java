@@ -1,11 +1,11 @@
 package me.hardstyles.blitz.game;
 
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.gui.SpectatorGUI;
+import me.hardstyles.blitz.gui.impl.game.SpectatorGUI;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.fireworks.FireworkCommand;
-import me.hardstyles.blitz.gui.KitGUI;
-import me.hardstyles.blitz.gui.StarGUI;
+import me.hardstyles.blitz.gui.impl.game.KitGUI;
+import me.hardstyles.blitz.gui.impl.shop.StarGUI;
 import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.utils.loot.ChestUtils;
 import me.hardstyles.blitz.utils.ItemBuilder;
@@ -41,46 +41,46 @@ public class GameHandler implements Listener {
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        if (bsgPlayer.isInGame()) {
-            if (bsgPlayer.getGame().getGameMode() == Game.GameMode.INGAME) {
-                bsgPlayer.getGame().killPlayer(p);
-                bsgPlayer.getGame().message(BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + p.getName() + " &ewas killed!");
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        if (iPlayer.isInGame()) {
+            if (iPlayer.getGame().getGameMode() == Game.GameMode.INGAME) {
+                iPlayer.getGame().killPlayer(p);
+                iPlayer.getGame().message(BlitzSG.CORE_NAME + iPlayer.getRank(true).getChatColor() + p.getName() + " &ewas killed!");
                 dropInventory(p);
-            } else if (bsgPlayer.getGame().getGameMode() == Game.GameMode.WAITING || bsgPlayer.getGame().getGameMode() == Game.GameMode.STARTING) {
-                bsgPlayer.getGame().removePlayer(p);
+            } else if (iPlayer.getGame().getGameMode() == Game.GameMode.WAITING || iPlayer.getGame().getGameMode() == Game.GameMode.STARTING) {
+                iPlayer.getGame().removePlayer(p);
             }
         }
-        BlitzSG.getInstance().getStatisticsManager().savePlayer(bsgPlayer);
+        BlitzSG.getInstance().getStatisticsManager().savePlayer(iPlayer);
         BlitzSG.getInstance().getIPlayerManager().removePlayer(p.getUniqueId());
     }
 
 
     public void onPlayerDeath(Player victim, Player killer) {
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(victim.getUniqueId());
-        if (!bsgPlayer.isInGame()) {
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(victim.getUniqueId());
+        if (!iPlayer.isInGame()) {
             return;
         }
 
-        bsgPlayer.getGame().applyDeathEffects();
+        iPlayer.getGame().applyDeathEffects();
 
-        String deathMessage = BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed and everyone got a speed buff!";
+        String deathMessage = BlitzSG.CORE_NAME + iPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed and everyone got a speed buff!";
         if (killer != null) {
             IPlayer killerPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(killer.getUniqueId());
-            deathMessage = BlitzSG.CORE_NAME + bsgPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed by " + killerPlayer.getRank().getChatColor() + killer.getName() + " &eand everyone got a speed buff!";
+            deathMessage = BlitzSG.CORE_NAME + iPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed by " + killerPlayer.getRank().getChatColor() + killer.getName() + " &eand everyone got a speed buff!";
             killerPlayer.addGameKill();
             BlitzSG.getInstance().getIPlayerManager().handleKillElo(victim, killer);
             handleCoinReward(killerPlayer, killer);
         }
 
         String finalDeathMessage = deathMessage;
-        bsgPlayer.getGame().getAllPlayers().forEach(p -> BlitzSG.send(p, finalDeathMessage));
+        iPlayer.getGame().getAllPlayers().forEach(p -> BlitzSG.send(p, finalDeathMessage));
 
-        bsgPlayer.getGame().killPlayer(victim);
+        iPlayer.getGame().killPlayer(victim);
         victim.getWorld().strikeLightningEffect(victim.getLocation());
-        bsgPlayer.getGameEntities().forEach(Entity::remove);
-        bsgPlayer.getGameEntities().clear();
-        bsgPlayer.addDeath();
+        iPlayer.getGameEntities().forEach(Entity::remove);
+        iPlayer.getGameEntities().clear();
+        iPlayer.addDeath();
         BlitzSG.getInstance().getIPlayerManager().handleDeathElo(victim);
         victim.setGameMode(GameMode.ADVENTURE);
 
@@ -92,11 +92,11 @@ public class GameHandler implements Listener {
         victim.setFallDistance(0);
         victim.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 99999, 1));
 
-        bsgPlayer.getGame().getAlivePlayers().forEach(p -> p.hidePlayer(victim));
+        iPlayer.getGame().getAlivePlayers().forEach(p -> p.hidePlayer(victim));
 
         dropInventory(victim);
 
-        victim.teleport(bsgPlayer.getGame().getMap().getLobby());
+        victim.teleport(iPlayer.getGame().getMap().getLobby());
         victim.getInventory().setItem(0, new ItemBuilder(Material.COMPASS).name("&aSpectate Menu").make());
     }
 
@@ -135,17 +135,17 @@ public class GameHandler implements Listener {
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent e) {
         Player p = e.getPlayer();
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        if (!bsgPlayer.isInGame() || bsgPlayer.getGame().getGameMode() != Game.GameMode.STARTING) {
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        if (!iPlayer.isInGame() || iPlayer.getGame().getGameMode() != Game.GameMode.STARTING) {
             return;
         }
         Location to = e.getTo();
         Location from = e.getFrom();
         if (to.getBlockX() != from.getBlockX() || to.getBlockZ() != from.getBlockZ()) {
-            Location spawn = bsgPlayer.getGameSpawn();
+            Location spawn = iPlayer.getGameSpawn();
             if (spawn == null) {
-                bsgPlayer.getGame().resetGame();
-                Bukkit.broadcastMessage("Error occurred in game " + bsgPlayer.getGame());
+                iPlayer.getGame().resetGame();
+                Bukkit.broadcastMessage("Error occurred in game " + iPlayer.getGame());
                 return;
             }
             spawn.setY(p.getLocation().getY());
@@ -167,11 +167,11 @@ public class GameHandler implements Listener {
     @EventHandler
     public void onPlayerInteractFire(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
-        if (bsgPlayer.isInGame()) {
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
+        if (iPlayer.isInGame()) {
             return;
         }
-        if (bsgPlayer.getRank().isManager() && player.getGameMode() == org.bukkit.GameMode.CREATIVE) {
+        if (iPlayer.getRank().isManager() && player.getGameMode() == org.bukkit.GameMode.CREATIVE) {
             return;
         }
         if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
@@ -187,9 +187,9 @@ public class GameHandler implements Listener {
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         Player p = e.getPlayer();
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        if (!bsgPlayer.isInGame()) {
-            if (bsgPlayer.getRank().isManager() && p.getGameMode() == org.bukkit.GameMode.CREATIVE) {
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        if (!iPlayer.isInGame()) {
+            if (iPlayer.getRank().isManager() && p.getGameMode() == org.bukkit.GameMode.CREATIVE) {
                 return;
             }
             e.setCancelled(true);
@@ -236,25 +236,25 @@ public class GameHandler implements Listener {
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent e) {
         Player p = e.getPlayer();
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        if (!bsgPlayer.isInGame()) {
-            if (!(bsgPlayer.getRank().isManager()) && !(p.getGameMode() == org.bukkit.GameMode.CREATIVE))
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        if (!iPlayer.isInGame()) {
+            if (!(iPlayer.getRank().isManager()) && !(p.getGameMode() == org.bukkit.GameMode.CREATIVE))
                 e.setCancelled(true);
             return;
         }
 
-        if (bsgPlayer.getGame().getGameMode() == Game.GameMode.WAITING || bsgPlayer.getGame().getGameMode() == Game.GameMode.STARTING) {
+        if (iPlayer.getGame().getGameMode() == Game.GameMode.WAITING || iPlayer.getGame().getGameMode() == Game.GameMode.STARTING) {
             e.setCancelled(true);
             return;
         }
-        if (bsgPlayer.getGame().getGameMode() == Game.GameMode.INGAME) {
-            if (bsgPlayer.isSpectating()) {
+        if (iPlayer.getGame().getGameMode() == Game.GameMode.INGAME) {
+            if (iPlayer.isSpectating()) {
                 e.setCancelled(true);
                 return;
             }
             return;
         }
-        if (bsgPlayer.getGame().getGameMode() != Game.GameMode.STARTING && bsgPlayer.getGame().getGameMode() != Game.GameMode.WAITING) {
+        if (iPlayer.getGame().getGameMode() != Game.GameMode.STARTING && iPlayer.getGame().getGameMode() != Game.GameMode.WAITING) {
             e.setCancelled(true);
         }
     }
@@ -270,7 +270,7 @@ public class GameHandler implements Listener {
         Player p = (Player) e.getEntity();
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
         if (iPlayer == null || iPlayer.getGame() == null || iPlayer.getGame().getGameMode() == null) return;
-        if (iPlayer.getGame().getGameMode() == Game.GameMode.WAITING || iPlayer.getGame().getGameMode() == Game.GameMode.STARTING || iPlayer.getGame().getGameMode() == Game.GameMode.RESETING)
+        if (iPlayer.getGame().getGameMode() == Game.GameMode.WAITING || iPlayer.getGame().getGameMode() == Game.GameMode.STARTING || iPlayer.getGame().getGameMode() == Game.GameMode.RESETTING)
             e.setCancelled(true);
         if (!iPlayer.isInGame() || iPlayer.isSpectating()) {
             e.setCancelled(true);
@@ -316,13 +316,13 @@ public class GameHandler implements Listener {
     public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         Player p = (Player) e.getEntity();
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        if (!bsgPlayer.isInGame()) return;
-        if (bsgPlayer.getGame().getDeathmatchStartTime() >= 45 && bsgPlayer.getGame().getDeathmatchStartTime() <= 60) {
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        if (!iPlayer.isInGame()) return;
+        if (iPlayer.getGame().getDeathmatchStartTime() >= 45 && iPlayer.getGame().getDeathmatchStartTime() <= 60) {
             e.setCancelled(true);
             return;
         }
-        if (bsgPlayer.isWobbuffet()) {
+        if (iPlayer.isWobbuffet()) {
             e.setCancelled(true);
             if ((e.getDamager() instanceof Player)) {
                 ((Player) e.getDamager()).damage(e.getDamage());
@@ -335,13 +335,13 @@ public class GameHandler implements Listener {
             e.getEntity().getWorld().playSound(e.getDamager().getLocation(), Sound.IRONGOLEM_HIT, 1, 1);
 
         }
-        if (bsgPlayer.getGame().getGameMode() == Game.GameMode.INGAME || bsgPlayer.getGame().getGameMode() == Game.GameMode.RESETING) {
-            if (bsgPlayer.getGameEntities().contains(e.getDamager()) || (e.getDamager() instanceof Snowball && bsgPlayer.getGameEntities().contains(((Snowball) e.getDamager()).getShooter())) || (e.getDamager() instanceof Arrow && bsgPlayer.getGameEntities().contains(((Arrow) e.getDamager()).getShooter()))) {
+        if (iPlayer.getGame().getGameMode() == Game.GameMode.INGAME || iPlayer.getGame().getGameMode() == Game.GameMode.RESETTING) {
+            if (iPlayer.getGameEntities().contains(e.getDamager()) || (e.getDamager() instanceof Snowball && iPlayer.getGameEntities().contains(((Snowball) e.getDamager()).getShooter())) || (e.getDamager() instanceof Arrow && iPlayer.getGameEntities().contains(((Arrow) e.getDamager()).getShooter()))) {
                 e.setCancelled(true);
             }
             if (!(e.getDamager() instanceof Player)) {
                 if (e.getDamager() instanceof Arrow) if (((Arrow) e.getDamager()).getShooter() instanceof Player) {
-                    bsgPlayer.setLastDamager((Player) ((Arrow) e.getDamager()).getShooter());
+                    iPlayer.setLastDamager((Player) ((Arrow) e.getDamager()).getShooter());
                     if (BlitzSG.getInstance().getIPlayerManager().getPlayer(((Player) ((Arrow) e.getDamager()).getShooter()).getUniqueId()).isRobinhood()) {
                         e.setDamage(1000);
                         e.getEntity().sendMessage("&aYou were taken out in a single shot!");
@@ -376,8 +376,8 @@ public class GameHandler implements Listener {
 
     @EventHandler
     public void onPickUp(PlayerPickupItemEvent e) {
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
-        if (bsgPlayer.isSpectating()) {
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
+        if (iPlayer.isSpectating()) {
             e.setCancelled(true);
         }
         if (!(e.getItem().getItemStack().getType() == Material.POTION)) {
@@ -395,13 +395,13 @@ public class GameHandler implements Listener {
     @EventHandler
     public void playerOpenVotingMenu(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
 
-        if (bsgPlayer.isSpectating()) {
+        if (iPlayer.isSpectating()) {
             e.setCancelled(true);
         }
-        if (!bsgPlayer.isInGame()) return;
-        if (bsgPlayer.getGame().getGameMode() != Game.GameMode.WAITING && bsgPlayer.getGame().getGameMode() != Game.GameMode.STARTING) {
+        if (!iPlayer.isInGame()) return;
+        if (iPlayer.getGame().getGameMode() != Game.GameMode.WAITING && iPlayer.getGame().getGameMode() != Game.GameMode.STARTING) {
             return;
         }
         if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
@@ -414,20 +414,20 @@ public class GameHandler implements Listener {
     @EventHandler
     public void playerOpenStarMenu(PlayerInteractEvent e) {
         Player p = e.getPlayer();
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-        if (!bsgPlayer.isInGame()) return;
-        if (bsgPlayer.getGame().getGameMode() != Game.GameMode.INGAME) return;
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        if (!iPlayer.isInGame()) return;
+        if (iPlayer.getGame().getGameMode() != Game.GameMode.INGAME) return;
         if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
         if (e.getItem() == null) return;
         if (e.getItem().getType() == Material.NETHER_STAR) {
-            if (bsgPlayer.getGame().getDeathmatchStartTime() >= 15) {
+            if (iPlayer.getGame().getDeathmatchStartTime() >= 15) {
                 p.sendMessage(BlitzSG.CORE_NAME + ChatColor.RED + "The Blitz Star has been disabled!");
                 e.setCancelled(true);
                 return;
             }
             StarGUI.openGUI(p);
         } else if (e.getItem().getType() == Material.COMPASS) {
-            if (bsgPlayer.isSpectating()) {
+            if (iPlayer.isSpectating()) {
                 SpectatorGUI.openGUI(p);
             }
         }
@@ -450,35 +450,35 @@ public class GameHandler implements Listener {
 
     @EventHandler
     public void onBlockInteract(PlayerInteractEvent e) {
-        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
-        if (!bsgPlayer.isInGame()) return;
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
+        if (!iPlayer.isInGame()) return;
         if (e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_AIR) {
             if (e.getPlayer().getItemInHand().getType() == Material.COMPASS && e.getPlayer().isSneaking()) {
                 BlitzSG.getInstance().getGameManager().taunt(e.getPlayer());
             }
             return;
         }
-        if (!(bsgPlayer.getGame().getGameMode() == Game.GameMode.INGAME)) return;
+        if (!(iPlayer.getGame().getGameMode() == Game.GameMode.INGAME)) return;
         if (e.getClickedBlock() != null) {
             if (e.getClickedBlock().getType() == Material.CHEST || e.getClickedBlock().getType() == Material.TRAPPED_CHEST) {
-                if (!bsgPlayer.getGame().getOpenedChests().contains(e.getClickedBlock().getLocation())) {
+                if (!iPlayer.getGame().getOpenedChests().contains(e.getClickedBlock().getLocation())) {
                     Chest chest = (Chest) e.getClickedBlock().getState();
                     chest.getInventory().clear();
                     chestUtils.generateChestLoot(chest.getInventory(), 3, e.getClickedBlock().getLocation());
                     chest.update();
-                    bsgPlayer.getGame().getOpenedChests().add(e.getClickedBlock().getLocation());
+                    iPlayer.getGame().getOpenedChests().add(e.getClickedBlock().getLocation());
                 }
-                if (bsgPlayer.getGame().isStarAvailable() && !(bsgPlayer.getGame().getStarChests().contains(e.getClickedBlock().getLocation()))) {
+                if (iPlayer.getGame().isStarAvailable() && !(iPlayer.getGame().getStarChests().contains(e.getClickedBlock().getLocation()))) {
                     int foo = (int) (Math.random() * 100);
                     if (foo < 12) {
                         Chest chest = (Chest) e.getClickedBlock().getState();
                         chest.getInventory().addItem(new ItemBuilder(Material.NETHER_STAR).name("&6Blitz Star").lores(new String[]{"&7Please in hotbar and right click", "&7to activate your Blitz!", "&7A Blitz is a super-powerful", "&7ability that can change the", "&7course of the game.", "&7Unlock more in the shop", "&7with coins."}).enchantment(Enchantment.LOOT_BONUS_BLOCKS, 1).make());
-                        bsgPlayer.getGame().message(String.format("%s%s%s &efound the &6Blitz Star&e!", BlitzSG.CORE_NAME, bsgPlayer.getRank(true).getChatColor(), e.getPlayer().getName()));
-                        bsgPlayer.getGame().setStarAvailable(false);
+                        iPlayer.getGame().message(BlitzSG.CORE_NAME + iPlayer.getRank(true).getChatColor() + e.getPlayer().getName() + " &efound the &6Blitz Star&e!");
+                        iPlayer.getGame().setStarAvailable(false);
                         new FireworkCommand().launchFirework(chest.getLocation());
-                        bsgPlayer.getGame().getStarChests().clear();
+                        iPlayer.getGame().getStarChests().clear();
                     }
-                    bsgPlayer.getGame().getStarChests().add(e.getClickedBlock().getLocation());
+                    iPlayer.getGame().getStarChests().add(e.getClickedBlock().getLocation());
                 }
             }
         }

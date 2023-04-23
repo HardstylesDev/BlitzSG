@@ -4,8 +4,6 @@ main: me.hardstyles.blitz.BlitzSG
 author: Hardstyles
 description: BlitzSG Plugin
 commands:
-  acban:
-    description: lol
   unban:
     description: lol
 

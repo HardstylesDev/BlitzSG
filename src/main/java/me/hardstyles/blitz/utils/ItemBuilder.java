@@ -122,6 +122,14 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder lores(ArrayList<String> lines){
+
+        meta().setLore(lines);
+        make().setItemMeta(meta());
+        return this;
+
+    }
+
     /**
      * Clears the {@link ItemStack}s lore and replaces it with the defined String array.
      *

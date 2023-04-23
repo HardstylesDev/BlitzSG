@@ -1,8 +1,6 @@
 package me.hardstyles.blitz.player;
 
-import me.hardstyles.blitz.game.Game;
-import me.hardstyles.blitz.gui.ShopGUI;
-import me.hardstyles.blitz.rank.ranks.*;
+import me.hardstyles.blitz.gui.impl.shop.ShopGUI;
 import me.hardstyles.blitz.utils.BookUtility;
 import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.BlitzSG;
@@ -20,7 +18,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 public class IPlayerHandler implements Listener {
 

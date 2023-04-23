@@ -1,16 +1,15 @@
-package me.hardstyles.blitz.gui;
+package me.hardstyles.blitz.gui.impl.game;
 
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.game.Game;
-import me.hardstyles.blitz.gamestar.Star;
+import me.hardstyles.blitz.gui.MenuContainer;
+import me.hardstyles.blitz.gui.MenuItem;
 import me.hardstyles.blitz.player.IPlayer;
-import me.hardstyles.blitz.utils.ItemBuilder;
-import org.bukkit.Bukkit;
+import me.hardstyles.blitz.utils.ChatUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.SkullType;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -24,27 +23,35 @@ public class SpectatorGUI {
             p.sendMessage(ChatColor.RED + "You are not in a game!");
             return;
         }
-
         if (!iPlayer.isSpectating()) {
             p.sendMessage(ChatColor.RED + "You are not spectating!");
             return;
         }
         Game game = iPlayer.getGame();
-        Inventory inv = Bukkit.createInventory(null, 27, "§8Spectator Menu");
+        MenuContainer gui = new MenuContainer("§8Spectator Menu", 3);
         for (Player alivePlayer : game.getAlivePlayers()) {
             IPlayer iAlive = BlitzSG.getInstance().getIPlayerManager().getPlayer(alivePlayer.getUniqueId());
             ItemStack skull = new ItemStack(Material.SKULL_ITEM, 1, (short) SkullType.PLAYER.ordinal());
             SkullMeta meta = (SkullMeta) skull.getItemMeta();
             meta.setDisplayName(iAlive.getRank().getPrefix() + alivePlayer.getName());
             ArrayList<String> lore = new ArrayList<>();
-            lore.add("§eHealth: §f" + alivePlayer.getHealth() + "§4❤");
-            lore.add("§eKills: §f" + iAlive.getGameKills());
+            lore.add(ChatUtil.color("&fHealth: &a" + alivePlayer.getHealth() + "&4❤"));
+            lore.add(ChatUtil.color("&fKills: &a" + iAlive.getGameKills()));
             meta.setLore(lore);
             meta.setOwner(alivePlayer.getName());
             skull.setItemMeta(meta);
-            inv.addItem(skull);
+            MenuItem menuItem = new MenuItem(skull, e -> {
+                e.setCancelled(true);
+                if (alivePlayer.isOnline()) {
+                    p.teleport(alivePlayer);
+                    p.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&eYou teleported to &f" + alivePlayer.getName() + "&e!"));
+                } else {
+                    p.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&cThat player is no longer online!"));
+                }
+                p.closeInventory();
+            });
+            gui.addItem(menuItem);
         }
-        BlitzSG.getInstance().getGuiManager().setInGUI(p, true);
-        p.openInventory(inv);
+        gui.show(p);
     }
 }

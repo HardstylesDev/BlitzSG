@@ -38,7 +38,7 @@ public class Game {
 
     public enum GameMode {
         LOADING, INACTIVE, WAITING,
-        STARTING, INGAME, RESETING
+        STARTING, INGAME, RESETTING,
     }
 
     public enum NextEvent {
@@ -281,12 +281,12 @@ public class Game {
         for (Player p : alivePlayers) {
             p.closeInventory();
             p.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 2, 1);
-            IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-            if (bsgPlayer.getSelectedKit() == null) {
-                bsgPlayer.setSelectedKit(BlitzSG.getInstance().getKitManager().getKit("Knight"));
+            IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+            if (iPlayer.getSelectedKit() == null) {
+                iPlayer.setSelectedKit(BlitzSG.getInstance().getKitManager().getKit("Knight"));
             }
             BlitzSG.getInstance().getIPlayerManager().resetPlayerStatus(p);
-            BlitzSG.send(p, BlitzSG.CORE_NAME + "&eYou will get the items for your " + bsgPlayer.getSelectedKit().getName() + " kit in 60 seconds.");
+            BlitzSG.send(p, BlitzSG.CORE_NAME + "&eYou will get the items for your " + iPlayer.getSelectedKit().getName() + " kit in 60 seconds.");
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&6The Blitz Star will be released in 5 minutes!");
             p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60 * 20, 2));
             p.setHealth(19);
@@ -313,9 +313,9 @@ public class Game {
                     message("&eThe grace period has ended, PvP is now enabled!");
                     for (Player p : alivePlayers) {
                         p.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
-                        IPlayer bsgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-                        bsgPlayer.getSelectedKit().giveKit(p, bsgPlayer.getKitLevel(bsgPlayer.getSelectedKit()));
-                        BlitzSG.send(p, BlitzSG.CORE_NAME + "&eYou got your " + bsgPlayer.getSelectedKit().getName() + " kit!");
+                        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+                        iPlayer.getSelectedKit().giveKit(p, iPlayer.getKitLevel(iPlayer.getSelectedKit()));
+                        BlitzSG.send(p, BlitzSG.CORE_NAME + "&eYou got your " + iPlayer.getSelectedKit().getName() + " kit!");
                     }
                     message(BlitzSG.CORE_NAME + "&6The Blitz Star will be released in 4 minutes!");
                 }
@@ -487,9 +487,9 @@ public class Game {
     }
 
     public void endGame(boolean draw) {
-        if (gameMode == GameMode.RESETING)
+        if (gameMode == GameMode.RESETTING)
             return;
-        gameMode = GameMode.RESETING;
+        gameMode = GameMode.RESETTING;
         try {
             message("&6#&7------------------&6#");
             if (draw) {
