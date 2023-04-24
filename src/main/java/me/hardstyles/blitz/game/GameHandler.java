@@ -456,20 +456,6 @@ public class GameHandler implements Listener {
         }
     }
 
-    @EventHandler
-    public void playerEatHead(PlayerInteractEvent e) {
-        Player p = e.getPlayer();
-        if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) return;
-        if (e.getItem() == null) return;
-        if (e.getItem().getType() != Material.SKULL_ITEM) return;
-        if (e.getItem().getDurability() != 3) return;
-        e.setCancelled(true);
-        p.sendMessage("§aYou ate a player head and gained Regeneration III and Speed II for 4 seconds!");
-        p.playSound(p.getLocation(), Sound.EAT, 2, 1);
-        p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, 80, 2));
-        p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 80, 1));
-        p.getInventory().setItemInHand(null);
-    }
 
     @EventHandler
     public void onBlockInteract(PlayerInteractEvent e) {

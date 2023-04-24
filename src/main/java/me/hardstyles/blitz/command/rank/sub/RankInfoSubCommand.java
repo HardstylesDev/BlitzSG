@@ -9,12 +9,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class RankSetSubCommand extends SubCommand {
+public class RankInfoSubCommand extends SubCommand {
 
-    public RankSetSubCommand() {
-        super("set", ImmutableList.of("setrank"), "blitz.rank.setrank", "/rank set <player> <rank>");
+    public RankInfoSubCommand() {
+        super("info", ImmutableList.of("ad"), "blitz.rank.rankad", "/rank info <player>");
     }
 
     @Override
@@ -31,8 +32,8 @@ public class RankSetSubCommand extends SubCommand {
     @Override
     public void onExecute(CommandSender sender, String[] args) {
         Player s = (Player) sender;
-        if (args.length == 1 || args.length == 2) {
-            s.sendMessage(ChatUtil.color("&cUsage: /rank set <player> <rank>"));
+        if(args[1] == null) {
+            s.sendMessage(ChatUtil.color("&cYou must specify a player!"));
             return;
         }
         Player target = BlitzSG.getInstance().getServer().getPlayer(args[1]);
@@ -40,18 +41,18 @@ public class RankSetSubCommand extends SubCommand {
             s.sendMessage(ChatUtil.color("&cThat player is not online!"));
             return;
         }
-        Rank rank = BlitzSG.getInstance().getRankManager().getRankByName(args[2]);
-        if (rank == null) {
-            s.sendMessage(ChatUtil.color("&cThat rank does not exist!"));
-            return;
-        }
 
-        BlitzSG.getInstance().getRankManager().setRank(target, rank);
-        s.sendMessage(ChatUtil.color("&7&m-------------------------------"));
-        s.sendMessage(ChatUtil.color("&aYou have set " + target.getName() + "'s rank to " + rank.getRank()));
-        s.sendMessage(ChatUtil.color("&7&m-------------------------------"));
-        target.sendMessage(ChatUtil.color("&7&m-------------------------------"));
-        target.sendMessage(ChatUtil.color("&aYour rank has been set to " + rank.getRank()));
-        target.sendMessage(ChatUtil.color("&7&m-------------------------------"));
+        ArrayList<String> messages = new ArrayList<>();
+        messages.add(ChatUtil.color("&7&m----------------------------------------"));
+        messages.add(ChatUtil.color("&6To get a FREE rank, follow me on GitHub!"));
+        messages.add(ChatUtil.color("&6https://github.com/HardstylesDev"));
+        messages.add("");
+        messages.add(ChatUtil.color("&6To get some free coins, drop a star!"));
+        messages.add(ChatUtil.color("&6https://github.com/HardstylesDev/BlitzSG"));
+        messages.add(ChatUtil.color("&7&m----------------------------------------"));
+
+        messages.forEach(target::sendMessage);
+
+
     }
 }

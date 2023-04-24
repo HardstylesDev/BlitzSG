@@ -2,6 +2,7 @@ package me.hardstyles.blitz.map;
 
 import lombok.SneakyThrows;
 import me.hardstyles.blitz.BlitzSG;
+import me.hardstyles.blitz.game.Game;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -22,7 +23,7 @@ public class MapManager {
 
 
     @SneakyThrows
-    public void populateMap(Map map) {
+    public void populateMap(Game g, Map map) {
         String worldName = map.getMapId();
         FileConfiguration fc = new YamlConfiguration();
         fc.load(new File(BlitzSG.getInstance().getDataFolder() + "/arenas/" + map.getMapName().toLowerCase() + ".yml"));
@@ -31,8 +32,27 @@ public class MapManager {
         world.setAutoSave(false);
         setGameRules(world);
         world.getEntities().forEach(Entity::remove);
+        if (g.isGodGame()) {
+            List<Location> existingSpawns = new ArrayList<>();
+            fc.getConfigurationSection("Spawns").getKeys(false).forEach(str -> {
+                Location spawn = new Location(Bukkit.getWorld(worldName), fc.getInt("Spawns." + str + ".X"), fc.getInt("Spawns." + str + ".Y"), fc.getInt("Spawns." + str + ".Z"));
+                existingSpawns.add(spawn);
+                map.getSpawns().add(spawn);
+            });
+            int spawnCount = 100;
+            int existingSpawnCount = existingSpawns.size();
+            if (existingSpawnCount == 0) {
+                throw new RuntimeException("No existing spawns found for god game mode.");
+            }
+            while (map.getSpawns().size() < spawnCount) {
+                Location existingSpawn = existingSpawns.get((int) (Math.random() * existingSpawnCount));
+                Location newSpawn = existingSpawn.clone();
+                map.getSpawns().add(newSpawn);
+            }
 
-        fc.getConfigurationSection("Spawns").getKeys(false).forEach(str -> map.getSpawns().add(new Location(Bukkit.getWorld(worldName), fc.getInt("Spawns." + str + ".X"), fc.getInt("Spawns." + str + ".Y"), fc.getInt("Spawns." + str + ".Z"))));
+        } else {
+            fc.getConfigurationSection("Spawns").getKeys(false).forEach(str -> map.getSpawns().add(new Location(Bukkit.getWorld(worldName), fc.getInt("Spawns." + str + ".X"), fc.getInt("Spawns." + str + ".Y"), fc.getInt("Spawns." + str + ".Z"))));
+        }
         map.setLobby(new Location(world, fc.getInt("Lobby.X"), fc.getInt("Lobby.Y"), fc.getInt("Lobby.Z")));
         int deathmatchY = fc.getInt("Deathmatch.Y");
         if (deathmatchY != 0) {

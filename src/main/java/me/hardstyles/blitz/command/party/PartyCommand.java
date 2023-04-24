@@ -1,14 +1,14 @@
-package me.hardstyles.blitz.command.rank;
+package me.hardstyles.blitz.command.party;
 
 import com.google.common.collect.ImmutableList;
-
+import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
+import me.hardstyles.blitz.command.party.sub.*;
 import me.hardstyles.blitz.command.rank.sub.RankInfoSubCommand;
 import me.hardstyles.blitz.command.rank.sub.RankListSubCommand;
 import me.hardstyles.blitz.command.rank.sub.RankSetPrefixCommand;
 import me.hardstyles.blitz.command.rank.sub.RankSetSubCommand;
 import me.hardstyles.blitz.utils.ChatUtil;
-import me.hardstyles.blitz.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.StringUtil;
 
@@ -16,15 +16,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RankCommand extends Command {
+public class PartyCommand extends Command {
     private final List<SubCommand> subcommands = new ArrayList<>();
 
-    public RankCommand() {
-        super("rank", ImmutableList.of("ranks"), "blood.command.rank");
-        subcommands.add(new RankListSubCommand());
-        subcommands.add(new RankSetSubCommand());
-        subcommands.add(new RankSetPrefixCommand());
-        subcommands.add(new RankInfoSubCommand());
+    public PartyCommand() {
+        super("party", ImmutableList.of("p"), null);
+        subcommands.add(new PartyAcceptSubCommand());
+        subcommands.add(new PartyDisbandSubCommand());
+        subcommands.add(new PartyInviteSubCommand());
+        subcommands.add(new PartyLeaveSubCommand());
+        subcommands.add(new PartyListSubCommand());
+        subcommands.add(new PartyCreateSubCommand());
+        subcommands.add(new PartyGameSubCommand());
+        subcommands.add(new PartyChatSubCommand());
     }
 
     @Override
@@ -75,9 +79,9 @@ public class RankCommand extends Command {
         if (subs.isEmpty()) {
             sender.sendMessage(ChatUtil.color("&eYou don't have permission to use any subcommands."));
         } else {
-            StringBuilder help = new StringBuilder("&6&lRank Commands &7»");
+            StringBuilder help = new StringBuilder("&9Party Commands&r:");
             for (SubCommand sub : getAvailableSubs(sender)) {
-                help.append("\n&6» &e").append(sub.getUsage());
+                help.append("\n&7- &9").append("&e" + sub.getUsage());
             }
             sender.sendMessage(ChatUtil.color(help.toString()));
         }
@@ -85,9 +89,7 @@ public class RankCommand extends Command {
     }
 
     private List<SubCommand> getAvailableSubs(CommandSender sender) {
-        return subcommands.stream()
-                .filter(c -> sender.hasPermission(c.getPermission()))
-                .collect(Collectors.toList());
+        return new ArrayList<>(subcommands);
     }
 
     private SubCommand getSubCommand(String name) {

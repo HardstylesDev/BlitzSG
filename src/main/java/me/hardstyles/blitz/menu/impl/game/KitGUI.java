@@ -28,7 +28,8 @@ public class KitGUI {
                     if (!iPlayer.isInGame()) {
                         return;
                     }
-                    if (iPlayer.getKitLevel(kit) == 0) {
+
+                    if (iPlayer.getKitLevel(kit) == 0 && !iPlayer.getGame().isGodGame()) {
                         if (!(kit.getPrice(0) == 0) && !((kit.getPrice(0) == 125000) && iPlayer.getRank().getMultiplier() >= 2) && !((kit.getPrice(0) == 250000) && iPlayer.getRank().getMultiplier() >= 3)) {
                             p.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&cYou don't have this kit!"));
                             return;

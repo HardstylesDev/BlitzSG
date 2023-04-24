@@ -56,6 +56,7 @@ public class Game {
     private ArrayList<Location> openedChests, starChests;
     private HashSet<Location> spawnUsed;
     private boolean isDeathmatchStarting = false;
+    private boolean godGame;
 
     private int countdownTime, gameTime, deathmatchCountDownTime;
 
@@ -75,7 +76,7 @@ public class Game {
         this.map.load();
 
         Bukkit.getScheduler().runTaskLater(BlitzSG.getInstance(), () -> {
-            BlitzSG.getInstance().getMapManager().populateMap(this.map);
+            BlitzSG.getInstance().getMapManager().populateMap(this, this.map);
 
             if (map == null) {
                 Bukkit.broadcastMessage(BlitzSG.CORE_NAME + ChatColor.RED + "Couldn't find an available arena!");
@@ -335,6 +336,9 @@ public class Game {
             BlitzSG.getInstance().getIPlayerManager().resetPlayerStatus(p);
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&eYou will get the items for your " + iPlayer.getSelectedKit().getName() + " kit in 60 seconds.");
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&6The Blitz Star will be released in 5 minutes!");
+            if(godGame){
+                p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60 * 20, 2));
+            }
             p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60 * 20, 2));
             p.setHealth(19);
             p.setHealth(20);
@@ -361,7 +365,11 @@ public class Game {
                     for (Player p : alivePlayers) {
                         p.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
                         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-                        iPlayer.getSelectedKit().giveKit(p, iPlayer.getKitLevel(iPlayer.getSelectedKit()));
+                        if(godGame) {
+                            iPlayer.getSelectedKit().giveKit(p, 10);
+                        } else {
+                            iPlayer.getSelectedKit().giveKit(p, iPlayer.getKitLevel(iPlayer.getSelectedKit()));
+                        }
                         BlitzSG.send(p, BlitzSG.CORE_NAME + "&eYou got your " + iPlayer.getSelectedKit().getName() + " kit!");
                     }
                     message(BlitzSG.CORE_NAME + "&6The Blitz Star will be released in 4 minutes!");

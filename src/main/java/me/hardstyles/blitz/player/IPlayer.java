@@ -8,6 +8,7 @@ import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.cosmetic.Aura;
 import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.gamestar.Star;
+import me.hardstyles.blitz.party.Party;
 import me.hardstyles.blitz.punishments.PlayerMute;
 import me.hardstyles.blitz.rank.Rank;
 import me.hardstyles.blitz.nametag.Nametag;
@@ -32,6 +33,8 @@ public class IPlayer {
     private int gameTaunt;
     private UUID uuid, lastMessaged;
     private PlayerMute mute;
+    private Party party;
+    private Party partyInvite;
     private long lastFirework = System.currentTimeMillis(), lastGameRequested = System.currentTimeMillis(), usedTauntAt = System.currentTimeMillis();
 
     private boolean robinhood, punched, wobbuffet;

@@ -7,8 +7,12 @@ import me.hardstyles.blitz.command.broadcast.BroadcastCommand;
 import me.hardstyles.blitz.command.coins.SetCoinsCommand;
 import me.hardstyles.blitz.command.join.JoinCommand;
 import me.hardstyles.blitz.command.list.ListCommand;
+import me.hardstyles.blitz.command.party.PartyChatCommand;
+import me.hardstyles.blitz.command.party.PartyCommand;
 import me.hardstyles.blitz.command.taunt.TauntCommand;
 import me.hardstyles.blitz.command.vote.VoteCommand;
+import me.hardstyles.blitz.party.Party;
+import me.hardstyles.blitz.party.PartyManager;
 import me.hardstyles.blitz.player.IPlayerHandler;
 import me.hardstyles.blitz.player.IPlayerManager;
 import me.hardstyles.blitz.command.fireworks.FireworkCommand;
@@ -72,6 +76,7 @@ public class BlitzSG extends JavaPlugin {
     public static Location lobbySpawn;
     private Database db;
     private CosmeticsManager cosmeticsManager;
+    private PartyManager partyManager;
     private long startTime;
 
     public BlitzSG() {
@@ -106,6 +111,7 @@ public class BlitzSG extends JavaPlugin {
         cosmeticsManager = new CosmeticsManager();
         cosmeticsManager.init();
         leaderboardManager = new LeaderboardManager();
+        partyManager = new PartyManager(iPlayerManager);
 
 
 
@@ -156,6 +162,8 @@ public class BlitzSG extends JavaPlugin {
         new ListCommand();
         new TauntCommand();
         new VoteCommand();
+        new PartyCommand();
+        new PartyChatCommand();
         Bukkit.getConsoleSender().sendMessage(ChatUtil.color("&d&lFinished Loading Commands!"));
 
     }

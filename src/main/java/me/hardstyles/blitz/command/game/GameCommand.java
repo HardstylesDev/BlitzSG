@@ -22,6 +22,7 @@ public class GameCommand extends Command {
         subcommands.add(new GameListSubCommand());
         subcommands.add(new GameStopAllSubCommand());
         subcommands.add(new GameSpeedSubCommand());
+        subcommands.add(new GameGodgameSubCommand());
     }
 
     @Override
