@@ -1,6 +1,7 @@
 package me.hardstyles.blitz.player;
 
 import me.hardstyles.blitz.menu.impl.shop.ShopGUI;
+import me.hardstyles.blitz.party.Party;
 import me.hardstyles.blitz.utils.BookUtility;
 import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.BlitzSG;
@@ -86,6 +87,13 @@ public class IPlayerHandler implements Listener {
             IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
             iPlayer.getNametag().sendPacket(p);
         });
+
+        for (Party party : BlitzSG.getInstance().getPartyManager().getParties()) {
+            if(party.getMembers().contains(p.getUniqueId())){
+                sgPlayer.setParty(party);
+                party.message(ChatUtil.color("&9Party > " + sgPlayer.getRank().getPrefix() + p.getName() + " §6has returned!"));
+            }
+        }
     }
 
 

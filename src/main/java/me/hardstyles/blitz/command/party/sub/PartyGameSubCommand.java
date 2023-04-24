@@ -38,6 +38,12 @@ public class PartyGameSubCommand extends SubCommand {
             return;
         }
         Party party = iPlayer.getParty();
+
+        if(party.getOnlineMembers().size() < 2) {
+            party.message(ChatUtil.color("&cYou need at least 2 players to start a game!"));
+            return;
+        }
+
         if (args.length == 1) {
             player.sendMessage(ChatUtil.color("&cUsage: /party game <map>"));
             return;

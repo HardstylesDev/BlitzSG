@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import me.hardstyles.blitz.cosmetic.Taunt;
 import me.hardstyles.blitz.kit.Kit;
 import me.hardstyles.blitz.BlitzSG;
+import me.hardstyles.blitz.party.Party;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.cosmetic.Aura;
 import me.hardstyles.blitz.gamestar.Star;
@@ -170,6 +171,10 @@ public class StatisticsManager {
                 }
 
                 BlitzSG.getInstance().getIPlayerManager().addPlayer(uuid, player);
+
+
+
+
 
 
 

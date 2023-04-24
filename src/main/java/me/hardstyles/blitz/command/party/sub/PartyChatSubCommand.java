@@ -41,6 +41,6 @@ public class PartyChatSubCommand extends SubCommand {
         for (int i = 1; i < args.length; i++) {
             message.append(args[i]).append(" ");
         }
-        party.message(ChatUtil.color("&9Party > " + iPlayer.getRank().getPrefix() + player.getName() + "&7: " + message.toString()));
+        party.message(ChatUtil.color("&9Party > " + iPlayer.getRank().getPrefix() + player.getName() + "&f: " + message));
     }
 }

@@ -32,8 +32,8 @@ public class PartyInviteSubCommand extends SubCommand {
         Player s = (Player) sender;
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(s.getUniqueId());
         if (iPlayer.getParty() == null) {
-            s.sendMessage(ChatUtil.color("&cYou are not in a party!"));
-            return;
+            s.sendMessage(ChatUtil.color("&9Party > &eYou have created a party!"));
+            iPlayer.setParty(new Party(s.getUniqueId()));
         }
         Party party = iPlayer.getParty();
         if(party.getOwner() != iPlayer.getUuid()){
