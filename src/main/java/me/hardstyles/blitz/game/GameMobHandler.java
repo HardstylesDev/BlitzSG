@@ -37,10 +37,10 @@ public class GameMobHandler implements Listener {
     public void mobSpawnEvent(PlayerInteractEvent e) {
         if (e.getItem() == null || e.getItem().getType() == null)
             return;
-        IPlayer sgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
-        if (!sgPlayer.isInGame())
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
+        if (!iPlayer.isInGame())
             return;
-        if (!(sgPlayer.getGame().getGameMode() == Game.GameMode.INGAME))
+        if (!(iPlayer.getGame().getGameMode() == Game.GameMode.INGAME))
             return;
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem().getType() == Material.MONSTER_EGG) {
             EntityType entityType = ((SpawnEgg) e.getPlayer().getItemInHand().getData()).getSpawnedType();
@@ -82,11 +82,11 @@ public class GameMobHandler implements Listener {
                 }
                 entity.setCustomName(null);
                 entity.setCustomNameVisible(false);
-                sgPlayer.getGameEntities().add(entity);
+                iPlayer.getGameEntities().add(entity);
                 for (Entity entityList : entity.getNearbyEntities(15, 15, 15))
                     if (entityList instanceof Player) {
                         Player potentialTarget = (Player) entityList;
-                        if (!sgPlayer.getGame().isDead(potentialTarget) && potentialTarget != e.getPlayer())
+                        if (!iPlayer.getGame().isDead(potentialTarget) && potentialTarget != e.getPlayer())
                             if (entity instanceof Monster)
                                 ((Monster) entity).setTarget(potentialTarget);
                             else if (entity instanceof Wolf)
@@ -109,11 +109,11 @@ public class GameMobHandler implements Listener {
                 entity.setCustomName(null);
                 entity.setCustomNameVisible(false);
                 ((Snowman) entity).addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 99999, 1, false, false));
-                sgPlayer.getGameEntities().add(entity);
+                iPlayer.getGameEntities().add(entity);
                 for (Entity entityList : entity.getNearbyEntities(15, 15, 15))
                     if (entityList instanceof Player) {
                         Player potentialTarget = (Player) entityList;
-                        if (!sgPlayer.getGame().isDead(potentialTarget) && potentialTarget != e.getPlayer()) {
+                        if (!iPlayer.getGame().isDead(potentialTarget) && potentialTarget != e.getPlayer()) {
                             ((Golem) entity).setTarget(potentialTarget);
                             ((Golem) entity).launchProjectile(Snowball.class);
                         }
@@ -147,10 +147,10 @@ public class GameMobHandler implements Listener {
     @EventHandler
     public void mobRide(EntityMountEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
-        IPlayer sgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getEntity().getUniqueId());
-        if (!sgPlayer.isInGame())
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getEntity().getUniqueId());
+        if (!iPlayer.isInGame())
             return;
-        if (sgPlayer.getGameEntities().contains(e.getMount()))
+        if (iPlayer.getGameEntities().contains(e.getMount()))
             return;
         Location loc = e.getEntity().getLocation();
         loc.setPitch(e.getEntity().getLocation().getPitch());

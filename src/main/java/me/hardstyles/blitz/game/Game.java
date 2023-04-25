@@ -551,9 +551,9 @@ public class Game {
                 message("    &aDRAW! ");
             } else {
                 winner = alivePlayers.get(0);
-                IPlayer winnerSGPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(winner.getUniqueId());
-                winnerSGPlayer.addWin();
-                message("    " + winnerSGPlayer.getRank(true).getChatColor() + winner.getName() + " &ahas won the Blitz Survival Games!");
+                IPlayer iWinner = BlitzSG.getInstance().getIPlayerManager().getPlayer(winner.getUniqueId());
+                iWinner.addWin();
+                message("    " + iWinner.getRank(true).getChatColor() + winner.getName() + " &ahas won the Blitz Survival Games!");
             }
             message("&6#&7------------------&6#");
             if (!draw) {

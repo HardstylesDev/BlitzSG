@@ -38,60 +38,60 @@ public class IPlayerHandler implements Listener {
         p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
         p.getInventory().setLeggings(new ItemStack(Material.AIR, 1));
         p.getInventory().setBoots(new ItemStack(Material.AIR, 1));
-        IPlayer sgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
 
         p.setGameMode(GameMode.SURVIVAL);
         p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0)); //todo change back
-        if (sgPlayer.getRank().isVip()) {
+        if (iPlayer.getRank().isVip()) {
             p.setAllowFlight(true);
             p.setFlying(true);
         }
-        if (sgPlayer.getNick() != null && sgPlayer.getNick().isNicked()) {
+        if (iPlayer.getNick() != null && iPlayer.getNick().isNicked()) {
             Nickname nickname = new Nickname();
-            if (sgPlayer.getNick().getSkinSignature() == null) {
-                if (sgPlayer.getRank().getPosition() > 4) {
+            if (iPlayer.getNick().getSkinSignature() == null) {
+                if (iPlayer.getRank().getPosition() > 4) {
                     for (Player member : Bukkit.getWorld("world").getPlayers()) {
-                        member.sendMessage(ChatUtil.color("&e" + sgPlayer.getRank().getPrefix() + p.getName() + "&6 joined the lobby!"));
+                        member.sendMessage(ChatUtil.color("&e" + iPlayer.getRank().getPrefix() + p.getName() + "&6 joined the lobby!"));
                     }
                 }
 
-                sgPlayer.getNick().setNicked(true);
+                iPlayer.getNick().setNicked(true);
                 p.kickPlayer(ChatColor.GREEN + "Re-applied nick, please rejoin");
-                String[] skin = nickname.prepareSkinTextures(p, sgPlayer.getNick().getNickName());
-                sgPlayer.getNick().setNicked(true);
-                sgPlayer.getNick().setSkinValue(skin[0]);
-                sgPlayer.getNick().setSkinSignature(skin[1]);
+                String[] skin = nickname.prepareSkinTextures(p, iPlayer.getNick().getNickName());
+                iPlayer.getNick().setNicked(true);
+                iPlayer.getNick().setSkinValue(skin[0]);
+                iPlayer.getNick().setSkinSignature(skin[1]);
             } else {
-                nickname.setNick(p, sgPlayer.getNick().getNickName(), true);
+                nickname.setNick(p, iPlayer.getNick().getNickName(), true);
             }
         } else {
             Bukkit.getScheduler().runTaskLater(BlitzSG.getInstance(), () -> {
-                p.setPlayerListName(sgPlayer.getRank(true).getPrefix() + p.getName());
-                if (sgPlayer.getRank().getPosition() > 4) {
+                p.setPlayerListName(iPlayer.getRank(true).getPrefix() + p.getName());
+                if (iPlayer.getRank().getPosition() > 4) {
                     for (Player member : Bukkit.getWorld("world").getPlayers()) {
-                        member.sendMessage(ChatUtil.color("&e" + sgPlayer.getRank(true).getPrefix() + p.getName() + "&6 joined the lobby!"));
+                        member.sendMessage(ChatUtil.color("&e" + iPlayer.getRank(true).getPrefix() + p.getName() + "&6 joined the lobby!"));
                     }
                 }
             }, 10L);
 
         }
-        if (sgPlayer.getRank() == null) {
-            sgPlayer.setRank(BlitzSG.getInstance().getRankManager().getRankByName("Default"));
+        if (iPlayer.getRank() == null) {
+            iPlayer.setRank(BlitzSG.getInstance().getRankManager().getRankByName("Default"));
         }
-        p.setPlayerListName(sgPlayer.getRank(true).getPrefix() + p.getName());
+        p.setPlayerListName(iPlayer.getRank(true).getPrefix() + p.getName());
         BlitzSG.getInstance().getIPlayerManager().toLobby(p);
 
         p.getActivePotionEffects().forEach(potionEffect -> p.removePotionEffect(potionEffect.getType()));
 
         Bukkit.getOnlinePlayers().forEach(player -> {
-            IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
-            iPlayer.getNametag().sendPacket(p);
+            IPlayer oPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
+            oPlayer.getNametag().sendPacket(p);
         });
 
         for (Party party : BlitzSG.getInstance().getPartyManager().getParties()) {
-            if(party.getMembers().contains(p.getUniqueId()) || party.getOwner() == sgPlayer.getUuid()){
-                sgPlayer.setParty(party);
-                party.message(ChatUtil.color("&9Party > " + sgPlayer.getRank().getPrefix() + p.getName() + " §6has returned!"));
+            if(party.getMembers().contains(p.getUniqueId()) || party.getOwner() == iPlayer.getUuid()){
+                iPlayer.setParty(party);
+                party.message(ChatUtil.color("&9Party > " + iPlayer.getRank().getPrefix() + p.getName() + " §6has returned!"));
             }
         }
     }
@@ -99,18 +99,18 @@ public class IPlayerHandler implements Listener {
 
     @EventHandler
     public void onAsyncChat(AsyncPlayerChatEvent e) {
-        IPlayer sgPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
-        if (sgPlayer.getMute() != null) {
-            if (sgPlayer.getMute().isMuted()) {
-                e.getPlayer().sendMessage(ChatUtil.color("&cYou are currently muted for \"" + sgPlayer.getMute().getReason() + "\""));
-                e.getPlayer().sendMessage(ChatUtil.color("&cThis mute will expire in " + ChatUtil.formatDate(sgPlayer.getMute().getEndTime())));
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
+        if (iPlayer.getMute() != null) {
+            if (iPlayer.getMute().isMuted()) {
+                e.getPlayer().sendMessage(ChatUtil.color("&cYou are currently muted for \"" + iPlayer.getMute().getReason() + "\""));
+                e.getPlayer().sendMessage(ChatUtil.color("&cThis mute will expire in " + ChatUtil.formatDate(iPlayer.getMute().getEndTime())));
                 e.setCancelled(true);
                 return;
             }
         }
-        String format = ChatUtil.color("&r[&7" + sgPlayer.getKills() + "&r] " + sgPlayer.getRank(true).getPrefix() + e.getPlayer().getName() + (sgPlayer.getRank(true).getPrefix().equalsIgnoreCase(ChatColor.GRAY + "") ? ChatColor.GRAY + ": " : ChatColor.WHITE + ": ") + e.getMessage());
-        if(sgPlayer.isSpectating()){
-            format = ChatUtil.color("&7[SPECTATOR] &r[&7" + sgPlayer.getKills() + "&r] " + sgPlayer.getRank(true).getPrefix() + e.getPlayer().getName() + (sgPlayer.getRank(true).getPrefix().equalsIgnoreCase(ChatColor.GRAY + "") ? ChatColor.GRAY + ": " : ChatColor.WHITE + ": ") + e.getMessage());
+        String format = ChatUtil.color("&r[&7" + iPlayer.getKills() + "&r] " + iPlayer.getRank(true).getPrefix() + e.getPlayer().getName() + (iPlayer.getRank(true).getPrefix().equalsIgnoreCase(ChatColor.GRAY + "") ? ChatColor.GRAY + ": " : ChatColor.WHITE + ": ") + e.getMessage());
+        if(iPlayer.isSpectating()){
+            format = ChatUtil.color("&7[SPECTATOR] &r[&7" + iPlayer.getKills() + "&r] " + iPlayer.getRank(true).getPrefix() + e.getPlayer().getName() + (iPlayer.getRank(true).getPrefix().equalsIgnoreCase(ChatColor.GRAY + "") ? ChatColor.GRAY + ": " : ChatColor.WHITE + ": ") + e.getMessage());
 
         }
         for (Player p : Bukkit.getOnlinePlayers()) {
