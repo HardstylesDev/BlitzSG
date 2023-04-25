@@ -72,13 +72,12 @@ public class Party {
     public void disband() {
         for (Player onlineMember : getOnlineMembers()) {
             IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(onlineMember.getUniqueId());
-            if (iPlayer.getUuid() == owner) {
-                iPlayer.setParty(null);
-                onlineMember.sendMessage(ChatUtil.color("&9Party > &cYour party has been disbanded!"));
-            } else {
-                iPlayer.setParty(null);
-                onlineMember.sendMessage(ChatUtil.color("&9Party > &cYour party has been disbanded!"));
-            }
+            iPlayer.setParty(null);
+            onlineMember.sendMessage(ChatUtil.color("&9Party > &cYour party has been disbanded!"));
+            this.members = null;
+            this.owner = null;
+
+            BlitzSG.getInstance().getPartyManager().getParties().remove(this);
         }
     }
 

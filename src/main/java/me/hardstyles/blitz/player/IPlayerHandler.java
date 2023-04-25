@@ -89,7 +89,7 @@ public class IPlayerHandler implements Listener {
         });
 
         for (Party party : BlitzSG.getInstance().getPartyManager().getParties()) {
-            if(party.getMembers().contains(p.getUniqueId())){
+            if(party.getMembers().contains(p.getUniqueId()) || party.getOwner() == sgPlayer.getUuid()){
                 sgPlayer.setParty(party);
                 party.message(ChatUtil.color("&9Party > " + sgPlayer.getRank().getPrefix() + p.getName() + " §6has returned!"));
             }
