@@ -10,15 +10,13 @@ import java.util.List;
 
 public class Kit {
 
-    private String name;
-    private ItemStack icon;
-    private List<List<String>> levelDescriptions;
-    private List<Integer> kitPrices;
-    private String description;
+    private final String name;
+    private final ItemStack icon;
+    private final List<List<String>> levelDescriptions;
+    private final List<Integer> kitPrices;
+    private final String description;
     private List<List<ItemStack>> kitItems;
-    private int selectorLocation;
-    private int shopLocation;
-    private Rank requiredRank;
+    private final Rank requiredRank;
 
 	public Kit(String name, String description, ItemStack icon, List<Integer> kitPrices, List<List<String>> levelDescriptions, List<List<ItemStack>> kitItems) {
 		this.name = name;

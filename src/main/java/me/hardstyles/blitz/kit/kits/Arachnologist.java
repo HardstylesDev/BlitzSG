@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Arachnologist extends Kit {
@@ -94,17 +95,8 @@ public class Arachnologist extends Kit {
         super(
                 "Arachnologist", "Some people might be scared", new ItemBuilder(Material.MONSTER_EGG).durability(52).amount(1).make()
                 , Arrays.asList(192000, 100, 1000, 2000, 4000, 16000, 50000, 100000, 250000, 1000000)
-                , Arrays.asList(Arrays.asList("§7Start the game with 3x TNT.")
-                        , Arrays.asList("§7Start the game with some bullshit.")
-                        , Arrays.asList("§7Start the game with some bullshit.")
-                        , Arrays.asList("§7Start the game with some bullshit.")
-                        , Arrays.asList("§7Start the game with some bullshit.")
-                        , Arrays.asList("§7Start the game with some bullshit.")
-                        , Arrays.asList("§7Start the game with some bullshit.")
-                        , Arrays.asList("§7Start the game with some bullshit.")
-                        , Arrays.asList("§7Start the game with some bullshit.")
-                        , Arrays.asList("§7Start the game with some bullshit."))
-                , Arrays.asList(Arrays.asList(new ItemStack(Material.AIR, 1))), BlitzSG.getInstance().getRankManager().getRankByName("VIP+")
+                , Collections.emptyList()
+                , Collections.singletonList(Collections.singletonList(new ItemStack(Material.AIR, 1))), BlitzSG.getInstance().getRankManager().getRankByName("VIP+")
 
         );
     }

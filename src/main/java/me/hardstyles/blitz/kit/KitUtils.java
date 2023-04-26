@@ -12,7 +12,7 @@ import java.text.NumberFormat;
 import java.util.*;
 
 public class KitUtils {
-	
+
 	public static String getKitTag(int level) {
 		if(level == 0)
 			return "";
@@ -71,28 +71,26 @@ public class KitUtils {
 		// Add item description
 		getItemDescription(kit, kitLevel).forEach(s -> desc.add(ChatColor.GRAY + s.replaceAll("" + ChatColor.RESET, "")));
 		desc.add("");
-
-		switch (kitPrice) {
-			case -1:
-				desc.add("§aMAX LEVEL");
-				break;
-			case 0:
-				if (requiredRank.getPosition() <= playerRank.getPosition()) {
-					desc.add("§eClick to unlock!");
-					desc.add("");
-					desc.add("§7This is free because you are a " + playerRank.getRankFormatted());
-				} else {
-					desc.add("§7Requires " + requiredRank.getRankFormatted() + " §7or unlock it for §6" + NumberFormat.getNumberInstance(Locale.US).format(kitPrice) + " §7coins.");
-				}
-				break;
-			default:
-				desc.add("§7Price: §6" + NumberFormat.getNumberInstance(Locale.US).format(kitPrice));
+		if(kitLevel == 0 && kitPrice > 10000) {
+			if (requiredRank.getPosition() <= playerRank.getPosition()) {
+				desc.add("§eClick to unlock!");
 				desc.add("");
-				if (kitPrice <= player.getCoins()) {
-					desc.add("§eClick to unlock!");
-				} else {
-					desc.add("§cNot enough coins!");
-				}
+				desc.add("§7This is free because you are a " + playerRank.getRankFormatted());
+			} else {
+				desc.add("§7Requires " + requiredRank.getRankFormatted() + " §7or unlock it for §6" + NumberFormat.getNumberInstance(Locale.US).format(kitPrice) + " §7coins.");
+			}
+			return desc;
+		}
+		if (kitPrice == -1) {
+			desc.add("§aMAX LEVEL");
+		} else {
+			desc.add("§7Price: §6" + NumberFormat.getNumberInstance(Locale.US).format(kitPrice));
+			desc.add("");
+			if (kitPrice <= player.getCoins()) {
+				desc.add("§eClick to unlock!");
+			} else {
+				desc.add("§cNot enough coins!");
+			}
 		}
 		return desc;
 	}

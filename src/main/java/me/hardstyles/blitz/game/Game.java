@@ -168,10 +168,9 @@ public class Game {
                 player.hidePlayer(p);
                 p.hidePlayer(player);
             });
-        } catch (ConcurrentModificationException e){
+        } catch (ConcurrentModificationException e) {
             Bukkit.getLogger().log(Level.WARNING, "ConcurrentModificationException in Game.addPlayer(Player p)");
         }
-
 
 
     }
@@ -336,7 +335,7 @@ public class Game {
             BlitzSG.getInstance().getIPlayerManager().resetPlayerStatus(p);
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&eYou will get the items for your " + iPlayer.getSelectedKit().getName() + " kit in 60 seconds.");
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&6The Blitz Star will be released in 5 minutes!");
-            if(godGame){
+            if (godGame) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60 * 20, 2));
             }
             p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60 * 20, 2));
@@ -365,7 +364,7 @@ public class Game {
                     for (Player p : alivePlayers) {
                         p.removePotionEffect(PotionEffectType.DAMAGE_RESISTANCE);
                         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-                        if(godGame) {
+                        if (godGame) {
                             iPlayer.getSelectedKit().giveKit(p, 10);
                         } else {
                             iPlayer.getSelectedKit().giveKit(p, iPlayer.getKitLevel(iPlayer.getSelectedKit()));
@@ -545,26 +544,28 @@ public class Game {
         if (gameMode == GameMode.RESETTING)
             return;
         gameMode = GameMode.RESETTING;
-        try {
-            message("&6#&7------------------&6#");
-            if (draw) {
-                message("    &aDRAW! ");
-            } else {
+        message("&6#&7------------------&6#");
+        if (draw) {
+            message("    &aDRAW! ");
+        } else {
+            if (alivePlayers.size() > 0) {
                 winner = alivePlayers.get(0);
                 IPlayer iWinner = BlitzSG.getInstance().getIPlayerManager().getPlayer(winner.getUniqueId());
                 iWinner.addWin();
                 message("    " + iWinner.getRank(true).getChatColor() + winner.getName() + " &ahas won the Blitz Survival Games!");
+            } else {
+                message("    &aDRAW! ");
             }
-            message("&6#&7------------------&6#");
-            if (!draw) {
-                BlitzSG.getInstance().getIPlayerManager().handleWinElo(this);
-                IPlayer blitzSGWinner = BlitzSG.getInstance().getIPlayerManager().getPlayer(winner.getUniqueId());
-                int coins = 75 * blitzSGWinner.getRank().getMultiplier();
-                blitzSGWinner.addCoins(coins);
-                winner.sendMessage(ChatColor.GOLD + "+" + coins + " Coins (Win)");
-            }
-        } catch (Exception ignored) {
         }
+        message("&6#&7------------------&6#");
+        if (!draw) {
+            BlitzSG.getInstance().getIPlayerManager().handleWinElo(this);
+            IPlayer blitzSGWinner = BlitzSG.getInstance().getIPlayerManager().getPlayer(winner.getUniqueId());
+            int coins = 75 * blitzSGWinner.getRank().getMultiplier();
+            blitzSGWinner.addCoins(coins);
+            winner.sendMessage(ChatColor.GOLD + "+" + coins + " Coins (Win)");
+        }
+
         new BukkitRunnable() {
             public void run() {
                 resetGame();
