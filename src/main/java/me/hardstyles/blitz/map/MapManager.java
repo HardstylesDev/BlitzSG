@@ -25,7 +25,6 @@ public class MapManager {
         String worldName = map.getMapId();
         FileConfiguration fc = new YamlConfiguration();
         fc.load(new File(BlitzSG.getInstance().getDataFolder() + "/arenas/" + map.getMapName().toLowerCase() + ".yml"));
-        System.out.println("Loading map: " + worldName);
         World world = Bukkit.getWorld(worldName.toLowerCase());
         world.setAutoSave(false);
         setGameRules(world);

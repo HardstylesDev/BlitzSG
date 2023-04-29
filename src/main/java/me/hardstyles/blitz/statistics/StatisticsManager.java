@@ -196,7 +196,6 @@ public class StatisticsManager {
             banPs.setString(1, uuid.toString());
             ResultSet banRs = banPs.executeQuery();
             while (banRs.next()) {
-                System.out.println("Mute found for " + uuid);
                 if (banRs.getDouble("expires") != -1) {
                     double expireDate = banRs.getDouble("expires");
                     if (System.currentTimeMillis() > expireDate) {
@@ -210,7 +209,6 @@ public class StatisticsManager {
 
                     IPlayer player = BlitzSG.getInstance().getIPlayerManager().getPlayer(uuid);
                     player.setMute(new PlayerMute((long) expireDate, reason));
-                    System.out.println("Muted " + player.getUuid() + " for " + reason + " until " + expireDate);
                 }
                 banRs.close();
                 banPs.close();
