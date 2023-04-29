@@ -20,8 +20,6 @@ public class MapManager {
     public MapManager() {
 
     }
-
-
     @SneakyThrows
     public void populateMap(Game g, Map map) {
         String worldName = map.getMapId();
