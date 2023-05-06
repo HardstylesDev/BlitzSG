@@ -7,6 +7,4 @@ public interface AntiCheatProvider {
     public void unwhitelistPlayer(Player player);
 
     public boolean isWhitelisted(Player player);
-
-
 }
