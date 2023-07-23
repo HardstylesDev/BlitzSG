@@ -2,7 +2,6 @@ package me.hardstyles.blitz;
 
 import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
-import me.hardstyles.blitz.anticheat.impl.KarhuAnticheat;
 import me.hardstyles.blitz.command.broadcast.BroadcastCommand;
 import me.hardstyles.blitz.command.coins.SetCoinsCommand;
 import me.hardstyles.blitz.command.join.JoinCommand;
@@ -57,7 +56,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class BlitzSG extends JavaPlugin {
 
     public static String CORE_NAME = EnumChatFormat.GRAY + "[" + EnumChatFormat.RED + "B-SG" + EnumChatFormat.GRAY + "]: " + EnumChatFormat.WHITE;
-    private KarhuAnticheat anticheat;
 
     public static BlitzSG instance;
     private StatisticsManager statisticsManager;
@@ -95,7 +93,6 @@ public class BlitzSG extends JavaPlugin {
 
         db = new Database();
         statisticsManager = new StatisticsManager();
-        anticheat = new KarhuAnticheat();
         iPlayerManager = new IPlayerManager();
         rankManager = new RankManager();
         kitManager = new KitManager();

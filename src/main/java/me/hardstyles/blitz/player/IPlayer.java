@@ -75,8 +75,9 @@ public class IPlayer {
         this.gameEntities = new HashSet<Entity>();
         this.stars = new HashSet<Star>();
         this.kitLevels = new HashMap<Kit, Integer>();
-        for (Kit p : BlitzSG.getInstance().getKitManager().getKits())
-            this.kitLevels.put(p, 0);
+        for (Kit kit : BlitzSG.getInstance().getKitManager().getKits()) {
+            this.kitLevels.put(kit, kit.getRequiredRank() == BlitzSG.getInstance().getRankManager().getRankByName("Default") ? 1 : 0);
+        }
 
 
         this.gameKills = 0;
@@ -222,8 +223,9 @@ public class IPlayer {
     }
 
     public int getKitLevel(Kit p) {
-        if (!kitLevels.containsKey(p))
-            return 0;
+        if (!kitLevels.containsKey(p)){
+            return p.getRequiredRank() == BlitzSG.getInstance().getRankManager().getRankByName("Default") ? 1 : 0;
+        }
         return this.kitLevels.get(p);
     }
 

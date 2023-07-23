@@ -142,12 +142,17 @@ public class StatisticsManager {
                 player.getKits().clear();
                 String kitsJson = resultSet.getString("kits");
                 if (kitsJson != null) {
-                    Map<String, Integer> kits = new Gson().fromJson(kitsJson, new TypeToken<Map<String, Integer>>() {
-                    }.getType());
+                    Map<String, Integer> kits = new Gson().fromJson(kitsJson, new TypeToken<Map<String, Integer>>() {}.getType());
                     for (Map.Entry<String, Integer> entry : kits.entrySet()) {
                         Kit kit = BlitzSG.getInstance().getKitManager().getKit(entry.getKey());
                         if (kit != null) {
-                            player.getKits().put(kit, entry.getValue());
+                            int level = entry.getValue();
+                            if(kit.getRequiredRank() == BlitzSG.getInstance().getRankManager().getRankByName("Default")){
+                                if (level == 0) {
+                                    level = 1;
+                                }
+                            }
+                            player.getKits().put(kit, level);
                         }
                     }
                 }

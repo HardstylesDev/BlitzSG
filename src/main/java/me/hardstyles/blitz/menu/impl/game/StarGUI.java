@@ -1,6 +1,7 @@
-package me.hardstyles.blitz.menu.impl.shop;
+package me.hardstyles.blitz.menu.impl.game;
 
 import me.hardstyles.blitz.BlitzSG;
+import me.hardstyles.blitz.menu.impl.shop.ShopGUI;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.gamestar.Star;
 import me.hardstyles.blitz.utils.ItemBuilder;

@@ -5,7 +5,7 @@ import me.hardstyles.blitz.menu.impl.game.SpectatorGUI;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.fireworks.FireworkCommand;
 import me.hardstyles.blitz.menu.impl.game.KitGUI;
-import me.hardstyles.blitz.menu.impl.shop.StarGUI;
+import me.hardstyles.blitz.menu.impl.game.StarGUI;
 import me.hardstyles.blitz.utils.ChatUtil;
 import me.hardstyles.blitz.utils.loot.ChestUtils;
 import me.hardstyles.blitz.utils.ItemBuilder;

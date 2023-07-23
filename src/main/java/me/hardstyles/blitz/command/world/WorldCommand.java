@@ -3,9 +3,6 @@ package me.hardstyles.blitz.command.world;
 import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
-import me.hardstyles.blitz.command.rank.sub.RankListSubCommand;
-import me.hardstyles.blitz.command.rank.sub.RankSetPrefixCommand;
-import me.hardstyles.blitz.command.rank.sub.RankSetSubCommand;
 import me.hardstyles.blitz.command.world.sub.*;
 import me.hardstyles.blitz.utils.ChatUtil;
 import org.bukkit.command.CommandSender;
@@ -26,6 +23,7 @@ public class WorldCommand extends Command {
         subcommands.add(new WorldTeleportSubCommand());
         subcommands.add(new WorldLocateSubCommand());
         subcommands.add(new WorldAddSpawnSubCommand());
+        subcommands.add(new WorldFormDeathmatch());
     }
 
     @Override
@@ -63,7 +61,7 @@ public class WorldCommand extends Command {
             if (sub != null) {
                 sub.execute(sender, args);
             } else {
-                sender.sendMessage(ChatUtil.color("&cUnknown sub-command, use &c/rank help &cfor help."));
+                sender.sendMessage(ChatUtil.color("&cUnknown sub-command, use &c/world help &cfor help."));
             }
         } else {
             help(sender);

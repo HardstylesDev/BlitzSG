@@ -15,7 +15,7 @@ public class Imprison extends Star {
 
     @Override
     public void run(Player p) {
-        BlitzSG.getInstance().getAnticheat().whitelistPlayer(p, 20* 25);
+        //BlitzSG.getInstance().getAnticheat().whitelistPlayer(p, 20* 25);
         p.getInventory().remove(Material.NETHER_STAR);
         IPlayer user = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
         for (Player alivePlayer : user.getGame().getAlivePlayers()) {
