@@ -30,21 +30,27 @@ public class SetCoinsCommand extends Command {
     public void onExecute(CommandSender sender, String[] args) {
         Player player = (Player) sender;
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
-        if(iPlayer.getRank().isManager()){
-
-            if(args.length == 2) {
+        if (iPlayer.getRank().isManager()) {
+            if (args.length == 2) {
                 Player target = Bukkit.getPlayer(args[0]);
-                if(target == null) {
+                if (target == null) {
                     sender.sendMessage(ChatColor.RED + "Player not found.");
                     return;
                 }
                 IPlayer targetIPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(target.getUniqueId());
-                int coins = Integer.parseInt(args[1]);
+                int coins = 0;
+                try {
+                    coins = Integer.parseInt(args[1]);
+                } catch (NumberFormatException e) {
+                    sender.sendMessage(ChatColor.RED + "Please enter a valid number.");
+                    return;
+                }
                 targetIPlayer.setCoins(coins);
                 sender.sendMessage(ChatColor.GREEN + "You have set " + target.getName() + "'s coins to " + coins + ".");
                 return;
 
             }
+            sender.sendMessage(ChatColor.RED + "Usage: /coins <player> <amount>");
             return;
         }
         sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");

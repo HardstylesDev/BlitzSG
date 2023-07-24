@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class ShopStarGUI {
@@ -67,29 +68,31 @@ public class ShopStarGUI {
     }
 
 
-    public static String[] getFullDescription(IPlayer iPlayer, Star p) {
-        StringBuilder builder = new StringBuilder();
-        builder.append(ChatColor.RESET).append(p.getDescription()).append("\n\n");
+    public static ArrayList<String> getFullDescription(IPlayer iPlayer, Star p) {
+        ArrayList<String> descriptionList = new ArrayList<>();
+        descriptionList.add(ChatColor.RESET + p.getDescription());
+        descriptionList.add("");
+        descriptionList.add("");
 
         if (iPlayer.getStars().contains(p)) {
-            builder.append(ChatColor.GREEN).append("UNLOCKED!");
-            return builder.toString().split("\n");
+            descriptionList.add(ChatColor.GREEN + "UNLOCKED!");
+            return descriptionList;
         }
 
         if (p.getPrice() == 0) {
-            builder.append(ChatColor.GREEN).append("UNLOCKED!");
+            descriptionList.add(ChatColor.GREEN + "UNLOCKED!");
         } else {
-            builder.append(ChatColor.GRAY).append("Price: ")
-                    .append(ChatColor.GOLD).append(NumberFormat.getNumberInstance(Locale.US).format(p.getPrice()))
-                    .append("\n\n");
+            descriptionList.add(ChatColor.GRAY + "Price: " + ChatColor.GOLD + NumberFormat.getNumberInstance(Locale.US).format(p.getPrice()));
+            descriptionList.add("");
+            descriptionList.add("");
             if (p.getPrice() <= iPlayer.getCoins()) {
-                builder.append(ChatColor.YELLOW).append("Click to unlock!");
+                descriptionList.add(ChatColor.YELLOW + "Click to unlock!");
             } else {
-                builder.append(ChatColor.RED).append("Not enough coins!");
+                descriptionList.add(ChatColor.RED + "Not enough coins!");
             }
         }
 
-        return builder.toString().split("\n");
+        return descriptionList;
     }
 
 
