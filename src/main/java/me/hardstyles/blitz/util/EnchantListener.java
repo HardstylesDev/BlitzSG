@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.utils;
+package me.hardstyles.blitz.util;
 
 import me.hardstyles.blitz.BlitzSG;
 import net.minecraft.server.v1_8_R3.ContainerEnchantTable;

@@ -45,7 +45,7 @@ public class KitUtils {
 		String roman = KitUtils.getKitTag(iPlayer.getKitLevel(kit));
 		switch (kitPrice) {
 			case -1:
-				return "§a" + kit.getName() + roman;
+				return "§c" + kit.getName() + roman;
 			case 0:
 				if (playerRank.getPosition() >= kit.getRequiredRank().getPosition()) {
 					return "§a" + kit.getName() + roman;
@@ -54,7 +54,7 @@ public class KitUtils {
 				}
 			default:
 				if (kitPrice <= iPlayer.getCoins()) {
-					return "§e" + kit.getName() + KitUtils.getKitTag(iPlayer.getKitLevel(kit) + 1);
+					return "§a" + kit.getName() + KitUtils.getKitTag(iPlayer.getKitLevel(kit) + 1);
 				} else {
 					return "§c" + kit.getName() + KitUtils.getKitTag(iPlayer.getKitLevel(kit) + 1);
 				}
@@ -69,7 +69,8 @@ public class KitUtils {
 		Rank requiredRank = kit.getRequiredRank();
 
 		// Add item description
-		getItemDescription(kit, kitLevel).forEach(s -> desc.add(ChatColor.GRAY + s.replaceAll("" + ChatColor.RESET, "")));
+		desc.add(ChatColor.GRAY + kit.getDescription());
+		getItemDescription(kit, kitLevel).forEach(s -> desc.add(ChatColor.DARK_GRAY + s.replaceAll("" + ChatColor.RESET, "")));
 		desc.add("");
 		if(kitLevel == 0 && kitPrice > 10000) {
 			if (requiredRank.getPosition() <= playerRank.getPosition()) {
@@ -82,15 +83,15 @@ public class KitUtils {
 			return desc;
 		}
 		if (kitPrice == -1) {
-			desc.add("§aMAX LEVEL");
+			desc.add("§7Cost: §61,000,000");
 		} else {
-			desc.add("§7Price: §6" + NumberFormat.getNumberInstance(Locale.US).format(kitPrice));
-			desc.add("");
-			if (kitPrice <= player.getCoins()) {
-				desc.add("§eClick to unlock!");
-			} else {
-				desc.add("§cNot enough coins!");
-			}
+			desc.add("§7Cost: §6" + NumberFormat.getNumberInstance(Locale.US).format(kitPrice));
+//			desc.add("");
+//			if (kitPrice <= player.getCoins()) {
+//				desc.add("§eClick to unlock!");
+//			} else {
+//				desc.add("§cNot enough coins!");
+//			}
 		}
 		return desc;
 	}
@@ -111,7 +112,7 @@ public class KitUtils {
 				PotionMeta meta = (PotionMeta) item.getItemMeta();
 				String potionName = capitalizeString(meta.getCustomEffects().get(0).getType().getName().toLowerCase());
 				int potionLevel = meta.getCustomEffects().get(0).getAmplifier() + 1;
-				desc.add(ChatColor.RESET + (item.getAmount() > 1 ? item.getAmount() + "x " : "") + potionName + KitUtils.getKitTag(Math.max(1, potionLevel)) + " potion" + (item.getAmount() > 1 ? "s" : ""));
+				desc.add(ChatColor.RESET + (item.getAmount() > 1 ? item.getAmount() + "x " : "") + potionName + KitUtils.getKitTag(Math.max(1, potionLevel)) + " Potion" + (item.getAmount() > 1 ? "s" : ""));
 			} else {
 				String formattedType = capitalizeString(item.getType().toString().replaceAll("_", " "));
 				desc.add(ChatColor.RESET + (item.getAmount() > 1 ? item.getAmount() + "x " : "") + formattedType);
@@ -132,7 +133,22 @@ public class KitUtils {
 		if (SPECIAL_CASES.containsKey(lowercase)) {
 			return SPECIAL_CASES.get(lowercase);
 		}
-		return Character.toTitleCase(lowercase.charAt(0)) + lowercase.substring(1);
+		return Character.toTitleCase(lowercase.charAt(0)) + lowercase.substring(1)
+				.replaceAll("chestplate", "Chestplate")
+				.replaceAll("leggings", "Leggings")
+				.replaceAll("sword", "Sword")
+				.replaceAll("boots", "Boots")
+				.replaceAll("helmet", "Helmet")
+				.replaceAll("ball", "Balls")
+				.replaceAll("barding", "Barding")
+				.replaceAll("rod", "Rod")
+				.replaceAll("beef", "Beef")
+				.replaceAll("potato", "Potato")
+				.replaceAll("fish", "Fish")
+				.replaceAll("pickaxe", "Pickaxe")
+				.replaceAll("axe", "Axe")
+				.replaceAll("flesh", "Flesh")
+				.replaceAll("Tnt", "TNT");
 	}
 
 	public static String getEnchantString(ItemStack itemStack) {
@@ -163,6 +179,8 @@ public class KitUtils {
 				enchantName = "Blast Protection";
 			} else if (enchantment == Enchantment.OXYGEN) {
 				enchantName = "Respiration";
+			} else if (enchantment == Enchantment.PROTECTION_FIRE) {
+				enchantName = "Fire Resistance";
 			} else {
 				enchantName = enchantment.getName();
 			}

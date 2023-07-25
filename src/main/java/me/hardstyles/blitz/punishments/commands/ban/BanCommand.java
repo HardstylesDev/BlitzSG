@@ -5,14 +5,14 @@ import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
-import me.hardstyles.blitz.utils.ChatUtil;
+import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bson.Document;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,15 +39,14 @@ public class BanCommand extends Command {
     @Override
     public void onExecute(CommandSender sender, String[] args) {
         String executor = "Console";
-        if(sender instanceof Player) {
+        if (sender instanceof Player) {
             IPlayer p = BlitzSG.getInstance().getIPlayerManager().getPlayer(((Player) sender).getUniqueId());
-            if(!(p.getRank().canBan())) {
+            if (!(p.getRank().canBan())) {
                 sender.sendMessage(ChatUtil.color("&cYou do not have permission to use this command!"));
                 return;
             }
             executor = ((Player) sender).getName();
         }
-
 
         if (args.length == 0) {
             help(sender);
@@ -77,17 +76,20 @@ public class BanCommand extends Command {
         String finalReason = reason;
         String finalExecutor = executor;
         Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
-            try (Connection connection = BlitzSG.getInstance().getDb().getConnection();
-                 PreparedStatement statement = connection.prepareStatement("INSERT INTO `bans` (`uuid`, `reason`, `expires`, `executor`) VALUES (?, ?, ?, ?)")) {
-                statement.setString(1, target.getUniqueId().toString());
-                statement.setString(2, finalReason);
-                statement.setLong(3, futureTime);
-                statement.setString(4, finalExecutor);
-                statement.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            try {
+                MongoDatabase database = BlitzSG.getInstance().getDb().getDatabase();
+                MongoCollection<Document> collection = database.getCollection("bans");
+
+                Document banDoc = new Document("uuid", target.getUniqueId().toString())
+                        .append("reason", finalReason)
+                        .append("expires", futureTime)
+                        .append("executor", finalExecutor);
+                collection.insertOne(banDoc);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
+
         target.kickPlayer(ChatUtil.color("&cYou have been banned for " + duration + " for " + reason + ""));
     }
 

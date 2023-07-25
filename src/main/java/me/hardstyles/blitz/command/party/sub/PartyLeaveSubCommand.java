@@ -3,10 +3,8 @@ package me.hardstyles.blitz.command.party.sub;
 import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.command.SubCommand;
-import me.hardstyles.blitz.party.Party;
 import me.hardstyles.blitz.player.IPlayer;
-import me.hardstyles.blitz.utils.ChatUtil;
-import org.bukkit.Bukkit;
+import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

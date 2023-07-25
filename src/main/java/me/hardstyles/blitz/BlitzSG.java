@@ -10,7 +10,6 @@ import me.hardstyles.blitz.command.party.PartyChatCommand;
 import me.hardstyles.blitz.command.party.PartyCommand;
 import me.hardstyles.blitz.command.taunt.TauntCommand;
 import me.hardstyles.blitz.command.vote.VoteCommand;
-import me.hardstyles.blitz.party.Party;
 import me.hardstyles.blitz.party.PartyManager;
 import me.hardstyles.blitz.player.IPlayerHandler;
 import me.hardstyles.blitz.player.IPlayerManager;
@@ -30,8 +29,8 @@ import me.hardstyles.blitz.punishments.commands.mute.MuteCommand;
 import me.hardstyles.blitz.punishments.commands.mute.UnmuteCommand;
 import me.hardstyles.blitz.statistics.LeaderboardManager;
 import me.hardstyles.blitz.statistics.StatisticsManager;
-import me.hardstyles.blitz.utils.ChatUtil;
-import me.hardstyles.blitz.utils.EnchantListener;
+import me.hardstyles.blitz.util.ChatUtil;
+import me.hardstyles.blitz.util.EnchantListener;
 import me.hardstyles.blitz.command.game.GameCommand;
 import me.hardstyles.blitz.cosmetic.CosmeticsManager;
 import me.hardstyles.blitz.elo.EloManager;
@@ -81,7 +80,8 @@ public class BlitzSG extends JavaPlugin {
         instance = this;
         startTime = System.currentTimeMillis();
     }
-    public Database db(){
+
+    public Database db() {
         return db;
     }
 
@@ -111,8 +111,6 @@ public class BlitzSG extends JavaPlugin {
         partyManager = new PartyManager(iPlayerManager);
 
 
-
-
         //Register Commands::
         registerCommands();
 
@@ -138,7 +136,7 @@ public class BlitzSG extends JavaPlugin {
     }
 
 
-    private void registerCommands(){
+    private void registerCommands() {
         Bukkit.getConsoleSender().sendMessage(ChatUtil.color(" "));
         Bukkit.getConsoleSender().sendMessage(ChatUtil.color("&d&lLoading Commands..."));
         Bukkit.getConsoleSender().sendMessage(ChatUtil.color(" "));
@@ -189,9 +187,6 @@ public class BlitzSG extends JavaPlugin {
     public static BlitzSG getInstance() {
         return instance;
     }
-
-
-
 
 
 }

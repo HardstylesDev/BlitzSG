@@ -3,8 +3,8 @@ package me.hardstyles.blitz.command;
 import com.google.common.collect.ImmutableList;
 
 import lombok.Getter;
-import me.hardstyles.blitz.utils.ChatUtil;
-import me.hardstyles.blitz.utils.ReflectionUtil;
+import me.hardstyles.blitz.util.ChatUtil;
+import me.hardstyles.blitz.util.ReflectionUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;

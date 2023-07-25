@@ -5,9 +5,9 @@ import lombok.Setter;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.player.IPlayerManager;
 import me.hardstyles.blitz.map.Map;
-import me.hardstyles.blitz.utils.ChatUtil;
-import me.hardstyles.blitz.utils.ItemBuilder;
-import me.hardstyles.blitz.utils.ItemUtils;
+import me.hardstyles.blitz.util.ChatUtil;
+import me.hardstyles.blitz.util.ItemBuilder;
+import me.hardstyles.blitz.util.ItemUtils;
 import me.hardstyles.blitz.BlitzSG;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
@@ -335,6 +335,7 @@ public class Game {
             }
             BlitzSG.getInstance().getIPlayerManager().resetPlayerStatus(p);
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&eYou will get the items for your " + iPlayer.getSelectedKit().getName() + " kit in 60 seconds.");
+            BlitzSG.send(p, (godGame ? BlitzSG.CORE_NAME + "&e&lGOD MODE GAME: ALL KITS ARE MAXED OUT!" : ""));
             BlitzSG.send(p, BlitzSG.CORE_NAME + "&6The Blitz Star will be released in 5 minutes!");
             if (godGame) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 60 * 20, 2));

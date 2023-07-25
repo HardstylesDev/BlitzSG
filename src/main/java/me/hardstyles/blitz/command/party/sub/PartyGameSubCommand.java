@@ -7,7 +7,7 @@ import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.map.Map;
 import me.hardstyles.blitz.party.Party;
 import me.hardstyles.blitz.player.IPlayer;
-import me.hardstyles.blitz.utils.ChatUtil;
+import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;

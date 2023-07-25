@@ -2,8 +2,8 @@ package me.hardstyles.blitz.kit.kits;
 
 import me.hardstyles.blitz.kit.Kit;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.utils.ItemBuilder;
-import me.hardstyles.blitz.utils.ItemUtils;
+import me.hardstyles.blitz.util.ItemBuilder;
+import me.hardstyles.blitz.util.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -34,40 +34,40 @@ public class Astronaut extends Kit {
     @Override
     public void initialize() {
 
-        I = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots (I)").enchantment(Enchantment.PROTECTION_FALL,2).amount(1).make());
-        II = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots (II)").enchantment(Enchantment.PROTECTION_FALL,2).amount(1).make(),
+        I = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots §7(I)").enchantment(Enchantment.PROTECTION_FALL,2).amount(1).make());
+        II = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots §7(II)").enchantment(Enchantment.PROTECTION_FALL,2).amount(1).make(),
                 pot(1));
-        III = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots (III)").enchantment(Enchantment.PROTECTION_FALL,2).amount(1).make(),
+        III = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots §7(III)").enchantment(Enchantment.PROTECTION_FALL,2).amount(1).make(),
                 pot(2));
-        IV = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots (IV)").enchantment(Enchantment.PROTECTION_FALL,3).amount(1).make(),
-                new ItemBuilder(Material.WOOD_AXE).name("&rAstronaut's Wooden Axe (IV)").make(),
+        IV = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots §7(IV)").enchantment(Enchantment.PROTECTION_FALL,3).amount(1).make(),
+                new ItemBuilder(Material.WOOD_AXE).name("&rAstronaut's Wooden Axe §7(IV)").make(),
                 pot(3));
-        V =Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots (V)").enchantment(Enchantment.PROTECTION_FALL,4).amount(1).make(),
+        V =Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots §7(V)").enchantment(Enchantment.PROTECTION_FALL,4).amount(1).make(),
                 new ItemBuilder(Material.WOOD_AXE).name("&rAstronaut's Wooden Axe (V").make(),
                 pot(3));
-        VI = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots (VI)").enchantment(Enchantment.PROTECTION_FALL,4).amount(1).make(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rAstronaut's Chainmail Helmet (VI)").enchantment(Enchantment.PROTECTION_EXPLOSIONS,1).amount(1).make(),
+        VI = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots §7(VI)").enchantment(Enchantment.PROTECTION_FALL,4).amount(1).make(),
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rAstronaut's Chainmail Helmet §7(VI)").enchantment(Enchantment.PROTECTION_EXPLOSIONS,1).amount(1).make(),
                 new ItemBuilder(Material.WOOD_AXE).name("&rAstronaut's Wooden Axe (VI").make(),
                 pot(3));
-        VII = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots (VII)").enchantment(Enchantment.PROTECTION_FALL,4).amount(1).make(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rAstronaut's Chainmail Helmet (VII)").enchantment(Enchantment.PROTECTION_EXPLOSIONS,2).amount(1).make(),
+        VII = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots §7(VII)").enchantment(Enchantment.PROTECTION_FALL,4).amount(1).make(),
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rAstronaut's Chainmail Helmet §7(VII)").enchantment(Enchantment.PROTECTION_EXPLOSIONS,2).amount(1).make(),
                 new ItemBuilder(Material.STONE_AXE).name("&rAstronaut's Stone Axe (VII").make(),
                 pot(3));
-        VIII = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots (VIII)").enchantment(Enchantment.PROTECTION_FALL,5).amount(1).make(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rAstronaut's Chainmail Helmet (VIII)").enchantment(Enchantment.PROTECTION_EXPLOSIONS,3).amount(1).make(),
-                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rAstronaut's Chainmail Chestplate (VIII)").make(),
+        VIII = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots §7(VIII)").enchantment(Enchantment.PROTECTION_FALL,5).amount(1).make(),
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rAstronaut's Chainmail Helmet §7(VIII)").enchantment(Enchantment.PROTECTION_EXPLOSIONS,3).amount(1).make(),
+                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rAstronaut's Chainmail Chestplate §7(VIII)").make(),
                 new ItemBuilder(Material.STONE_AXE).name("&rAstronaut's Stone Axe (VIII").make(),
                 pot(3));
-        IX = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots (IX)").enchantment(Enchantment.PROTECTION_FALL,7).amount(1).make(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rAstronaut's Chainmail Helmet (IX)").enchantment(Enchantment.PROTECTION_EXPLOSIONS,3).amount(1).make(),
-                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rAstronaut's Chainmail Chestplate (IX)").make(),
-                new ItemBuilder(Material.CHAINMAIL_LEGGINGS).name("&rAstronaut's Chainmail Leggings (IX)").make(),
+        IX = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots §7(IX)").enchantment(Enchantment.PROTECTION_FALL,7).amount(1).make(),
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rAstronaut's Chainmail Helmet §7(IX)").enchantment(Enchantment.PROTECTION_EXPLOSIONS,3).amount(1).make(),
+                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rAstronaut's Chainmail Chestplate §7(IX)").make(),
+                new ItemBuilder(Material.CHAINMAIL_LEGGINGS).name("&rAstronaut's Chainmail Leggings §7(IX)").make(),
                 new ItemBuilder(Material.STONE_AXE).name("&rAstronaut's Stone Axe (IX").make(),
                 pot(3));
-        X = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots (X)").enchantment(Enchantment.PROTECTION_FALL,10).amount(1).make(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rAstronaut's Chainmail Helmet (X)").enchantment(Enchantment.PROTECTION_EXPLOSIONS,3).amount(1).make(),
-                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rAstronaut's Chainmail Chestplate (X)").make(),
-                new ItemBuilder(Material.CHAINMAIL_LEGGINGS).name("&rAstronaut's Chainmail Leggings (X)").make(),
+        X = Arrays.asList(new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rAstronaut's Chainmail Boots §7(X)").enchantment(Enchantment.PROTECTION_FALL,10).amount(1).make(),
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rAstronaut's Chainmail Helmet §7(X)").enchantment(Enchantment.PROTECTION_EXPLOSIONS,3).amount(1).make(),
+                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rAstronaut's Chainmail Chestplate §7(X)").make(),
+                new ItemBuilder(Material.CHAINMAIL_LEGGINGS).name("&rAstronaut's Chainmail Leggings §7(X)").make(),
                 new ItemBuilder(Material.STONE_SWORD).name("&rAstronaut's Stone Sword (X").make(),
                 pot(4));
 

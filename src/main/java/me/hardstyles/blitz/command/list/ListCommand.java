@@ -4,17 +4,12 @@ import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
-import me.hardstyles.blitz.game.Game;
-import me.hardstyles.blitz.map.Map;
 import me.hardstyles.blitz.player.IPlayer;
-import me.hardstyles.blitz.utils.ChatUtil;
+import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

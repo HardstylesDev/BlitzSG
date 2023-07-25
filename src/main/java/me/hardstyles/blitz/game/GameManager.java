@@ -6,7 +6,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.cosmetic.Taunt;
 import me.hardstyles.blitz.player.IPlayer;
-import me.hardstyles.blitz.utils.ChatUtil;
+import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -137,7 +137,7 @@ public class GameManager {
             return;
         }
 
-        if (g.getGameMode() != Game.GameMode.INGAME && !iPlayer.getRank().isManager()) {
+        if (g.getGameMode() != Game.GameMode.INGAME) {
             player.sendMessage(ChatUtil.color("&cThe taunt can only be used in a game!"));
             return;
         }

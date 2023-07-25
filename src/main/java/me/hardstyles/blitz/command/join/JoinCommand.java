@@ -4,25 +4,19 @@ import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
-import me.hardstyles.blitz.command.game.sub.GameListSubCommand;
-import me.hardstyles.blitz.command.game.sub.GameStartDeathmatchSubCommand;
-import me.hardstyles.blitz.command.game.sub.GameStartSubCommand;
-import me.hardstyles.blitz.command.game.sub.GameStopAllSubCommand;
 import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.map.Map;
 import me.hardstyles.blitz.player.IPlayer;
-import me.hardstyles.blitz.utils.ChatUtil;
+import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.StringUtil;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class JoinCommand extends Command {
     private final List<SubCommand> subcommands = new ArrayList<>();

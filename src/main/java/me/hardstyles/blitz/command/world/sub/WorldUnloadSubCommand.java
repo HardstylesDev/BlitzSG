@@ -2,7 +2,7 @@ package me.hardstyles.blitz.command.world.sub;
 
 import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.command.SubCommand;
-import me.hardstyles.blitz.utils.ChatUtil;
+import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;

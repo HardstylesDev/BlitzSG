@@ -2,7 +2,7 @@ package me.hardstyles.blitz.kit.kits;
 
 import me.hardstyles.blitz.kit.Kit;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.utils.ItemBuilder;
+import me.hardstyles.blitz.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -32,37 +32,37 @@ public class Creepertamer extends Kit {
 
         I = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(50).name("&rCreeper Spawn Egg").amount(1).make());
         II = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(50).name("&rCreeper Spawn Egg").amount(1).make(),
-                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rCreepertamer's Leather Chestplate (II)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 1).make());
+                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rCreepertamer's Leather Chestplate §7(II)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 1).make());
         III = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(50).name("&rCreeper Spawn Egg").amount(2).make(),
-                new ItemBuilder(Material.WOOD_AXE).name("&rCreepertamer's Wood Axe (III)").make(),
-                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rCreepertamer's Leather Chestplate (III)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 2).make());
+                new ItemBuilder(Material.WOOD_AXE).name("&rCreepertamer's Wood Axe §7(III)").make(),
+                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rCreepertamer's Leather Chestplate §7(III)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 2).make());
         IV = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(50).name("&rCreeper Spawn Egg").amount(2).make(),
-                new ItemBuilder(Material.WOOD_AXE).name("&rCreepertamer's Wood Axe (IV)").make(),
-                new ItemBuilder(Material.GOLD_CHESTPLATE).name("&rCreepertamer's Gold Chestplate (IV)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 1).make(),
+                new ItemBuilder(Material.WOOD_AXE).name("&rCreepertamer's Wood Axe §7(IV)").make(),
+                new ItemBuilder(Material.GOLD_CHESTPLATE).name("&rCreepertamer's Gold Chestplate §7(IV)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 1).make(),
                 new ItemStack(Material.TNT, 1));
         V = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(50).name("&rCreeper Spawn Egg").amount(2).make(),
-                new ItemBuilder(Material.WOOD_AXE).name("&rCreepertamer's Wood Axe (V)").make(),
-                new ItemBuilder(Material.IRON_CHESTPLATE).name("&rCreepertamer's Iron Chestplate (V)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 1).make(),
+                new ItemBuilder(Material.WOOD_AXE).name("&rCreepertamer's Wood Axe §7(V)").make(),
+                new ItemBuilder(Material.IRON_CHESTPLATE).name("&rCreepertamer's Iron Chestplate §7(V)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 1).make(),
                 new ItemStack(Material.TNT, 2));
         VI = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(50).name("&rCreeper Spawn Egg").amount(2).make(),
-                new ItemBuilder(Material.WOOD_SWORD).name("&rCreepertamer's Wood Sword (VI)").make(),
-                new ItemBuilder(Material.IRON_CHESTPLATE).name("&rCreepertamer's Iron Chestplate (VI)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 1).make(),
+                new ItemBuilder(Material.WOOD_SWORD).name("&rCreepertamer's Wood Sword §7(VI)").make(),
+                new ItemBuilder(Material.IRON_CHESTPLATE).name("&rCreepertamer's Iron Chestplate §7(VI)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 1).make(),
                 new ItemStack(Material.TNT, 3));
         VII = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(50).name("&rCreeper Spawn Egg").amount(2).make(),
-                new ItemBuilder(Material.WOOD_SWORD).name("&rCreepertamer's Wood Sword (VII)").make(),
-                new ItemBuilder(Material.IRON_CHESTPLATE).name("&rCreepertamer's Iron Chestplate (VII)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 2).make(),
+                new ItemBuilder(Material.WOOD_SWORD).name("&rCreepertamer's Wood Sword §7(VII)").make(),
+                new ItemBuilder(Material.IRON_CHESTPLATE).name("&rCreepertamer's Iron Chestplate §7(VII)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 2).make(),
                 new ItemStack(Material.TNT, 4));
         VIII = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(50).name("&rCreeper Spawn Egg").amount(3).make(),
-                new ItemBuilder(Material.WOOD_SWORD).name("&rCreepertamer's Wood Sword (VIII)").make(),
-                new ItemBuilder(Material.IRON_CHESTPLATE).name("&rCreepertamer's Iron Chestplate (VIII)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 3).make(),
+                new ItemBuilder(Material.WOOD_SWORD).name("&rCreepertamer's Wood Sword §7(VIII)").make(),
+                new ItemBuilder(Material.IRON_CHESTPLATE).name("&rCreepertamer's Iron Chestplate §7(VIII)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 3).make(),
                 new ItemStack(Material.TNT, 5));
         IX = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(50).name("&rCreeper Spawn Egg").amount(3).make(),
-                new ItemBuilder(Material.STONE_SWORD).name("&rCreepertamer's Stone Sword (IX)").enchantment(Enchantment.DURABILITY, 1).make(),
-                new ItemBuilder(Material.IRON_CHESTPLATE).name("&rCreepertamer's Iron Chestplate (IX)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 4).make(),
+                new ItemBuilder(Material.STONE_SWORD).name("&rCreepertamer's Stone Sword §7(IX)").enchantment(Enchantment.DURABILITY, 1).make(),
+                new ItemBuilder(Material.IRON_CHESTPLATE).name("&rCreepertamer's Iron Chestplate §7(IX)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 4).make(),
                 new ItemStack(Material.TNT, 6));
         X = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(50).name("&rCreeper Spawn Egg").amount(4).make(),
-                new ItemBuilder(Material.STONE_SWORD).name("&rCreepertamer's Stone Sword (X)").enchantment(Enchantment.DURABILITY, 1).make(),
-                new ItemBuilder(Material.DIAMOND_CHESTPLATE).name("&rCreepertamer's Diamond Chestplate (X)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 4).make(),
+                new ItemBuilder(Material.STONE_SWORD).name("&rCreepertamer's Stone Sword §7(X)").enchantment(Enchantment.DURABILITY, 1).make(),
+                new ItemBuilder(Material.DIAMOND_CHESTPLATE).name("&rCreepertamer's Diamond Chestplate §7(X)").enchantment(Enchantment.PROTECTION_EXPLOSIONS, 4).make(),
                 new ItemStack(Material.TNT, 8));
 
         setKitItems(Arrays.asList(I, II, III, IV, V, VI, VII, VIII, IX, X));

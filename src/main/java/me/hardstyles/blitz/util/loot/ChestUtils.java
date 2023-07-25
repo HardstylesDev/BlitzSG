@@ -1,6 +1,6 @@
-package me.hardstyles.blitz.utils.loot;
+package me.hardstyles.blitz.util.loot;
 
-import me.hardstyles.blitz.utils.ItemBuilder;
+import me.hardstyles.blitz.util.ItemBuilder;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.enchantments.Enchantment;

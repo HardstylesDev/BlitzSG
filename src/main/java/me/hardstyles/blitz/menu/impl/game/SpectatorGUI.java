@@ -5,7 +5,7 @@ import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.menu.MenuContainer;
 import me.hardstyles.blitz.menu.MenuItem;
 import me.hardstyles.blitz.player.IPlayer;
-import me.hardstyles.blitz.utils.ChatUtil;
+import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.SkullType;

@@ -2,7 +2,7 @@ package me.hardstyles.blitz.kit.kits;
 
 import me.hardstyles.blitz.kit.Kit;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.utils.ItemBuilder;
+import me.hardstyles.blitz.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -32,55 +32,55 @@ public class Necromancer extends Kit {
         I = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(54).name("&rZombie Spawn Egg").amount(1).make());
         II = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(54).name("&rZombie Spawn Egg").amount(2).make());
         III = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(54).name("&rZombie Spawn Egg").amount(2).make(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet (III)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make());
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet §7(III)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make());
         IV = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(54).name("&rZombie Spawn Egg").amount(2).make(),
                 new ItemBuilder(Material.MONSTER_EGG).durability(51).name("&rSkeleton Spawn Egg").amount(1).make(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet (IV)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make());
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet §7(IV)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make());
         V = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(54).name("&rZombie Spawn Egg").amount(2).make(),
                 new ItemBuilder(Material.MONSTER_EGG).durability(51).name("&rSkeleton Spawn Egg").amount(1).make(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet (V)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
-                new ItemBuilder(Material.BOW).name("&rNecromancer's Bow (V)").make(),
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet §7(V)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
+                new ItemBuilder(Material.BOW).name("&rNecromancer's Bow §7(V)").make(),
                 new ItemBuilder(Material.ARROW).amount(3).make());
         VI = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(54).name("&rZombie Spawn Egg").amount(2).make(),
                 new ItemBuilder(Material.MONSTER_EGG).durability(51).name("&rSkeleton Spawn Egg").amount(1).make(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet (VI)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
-                new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rNecromancer's Chainmail Boots (VI)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet §7(VI)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
+                new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rNecromancer's Chainmail Boots §7(VI)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
 
-                new ItemBuilder(Material.BOW).name("&rNecromancer's Bow (VI)").make(),
+                new ItemBuilder(Material.BOW).name("&rNecromancer's Bow §7(VI)").make(),
                 new ItemBuilder(Material.ARROW).amount(3).make());
         VII = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(54).name("&rZombie Spawn Egg").amount(2).make(),
                 new ItemBuilder(Material.MONSTER_EGG).durability(51).name("&rSkeleton Spawn Egg").amount(2).make(),
-                new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rNecromancer's Chainmail Boots (VII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
-                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rNecromancer's Chainmail Chestplate (VII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
+                new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rNecromancer's Chainmail Boots §7(VII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
+                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rNecromancer's Chainmail Chestplate §7(VII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
 
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet (VII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
-                new ItemBuilder(Material.BOW).name("&rNecromancer's Bow (VII)").make(),
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet §7(VII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
+                new ItemBuilder(Material.BOW).name("&rNecromancer's Bow §7(VII)").make(),
                 new ItemBuilder(Material.ARROW).amount(9).make());
         VIII = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(54).name("&rZombie Spawn Egg").amount(2).make(),
                 new ItemBuilder(Material.MONSTER_EGG).durability(51).name("&rSkeleton Spawn Egg").amount(2).make(),
-                new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rNecromancer's Chainmail Boots (VIII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
-                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rNecromancer's Chainmail Chestplate (VIII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet (VIII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
-                new ItemBuilder(Material.BOW).name("&rNecromancer's Bow (VIII)").enchantment(Enchantment.ARROW_KNOCKBACK, 1).make(),
+                new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rNecromancer's Chainmail Boots §7(VIII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
+                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rNecromancer's Chainmail Chestplate §7(VIII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet §7(VIII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 2).make(),
+                new ItemBuilder(Material.BOW).name("&rNecromancer's Bow §7(VIII)").enchantment(Enchantment.ARROW_KNOCKBACK, 1).make(),
                 new ItemBuilder(Material.ARROW).amount(9).make());
 
 
         IX = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(54).name("&rZombie Spawn Egg").amount(3).make(),
                 new ItemBuilder(Material.MONSTER_EGG).durability(51).name("&rSkeleton Spawn Egg").amount(2).make(),
-                new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rNecromancer's Chainmail Boots (IX)").enchantment(Enchantment.PROTECTION_PROJECTILE, 3).make(),
-                new ItemBuilder(Material.CHAINMAIL_LEGGINGS).name("&rNecromancer's Chainmail Leggings (IX)").enchantment(Enchantment.PROTECTION_PROJECTILE, 3).make(),
-                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rNecromancer's Chainmail Chestplate (IX)").enchantment(Enchantment.PROTECTION_PROJECTILE, 3).make(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet (IX)").enchantment(Enchantment.PROTECTION_PROJECTILE, 3).make(),
-                new ItemBuilder(Material.BOW).name("&rNecromancer's Bow (IX)").enchantment(Enchantment.ARROW_KNOCKBACK, 1).make(),
+                new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rNecromancer's Chainmail Boots §7(IX)").enchantment(Enchantment.PROTECTION_PROJECTILE, 3).make(),
+                new ItemBuilder(Material.CHAINMAIL_LEGGINGS).name("&rNecromancer's Chainmail Leggings §7(IX)").enchantment(Enchantment.PROTECTION_PROJECTILE, 3).make(),
+                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rNecromancer's Chainmail Chestplate §7(IX)").enchantment(Enchantment.PROTECTION_PROJECTILE, 3).make(),
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet §7(IX)").enchantment(Enchantment.PROTECTION_PROJECTILE, 3).make(),
+                new ItemBuilder(Material.BOW).name("&rNecromancer's Bow §7(IX)").enchantment(Enchantment.ARROW_KNOCKBACK, 1).make(),
                 new ItemBuilder(Material.ARROW).amount(12).make());
         X = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(54).name("&rZombie Spawn Egg").amount(3).make(),
                 new ItemBuilder(Material.MONSTER_EGG).durability(51).name("&rSkeleton Spawn Egg").amount(3).make(),
-                new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rNecromancer's Chainmail Boots (X)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
-                new ItemBuilder(Material.CHAINMAIL_LEGGINGS).name("&rNecromancer's Chainmail Leggings (X)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
-                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rNecromancer's Chainmail Chestplate (X)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet (X)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
-                new ItemBuilder(Material.BOW).name("&rNecromancer's Bow (X)").enchantment(Enchantment.ARROW_KNOCKBACK, 1).make(),
-                new ItemBuilder(Material.WOOD_SWORD).name("&rNecromancer's Wooden Sword (X)").make(),
+                new ItemBuilder(Material.CHAINMAIL_BOOTS).name("&rNecromancer's Chainmail Boots §7(X)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
+                new ItemBuilder(Material.CHAINMAIL_LEGGINGS).name("&rNecromancer's Chainmail Leggings §7(X)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
+                new ItemBuilder(Material.CHAINMAIL_CHESTPLATE).name("&rNecromancer's Chainmail Chestplate §7(X)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rNecromancer's Chainmail Helmet §7(X)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
+                new ItemBuilder(Material.BOW).name("&rNecromancer's Bow §7(X)").enchantment(Enchantment.ARROW_KNOCKBACK, 1).make(),
+                new ItemBuilder(Material.WOOD_SWORD).name("&rNecromancer's Wooden Sword §7(X)").make(),
                 new ItemBuilder(Material.ARROW).amount(16).make());
 
         setKitItems(Arrays.asList(I, II, III, IV, V, VI, VII, VIII, IX, X));

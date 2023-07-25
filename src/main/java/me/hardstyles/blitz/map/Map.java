@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.utils.EmptyWorldGenerator;
+import me.hardstyles.blitz.util.EmptyWorldGenerator;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;

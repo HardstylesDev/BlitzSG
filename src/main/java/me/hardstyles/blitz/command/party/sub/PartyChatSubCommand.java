@@ -5,14 +5,11 @@ import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.command.SubCommand;
 import me.hardstyles.blitz.party.Party;
 import me.hardstyles.blitz.player.IPlayer;
-import me.hardstyles.blitz.utils.ChatUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
+import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-import java.util.UUID;
 
 public class PartyChatSubCommand extends SubCommand {
     public PartyChatSubCommand() {

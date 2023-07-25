@@ -6,14 +6,14 @@ import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
 import me.hardstyles.blitz.punishments.PlayerMute;
-import me.hardstyles.blitz.utils.ChatUtil;
+import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bson.Document;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,7 +49,6 @@ public class MuteCommand extends Command {
             executor = ((Player) sender).getName();
         }
 
-
         if (args.length == 0) {
             help(sender);
             return;
@@ -77,16 +76,19 @@ public class MuteCommand extends Command {
 
         String finalReason = reason;
         String finalExecutor = executor;
+
         Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
-            try (Connection connection = BlitzSG.getInstance().getDb().getConnection();
-                 PreparedStatement statement = connection.prepareStatement("INSERT INTO `mutes` (`uuid`, `reason`, `expires`, `executor`) VALUES (?, ?, ?, ?)")) {
-                statement.setString(1, target.getUniqueId().toString());
-                statement.setString(2, finalReason);
-                statement.setLong(3, futureTime);
-                statement.setString(4, finalExecutor);
-                statement.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            try {
+                MongoDatabase database = BlitzSG.getInstance().getDb().getDatabase();
+                MongoCollection<Document> collection = database.getCollection("mutes");
+
+                Document muteDoc = new Document("uuid", target.getUniqueId().toString())
+                        .append("reason", finalReason)
+                        .append("expires", futureTime)
+                        .append("executor", finalExecutor);
+                collection.insertOne(muteDoc);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
@@ -96,7 +98,6 @@ public class MuteCommand extends Command {
         target.sendMessage(ChatUtil.color("&7&m-------------------------------"));
         target.sendMessage(ChatUtil.color("&cYou have been muted for " + duration + " for " + reason + "."));
         target.sendMessage(ChatUtil.color("&7&m-------------------------------"));
-
     }
 
     private void help(CommandSender sender) {

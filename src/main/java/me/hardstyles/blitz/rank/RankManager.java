@@ -11,7 +11,7 @@ import java.util.Set;
 
 public class RankManager {
 
-    public static final Class<? extends Rank>[] RANKS = new Class[]{Default.class, Builder.class, Admin.class, Helper.class, Moderator.class, Vip.class, VipPlus.class, Mvp.class, MvpPlus.class, Youtuber.class, Owner.class};
+    public static final Class<? extends Rank>[] RANKS = new Class[]{Default.class, Builder.class, Admin.class, Helper.class, Moderator.class, Vip.class, VipPlus.class, Mvp.class, MvpPlus.class, Youtuber.class, Owner.class, JrHelper.class, BuilderPlus.class, Mojang.class, Apple.class, Sloth.class};
     private final ArrayList<Rank> ranks = new ArrayList<>();
 
 

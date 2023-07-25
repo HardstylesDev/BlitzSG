@@ -14,7 +14,7 @@ import me.hardstyles.blitz.rank.Rank;
 import me.hardstyles.blitz.nametag.Nametag;
 import me.hardstyles.blitz.nickname.Nick;
 import me.hardstyles.blitz.rank.ranks.Default;
-import me.hardstyles.blitz.utils.ChatUtil;
+import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;

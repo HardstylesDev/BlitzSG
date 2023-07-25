@@ -4,24 +4,22 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.utils.ChatUtil;
+import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.block.Skull;
+import org.bson.Document;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -46,15 +44,21 @@ public class LeaderboardManager {
     }
 
     public void update() {
-        try (Connection connection = BlitzSG.getInstance().getDb().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `stats` ORDER BY `wins` DESC LIMIT 3")) {
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try {
+            MongoDatabase database = BlitzSG.getInstance().getDb().getDatabase();
+            MongoCollection<Document> collection = database.getCollection("stats");
+            leaderboard.clear();
+
+            Document sortQuery = new Document("wins", -1);
+            Document projectionQuery = new Document("uuid", 1).append("wins", 1);
             int i = 0;
-            while (resultSet.next()) {
+            for (Document doc : collection.find().sort(sortQuery).projection(projectionQuery).limit(3)) {
                 i++;
-                leaderboard.put(i, new LeaderboardPlayer(resultSet.getInt("wins"), UUID.fromString(resultSet.getString("uuid")), i));
+                int wins = doc.getInteger("wins", 0);
+                UUID uuid = UUID.fromString(doc.getString("uuid"));
+                leaderboard.put(i, new LeaderboardPlayer(wins, uuid, i));
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

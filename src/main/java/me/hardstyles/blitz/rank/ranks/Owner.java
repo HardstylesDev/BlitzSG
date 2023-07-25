@@ -5,6 +5,6 @@ import org.bukkit.ChatColor;
 
 public class Owner extends Rank {
     public Owner(){
-    super("Owner",ChatColor.RED + "[OWNER] ", ChatColor.RED + "", 5,9);
+    super("Owner",ChatColor.RED + "[OWNER] ", ChatColor.RED + "", 5,10);
     }
 }

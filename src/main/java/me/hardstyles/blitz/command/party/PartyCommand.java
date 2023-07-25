@@ -4,17 +4,12 @@ import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
 import me.hardstyles.blitz.command.party.sub.*;
-import me.hardstyles.blitz.command.rank.sub.RankInfoSubCommand;
-import me.hardstyles.blitz.command.rank.sub.RankListSubCommand;
-import me.hardstyles.blitz.command.rank.sub.RankSetPrefixCommand;
-import me.hardstyles.blitz.command.rank.sub.RankSetSubCommand;
-import me.hardstyles.blitz.utils.ChatUtil;
+import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.command.CommandSender;
 import org.bukkit.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PartyCommand extends Command {
     private final List<SubCommand> subcommands = new ArrayList<>();

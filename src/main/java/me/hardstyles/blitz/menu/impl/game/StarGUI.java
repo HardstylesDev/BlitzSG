@@ -4,7 +4,7 @@ import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.menu.impl.shop.ShopGUI;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.gamestar.Star;
-import me.hardstyles.blitz.utils.ItemBuilder;
+import me.hardstyles.blitz.util.ItemBuilder;
 import me.hardstyles.blitz.menu.MenuItem;
 import me.hardstyles.blitz.menu.MenuContainer;
 import org.bukkit.ChatColor;

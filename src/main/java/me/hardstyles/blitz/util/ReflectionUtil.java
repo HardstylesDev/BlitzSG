@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.utils;
+package me.hardstyles.blitz.util;
 
 
 import com.mojang.authlib.GameProfile;

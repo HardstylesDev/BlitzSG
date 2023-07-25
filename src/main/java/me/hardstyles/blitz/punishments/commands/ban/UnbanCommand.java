@@ -1,19 +1,19 @@
 package me.hardstyles.blitz.punishments.commands.ban;
 
 import com.google.common.collect.ImmutableList;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
-import me.hardstyles.blitz.utils.ChatUtil;
+import me.hardstyles.blitz.player.IPlayer;
+import me.hardstyles.blitz.util.ChatUtil;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,13 +51,16 @@ public class UnbanCommand extends Command {
         }
 
         Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
-            try (Connection connection = BlitzSG.getInstance().getDb().getConnection();
-                 PreparedStatement statement = connection.prepareStatement("DELETE FROM bans WHERE uuid = ?")) {
-                statement.setString(1, target.getUniqueId().toString());
-                statement.executeUpdate();
+            try {
+                MongoDatabase database = BlitzSG.getInstance().getDb().getDatabase();
+                MongoCollection<Document> collection = database.getCollection("bans");
+
+                Document query = new Document("uuid", target.getUniqueId().toString());
+                collection.deleteOne(query);
+
                 sender.sendMessage(ChatUtil.color("&aSuccessfully unbanned " + target.getName() + "!"));
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }

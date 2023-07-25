@@ -4,12 +4,10 @@ import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.command.SubCommand;
 import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.map.Map;
-import me.hardstyles.blitz.utils.ChatUtil;
-import org.bukkit.Bukkit;
+import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
-import java.util.logging.Level;
 
 
 public class GameGodgameSubCommand extends SubCommand {

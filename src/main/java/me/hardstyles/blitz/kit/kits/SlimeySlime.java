@@ -2,8 +2,8 @@ package me.hardstyles.blitz.kit.kits;
 
 import me.hardstyles.blitz.kit.Kit;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.utils.ItemBuilder;
-import me.hardstyles.blitz.utils.ItemUtils;
+import me.hardstyles.blitz.util.ItemBuilder;
+import me.hardstyles.blitz.util.ItemUtils;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -32,48 +32,48 @@ public class SlimeySlime extends Kit {
     public void initialize() {
         I = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(55).name("&rSlime Spawn Egg").amount(1).make());
         II = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(55).name("&rSlime Spawn Egg").amount(1).make(),
-                new ItemBuilder(Material.WOOD_SWORD).name("&rSlimeySlime's Wood Sword (II)").enchantment(Enchantment.KNOCKBACK, 1).make());
+                new ItemBuilder(Material.WOOD_SWORD).name("&rSlimeySlime's Wood Sword §7(II)").enchantment(Enchantment.KNOCKBACK, 1).make());
         III = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(55).name("&rSlime Spawn Egg").amount(2).make(),
-                new ItemBuilder(Material.WOOD_SWORD).name("&rSlimeySlime's Wood Sword (III)").enchantment(Enchantment.KNOCKBACK, 1).make());
+                new ItemBuilder(Material.WOOD_SWORD).name("&rSlimeySlime's Wood Sword §7(III)").enchantment(Enchantment.KNOCKBACK, 1).make());
         IV = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(55).name("&rSlime Spawn Egg").amount(2).make(),
-                new ItemBuilder(Material.WOOD_SWORD).name("&rSlimeySlime's Wood Sword (IV)").enchantment(Enchantment.KNOCKBACK, 1).make(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rSlimeySlime's Chain Helmet (IV)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
+                new ItemBuilder(Material.WOOD_SWORD).name("&rSlimeySlime's Wood Sword §7(IV)").enchantment(Enchantment.KNOCKBACK, 1).make(),
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rSlimeySlime's Chain Helmet §7(IV)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
                 ItemUtils.buildPotion(PotionEffectType.SLOW, 15 * 20, 4, (short) 16426, 1));
         // 1 x potion slowness 4 15 seconds
         V = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(55).name("&rSlime Spawn Egg").amount(2).make(),
-                new ItemBuilder(Material.WOOD_SWORD).name("&rSlimeySlime's Wood Sword (V)").enchantment(Enchantment.KNOCKBACK, 1).make(),
-                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rSlimeySlime's Chain Helmet (V)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
+                new ItemBuilder(Material.WOOD_SWORD).name("&rSlimeySlime's Wood Sword §7(V)").enchantment(Enchantment.KNOCKBACK, 1).make(),
+                new ItemBuilder(Material.CHAINMAIL_HELMET).name("&rSlimeySlime's Chain Helmet §7(V)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
                 ItemUtils.buildPotion(PotionEffectType.SLOW, 15 * 20, 4, (short) 16426, 2));
         // 2 x potion slowness 4 15 seconds
         VI = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(55).name("&rSlime Spawn Egg").amount(3).make(),
-                new ItemBuilder(Material.WOOD_SWORD).name("&rSlimeySlime's Wood Sword (VI)").enchantment(Enchantment.KNOCKBACK, 1).make(),
-                new ItemBuilder(Material.IRON_HELMET).name("&rSlimeySlime's Iron Helmet (VI)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
+                new ItemBuilder(Material.WOOD_SWORD).name("&rSlimeySlime's Wood Sword §7(VI)").enchantment(Enchantment.KNOCKBACK, 1).make(),
+                new ItemBuilder(Material.IRON_HELMET).name("&rSlimeySlime's Iron Helmet §7(VI)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
                 ItemUtils.buildPotion(PotionEffectType.SLOW, 15 * 20, 4, (short) 16426, 3));
         //  3 x potion slowness 4 15 seconds
         VII = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(55).name("&rSlime Spawn Egg").amount(4).make(),
-                new ItemBuilder(Material.WOOD_SWORD).name("&rSlimeySlime's Wood Sword (VII)").enchantment(Enchantment.KNOCKBACK, 1).make(),
-                new ItemBuilder(Material.IRON_HELMET).name("&rSlimeySlime's Iron Helmet (VII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
+                new ItemBuilder(Material.WOOD_SWORD).name("&rSlimeySlime's Wood Sword §7(VII)").enchantment(Enchantment.KNOCKBACK, 1).make(),
+                new ItemBuilder(Material.IRON_HELMET).name("&rSlimeySlime's Iron Helmet §7(VII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
                 new ItemStack(Material.COOKED_CHICKEN, 3),
                 ItemUtils.buildPotion(PotionEffectType.SLOW, 15 * 20, 4, (short) 16426, 3));
         // 3 x potion slowness 4 15 seconds
         VIII = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(55).name("&rSlime Spawn Egg").amount(4).make(),
-                new ItemBuilder(Material.STONE_SWORD).name("&rSlimeySlime's Stone Sword (VIII)").enchantment(Enchantment.KNOCKBACK, 1).make(),
-                new ItemBuilder(Material.IRON_HELMET).name("&rSlimeySlime's Iron Helmet (VIII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
-                new ItemBuilder(Material.IRON_BOOTS).name("&rSlimeySlime's Iron Boots (VIII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
+                new ItemBuilder(Material.STONE_SWORD).name("&rSlimeySlime's Stone Sword §7(VIII)").enchantment(Enchantment.KNOCKBACK, 1).make(),
+                new ItemBuilder(Material.IRON_HELMET).name("&rSlimeySlime's Iron Helmet §7(VIII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
+                new ItemBuilder(Material.IRON_BOOTS).name("&rSlimeySlime's Iron Boots §7(VIII)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
                 new ItemStack(Material.COOKED_CHICKEN, 5),
                 ItemUtils.buildPotion(PotionEffectType.SLOW, 15 * 20, 4, (short) 16426, 4));
         //  4 x potion slowness 4 15 seconds
         IX = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(55).name("&rSlime Spawn Egg").amount(5).make(),
-                new ItemBuilder(Material.STONE_SWORD).name("&rSlimeySlime's Stone Sword (IX)").enchantment(Enchantment.KNOCKBACK, 2).make(),
-                new ItemBuilder(Material.IRON_HELMET).name("&rSlimeySlime's Iron Helmet (IX)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
-                new ItemBuilder(Material.IRON_BOOTS).name("&rSlimeySlime's Iron Boots (IX)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
+                new ItemBuilder(Material.STONE_SWORD).name("&rSlimeySlime's Stone Sword §7(IX)").enchantment(Enchantment.KNOCKBACK, 2).make(),
+                new ItemBuilder(Material.IRON_HELMET).name("&rSlimeySlime's Iron Helmet §7(IX)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
+                new ItemBuilder(Material.IRON_BOOTS).name("&rSlimeySlime's Iron Boots §7(IX)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
                 new ItemStack(Material.COOKED_CHICKEN, 5),
                 ItemUtils.buildPotion(PotionEffectType.SLOW, 15 * 20, 4, (short) 16426, 4));
         // 4 x potion slowness 4 15 seconds
         X = Arrays.asList(new ItemBuilder(Material.MONSTER_EGG).durability(55).name("&rSlime Spawn Egg").amount(5).make(),
-                new ItemBuilder(Material.STONE_SWORD).name("&rSlimeySlime's Stone Sword (X)").enchantment(Enchantment.KNOCKBACK, 2).make(),
-                new ItemBuilder(Material.IRON_HELMET).name("&rSlimeySlime's Iron Helmet (X)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
-                new ItemBuilder(Material.IRON_BOOTS).name("&rSlimeySlime's Iron Boots (X)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
+                new ItemBuilder(Material.STONE_SWORD).name("&rSlimeySlime's Stone Sword §7(X)").enchantment(Enchantment.KNOCKBACK, 2).make(),
+                new ItemBuilder(Material.IRON_HELMET).name("&rSlimeySlime's Iron Helmet §7(X)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
+                new ItemBuilder(Material.IRON_BOOTS).name("&rSlimeySlime's Iron Boots §7(X)").enchantment(Enchantment.PROTECTION_PROJECTILE, 4).make(),
                 new ItemStack(Material.CARROT, 5),
                 new ItemStack(Material.COOKED_CHICKEN, 5),
                 new ItemStack(Material.DIAMOND, 1),
@@ -85,7 +85,7 @@ public class SlimeySlime extends Kit {
     public SlimeySlime() {
 
         super(
-                "Slimeyslime", "It's kinda Slimey", new ItemBuilder(Material.MONSTER_EGG).durability(55).make()
+                "SlimeySlime", "It's kinda Slimey", new ItemBuilder(Material.MONSTER_EGG).durability(55).make()
                 , Arrays.asList(96000, 100, 1000, 2000, 4000, 16000, 50000, 100000, 250000, 1000000)
                 , Arrays.asList(Arrays.asList("§7Start the game with 3x TNT.")
                         , Arrays.asList("§7Start the game with some bullshit.")

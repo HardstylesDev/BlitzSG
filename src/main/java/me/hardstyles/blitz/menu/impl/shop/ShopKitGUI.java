@@ -6,8 +6,8 @@ import me.hardstyles.blitz.menu.MenuItem;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.kit.Kit;
 import me.hardstyles.blitz.kit.KitUtils;
-import me.hardstyles.blitz.utils.ChatUtil;
-import me.hardstyles.blitz.utils.ItemBuilder;
+import me.hardstyles.blitz.util.ChatUtil;
+import me.hardstyles.blitz.util.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -53,21 +53,21 @@ public class ShopKitGUI {
                     return;
                 }
                 if (kit.getPrice(iPlayer.getKitLevel(kit)) == -1) {
-                    p.sendMessage("§cYou already have this kit at max level!!");
+                    p.sendMessage("§cYou have already unlocked that level!");
                     return;
                 }
                 if (iPlayer.getCoins() < kit.getPrice(iPlayer.getKitLevel(kit))) {
-                    p.sendMessage("§cYou don't have enough coins to purchase this upgrade!");
+                    p.sendMessage("§cYou don't have enough coins!");
                     return;
                 }
-                p.sendMessage(ChatColor.GOLD + "You purchased " + ChatColor.GREEN + kit.getName() + KitUtils.getKitTag(iPlayer.getKitLevel(kit) + 1) + "");
+                p.sendMessage(ChatColor.GOLD + "You purchased " + ChatColor.GREEN + kit.getName() + KitUtils.getKitTag(iPlayer.getKitLevel(kit) + 1) + ChatColor.GOLD + "!");
                 p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
 
                 iPlayer.removeCoins(kit.getPrice(iPlayer.getKitLevel(kit)));
                 iPlayer.setKitLevel(kit, iPlayer.getKitLevel(kit) + 1);
                 if(iPlayer.getKitLevel(kit) == 10) {
                     Bukkit.getServer().getOnlinePlayers().stream().filter(player -> player.getWorld() == p.getWorld()).forEach(player -> {
-                        player.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + iPlayer.getRank().getPrefix() + p.getName() + " &6has unlocked &a" + kit.getName() + " X&6!"));
+                        player.sendMessage(ChatUtil.color(iPlayer.getRank().getPrefix() + p.getName() + " &6has unlocked &a" + kit.getName() + " X&6!"));
                         player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 2, 1);
                     });
                 }

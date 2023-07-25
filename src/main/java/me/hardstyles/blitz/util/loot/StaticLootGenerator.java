@@ -1,6 +1,5 @@
-package me.hardstyles.blitz.utils.loot;
+package me.hardstyles.blitz.util.loot;
 
-import me.hardstyles.blitz.utils.ItemBuilder;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

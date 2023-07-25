@@ -2,8 +2,8 @@ package me.hardstyles.blitz.player;
 
 import me.hardstyles.blitz.menu.impl.shop.ShopGUI;
 import me.hardstyles.blitz.party.Party;
-import me.hardstyles.blitz.utils.BookUtility;
-import me.hardstyles.blitz.utils.ChatUtil;
+import me.hardstyles.blitz.util.BookUtility;
+import me.hardstyles.blitz.util.ChatUtil;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.nickname.Nickname;
 import org.bukkit.*;

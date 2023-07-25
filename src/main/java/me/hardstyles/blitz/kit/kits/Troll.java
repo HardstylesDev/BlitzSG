@@ -2,8 +2,8 @@ package me.hardstyles.blitz.kit.kits;
 
 import me.hardstyles.blitz.kit.Kit;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.utils.ItemBuilder;
-import me.hardstyles.blitz.utils.ItemUtils;
+import me.hardstyles.blitz.util.ItemBuilder;
+import me.hardstyles.blitz.util.ItemUtils;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -48,45 +48,45 @@ public class Troll extends Kit {
                 new ItemBuilder(Material.FIREWORK).amount(4).make());
         V = Arrays.asList(new ItemBuilder(Material.WEB).amount(5).make(),
                 new ItemBuilder(Material.SNOW_BALL).amount(32).make(),
-                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rTroll's Leather Chestplate (V)").color(color).enchantment(Enchantment.LOOT_BONUS_BLOCKS, 3).make(),
+                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rTroll's Leather Chestplate §7(V)").color(color).enchantment(Enchantment.LOOT_BONUS_BLOCKS, 3).make(),
                 new ItemBuilder(Material.STICK).amount(64).make(),
                 new ItemBuilder(Material.FIREWORK).amount(7).make());
         VI = Arrays.asList(new ItemBuilder(Material.WEB).amount(6).make(),
                 new ItemBuilder(Material.SNOW_BALL).amount(64).make(),
-                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rTroll's Leather Chestplate (VI)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
+                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rTroll's Leather Chestplate §7(VI)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
                 new ItemBuilder(Material.STICK).amount(64).make(),
                 new ItemBuilder(Material.FIREWORK).amount(10).make(),
                 new ItemBuilder(Material.FIREBALL).amount(2).make());
         VII = Arrays.asList(new ItemBuilder(Material.WEB).amount(6).make(),
                 new ItemBuilder(Material.SNOW_BALL).amount(64).make(),
-                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rTroll's Leather Chestplate (VII)").color(color).enchantment(Enchantment.LOOT_BONUS_BLOCKS, 3).make(),
-                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rTroll's Leather Leather (VII)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
+                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rTroll's Leather Chestplate §7(VII)").color(color).enchantment(Enchantment.LOOT_BONUS_BLOCKS, 3).make(),
+                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rTroll's Leather Leather §7(VII)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
                 new ItemBuilder(Material.STICK).amount(64).make(),
                 new ItemBuilder(Material.FIREWORK).amount(10).make(),
                 new ItemBuilder(Material.FIREBALL).amount(2).make());
         VIII = Arrays.asList(new ItemBuilder(Material.WEB).amount(6).make(),
                 new ItemBuilder(Material.SNOW_BALL).amount(64).make(),
-                new ItemBuilder(Material.LEATHER_HELMET).name("&rTroll's Leather Helmet (VIII)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
-                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rTroll's Leather Chestplate (VIII)").color(color).enchantment(Enchantment.LOOT_BONUS_BLOCKS, 3).make(),
-                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rTroll's Leather Leggings (VIII)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
+                new ItemBuilder(Material.LEATHER_HELMET).name("&rTroll's Leather Helmet §7(VIII)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
+                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rTroll's Leather Chestplate §7(VIII)").color(color).enchantment(Enchantment.LOOT_BONUS_BLOCKS, 3).make(),
+                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rTroll's Leather Leggings §7(VIII)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
                 new ItemBuilder(Material.STICK).amount(64).make(),
                 new ItemBuilder(Material.FIREWORK).amount(12).make(),
                 new ItemBuilder(Material.FIREBALL).amount(3).make());
         IX = Arrays.asList(new ItemBuilder(Material.WEB).amount(6).make(),
                 new ItemBuilder(Material.SNOW_BALL).amount(64).make(),
-                new ItemBuilder(Material.LEATHER_HELMET).name("&rTroll's Leather Helmet (IX)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
-                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rTroll's Leather Chestplate (IX)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
-                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rTroll's Leather Leggings (IX)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
-                new ItemBuilder(Material.LEATHER_BOOTS).name("&rTroll's Leather Boots (IX)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
+                new ItemBuilder(Material.LEATHER_HELMET).name("&rTroll's Leather Helmet §7(IX)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
+                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rTroll's Leather Chestplate §7(IX)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
+                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rTroll's Leather Leggings §7(IX)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
+                new ItemBuilder(Material.LEATHER_BOOTS).name("&rTroll's Leather Boots §7(IX)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
                 new ItemBuilder(Material.STICK).amount(64).make(),
                 new ItemBuilder(Material.FIREWORK).amount(12).make(),
                 new ItemBuilder(Material.FIREBALL).amount(3).make());
         X = Arrays.asList(new ItemBuilder(Material.WEB).amount(6).make(),
                 new ItemBuilder(Material.SNOW_BALL).amount(64).make(),
-                new ItemBuilder(Material.LEATHER_HELMET).name("&rTroll's Leather Helmet (X)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
-                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rTroll's Leather Chestplate (X)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
-                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rTroll's Leather Leggings (X)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
-                new ItemBuilder(Material.LEATHER_BOOTS).name("&rTroll's Leather Boots (X)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
+                new ItemBuilder(Material.LEATHER_HELMET).name("&rTroll's Leather Helmet §7(X)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
+                new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rTroll's Leather Chestplate §7(X)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
+                new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rTroll's Leather Leggings §7(X)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
+                new ItemBuilder(Material.LEATHER_BOOTS).name("&rTroll's Leather Boots §7(X)").color(color).enchantment(Enchantment.LOOT_BONUS_MOBS, 3).make(),
                 new ItemBuilder(Material.STICK).amount(64).make(),
                 new ItemBuilder(Material.FIREWORK).amount(12).make(),
                 new ItemBuilder(Material.FIREBALL).amount(3).make(),

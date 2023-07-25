@@ -1,7 +1,7 @@
 package me.hardstyles.blitz.kit.kits;
 
 import me.hardstyles.blitz.kit.Kit;
-import me.hardstyles.blitz.utils.ItemBuilder;
+import me.hardstyles.blitz.util.ItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -26,45 +26,45 @@ public class Knight extends Kit {
 
     @Override
     public void initialize() {
-        I = Arrays.asList(new ItemBuilder(Material.WOOD_SWORD).name("&rKnight's Wooden Sword (I)").make());
-        II = Arrays.asList(new ItemBuilder(Material.GOLD_SWORD).name("&rKnight's Wooden Sword (II)").make());
-        III = Arrays.asList(new ItemBuilder(Material.GOLD_SWORD).name("&rKnight's Wooden Sword (III)").make(),
-                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Wooden Helmet (III)").make());
-        IV = Arrays.asList(new ItemBuilder(Material.GOLD_SWORD).name("&rKnight's Wooden Sword (IV)").make(),
-                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Golden Helmet (IV)").make(),
+        I = Arrays.asList(new ItemBuilder(Material.WOOD_SWORD).name("&rKnight's Wooden Sword §7(I)").make());
+        II = Arrays.asList(new ItemBuilder(Material.GOLD_SWORD).name("&rKnight's Wooden Sword §7(II)").make());
+        III = Arrays.asList(new ItemBuilder(Material.GOLD_SWORD).name("&rKnight's Wooden Sword §7(III)").make(),
+                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Wooden Helmet §7(III)").make());
+        IV = Arrays.asList(new ItemBuilder(Material.GOLD_SWORD).name("&rKnight's Wooden Sword §7(IV)").make(),
+                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Golden Helmet §7(IV)").make(),
                 new ItemStack(Material.COOKED_CHICKEN, 1));
-        V = Arrays.asList(new ItemBuilder(Material.GOLD_SWORD).name("&rKnight's Golden Sword (V)").enchantment(Enchantment.DURABILITY, 1).make(),
-                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Golden Helmet (V)").make(),
-                new ItemBuilder(Material.GOLD_BOOTS).name("&rKnight's Golden Boots (V)").make(),
+        V = Arrays.asList(new ItemBuilder(Material.GOLD_SWORD).name("&rKnight's Golden Sword §7(V)").enchantment(Enchantment.DURABILITY, 1).make(),
+                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Golden Helmet §7(V)").make(),
+                new ItemBuilder(Material.GOLD_BOOTS).name("&rKnight's Golden Boots §7(V)").make(),
                 new ItemStack(Material.COOKED_CHICKEN, 2));
-        VI = Arrays.asList(new ItemBuilder(Material.GOLD_SWORD).name("&rKnight's Golden Sword (VI)").enchantment(Enchantment.DURABILITY, 2).make(),
-                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Golden Helmet (VI)").make(),
-                new ItemBuilder(Material.GOLD_LEGGINGS).name("&rKnight's Golden Leggings (VI)").make(),
-                new ItemBuilder(Material.GOLD_BOOTS).name("&rKnight's Golden Boots (VI)").make(),
+        VI = Arrays.asList(new ItemBuilder(Material.GOLD_SWORD).name("&rKnight's Golden Sword §7(VI)").enchantment(Enchantment.DURABILITY, 2).make(),
+                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Golden Helmet §7(VI)").make(),
+                new ItemBuilder(Material.GOLD_LEGGINGS).name("&rKnight's Golden Leggings §7(VI)").make(),
+                new ItemBuilder(Material.GOLD_BOOTS).name("&rKnight's Golden Boots §7(VI)").make(),
                 new ItemStack(Material.COOKED_CHICKEN, 2));
-        VII = Arrays.asList(new ItemBuilder(Material.STONE_SWORD).name("&rKnight's Stone Sword (VII)").enchantment(Enchantment.DURABILITY, 1).make(),
-                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Golden Helmet (VII)").make(),
-                new ItemBuilder(Material.GOLD_LEGGINGS).name("&rKnight's Golden Leggings (VII)").make(),
-                new ItemBuilder(Material.GOLD_BOOTS).name("&rKnight's Golden Boots (VII)").make(),
+        VII = Arrays.asList(new ItemBuilder(Material.STONE_SWORD).name("&rKnight's Stone Sword §7(VII)").enchantment(Enchantment.DURABILITY, 1).make(),
+                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Golden Helmet §7(VII)").make(),
+                new ItemBuilder(Material.GOLD_LEGGINGS).name("&rKnight's Golden Leggings §7(VII)").make(),
+                new ItemBuilder(Material.GOLD_BOOTS).name("&rKnight's Golden Boots §7(VII)").make(),
                 new ItemStack(Material.COOKED_CHICKEN, 2));
-        VIII = Arrays.asList(new ItemBuilder(Material.STONE_SWORD).name("&rKnight's Stone Sword (VIII)").make(),
-                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Golden Helmet (VIII)").make(),
-                new ItemBuilder(Material.GOLD_LEGGINGS).name("&rKnight's Golden Leggings (VIII)").make(),
-                new ItemBuilder(Material.GOLD_CHESTPLATE).name("&rKnight's Golden Chestplate (VIII)").make(),
-                new ItemBuilder(Material.GOLD_BOOTS).name("&rKnight's Golden Boots (VIII)").make(),
+        VIII = Arrays.asList(new ItemBuilder(Material.STONE_SWORD).name("&rKnight's Stone Sword §7(VIII)").make(),
+                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Golden Helmet §7(VIII)").make(),
+                new ItemBuilder(Material.GOLD_LEGGINGS).name("&rKnight's Golden Leggings §7(VIII)").make(),
+                new ItemBuilder(Material.GOLD_CHESTPLATE).name("&rKnight's Golden Chestplate §7(VIII)").make(),
+                new ItemBuilder(Material.GOLD_BOOTS).name("&rKnight's Golden Boots §7(VIII)").make(),
                 new ItemStack(Material.COOKED_CHICKEN, 3));
-        IX = Arrays.asList(new ItemBuilder(Material.STONE_SWORD).name("&rKnight's Stone Sword (IX)").make(),
-                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Golden Helmet (IX)").make(),
-                new ItemBuilder(Material.GOLD_LEGGINGS).name("&rKnight's Golden Leggings (IX)").make(),
-                new ItemBuilder(Material.GOLD_CHESTPLATE).name("&rKnight's Golden Chestplate (IX)").make(),
-                new ItemBuilder(Material.GOLD_BOOTS).name("&rKnight's Golden Boots (IX)").enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1).make(),
+        IX = Arrays.asList(new ItemBuilder(Material.STONE_SWORD).name("&rKnight's Stone Sword §7(IX)").make(),
+                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Golden Helmet §7(IX)").make(),
+                new ItemBuilder(Material.GOLD_LEGGINGS).name("&rKnight's Golden Leggings §7(IX)").make(),
+                new ItemBuilder(Material.GOLD_CHESTPLATE).name("&rKnight's Golden Chestplate §7(IX)").make(),
+                new ItemBuilder(Material.GOLD_BOOTS).name("&rKnight's Golden Boots §7(IX)").enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 1).make(),
 
                 new ItemStack(Material.COOKED_CHICKEN, 3));
-        X = Arrays.asList(new ItemBuilder(Material.IRON_SWORD).name("&rKnight's Iron Sword (X)").enchantment(Enchantment.DURABILITY, 1).make(),
-                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Golden Helmet (X)").make(),
-                new ItemBuilder(Material.GOLD_CHESTPLATE).name("&rKnight's Golden Chestplate (X)").make(),
-                new ItemBuilder(Material.GOLD_LEGGINGS).name("&rKnight's Golden Leggings (X)").make(),
-                new ItemBuilder(Material.GOLD_BOOTS).name("&rKnight's Golden Boots (X)").enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).make(),
+        X = Arrays.asList(new ItemBuilder(Material.IRON_SWORD).name("&rKnight's Iron Sword §7(X)").enchantment(Enchantment.DURABILITY, 1).make(),
+                new ItemBuilder(Material.GOLD_HELMET).name("&rKnight's Golden Helmet §7(X)").make(),
+                new ItemBuilder(Material.GOLD_CHESTPLATE).name("&rKnight's Golden Chestplate §7(X)").make(),
+                new ItemBuilder(Material.GOLD_LEGGINGS).name("&rKnight's Golden Leggings §7(X)").make(),
+                new ItemBuilder(Material.GOLD_BOOTS).name("&rKnight's Golden Boots §7(X)").enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).make(),
                 new ItemStack(Material.COOKED_CHICKEN, 10));
 
         setKitItems(Arrays.asList(I, II, III, IV, V, VI, VII, VIII, IX, X));

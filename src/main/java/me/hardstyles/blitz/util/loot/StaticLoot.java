@@ -1,4 +1,4 @@
-package me.hardstyles.blitz.utils.loot;
+package me.hardstyles.blitz.util.loot;
 
 import lombok.Getter;
 import org.bukkit.inventory.ItemStack;

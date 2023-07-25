@@ -1,79 +1,65 @@
 package me.hardstyles.blitz.database;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.time.Duration;
-import java.util.HashMap;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoDatabase;
 
-import javax.sql.DataSource;
-
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
-
-import me.hardstyles.blitz.BlitzSG;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import me.hardstyles.blitz.BlitzSG;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class Database {
 
-    private static final HashMap<String, String> config = getDatabaseConfig();
-    private static final String host = config.get("host");
-    private static final String port = config.get("port");
-    private static final String database = config.get("database");
-    private static final String user = config.get("username");
-    private static final String password = config.get("password");
+    private static MongoClient mongoClient;
+    private static MongoDatabase database;
 
-    private static final String jdbcUrl = String.format("jdbc:mysql://%s:%s/%s?useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=CET", host, port, database);
-
-    private static DataSource dataSource;
-
-    public Connection getConnection() throws SQLException {
-        return getDataSource().getConnection();
+    public MongoClient getMongoClient() {
+        if (mongoClient == null) {
+            createMongoClient();
+        }
+        return mongoClient;
     }
 
-    private synchronized DataSource getDataSource() {
-        if (dataSource == null) {
-            createDataSource();
+    public MongoDatabase getDatabase() {
+        if (database == null) {
+            createDatabase();
         }
-        return dataSource;
+        return database;
     }
 
-    private void createDataSource() {
-        HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(jdbcUrl);
-        hikariConfig.setUsername(user);
-        hikariConfig.setPassword(password);
-        hikariConfig.setDriverClassName("com.mysql.jdbc.Driver");
-        hikariConfig.setPoolName("MysqlPool-1");
-        hikariConfig.setMaximumPoolSize(15);
-        hikariConfig.setConnectionTimeout(Duration.ofSeconds(30).toMillis());
-        hikariConfig.setIdleTimeout(Duration.ofMinutes(10).toMillis());
-        HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
-        dataSource = hikariDataSource;
+    private void createMongoClient() {
+        String host = "localhost";
+        int port = 27017; // Default MongoDB port
 
-        try (Connection connection = dataSource.getConnection()) {
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `stats` (`uuid` VARCHAR(255) PRIMARY KEY, `coins` INT NOT NULL, `kills` INT NOT NULL, `wins` INT NOT NULL, `deaths` INT NOT NULL, `rank` VARCHAR(255) NOT NULL, `nickname` VARCHAR(255) NULL, `stars` TEXT NULL, `aura` TEXT NULL, `taunt` TEXT NULL, `kits` TEXT NULL, `elo` INT NOT NULL, `taunt` VARCHAR(255) NULL, `selectedKit` VARCHAR(255) NULL) ENGINE = InnoDB;").executeUpdate();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `bans` (`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, `reason` VARCHAR(255) NOT NULL, `expires` FLOAT NOT NULL, `executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mutes` (`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, `reason` VARCHAR(255) NOT NULL, `expires` FLOAT NOT NULL, `executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
+        MongoClientSettings settings = MongoClientSettings.builder()
+                .applyToClusterSettings(builder -> builder.hosts(Collections.singletonList(new ServerAddress(host, port))))
+                .build();
+        mongoClient = MongoClients.create(settings);
+    }
 
-            Bukkit.getLogger().info("Connected to database.");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    private void createDatabase() {
+        database = getMongoClient().getDatabase("BlitzSG");
+        // Perform any other necessary setup operations for MongoDB collections here
+        // For example, create or retrieve collections, indexes, etc.
+
+        Bukkit.getLogger().info("Connected to MongoDB.");
     }
 
     private static void generateConfig() {
         File file = new File(BlitzSG.getInstance().getDataFolder(), "database.yml");
         FileConfiguration fc = new YamlConfiguration();
         fc.set("host", "localhost");
-        fc.set("port", "3306");
-        fc.set("database", "database");
-        fc.set("username", "root");
-        fc.set("password", "password");
+        fc.set("port", "27017"); // Default MongoDB port
+        fc.set("database", "BlitzSG");
         try {
             fc.save(file);
         } catch (IOException e) {

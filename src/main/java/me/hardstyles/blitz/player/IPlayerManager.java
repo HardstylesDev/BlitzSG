@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.game.Game;
-import me.hardstyles.blitz.utils.ItemUtils;
+import me.hardstyles.blitz.util.ItemUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;

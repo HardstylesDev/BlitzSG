@@ -1,6 +1,5 @@
-package me.hardstyles.blitz.utils;
+package me.hardstyles.blitz.util;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Material;

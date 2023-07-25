@@ -5,8 +5,8 @@ import me.hardstyles.blitz.menu.MenuContainer;
 import me.hardstyles.blitz.menu.MenuItem;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.kit.Kit;
-import me.hardstyles.blitz.utils.ChatUtil;
-import me.hardstyles.blitz.utils.ItemBuilder;
+import me.hardstyles.blitz.util.ChatUtil;
+import me.hardstyles.blitz.util.ItemBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -24,7 +24,8 @@ public class KitGUI {
                     break;
                 }
                 Kit kit = kits.get(index);
-                MenuItem item = new MenuItem(new ItemBuilder(new ItemStack(kit.getIcon())).name("&6" + kit.getName()).lore("&7" + kit.getDescription()).make(), e -> {
+                ItemStack icon = new ItemBuilder(kit.getIcon()).name("&6" + kit.getName()).lore("&7" + kit.getDescription()).make();
+                MenuItem item = new MenuItem(icon, e -> {
                     if (!iPlayer.isInGame()) {
                         return;
                     }
