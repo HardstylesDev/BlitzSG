@@ -21,7 +21,7 @@ public class KitManager {
         addKit(new Fisherman());
         addKit(new Speleologist());
         addKit(new Archer());
-        addKit(new Meatmaster());
+        addKit(new MeatMaster());
         addKit(new Scout());
         addKit(new Baker());
 
