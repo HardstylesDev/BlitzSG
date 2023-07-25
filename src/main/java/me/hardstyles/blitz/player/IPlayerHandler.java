@@ -176,13 +176,13 @@ public class IPlayerHandler implements Listener {
         if (e.getItem().getType() == Material.WATCH) {
             if (iPlayer.isVisibilityEnabled()) {
                 iPlayer.setVisibilityEnabled(false);
-                p.sendMessage(ChatUtil.color("&cYou have disabled visibility"));
                 BlitzSG.getInstance().getIPlayerManager().applyVisibility(p);
             } else {
                 iPlayer.setVisibilityEnabled(true);
-                p.sendMessage(ChatUtil.color("&aYou have enabled visibility"));
                 BlitzSG.getInstance().getIPlayerManager().applyVisibility(p);
             }
+            p.sendMessage(ChatUtil.color("&eYou have toggled player visibility. If you want to change your view level, right click the watch again."));
+
         } else if (e.getItem().getType() == Material.IRON_SWORD) {
             if (BlitzSG.getInstance().getGameManager().getAvailableGame() == null) {
                 p.sendMessage("§cCouldn't find any available games (0x1)");

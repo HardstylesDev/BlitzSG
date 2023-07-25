@@ -58,17 +58,20 @@ public class IPlayerManager {
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
         //p.getInventory().setItem(1, ItemUtils.buildItem(new ItemStack(Material.IRON_SWORD), "&b&lJoin a Game &7(Right-Click)", Arrays.asList("§7Right-Click to join a Blitz game")));
-        p.getInventory().setItem(2, ItemUtils.buildItem(new ItemStack(Material.EMERALD), "&aOpen the Shop &7(Right-Click)", Arrays.asList("§7Right-Click to open the shop")));
-        p.getInventory().setItem(7, ItemUtils.buildItem(new ItemStack(Material.PAINTING), "&aYour Stats &7(Right-Click)", Arrays.asList("§7Right-Click to view your stats")));
-        p.getInventory().setItem(8, ItemUtils.buildItem(new ItemStack(Material.NETHER_STAR), "&aLobby Selector &7(Right-Click)", Arrays.asList("§7Right-Click to open the Lobby Selector.")));
-        p.getInventory().setItem(1, ItemUtils.buildItem(new ItemStack(Material.WATCH), "&aMagic Clock &7(Right-Click)", Arrays.asList("§7Right-Click to hide or show players")));
-        p.getInventory().setItem(0, ItemUtils.buildItem(new ItemStack(Material.COMPASS), "&aGame Selector &7(Right-Click)", Arrays.asList("§7Right-Click to open the Game Selector")));
+        p.getInventory().setItem(2, ItemUtils.buildItem(new ItemStack(Material.EMERALD), "&aShop &7(Right Click)", Arrays.asList("§7Right-Click to open the shop")));
+        p.getInventory().setItem(7, ItemUtils.buildItem(new ItemStack(Material.PAINTING), "&aYour Stats &7(Right Click)", Arrays.asList("§7Right-Click to view your stats")));
+        p.getInventory().setItem(8, ItemUtils.buildItem(new ItemStack(Material.NETHER_STAR), "&aLobby Selector &7(Right Click)", Arrays.asList("§7Right-Click to open the Lobby Selector.")));
+        p.getInventory().setItem(1, ItemUtils.buildItem(new ItemStack(Material.WATCH), "&aPlayer Visibility &7(Right Click)", Arrays.asList("§7Right-Click to hide or show players")));
+        p.getInventory().setItem(0, ItemUtils.buildItem(new ItemStack(Material.COMPASS), "&aGame Selector &7(Right Click)", Arrays.asList("§7Right-Click to open the Game Selector")));
 
         resetPlayerStatus(p);
         IPlayer iPlayer = this.getPlayer(p.getUniqueId());
         iPlayer.setGame(null);
         iPlayer.resetGameKills();
         p.teleport(BlitzSG.lobbySpawn);
+        if (iPlayer.getRank() == null) {
+            return;
+        }
         if (iPlayer.getRank().getPosition() > 0) {
             p.setAllowFlight(true);
             p.setFlying(true);

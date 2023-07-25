@@ -89,17 +89,21 @@ public class MapManager {
 
     public void deleteWorlds() {
         File worlds = new File("worlds");
-        if (worlds.exists()) {
-            for (File f : worlds.listFiles()) {
-                if (!f.getName().equalsIgnoreCase("world")) {
-                    try {
-                        FileUtils.forceDelete(f);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+        try {
+            if (worlds.exists()) {
+                for (File f : worlds.listFiles()) {
+                    if (!f.getName().equalsIgnoreCase("world")) {
+                        try {
+                            FileUtils.forceDelete(f);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        Bukkit.getLogger().info("Deleted " + f.getName() + " from " + f.getAbsolutePath() + " ");
                     }
-                    Bukkit.getLogger().info("Deleted " + f.getName() + " from " + f.getAbsolutePath() + " ");
                 }
             }
+        } catch (Exception e) {
+            System.out.println("Error deleting worlds: " + e.getMessage());
         }
     }
 }

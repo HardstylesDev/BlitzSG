@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class StarGUI {
 
     public static void openGUI(Player p) {
-        MenuContainer gui = new MenuContainer("§8Star Selector", 3);
+        MenuContainer gui = new MenuContainer("§8Star Selector", 2);
         ArrayList<Star> stars = BlitzSG.getInstance().getStarManager().getStars();
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
 
@@ -50,7 +50,7 @@ public class StarGUI {
                 event.setCancelled(true);
                 p.closeInventory();
             });
-            gui.setItem(index, 1, menuItem);
+            gui.setItem(index, 0, menuItem);
             index++;
         }
         MenuItem back = new MenuItem(new ItemBuilder(new ItemStack(Material.ARROW)).name("&aBack").make(), e -> ShopGUI.openGUI(p));

@@ -93,8 +93,9 @@ public class JoinCommand extends Command {
             sender.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&cThere is already a game being created."));
             return;
         }
-
-        sender.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&6Requested map! &eCreating a new game..."));
+        if(p.isOp()) {
+            sender.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&6Requested map! &eCreating a new game..."));
+        }
         Game game = new Game(new Map(gameName));
         canStart = false;
         new BukkitRunnable() {
@@ -103,10 +104,15 @@ public class JoinCommand extends Command {
                 World world = Bukkit.getWorld(game.getMap().getMapId());
                 if(world == null || game.getMap().getLobby() == null){
                     attempts = attempts - 1;
-                    sender.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&eLoading map... &c(" + attempts + "/10)"));
-                    if(attempts == 0){
+                    if(p.isOp()){
+                        sender.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&eLoading map... &c(" + attempts + "/10)"));
+                    }
+                    if(attempts == 0 && p.isOp()){
                         sender.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME +"&cFailed to load the map."));
                         cancel();
+                    } else if(attempts == 0){
+                        sender.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME +"&cAn error occurred while loading the map. Please contact an administrator."));
+                        return;
                     }
                 } else {
                     game.addPlayer((Player) sender);

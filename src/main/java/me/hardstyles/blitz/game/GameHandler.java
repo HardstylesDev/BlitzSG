@@ -416,7 +416,7 @@ public class GameHandler implements Listener {
     }
 
     @EventHandler
-    public void playerOpenVotingMenu(PlayerInteractEvent e) {
+    public void playerInteractEvent(PlayerInteractEvent e) {
         Player p = e.getPlayer();
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
 

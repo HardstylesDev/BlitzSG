@@ -140,7 +140,8 @@ public class Game {
         allPlayers.add(p);
         alivePlayers.add(p);
         p.teleport(map.getLobby().clone().add(0.5, 0, 0.5));
-        message(BlitzSG.CORE_NAME + "&7" + iPlayer.getRank(true).getChatColor() + p.getName() + " &ehas joined (&d" + alivePlayers.size() + "&e/&d" + map.getSpawns().size() + "&e)!");
+        p.sendMessage(BlitzSG.CORE_NAME + ChatColor.GREEN + "To leave SurivalGames, type /lobby");
+        message(iPlayer.getRank(true).getChatColor() + p.getName() + " &ehas joined (&d" + alivePlayers.size() + "&e/&d" + map.getSpawns().size() + "&e)!");
         for (Player allPlayer : allPlayers) {
             allPlayer.showPlayer(p);
             p.showPlayer(allPlayer);

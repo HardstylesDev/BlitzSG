@@ -34,14 +34,15 @@ public class GameStartSubCommand extends SubCommand {
 
             return;
         }
+        String mapName = null;
+        if (args.length == 2){
+           mapName = args[1];
+        } else {
+            String[] maps = new String[]{"caelum", "valley", "citadel", "docks", "mithril", "aelinstower", "peaks"};
+            mapName = maps[(int) (Math.random() * maps.length)];
+        }
 
-        new Game(new Map(args[1]));
-        sender.sendMessage(ChatUtil.color("&aStarted a new game! Name: " + args[1] + ""));
-
-
-
-
-
-
+        new Game(new Map(mapName));
+        sender.sendMessage(ChatUtil.color("&aStarted a new game! Name: " + mapName));
     }
 }
