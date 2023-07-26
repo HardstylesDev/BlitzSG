@@ -20,7 +20,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class LeaderboardManager {
@@ -45,19 +47,17 @@ public class LeaderboardManager {
 
     public void update() {
         try {
-            MongoDatabase database = BlitzSG.getInstance().getDb().getDatabase();
-            MongoCollection<Document> collection = database.getCollection("stats");
-            leaderboard.clear();
-
-            Document sortQuery = new Document("wins", -1);
-            Document projectionQuery = new Document("uuid", 1).append("wins", 1);
-            int i = 0;
-            for (Document doc : collection.find().sort(sortQuery).projection(projectionQuery).limit(3)) {
+           Map<String, Integer> map = BlitzSG.getInstance().getDb().getLeaderboard();
+           if(map.isEmpty()){
+               Bukkit.getLogger().info("Leaderboard is empty!");
+               return;
+           }
+            int i = 1;
+            for (Map.Entry<String, Integer> entry : map.entrySet()) {
+                leaderboard.put(i, new LeaderboardPlayer(entry.getValue(), UUID.fromString(entry.getKey()), i));
                 i++;
-                int wins = doc.getInteger("wins", 0);
-                UUID uuid = UUID.fromString(doc.getString("uuid"));
-                leaderboard.put(i, new LeaderboardPlayer(wins, uuid, i));
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

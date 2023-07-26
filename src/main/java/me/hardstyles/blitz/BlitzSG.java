@@ -10,7 +10,11 @@ import me.hardstyles.blitz.command.party.PartyChatCommand;
 import me.hardstyles.blitz.command.party.PartyCommand;
 import me.hardstyles.blitz.command.taunt.TauntCommand;
 import me.hardstyles.blitz.command.vote.VoteCommand;
+import me.hardstyles.blitz.database.DatabaseProvider;
+import me.hardstyles.blitz.database.IDatabase;
+import me.hardstyles.blitz.database.impl.MySQLProvider;
 import me.hardstyles.blitz.party.PartyManager;
+import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.player.IPlayerHandler;
 import me.hardstyles.blitz.player.IPlayerManager;
 import me.hardstyles.blitz.command.fireworks.FireworkCommand;
@@ -28,7 +32,6 @@ import me.hardstyles.blitz.punishments.commands.ban.UnbanCommand;
 import me.hardstyles.blitz.punishments.commands.mute.MuteCommand;
 import me.hardstyles.blitz.punishments.commands.mute.UnmuteCommand;
 import me.hardstyles.blitz.statistics.LeaderboardManager;
-import me.hardstyles.blitz.statistics.StatisticsManager;
 import me.hardstyles.blitz.util.ChatUtil;
 import me.hardstyles.blitz.util.EnchantListener;
 import me.hardstyles.blitz.command.game.GameCommand;
@@ -40,7 +43,6 @@ import me.hardstyles.blitz.game.GameMobHandler;
 import me.hardstyles.blitz.punishments.PunishmentManager;
 import me.hardstyles.blitz.rank.RankManager;
 import me.hardstyles.blitz.scoreboard.ScoreboardManager;
-import me.hardstyles.blitz.database.Database;
 import me.hardstyles.blitz.menu.MenuListener;
 import net.minecraft.server.v1_8_R3.EnumChatFormat;
 import org.bukkit.Bukkit;
@@ -57,7 +59,6 @@ public class BlitzSG extends JavaPlugin {
     public static String CORE_NAME = EnumChatFormat.GRAY + "[" + EnumChatFormat.RED + "B-SG" + EnumChatFormat.GRAY + "]: " + EnumChatFormat.WHITE;
 
     public static BlitzSG instance;
-    private StatisticsManager statisticsManager;
     private MapManager mapManager;
     private IPlayerManager iPlayerManager;
     private GameManager gameManager;
@@ -71,7 +72,7 @@ public class BlitzSG extends JavaPlugin {
     private PunishmentManager punishmentManager;
     private HikariDataSource hikari;
     public static Location lobbySpawn;
-    private Database db;
+    private IDatabase db;
     private CosmeticsManager cosmeticsManager;
     private PartyManager partyManager;
     private long startTime;
@@ -81,7 +82,7 @@ public class BlitzSG extends JavaPlugin {
         startTime = System.currentTimeMillis();
     }
 
-    public Database db() {
+    public IDatabase db() {
         return db;
     }
 
@@ -91,8 +92,7 @@ public class BlitzSG extends JavaPlugin {
         //delete all directories in the /worlds folder except for the world folder
 
 
-        db = new Database();
-        statisticsManager = new StatisticsManager();
+        db = new DatabaseProvider().getDatabase();
         iPlayerManager = new IPlayerManager();
         rankManager = new RankManager();
         kitManager = new KitManager();
@@ -127,8 +127,9 @@ public class BlitzSG extends JavaPlugin {
         lobbySpawn = new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0);
 
         for (Player p : getServer().getOnlinePlayers()) {
-            statisticsManager.loadPlayer(p.getUniqueId());
+            IPlayer iPlayer = BlitzSG.getInstance().getDb().loadPlayer(p.getUniqueId());
             iPlayerManager.toLobby(p);
+
         }
         scoreboardManager.runTaskTimer(this, 20, 20);
 
@@ -164,13 +165,19 @@ public class BlitzSG extends JavaPlugin {
     }
 
     public void onDisable() {
-        BlitzSG.getInstance().getStatisticsManager().saveAll();
-        for (Game g : gameManager.getRunningGames()) {
-            g.resetGame();
+        if(gameManager != null) {
+            for (Game g : gameManager.getRunningGames()) {
+                g.resetGame();
+            }
         }
 
-        BlitzSG.getInstance().getStatisticsManager().saveAll();
-        BlitzSG.getInstance().getMapManager().deleteWorlds();
+        if(iPlayerManager != null) {
+            getIPlayerManager().getBlitzPlayers().forEach((uuid, iPlayer) -> {
+                getDb().savePlayer(iPlayer);
+            });
+            BlitzSG.getInstance().getMapManager().deleteWorlds();
+
+        }
     }
 
     public static void broadcast(String message, World world) {

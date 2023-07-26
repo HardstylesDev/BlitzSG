@@ -2,6 +2,7 @@ package me.hardstyles.blitz.player;
 
 import me.hardstyles.blitz.menu.impl.shop.ShopGUI;
 import me.hardstyles.blitz.party.Party;
+import me.hardstyles.blitz.punishments.PlayerMute;
 import me.hardstyles.blitz.util.BookUtility;
 import me.hardstyles.blitz.util.ChatUtil;
 import me.hardstyles.blitz.BlitzSG;
@@ -30,7 +31,9 @@ public class IPlayerHandler implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         e.setJoinMessage("");
-        BlitzSG.getInstance().getStatisticsManager().loadPlayer(e.getPlayer().getUniqueId());
+        BlitzSG.getInstance().getDb().loadPlayer(e.getPlayer().getUniqueId());
+
+
 
         Player p = e.getPlayer();
 

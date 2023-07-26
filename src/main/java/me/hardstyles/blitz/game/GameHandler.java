@@ -52,7 +52,7 @@ public class GameHandler implements Listener {
                 iPlayer.getGame().removePlayer(p);
             }
         }
-        BlitzSG.getInstance().getStatisticsManager().savePlayer(iPlayer);
+        BlitzSG.getInstance().getDb().savePlayer(iPlayer);
         BlitzSG.getInstance().getIPlayerManager().removePlayer(p.getUniqueId());
     }
 

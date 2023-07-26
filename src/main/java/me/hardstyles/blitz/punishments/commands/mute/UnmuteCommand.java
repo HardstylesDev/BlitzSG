@@ -53,14 +53,8 @@ public class UnmuteCommand extends Command {
 
         Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
             try {
-                MongoDatabase database = BlitzSG.getInstance().getDb().getDatabase();
-                MongoCollection<Document> collection = database.getCollection("mutes");
-
-                Document query = new Document("uuid", target.getUniqueId().toString());
-                collection.deleteOne(query);
-
+                BlitzSG.getInstance().getDb().removeMute(target.getUniqueId());
                 sender.sendMessage(ChatUtil.color("&aSuccessfully unmuted " + target.getName() + "!"));
-
                 if (target.isOnline()) {
                     IPlayer p = BlitzSG.getInstance().getIPlayerManager().getPlayer(target.getUniqueId());
                     target.getPlayer().sendMessage(ChatUtil.color("&aYour previous mute has been revoked!"));

@@ -52,12 +52,7 @@ public class UnbanCommand extends Command {
 
         Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
             try {
-                MongoDatabase database = BlitzSG.getInstance().getDb().getDatabase();
-                MongoCollection<Document> collection = database.getCollection("bans");
-
-                Document query = new Document("uuid", target.getUniqueId().toString());
-                collection.deleteOne(query);
-
+                BlitzSG.getInstance().getDb().removeBan(target.getUniqueId());
                 sender.sendMessage(ChatUtil.color("&aSuccessfully unbanned " + target.getName() + "!"));
             } catch (Exception e) {
                 e.printStackTrace();

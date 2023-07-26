@@ -6,26 +6,25 @@ import me.hardstyles.blitz.util.ChatUtil;
 
 @Getter
 @Setter
-public class PlayerMute {
+public class PlayerBan {
 
     private long endTime;
     private String reason;
     private String sender;
 
-    public PlayerMute(long endTime, String reason, String sender) {
+    public PlayerBan(long endTime, String reason, String sender) {
         this.endTime = endTime;
         this.reason = reason;
         this.sender = sender;
-
     }
 
-    public boolean isMuted() {
-        System.out.println("System.currentTimeMillis() < endTime: " + System.currentTimeMillis() + " < " + endTime);
+    public boolean isBanned() {
         return System.currentTimeMillis() < endTime;
     }
 
+
     @Override
     public String toString() {
-        return "Muted for " + reason + " for " + ChatUtil.formatDate(endTime) + " (" + endTime + ")";
+        return "Banned for " + reason + " for " + ChatUtil.formatDate(endTime) + " (" + endTime + ") by " + sender + ".";
     }
 }

@@ -31,7 +31,6 @@ public class ListCommand extends Command {
     public void onExecute(CommandSender sender, String[] args) {
 
         ArrayList<IPlayer> players = new ArrayList<>();
-        // sort players by rank and then by name
         for (Player p : Bukkit.getOnlinePlayers()) {
             IPlayer ip = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
             if (ip == null) continue;

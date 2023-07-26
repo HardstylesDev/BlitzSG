@@ -79,21 +79,29 @@ public class MuteCommand extends Command {
 
         Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
             try {
-                MongoDatabase database = BlitzSG.getInstance().getDb().getDatabase();
-                MongoCollection<Document> collection = database.getCollection("mutes");
-
-                Document muteDoc = new Document("uuid", target.getUniqueId().toString())
-                        .append("reason", finalReason)
-                        .append("expires", futureTime)
-                        .append("executor", finalExecutor);
-                collection.insertOne(muteDoc);
+                PlayerMute mute = BlitzSG.getInstance().getDb().getMute(target.getUniqueId());
+                if (mute != null) {
+                    if (mute.isMuted()) {
+                        sender.sendMessage(ChatUtil.color("&cThat player is already muted!"));
+                        return;
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
 
         IPlayer p = BlitzSG.getInstance().getIPlayerManager().getPlayer(target.getUniqueId());
-        p.setMute(new PlayerMute(futureTime, finalReason));
+        PlayerMute mute = new PlayerMute(futureTime, finalReason, finalExecutor);
+        p.setMute(mute);
+        Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
+            try {
+                BlitzSG.getInstance().getDb().saveMute(target.getUniqueId(), mute);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
 
         target.sendMessage(ChatUtil.color("&7&m-------------------------------"));
         target.sendMessage(ChatUtil.color("&cYou have been muted for " + duration + " for " + reason + "."));
