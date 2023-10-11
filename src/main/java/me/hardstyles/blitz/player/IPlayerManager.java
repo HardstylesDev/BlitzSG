@@ -176,8 +176,11 @@ public class IPlayerManager {
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(g.getWinner().getUniqueId());
         double allPlayerElo = 0;
         for (Player pl : g.getAllPlayers())
-            if (pl.getUniqueId() != g.getWinner().getUniqueId())
-                allPlayerElo += BlitzSG.getInstance().getIPlayerManager().getPlayer(pl.getUniqueId()).getElo();
+            if (pl.getUniqueId() != g.getWinner().getUniqueId()) {
+                if (BlitzSG.getInstance().getIPlayerManager().getPlayer(pl.getUniqueId()) != null) {
+                    allPlayerElo += BlitzSG.getInstance().getIPlayerManager().getPlayer(pl.getUniqueId()).getElo();
+                }
+            }
         double eloChange = (((allPlayerElo * 0.5) / (g.getAllPlayers().size() - 1)) / iPlayer.getElo()) * 4 + 1;
         if (iPlayer.getElo() == 0)
             eloChange = 1;

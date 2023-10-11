@@ -24,7 +24,9 @@ public class KitGUI {
                     break;
                 }
                 Kit kit = kits.get(index);
-                ItemStack icon = new ItemBuilder(kit.getIcon()).name("&6" + kit.getName()).lore("&7" + kit.getDescription()).make();
+                ArrayList<String> lore = new ArrayList<>();
+                lore.add(ChatUtil.color("&7" + kit.getDescription()));
+                ItemStack icon = new ItemBuilder(kit.getIcon()).name("&6" + kit.getName()).lores(lore).make();
                 MenuItem item = new MenuItem(icon, e -> {
                     if (!iPlayer.isInGame()) {
                         return;

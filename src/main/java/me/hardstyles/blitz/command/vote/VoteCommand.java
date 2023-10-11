@@ -38,30 +38,39 @@ public class VoteCommand extends Command {
         Player p = (Player) sender;
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
 
-        if(iPlayer.getGame() == null) {
+        if (iPlayer.getGame() == null) {
             sender.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&cYou are not in a game."));
             return;
         }
 
         Game game = iPlayer.getGame();
-        if(game.getGameMode() != Game.GameMode.WAITING) {
+        if (game.getGameMode() != Game.GameMode.WAITING) {
             sender.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&cVotes can only be casted in the waiting lobby."));
             return;
         }
 
-        if(game.getVotes().containsKey(p.getUniqueId())) {
+        if (game.getVotes().containsKey(p.getUniqueId())) {
             sender.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&cYou have already voted."));
             return;
         }
 
-        if(args.length == 0){
+        if (args.length == 0) {
             sender.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&cUsage: /vote <yes/no>"));
             return;
         }
         String vote = args[0];
-        if(vote.equalsIgnoreCase("yes")) {
+        if (vote.equalsIgnoreCase("force")) {
+            if (iPlayer.getRank().isStaff()) {
+                game.startLobbyCountdown();
+                p.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&aYou have forced the game to start."));
+                return;
+            }
+            p.sendMessage(ChatUtil.color(BlitzSG.CORE_NAME + "&cYou do not have permission to force the game to start."));
+            return;
+        }
+        if (vote.equalsIgnoreCase("yes") || vote.equalsIgnoreCase("y")) {
             game.castVote(p, true);
-        } else if(vote.equalsIgnoreCase("no")) {
+        } else if (vote.equalsIgnoreCase("no") || vote.equalsIgnoreCase("n")) {
             game.castVote(p, false);
         } else {
             sender.sendMessage(ChatUtil.color("&cUsage: /vote <yes/no>"));

@@ -82,12 +82,10 @@ public class MongoProvider implements IDatabase {
 
     @Override
     public void saveBan(UUID uuid, PlayerBan ban) {
-
     }
 
     @Override
     public void saveMute(UUID uuid, PlayerMute mute) {
-
     }
 
     @Override

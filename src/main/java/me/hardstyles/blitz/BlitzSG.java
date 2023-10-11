@@ -45,6 +45,7 @@ import me.hardstyles.blitz.rank.RankManager;
 import me.hardstyles.blitz.scoreboard.ScoreboardManager;
 import me.hardstyles.blitz.menu.MenuListener;
 import net.minecraft.server.v1_8_R3.EnumChatFormat;
+import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -52,6 +53,8 @@ import org.bukkit.World;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
 
 @Getter
 public class BlitzSG extends JavaPlugin {
@@ -88,6 +91,13 @@ public class BlitzSG extends JavaPlugin {
 
 
     public void onEnable() {
+
+        World world = Bukkit.getWorld("world");
+        if (world == null) {
+            Bukkit.getLogger().severe("World 'world' does not exist!");
+        }
+        world.setAutoSave(false);
+
 
         //delete all directories in the /worlds folder except for the world folder
 
@@ -165,18 +175,55 @@ public class BlitzSG extends JavaPlugin {
     }
 
     public void onDisable() {
-        if(gameManager != null) {
+        if (gameManager != null) {
             for (Game g : gameManager.getRunningGames()) {
                 g.resetGame();
             }
         }
 
-        if(iPlayerManager != null) {
+        if (iPlayerManager != null) {
             getIPlayerManager().getBlitzPlayers().forEach((uuid, iPlayer) -> {
                 getDb().savePlayer(iPlayer);
             });
             BlitzSG.getInstance().getMapManager().deleteWorlds();
+        }
+        
+        this.generateNewWorld();
+        //this.clearWorldData();
+    }
 
+    private void generateNewWorld() {
+        File source = new File("arenas/world");
+        File target = new File("worlds/world");
+        try {
+            FileUtils.copyDirectory(source, target);
+        } catch (Exception e) {
+            System.out.println("Failed to generate new world on shutdown. " + e.getMessage());
+        }
+        clearWorldData();
+    }
+
+    private void clearWorldData() {
+        try {
+            String[] directories = new String[]{"playerdata", "stats"};
+            for (String directory : directories) {
+                final File index = new File(Bukkit.getWorlds().get(0).getWorldFolder() + "/" + directory);
+                if(!index.exists()) continue;
+                for (String s : index.list()) {
+                    new File(index.getPath(), s).delete();
+                }
+                index.delete();
+            }
+
+            String[] files = new String[]{"uid.dat", "session.lock"};
+            for (String file : files) {
+                final File index = new File(Bukkit.getWorlds().get(0).getWorldFolder() + "/" + file);
+                index.delete();
+            }
+
+
+        } catch (Exception e) {
+            System.out.println("Failed to clear world data on shutdown. " + e.getMessage());
         }
     }
 

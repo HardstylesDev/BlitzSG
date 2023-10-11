@@ -5,6 +5,7 @@ import lombok.Setter;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.player.IPlayerManager;
 import me.hardstyles.blitz.map.Map;
+import me.hardstyles.blitz.rank.Rank;
 import me.hardstyles.blitz.util.ChatUtil;
 import me.hardstyles.blitz.util.ItemBuilder;
 import me.hardstyles.blitz.util.ItemUtils;
@@ -31,6 +32,7 @@ public class Game {
     private boolean deathMatchStarted = false;
     private long INTERVAL = 20L;
 
+
     public void applyDeathEffects() {
         for (Player alivePlayer : alivePlayers) {
             alivePlayer.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 15 * 15, 1));
@@ -50,7 +52,9 @@ public class Game {
     private GameMode gameMode;
 
     private Map map;
-    private Player winner;
+    private OfflinePlayer winner;
+    private Rank winnerRank;
+
 
     private HashMap<UUID, Boolean> votes;
     private ArrayList<Location> openedChests, starChests;
@@ -553,6 +557,7 @@ public class Game {
             if (alivePlayers.size() > 0) {
                 winner = alivePlayers.get(0);
                 IPlayer iWinner = BlitzSG.getInstance().getIPlayerManager().getPlayer(winner.getUniqueId());
+                winnerRank = iWinner.getRank(true);
                 iWinner.addWin();
                 message("    " + iWinner.getRank(true).getChatColor() + winner.getName() + " &ahas won the Blitz Survival Games!");
             } else {
@@ -565,7 +570,9 @@ public class Game {
             IPlayer blitzSGWinner = BlitzSG.getInstance().getIPlayerManager().getPlayer(winner.getUniqueId());
             int coins = 75 * blitzSGWinner.getRank().getMultiplier();
             blitzSGWinner.addCoins(coins);
-            winner.sendMessage(ChatColor.GOLD + "+" + coins + " Coins (Win)");
+            if (winner.isOnline()) {
+                winner.getPlayer().sendMessage(ChatColor.GOLD + "+" + coins + " Coins (Win)");
+            }
         }
 
         new BukkitRunnable() {

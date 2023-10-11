@@ -21,7 +21,7 @@ public class ShopKitGUI {
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
 
         MenuContainer gui = new MenuContainer(ChatColor.DARK_GRAY + "Basic Kit Upgrades", 4);
-        int firstItem = 10;
+        int firstItem = 11;
         for (Kit kit : BlitzSG.getInstance().getKitManager().getKits()) {
             if ((isBasic && kit.getPrice(0) != 0) || (!isBasic && kit.getPrice(0) == 0)) {
                 continue;
@@ -65,7 +65,7 @@ public class ShopKitGUI {
 
                 iPlayer.removeCoins(kit.getPrice(iPlayer.getKitLevel(kit)));
                 iPlayer.setKitLevel(kit, iPlayer.getKitLevel(kit) + 1);
-                if(iPlayer.getKitLevel(kit) == 10) {
+                if (iPlayer.getKitLevel(kit) == 10) {
                     Bukkit.getServer().getOnlinePlayers().stream().filter(player -> player.getWorld() == p.getWorld()).forEach(player -> {
                         player.sendMessage(ChatUtil.color(iPlayer.getRank().getPrefix() + p.getName() + " &6has unlocked &a" + kit.getName() + " X&6!"));
                         player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 2, 1);
@@ -73,11 +73,15 @@ public class ShopKitGUI {
                 }
                 p.closeInventory();
             });
-            gui.setItem(firstItem, item);
-            if ((firstItem + 2) % 9 == 0) {
-                firstItem += 3;
-                continue;
+
+
+            if (firstItem == 16 || firstItem == 25 || firstItem == 34) {
+                firstItem = firstItem + 4;
             }
+
+            gui.setItem(firstItem, item);
+
+
             firstItem++;
         }
 

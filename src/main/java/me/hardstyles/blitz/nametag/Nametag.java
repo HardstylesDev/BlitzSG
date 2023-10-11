@@ -91,6 +91,11 @@ public class Nametag {
         }
     }
 
+
+    public void setGameTag(Player p){
+
+    }
+
     public void sendPacket(Player player) {
         try {
             ((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);

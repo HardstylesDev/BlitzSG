@@ -85,12 +85,14 @@ public class ScoreboardManager extends BukkitRunnable {
                     board.add(iPlayer.getTauntStatus());
 
                 } else if (iPlayer.getGame().getGameMode() == Game.GameMode.RESETTING) {
-                    if (iPlayer.getGame().getWinner() == null)
+                    if (iPlayer.getGame().getWinner() == null) {
                         continue;
-                    IPlayer winner = BlitzSG.getInstance().getIPlayerManager().getPlayer(iPlayer.getGame().getWinner().getUniqueId());
+                    }
+                    Game g = iPlayer.getGame();
+
                     board.add(separator);
                     board.add("&fWinner");
-                    board.add("&a" + winner.getRank(true).getPrefix() + iPlayer.getGame().getWinner().getName());
+                    board.add("&a" + g.getWinnerRank().getPrefix() + g.getWinner().getName());
                     board.add(separator);
                     board.add("&fPlayers: &a" + iPlayer.getGame().getAlivePlayers().size());
                     board.add("&fKills: &a" + iPlayer.getGameKills());

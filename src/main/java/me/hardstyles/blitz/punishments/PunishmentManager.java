@@ -25,8 +25,11 @@ public class PunishmentManager {
                     BlitzSG.getInstance().getDb().removeBan(e.getUniqueId());
                     return;
                 }
-                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, ban.getReason());
-                Bukkit.getLogger().info("Banned player " + e.getName() + " tried to join.");
+
+                String reason = ban.getReason();
+                String duration = ChatUtil.formatDate(ban.getEndTime());
+                String message = String.format(ChatUtil.color("&cYou are currently banned for &f%s &cfrom this server!\n&7Reason: &f%s\n" + "&7Find out more: &bhttps://discord.gg/idk"), duration, reason);
+                e.disallow(AsyncPlayerPreLoginEvent.Result.KICK_BANNED, message );
             }
 
         } catch (Exception e1) {
