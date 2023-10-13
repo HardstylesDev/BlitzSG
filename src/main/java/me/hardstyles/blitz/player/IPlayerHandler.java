@@ -1,5 +1,6 @@
 package me.hardstyles.blitz.player;
 
+import lombok.var;
 import me.hardstyles.blitz.menu.impl.shop.ShopGUI;
 import me.hardstyles.blitz.party.Party;
 import me.hardstyles.blitz.punishments.PlayerMute;
@@ -25,6 +26,7 @@ public class IPlayerHandler implements Listener {
 
     @EventHandler
     public void banCheck(AsyncPlayerPreLoginEvent e) {
+
         BlitzSG.getInstance().getPunishmentManager().handlePreLogin(e);
     }
 

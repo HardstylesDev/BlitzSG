@@ -30,6 +30,13 @@ public class ListCommand extends Command {
     @Override
     public void onExecute(CommandSender sender, String[] args) {
 
+        Player player = (Player) sender;
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
+        if (!(iPlayer.getRank().isStaff())) {
+            sender.sendMessage(ChatUtil.color("&cYou do not have permission to use this command!"));
+            return;
+        }
+
         ArrayList<IPlayer> players = new ArrayList<>();
         for (Player p : Bukkit.getOnlinePlayers()) {
             IPlayer ip = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());

@@ -6,10 +6,13 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 
+import com.mongodb.client.model.Filters;
 import me.hardstyles.blitz.database.IDatabase;
+import me.hardstyles.blitz.kit.KitManager;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.punishments.PlayerBan;
 import me.hardstyles.blitz.punishments.PlayerMute;
+import org.bson.Document;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -62,36 +65,84 @@ public class MongoProvider implements IDatabase {
 
     @Override
     public void savePlayer(IPlayer player) {
-
+        Document document = new Document("uuid", player.getUuid().toString())
+                .append("rank", player.getRank().getRank())
+                .append("coins", player.getCoins())
+                .append("kills", player.getKills())
+                .append("deaths", player.getDeaths())
+                .append("wins", player.getWins());
+        Document kits = new Document();
+        player.getKits().forEach((kit, level) -> kits.append(kit.getName(), level));
+        getDatabase().getCollection("players").insertOne(document);
     }
 
     @Override
     public IPlayer loadPlayer(UUID uuid) {
+        Document document = getDatabase().getCollection("players").find(Filters.eq("uuid", uuid.toString())).first();
+        if (document != null) {
+            IPlayer p = new IPlayer(UUID.fromString(document.getString("uuid")));
+            p.setRank(BlitzSG.getInstance().getRankManager().getRankByName(document.getString("rank")));
+            p.setCoins(document.getInteger("coins"));
+            p.setKills(document.getInteger("kills"));
+            p.setDeaths(document.getInteger("deaths"));
+            p.setWins(document.getInteger("wins"));
+            p.setDeaths(document.getInteger("deaths"));
+            // set kits to their levels
+            Document kits = (Document) document.get("kits");
+            for (String kit : kits.keySet()) {
+                p.setKitLevel(BlitzSG.getInstance().getKitManager().getKit(kit), kits.getInteger(kit));
+            }
+            return p;
+
+        }
+
         return null;
     }
 
     @Override
     public Map<String, Integer> getLeaderboard() {
+
+
+
         return null;
     }
 
     @Override
     public PlayerMute getMute(UUID uuid) {
+        Document document = getDatabase().getCollection("mutes").find(Filters.eq("uuid", uuid.toString())).first();
+        if (document != null) {
+            return new PlayerMute(document.getLong("time"), document.getString("reason"), document.getString("executor"));
+        }
         return null;
     }
 
     @Override
     public void saveBan(UUID uuid, PlayerBan ban) {
+        Document document = new Document("uuid", uuid.toString())
+                .append("time", ban.getEndTime())
+                .append("reason", ban.getReason())
+                .append("executor", ban.getSender());
+        getDatabase().getCollection("bans").insertOne(document);
     }
 
     @Override
     public void saveMute(UUID uuid, PlayerMute mute) {
+        Document document = new Document("uuid", uuid.toString())
+                .append("time", mute.getEndTime())
+                .append("reason", mute.getReason())
+                .append("executor", mute.getSender());
+        getDatabase().getCollection("mutes").insertOne(document);
     }
 
     @Override
     public PlayerBan getBan(UUID uuid) {
+        Document document = getDatabase().getCollection("bans").find(Filters.eq("uuid", uuid.toString())).first();
+        if (document != null) {
+            return new PlayerBan(document.getLong("time"), document.getString("reason"), document.getString("executor"));
+        }
         return null;
     }
+
 
     @Override
     public void deleteData(UUID playerId) {

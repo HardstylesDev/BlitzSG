@@ -64,7 +64,7 @@ public class BanCommand extends Command {
             return;
         }
         String duration = args[1];
-        long futureTime = calculateFutureTime(duration);
+        long futureTime = ChatUtil.calculateFutureTime(duration);
         if (futureTime == -1) {
             sender.sendMessage(ChatUtil.color("&cInvalid duration!"));
             return;
@@ -86,7 +86,10 @@ public class BanCommand extends Command {
             }
         });
 
-        target.kickPlayer(ChatUtil.color("&cYou have been banned for " + duration + " for " + reason + ""));
+        String message = String.format(ChatUtil.color("&cYou are currently banned for &f%s &cfrom this server!\n&7Reason: &f%s\n" + "&7Find out more: &bhttps://discord.gg/idk"), duration, reason);
+
+
+        target.kickPlayer(message);
     }
 
     private void help(CommandSender sender) {
@@ -107,31 +110,5 @@ public class BanCommand extends Command {
     }
 
 
-    public long calculateFutureTime(String durationStr) {
-        long currentTimeMillis = System.currentTimeMillis();
-        long durationInMillis = 0;
-        try {
-            int duration = Integer.parseInt(durationStr.substring(0, durationStr.length() - 1));
-            char unit = durationStr.charAt(durationStr.length() - 1);
-            switch (unit) {
-                case 's':
-                    durationInMillis = duration * 1000L;
-                    break;
-                case 'm':
-                    durationInMillis = duration * 60L * 1000L;
-                    break;
-                case 'h':
-                    durationInMillis = duration * 60L * 60L * 1000L;
-                    break;
-                case 'd':
-                    durationInMillis = duration * 24L * 60L * 60L * 1000L;
-                    break;
-                default:
-                    return -1;
-            }
-        } catch (NumberFormatException | StringIndexOutOfBoundsException e) {
-            return -1;
-        }
-        return currentTimeMillis + durationInMillis;
-    }
+
 }

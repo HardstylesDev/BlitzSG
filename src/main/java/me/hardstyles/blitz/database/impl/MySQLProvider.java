@@ -13,13 +13,19 @@ import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.punishments.PlayerBan;
 import me.hardstyles.blitz.punishments.PlayerMute;
 import me.hardstyles.blitz.rank.Rank;
+import me.hardstyles.blitz.util.ChatUtil;
+import me.hardstyles.blitz.util.ReflectionUtil;
 import org.bukkit.Bukkit;
+// import InvocationTargetException
+import java.lang.reflect.InvocationTargetException;
+
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -79,8 +85,8 @@ public class MySQLProvider implements IDatabase {
 
         try (Connection connection = dataSource.getConnection()) {
             connection.prepareStatement("CREATE TABLE IF NOT EXISTS `stats` (`uuid` VARCHAR(255) PRIMARY KEY, `coins` INT NOT NULL, `kills` INT NOT NULL, `wins` INT NOT NULL, `deaths` INT NOT NULL, `rank` VARCHAR(255) NOT NULL, `nickname` VARCHAR(255) NULL, `stars` TEXT NULL, `aura` TEXT NULL, `taunt` TEXT NULL, `kits` TEXT NULL, `elo` INT NOT NULL, `taunt` VARCHAR(255) NULL, `selectedKit` VARCHAR(255) NULL) ENGINE = InnoDB;").executeUpdate();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `bans` (`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, `reason` VARCHAR(255) NOT NULL, `expires` FLOAT NOT NULL, `executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mutes` (`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, `reason` VARCHAR(255) NOT NULL, `expires` FLOAT NOT NULL, `executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `bans` (`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, `reason` VARCHAR(255) NOT NULL, `expires` BIGINT NOT NULL, `executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mutes` (`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, `reason` VARCHAR(255) NOT NULL, `expires` BIGINT NOT NULL, `executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
 
             Bukkit.getLogger().info("Connected to database.");
         } catch (SQLException e) {
@@ -224,9 +230,9 @@ public class MySQLProvider implements IDatabase {
 
 
                 PlayerMute mute = BlitzSG.getInstance().getDb().getMute(uuid);
-                if(mute != null){
+                if (mute != null) {
                     Bukkit.getLogger().info("Mute is not null");
-                    if(mute.isMuted()){
+                    if (mute.isMuted()) {
                         Bukkit.getLogger().info("Mute is muted");
                         player.setMute(mute);
                     }
@@ -271,102 +277,65 @@ public class MySQLProvider implements IDatabase {
 
     @Override
     public PlayerMute getMute(UUID uuid) {
-        PlayerMute playerMute = null;
-        String query = "SELECT * FROM mutes WHERE uuid = ?";
-
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, uuid.toString());
-            ResultSet resultSet = preparedStatement.executeQuery();
-
+        try (ResultSet resultSet = select("SELECT * FROM mutes WHERE uuid = ?", uuid.toString())) {
             if (resultSet.next()) {
                 String reason = resultSet.getString("reason");
                 long expires = resultSet.getLong("expires");
                 String executor = resultSet.getString("executor");
-                playerMute = new PlayerMute(expires, reason, executor);
+                System.out.println("Expires: " + expires + " Current: " + System.currentTimeMillis());
+                if (System.currentTimeMillis() < expires) {
+                    return new PlayerMute(expires, reason, executor);
+                }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Bukkit.getLogger().severe("Could not get mute for " + uuid.toString());
         }
-        return playerMute;
+        return null;
     }
 
     @Override
     public void saveBan(UUID uuid, PlayerBan ban) {
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `bans`(`uuid`, `reason`, `expires`, `executor`) VALUES (?,?,?,?)")) {
-            preparedStatement.setString(1, uuid.toString());
-            preparedStatement.setString(2, ban.getReason());
-            preparedStatement.setFloat(3, ban.getEndTime());
-            preparedStatement.setString(4, ban.getSender());
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public PlayerBan getBan(UUID uuid) {
-        PlayerBan playerBan = null;
-        String query = "SELECT * FROM bans WHERE uuid = ?";
-
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, uuid.toString());
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                String reason = resultSet.getString("reason");
-                long expires = resultSet.getLong("expires");
-                String executor = resultSet.getString("executor");
-                playerBan = new PlayerBan(expires, reason, executor);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return playerBan;
+//        execute("DELETE FROM `bans` WHERE `uuid`=?", uuid.toString());
+        execute("INSERT INTO `bans`(`uuid`, `reason`, `expires`, `executor`) VALUES (?,?,?,?)", uuid.toString(), ban.getReason(), ban.getEndTime(), ban.getSender());
     }
 
     @Override
     public void saveMute(UUID uuid, PlayerMute mute) {
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO `mutes`(`uuid`, `reason`, `expires`, `executor`) VALUES (?,?,?,?)")) {
-            preparedStatement.setString(1, uuid.toString());
-            preparedStatement.setString(2, mute.getReason());
-            preparedStatement.setFloat(3, mute.getEndTime());
-            preparedStatement.setString(4, mute.getSender());
-            preparedStatement.execute();
+//        execute("DELETE FROM `mutes` WHERE `uuid`=?", uuid.toString());
+        execute("INSERT INTO `mutes`(`uuid`, `reason`, `expires`, `executor`) VALUES (?,?,?,?)", uuid.toString(), mute.getReason(), mute.getEndTime(), mute.getSender());
+    }
+
+    @Override
+    public PlayerBan getBan(UUID uuid) {
+        try (ResultSet resultSet = select("SELECT * FROM bans WHERE uuid = ?", uuid.toString())) {
+            if (resultSet.next()) {
+                String reason = resultSet.getString("reason");
+                long expires = resultSet.getLong("expires");
+                String executor = resultSet.getString("executor");
+                if (System.currentTimeMillis() < expires) {
+                    return new PlayerBan(expires, reason, executor);
+                }
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
+            Bukkit.getLogger().severe("Could not get ban for " + uuid.toString());
         }
+        return null;
     }
 
 
     @Override
     public void deleteData(UUID playerId) {
-
+        execute("DELETE FROM `stats` WHERE `uuid`=?", playerId.toString());
     }
 
     @Override
     public void removeBan(UUID uniqueId) {
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `bans` WHERE `uuid`=?")) {
-            preparedStatement.setString(1, uniqueId.toString());
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        execute("DELETE FROM `bans` WHERE `uuid`=?", uniqueId.toString());
     }
 
     @Override
     public void removeMute(UUID uniqueId) {
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM `mutes` WHERE `uuid`=?")) {
-            preparedStatement.setString(1, uniqueId.toString());
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        execute("DELETE FROM `mutes` WHERE `uuid`=?", uniqueId.toString());
     }
 
 
@@ -386,7 +355,37 @@ public class MySQLProvider implements IDatabase {
             }
         });
         return new GsonBuilder().setPrettyPrinting().create().toJson(kits);
-
     }
+
+
+    private boolean execute(String query, Object... parameters) {
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            for (int i = 0; i < parameters.length; i++) {
+                preparedStatement.setObject(i + 1, parameters[i]);
+            }
+            preparedStatement.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // Method to execute a SELECT query and return a ResultSet
+    private ResultSet select(String query, Object... parameters) {
+        try {
+            Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            for (int i = 0; i < parameters.length; i++) {
+                preparedStatement.setObject(i + 1, parameters[i]);
+            }
+            return preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }

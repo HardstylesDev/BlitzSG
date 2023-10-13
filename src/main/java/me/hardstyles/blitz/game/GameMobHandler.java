@@ -40,8 +40,12 @@ public class GameMobHandler implements Listener {
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
         if (!iPlayer.isInGame())
             return;
-        if (!(iPlayer.getGame().getGameMode() == Game.GameMode.INGAME))
+        if (!(iPlayer.getGame().getGameMode() == Game.GameMode.INGAME)) {
+            if(e.getItem().getType() == Material.MONSTER_EGG){
+                e.setCancelled(true);
+            }
             return;
+        }
         if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getItem().getType() == Material.MONSTER_EGG) {
             EntityType entityType = ((SpawnEgg) e.getPlayer().getItemInHand().getData()).getSpawnedType();
             if (entityType != null) {

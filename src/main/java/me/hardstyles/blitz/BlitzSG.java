@@ -4,8 +4,10 @@ import com.zaxxer.hikari.HikariDataSource;
 import lombok.Getter;
 import me.hardstyles.blitz.command.broadcast.BroadcastCommand;
 import me.hardstyles.blitz.command.coins.SetCoinsCommand;
+import me.hardstyles.blitz.command.game.WTFMapCommand;
 import me.hardstyles.blitz.command.join.JoinCommand;
 import me.hardstyles.blitz.command.list.ListCommand;
+import me.hardstyles.blitz.command.me.MeCommand;
 import me.hardstyles.blitz.command.party.PartyChatCommand;
 import me.hardstyles.blitz.command.party.PartyCommand;
 import me.hardstyles.blitz.command.taunt.TauntCommand;
@@ -44,6 +46,7 @@ import me.hardstyles.blitz.punishments.PunishmentManager;
 import me.hardstyles.blitz.rank.RankManager;
 import me.hardstyles.blitz.scoreboard.ScoreboardManager;
 import me.hardstyles.blitz.menu.MenuListener;
+import me.hardstyles.blitz.util.ReflectionUtil;
 import net.minecraft.server.v1_8_R3.EnumChatFormat;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
@@ -51,6 +54,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -61,6 +65,7 @@ public class BlitzSG extends JavaPlugin {
 
     public static String CORE_NAME = EnumChatFormat.GRAY + "[" + EnumChatFormat.RED + "B-SG" + EnumChatFormat.GRAY + "]: " + EnumChatFormat.WHITE;
 
+    @Getter
     public static BlitzSG instance;
     private MapManager mapManager;
     private IPlayerManager iPlayerManager;
@@ -92,14 +97,13 @@ public class BlitzSG extends JavaPlugin {
 
     public void onEnable() {
 
+
         World world = Bukkit.getWorld("world");
         if (world == null) {
             Bukkit.getLogger().severe("World 'world' does not exist!");
+        } else {
+            world.setAutoSave(false);
         }
-        world.setAutoSave(false);
-
-
-        //delete all directories in the /worlds folder except for the world folder
 
 
         db = new DatabaseProvider().getDatabase();
@@ -142,12 +146,25 @@ public class BlitzSG extends JavaPlugin {
 
         }
         scoreboardManager.runTaskTimer(this, 20, 20);
-
-        //KarhuAPI.getEventRegistry().addListener(anticheat);
     }
 
 
     private void registerCommands() {
+        CommandMap map = null;
+        try {
+            map = (CommandMap) ReflectionUtil.getField(Bukkit.getServer().getClass(), "commandMap").get(Bukkit.getServer());
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        ReflectionUtil.unregisterCommands(map, "me");
+        ReflectionUtil.unregisterCommands(map, "minecraft:me");
+        ReflectionUtil.unregisterCommands(map, "tell");
+        ReflectionUtil.unregisterCommands(map, "minecraft:tell");
+        ReflectionUtil.unregisterCommands(map, "msg");
+        ReflectionUtil.unregisterCommands(map, "minecraft:msg");
+        ReflectionUtil.unregisterCommands(map, "say");
+        ReflectionUtil.unregisterCommands(map, "minecraft:say");
+
         Bukkit.getConsoleSender().sendMessage(ChatUtil.color(" "));
         Bukkit.getConsoleSender().sendMessage(ChatUtil.color("&d&lLoading Commands..."));
         Bukkit.getConsoleSender().sendMessage(ChatUtil.color(" "));
@@ -167,6 +184,7 @@ public class BlitzSG extends JavaPlugin {
         new JoinCommand();
         new ListCommand();
         new TauntCommand();
+        new WTFMapCommand();
         new VoteCommand();
         new PartyCommand();
         new PartyChatCommand();
@@ -187,7 +205,7 @@ public class BlitzSG extends JavaPlugin {
             });
             BlitzSG.getInstance().getMapManager().deleteWorlds();
         }
-        
+
         this.generateNewWorld();
         //this.clearWorldData();
     }
@@ -208,7 +226,7 @@ public class BlitzSG extends JavaPlugin {
             String[] directories = new String[]{"playerdata", "stats"};
             for (String directory : directories) {
                 final File index = new File(Bukkit.getWorlds().get(0).getWorldFolder() + "/" + directory);
-                if(!index.exists()) continue;
+                if (!index.exists()) continue;
                 for (String s : index.list()) {
                     new File(index.getPath(), s).delete();
                 }
@@ -236,10 +254,6 @@ public class BlitzSG extends JavaPlugin {
 
     public static void send(Player p, String message) {
         p.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
-    }
-
-    public static BlitzSG getInstance() {
-        return instance;
     }
 
 

@@ -32,6 +32,8 @@ public class DatabaseProvider {
                 return new MySQLProvider(config);
             case "mongo":
                 return new MongoProvider(config);
+                case "flatfile":
+                Bukkit.getLogger().severe("Flatfile is not supported yet!");
             default:
                 Bukkit.getLogger().severe("Invalid database type in config.yml!");
                 Bukkit.getPluginManager().disablePlugin(BlitzSG.getInstance());

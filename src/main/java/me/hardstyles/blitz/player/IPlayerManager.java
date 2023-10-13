@@ -92,6 +92,9 @@ public class IPlayerManager {
         IPlayer iPlayer = this.getPlayer(p.getUniqueId());
         Bukkit.getServer().getOnlinePlayers().stream().filter(player -> player.getWorld().getName().equalsIgnoreCase("world")).forEach(player -> {
             IPlayer iLobby = this.getPlayer(player.getUniqueId());
+            if(iLobby == null) {
+                return;
+            }
             if (!iLobby.isVisibilityEnabled()) {
                 player.hidePlayer(p);
             } else {

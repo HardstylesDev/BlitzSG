@@ -62,19 +62,15 @@ public class MessageCommand extends Command {
     }
 
     private void help(CommandSender sender) {
-        sender.sendMessage("&cUsage: /message <player> <message>");
+        sender.sendMessage(ChatUtil.color("&cUsage: /message <player> <message>"));
     }
 
     private List<SubCommand> getAvailableSubs(CommandSender sender) {
-        return subcommands.stream()
-                .filter(c -> sender.hasPermission(c.getPermission()))
-                .collect(Collectors.toList());
+        return subcommands.stream().filter(c -> sender.hasPermission(c.getPermission())).collect(Collectors.toList());
     }
 
     private SubCommand getSubCommand(String name) {
         String a = name.toLowerCase();
-        return subcommands.stream()
-                .filter(sub -> (sub.getName().equals(a) || sub.getAliases().contains(a)))
-                .findFirst().orElse(null);
+        return subcommands.stream().filter(sub -> (sub.getName().equals(a) || sub.getAliases().contains(a))).findFirst().orElse(null);
     }
 }
