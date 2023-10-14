@@ -5,14 +5,12 @@ import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
+import me.hardstyles.blitz.punishments.punishtype.PlayerMute;
 import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bson.Document;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,14 +49,21 @@ public class UnmuteCommand extends Command {
             return;
         }
 
+        IPlayer iTarget = BlitzSG.getInstance().getIPlayerManager().getPlayer(target.getUniqueId());
+
+        PlayerMute mute = iTarget.getMute();
+        if (mute == null || !mute.isActive()) {
+            sender.sendMessage(ChatUtil.color("&cThat player is not muted!"));
+            return;
+        }
+
         Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
             try {
-                BlitzSG.getInstance().getDb().removeMute(target.getUniqueId());
+                BlitzSG.getInstance().getDb().revokeMute(target.getUniqueId());
                 sender.sendMessage(ChatUtil.color("&aSuccessfully unmuted " + target.getName() + "!"));
                 if (target.isOnline()) {
-                    IPlayer p = BlitzSG.getInstance().getIPlayerManager().getPlayer(target.getUniqueId());
                     target.getPlayer().sendMessage(ChatUtil.color("&aYour previous mute has been revoked!"));
-                    p.setMute(null);
+                    iTarget.getMute().setActive(false);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

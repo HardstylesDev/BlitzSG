@@ -33,6 +33,7 @@ import me.hardstyles.blitz.punishments.commands.ban.BanCommand;
 import me.hardstyles.blitz.punishments.commands.ban.UnbanCommand;
 import me.hardstyles.blitz.punishments.commands.mute.MuteCommand;
 import me.hardstyles.blitz.punishments.commands.mute.UnmuteCommand;
+import me.hardstyles.blitz.punishments.commands.punishment.PunishmentsCommand;
 import me.hardstyles.blitz.statistics.LeaderboardManager;
 import me.hardstyles.blitz.util.ChatUtil;
 import me.hardstyles.blitz.util.EnchantListener;
@@ -183,6 +184,7 @@ public class BlitzSG extends JavaPlugin {
         new BroadcastCommand();
         new JoinCommand();
         new ListCommand();
+        new PunishmentsCommand();
         new TauntCommand();
         new WTFMapCommand();
         new VoteCommand();

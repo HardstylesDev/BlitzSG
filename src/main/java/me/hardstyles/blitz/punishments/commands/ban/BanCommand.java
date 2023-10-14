@@ -5,15 +5,11 @@ import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
-import me.hardstyles.blitz.punishments.PlayerBan;
-import me.hardstyles.blitz.punishments.PlayerMute;
+import me.hardstyles.blitz.punishments.punishtype.PlayerBan;
 import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bson.Document;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +73,7 @@ public class BanCommand extends Command {
 
         String finalReason = reason;
         String finalExecutor = executor;
-        PlayerBan ban = new PlayerBan(futureTime, finalReason, finalExecutor);
+        PlayerBan ban = new PlayerBan(System.currentTimeMillis(), futureTime, finalReason, finalExecutor, true);
         Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
             try {
                BlitzSG.getInstance().getDb().saveBan(target.getUniqueId(), ban);

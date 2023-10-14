@@ -1,9 +1,9 @@
 package me.hardstyles.blitz.database;
 
-import com.mongodb.client.MongoDatabase;
 import me.hardstyles.blitz.player.IPlayer;
-import me.hardstyles.blitz.punishments.PlayerMute;
-import me.hardstyles.blitz.punishments.PlayerBan;
+import me.hardstyles.blitz.punishments.punishtype.PlayerMute;
+import me.hardstyles.blitz.punishments.punishtype.PlayerBan;
+import me.hardstyles.blitz.punishments.punishtype.PunishType;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -17,9 +17,14 @@ public interface IDatabase {
     Map<String, Integer> getLeaderboard();
     PlayerMute getMute(UUID uuid);
 
+    ArrayList<PunishType> getMutes(UUID uuid);
+    ArrayList<PunishType> getBans(UUID uuid);
+
     void saveBan(UUID uuid, PlayerBan ban);
 
     void saveMute(UUID uuid, PlayerMute mute);
+
+    void revokeBan(UUID uuid);
 
     PlayerBan getBan(UUID uuid);
 
@@ -29,4 +34,8 @@ public interface IDatabase {
     void removeBan(UUID uniqueId);
 
     void removeMute(UUID uniqueId);
+
+    void revokeMute(UUID uniqueId);
+
+    void remove(UUID id, PunishType punishment);
 }

@@ -1,9 +1,7 @@
 package me.hardstyles.blitz.player;
 
-import lombok.var;
 import me.hardstyles.blitz.menu.impl.shop.ShopGUI;
 import me.hardstyles.blitz.party.Party;
-import me.hardstyles.blitz.punishments.PlayerMute;
 import me.hardstyles.blitz.util.BookUtility;
 import me.hardstyles.blitz.util.ChatUtil;
 import me.hardstyles.blitz.BlitzSG;
@@ -16,6 +14,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -101,12 +100,18 @@ public class IPlayerHandler implements Listener {
         }
     }
 
+//    @EventHandler
+//    public void chunk(ChunkLoadEvent e){
+//        if(e.isNewChunk()){
+//            e.getChunk().unload(false);
+//        }
+//    }
 
     @EventHandler
     public void onAsyncChat(AsyncPlayerChatEvent e) {
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
         if (iPlayer.getMute() != null) {
-            if (iPlayer.getMute().isMuted()) {
+            if (iPlayer.getMute().isActive()) {
                 e.getPlayer().sendMessage(ChatUtil.color("&cYou are currently muted for \"" + iPlayer.getMute().getReason() + "\""));
                 e.getPlayer().sendMessage(ChatUtil.color("&cThis mute will expire in " + ChatUtil.formatDate(iPlayer.getMute().getEndTime())));
                 e.setCancelled(true);
@@ -167,7 +172,7 @@ public class IPlayerHandler implements Listener {
             sb.append("\n&7Kit: &a").append(iPlayer.getSelectedKit() == null ? "None" : iPlayer.getSelectedKit().getName());
             sb.append("\n&7Aura: &a").append(iPlayer.getAura() == null ? "None" : iPlayer.getAura().getName());
             if(iPlayer.getMute() != null) {
-                if(iPlayer.getMute().isMuted()) {
+                if(iPlayer.getMute().isActive()) {
                     sb.append("\n");
                     sb.append("\n&7Mute: &cMuted");
                     sb.append("\n&7Reason: &c").append(iPlayer.getMute().getReason());

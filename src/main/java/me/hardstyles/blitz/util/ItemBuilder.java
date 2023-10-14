@@ -120,7 +120,12 @@ public class ItemBuilder {
     }
     public ItemBuilder lores(ArrayList<String> lines){
 
-        meta().setLore(lines);
+        ArrayList<String> lore = new ArrayList<>();
+        for(String line : lines){
+            lore.add(ChatColor.translateAlternateColorCodes('&', line));
+        }
+
+        meta().setLore(lore);
         make().setItemMeta(meta());
         return this;
 

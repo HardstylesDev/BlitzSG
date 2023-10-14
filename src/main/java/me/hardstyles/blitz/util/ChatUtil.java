@@ -15,6 +15,17 @@ public class ChatUtil {
         Date start = new Date(System.currentTimeMillis());
         Date end = new Date((long) milis);
 
+        return getOffsets(start, end);
+    }
+
+    public String formatPastDate(double milis) {
+        Date start = new Date((long) milis);
+        Date end = new Date(System.currentTimeMillis());
+
+        return getOffsets(start, end);
+    }
+
+    private static String getOffsets(Date start, Date end) {
         long diffInSeconds = (end.getTime() - start.getTime()) / 1000;
         long days = diffInSeconds / 86400;
         long hours = (diffInSeconds % 86400) / 3600;

@@ -1,15 +1,13 @@
 package me.hardstyles.blitz.punishments;
 
 import me.hardstyles.blitz.BlitzSG;
+import me.hardstyles.blitz.punishments.punishtype.PlayerBan;
 import me.hardstyles.blitz.util.ChatUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bson.Document;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 
 public class PunishmentManager {
+
+
 
     public void handlePreLogin(AsyncPlayerPreLoginEvent e) {
         try {
@@ -17,12 +15,13 @@ public class PunishmentManager {
 
             if (ban != null) {
                 if(!ban.isBanned()){
+                    BlitzSG.getInstance().getDb().revokeBan(e.getUniqueId());
                     return;
                 }
 
                 long now = System.currentTimeMillis();
                 if(ban.getEndTime() < now){
-                    BlitzSG.getInstance().getDb().removeBan(e.getUniqueId());
+                    BlitzSG.getInstance().getDb().revokeBan(e.getUniqueId());
                     return;
                 }
 

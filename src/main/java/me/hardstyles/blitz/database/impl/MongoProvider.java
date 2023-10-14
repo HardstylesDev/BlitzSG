@@ -8,19 +8,14 @@ import com.mongodb.client.MongoDatabase;
 
 import com.mongodb.client.model.Filters;
 import me.hardstyles.blitz.database.IDatabase;
-import me.hardstyles.blitz.kit.KitManager;
 import me.hardstyles.blitz.player.IPlayer;
-import me.hardstyles.blitz.punishments.PlayerBan;
-import me.hardstyles.blitz.punishments.PlayerMute;
+import me.hardstyles.blitz.punishments.punishtype.PlayerBan;
+import me.hardstyles.blitz.punishments.punishtype.PlayerMute;
+import me.hardstyles.blitz.punishments.punishtype.PunishType;
 import org.bson.Document;
 import org.bukkit.Bukkit;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import me.hardstyles.blitz.BlitzSG;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 
 public class MongoProvider implements IDatabase {
@@ -111,8 +106,18 @@ public class MongoProvider implements IDatabase {
     public PlayerMute getMute(UUID uuid) {
         Document document = getDatabase().getCollection("mutes").find(Filters.eq("uuid", uuid.toString())).first();
         if (document != null) {
-            return new PlayerMute(document.getLong("time"), document.getString("reason"), document.getString("executor"));
+            return new PlayerMute(document.getLong("startTime"), document.getLong("endTime"), document.getString("reason"), document.getString("executor"), document.getBoolean("active"));
         }
+        return null;
+    }
+
+    @Override
+    public ArrayList<PunishType> getMutes(UUID uuid) {
+        return null;
+    }
+
+    @Override
+    public ArrayList<PunishType> getBans(UUID uuid) {
         return null;
     }
 
@@ -121,7 +126,7 @@ public class MongoProvider implements IDatabase {
         Document document = new Document("uuid", uuid.toString())
                 .append("time", ban.getEndTime())
                 .append("reason", ban.getReason())
-                .append("executor", ban.getSender());
+                .append("executor", ban.getExecutor());
         getDatabase().getCollection("bans").insertOne(document);
     }
 
@@ -130,15 +135,20 @@ public class MongoProvider implements IDatabase {
         Document document = new Document("uuid", uuid.toString())
                 .append("time", mute.getEndTime())
                 .append("reason", mute.getReason())
-                .append("executor", mute.getSender());
+                .append("executor", mute.getExecutor());
         getDatabase().getCollection("mutes").insertOne(document);
+    }
+
+    @Override
+    public void revokeBan(UUID uuid) {
+
     }
 
     @Override
     public PlayerBan getBan(UUID uuid) {
         Document document = getDatabase().getCollection("bans").find(Filters.eq("uuid", uuid.toString())).first();
         if (document != null) {
-            return new PlayerBan(document.getLong("time"), document.getString("reason"), document.getString("executor"));
+            return new PlayerBan(document.getLong("startTime"), document.getLong("endTime"), document.getString("reason"), document.getString("executor"), document.getBoolean("active"));
         }
         return null;
     }
@@ -156,6 +166,16 @@ public class MongoProvider implements IDatabase {
 
     @Override
     public void removeMute(UUID uniqueId) {
+
+    }
+
+    @Override
+    public void revokeMute(UUID uniqueId) {
+
+    }
+
+    @Override
+    public void remove(UUID id, PunishType punishment) {
 
     }
 }

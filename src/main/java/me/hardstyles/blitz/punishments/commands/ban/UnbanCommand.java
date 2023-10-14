@@ -50,9 +50,10 @@ public class UnbanCommand extends Command {
             return;
         }
 
+
         Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
             try {
-                BlitzSG.getInstance().getDb().removeBan(target.getUniqueId());
+                BlitzSG.getInstance().getDb().revokeBan(target.getUniqueId());
                 sender.sendMessage(ChatUtil.color("&aSuccessfully unbanned " + target.getName() + "!"));
             } catch (Exception e) {
                 e.printStackTrace();

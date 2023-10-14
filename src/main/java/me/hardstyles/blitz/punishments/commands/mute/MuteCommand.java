@@ -5,14 +5,11 @@ import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
-import me.hardstyles.blitz.punishments.PlayerMute;
+import me.hardstyles.blitz.punishments.punishtype.PlayerMute;
 import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bson.Document;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -79,11 +76,11 @@ public class MuteCommand extends Command {
         Bukkit.getScheduler().runTaskAsynchronously(BlitzSG.getInstance(), () -> {
             try {
                 PlayerMute mute = BlitzSG.getInstance().getDb().getMute(target.getUniqueId());
-                if (mute != null && mute.isMuted()) {
+                if (mute != null && mute.isActive()) {
                     sender.sendMessage(ChatUtil.color("&cThat player is already muted!"));
                 } else {
                     IPlayer p = BlitzSG.getInstance().getIPlayerManager().getPlayer(target.getUniqueId());
-                    PlayerMute newMute = new PlayerMute(futureTime, finalReason, finalExecutor);
+                    PlayerMute newMute = new PlayerMute(System.currentTimeMillis(), futureTime, finalReason, finalExecutor, true);
                     p.setMute(newMute);
                     BlitzSG.getInstance().getDb().saveMute(target.getUniqueId(), newMute);
                     sender.sendMessage(ChatUtil.color("&aSuccessfully muted " + target.getName() + "!"));
