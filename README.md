@@ -1,5 +1,5 @@
 ![version](https://img.shields.io/badge/version-1.0.0-blue)
-<br><a href="https://github.com/badges/HardstylesDev/BlitzSG/contributors" alt="Contributors"><img src="https://img.shields.io/github/contributors/HardstylesDev/BlitzSG" /></a>
+<br><a href="https://github.com/HardstylesDev/BlitzSG/graphs/contributors" alt="Contributors"><img src="https://img.shields.io/github/contributors/HardstylesDev/BlitzSG" /></a>
 
 # Blitz Survival Games | 1.0.0
 
@@ -122,6 +122,7 @@ I'm always happy to help, especially if you share my passion for this game mode.
 - **Oculysm**: For helping me with some of the details of the game mode, such as economy and kits
 - **Panimioul**: For re-creating the original lobby, and helping me find some of the original maps through the archive
   discord
+- **Syes**: For contributing to the project at the very beginning
 - **ILost**: For providing me with free hosting on numerous occasions, and helping me test the game
 - **Pixelville**: for the hours spent testing the game (i'd include your friends but i don't know their usernames)
 - **Hypixel Map Archive discord**: For having a detailed list of all the maps
