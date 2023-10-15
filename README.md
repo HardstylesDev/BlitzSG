@@ -21,8 +21,7 @@ This project was never intended to be used on a public server, and as such, most
 to change this.
 <br>
 <br>I did my best to create faithful remake of original game mode, through watching numerous old videos, recounting my own
-<br>memories of the game, receiving feedback from some extremely helpful people such as Oculysm and Panimioul and discussing
-<br>the game with other OG players.
+<br>memories of the game, receiving feedback from some extremely helpful people such as Oculysm and Panimioul and discussing the game with other OG players.
 <br>That being said, there are some things that I was unable to recreate, or simply forgot about. If you notice anything
 <br>that is missing, or incorrect, please let me know!
 <br>Due to me not having access to the original source code, some speculation was required, and as such, some game logic may not be a 100% match to the original game mode.
