@@ -1,32 +1,44 @@
 package me.hardstyles.blitz.nickname;
 
+import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.rank.ranks.Default;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
+import me.hardstyles.blitz.command.Command;
+import me.hardstyles.blitz.player.IPlayer;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class NicknameCommand implements CommandExecutor {
-    public boolean onCommand(CommandSender sender, Command command, String alias, String[] args) {
-        if ((BlitzSG.getInstance().getRankManager().getRank((Player) sender).isVip())) {
-            sender.sendMessage(BlitzSG.CORE_NAME + "missing permission.");
+import java.util.List;
 
-            return true;
-        }
+public class NicknameCommand extends Command {
+    public NicknameCommand() {
+        super("nick", ImmutableList.of("nickname"), null);
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, String[] args) {
+        return null;
+    }
+
+    @Override
+    public void onExecute(CommandSender sender, String[] args) {
         Player p = (Player) sender;
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        if (!(iPlayer.getRank().getPosition() > 5)) {
+            p.sendMessage(BlitzSG.CORE_NAME + "missing permiss2ion.");
+            return;
+        }
         if (args.length == 1) {
-            if(args[0].equalsIgnoreCase("unnick") || args[0].equalsIgnoreCase("reset")){
+            if (args[0].equalsIgnoreCase("unnick") || args[0].equalsIgnoreCase("reset")) {
                 BlitzSG.send(p, "&aUnnicking");
                 new Nickname().unnick(p);
-                return true;
+                return;
             }
             BlitzSG.send(p, "&aChanging your nickname to &e" + args[0]);
             new Nickname().setNick(p, args[0]);
-            return true;
+            return;
         }
         p.sendMessage(BlitzSG.CORE_NAME + "&e");
-        return true;
     }
 }
 

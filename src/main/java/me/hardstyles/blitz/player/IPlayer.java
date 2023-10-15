@@ -2,6 +2,7 @@ package me.hardstyles.blitz.player;
 
 import lombok.Getter;
 import lombok.Setter;
+import me.hardstyles.blitz.cosmetic.Gadget;
 import me.hardstyles.blitz.cosmetic.Taunt;
 import me.hardstyles.blitz.cosmetic.wardrobe.WardrobeStorage;
 import me.hardstyles.blitz.kit.Kit;
@@ -50,6 +51,7 @@ public class IPlayer {
     private Taunt taunt;
     private Nametag nametag;
     private WardrobeStorage wardrobeStorage;
+    private Gadget gadget;
 
     private HashMap<Kit, Integer> kitLevels;
     private float lastDamage;

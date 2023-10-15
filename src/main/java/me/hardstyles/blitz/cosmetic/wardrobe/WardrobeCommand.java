@@ -37,7 +37,7 @@ public class WardrobeCommand extends Command {
                 sender.sendMessage(ChatUtil.color("&cUsage: /wardrobe"));
             }
         } else {
-            sender.sendMessage(ChatUtil.color("&cYou must be a &aVIP&6a+ &cor higher to use this command!"));
+            sender.sendMessage(ChatUtil.color("&cYou must be a &aVIP&6+ &cor higher to use this command!"));
         }
 
     }

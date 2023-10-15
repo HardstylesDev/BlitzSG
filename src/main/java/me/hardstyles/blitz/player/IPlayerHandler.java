@@ -1,5 +1,7 @@
 package me.hardstyles.blitz.player;
 
+import me.hardstyles.blitz.cosmetic.Gadget;
+import me.hardstyles.blitz.menu.impl.cosmetics.GadgetGUI;
 import me.hardstyles.blitz.menu.impl.shop.ShopGUI;
 import me.hardstyles.blitz.party.Party;
 import me.hardstyles.blitz.util.BookUtility;
@@ -33,7 +35,6 @@ public class IPlayerHandler implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         e.setJoinMessage("");
         BlitzSG.getInstance().getDb().loadPlayer(e.getPlayer().getUniqueId());
-
 
 
         Player p = e.getPlayer();
@@ -93,7 +94,7 @@ public class IPlayerHandler implements Listener {
         });
 
         for (Party party : BlitzSG.getInstance().getPartyManager().getParties()) {
-            if(party.getMembers().contains(p.getUniqueId()) || party.getOwner() == iPlayer.getUuid()){
+            if (party.getMembers().contains(p.getUniqueId()) || party.getOwner() == iPlayer.getUuid()) {
                 iPlayer.setParty(party);
                 party.message(ChatUtil.color("&9Party > " + iPlayer.getRank().getPrefix() + p.getName() + " §6has returned!"));
             }
@@ -119,7 +120,7 @@ public class IPlayerHandler implements Listener {
             }
         }
         String format = ChatUtil.color("&r[&7" + iPlayer.getKills() + "&r] " + iPlayer.getRank(true).getPrefix() + e.getPlayer().getName() + (iPlayer.getRank(true).getPrefix().equalsIgnoreCase(ChatColor.GRAY + "") ? ChatColor.GRAY + ": " : ChatColor.WHITE + ": ") + e.getMessage());
-        if(iPlayer.isSpectating()){
+        if (iPlayer.isSpectating()) {
             format = ChatUtil.color("&7[SPECTATOR] &r[&7" + iPlayer.getKills() + "&r] " + iPlayer.getRank(true).getPrefix() + e.getPlayer().getName() + (iPlayer.getRank(true).getPrefix().equalsIgnoreCase(ChatColor.GRAY + "") ? ChatColor.GRAY + ": " : ChatColor.WHITE + ": ") + e.getMessage());
 
         }
@@ -152,8 +153,12 @@ public class IPlayerHandler implements Listener {
         if (e.getItem() == null) return;
         if (iPlayer.getRank().isManager() && p.getGameMode() == GameMode.CREATIVE) return;
         e.setCancelled(true);
+
         if (e.getItem().getType() == Material.EMERALD) ShopGUI.openGUI(p);
-        if(e.getItem().getType() == Material.PAINTING) {
+        if(e.getItem().getType() == Material.SKULL_ITEM) {
+            GadgetGUI.open(p);
+        }
+        if (e.getItem().getType() == Material.PAINTING) {
             BookUtility bookUtility = new BookUtility();
             bookUtility.title("" + iPlayer.getRank(true).getPrefix() + p.getName() + "'s Profile");
             bookUtility.author("BlitzSG");
@@ -171,8 +176,8 @@ public class IPlayerHandler implements Listener {
             sb.append("\n&7Rank: &a").append(iPlayer.getRank(true).getPrefix());
             sb.append("\n&7Kit: &a").append(iPlayer.getSelectedKit() == null ? "None" : iPlayer.getSelectedKit().getName());
             sb.append("\n&7Aura: &a").append(iPlayer.getAura() == null ? "None" : iPlayer.getAura().getName());
-            if(iPlayer.getMute() != null) {
-                if(iPlayer.getMute().isActive()) {
+            if (iPlayer.getMute() != null) {
+                if (iPlayer.getMute().isActive()) {
                     sb.append("\n");
                     sb.append("\n&7Mute: &cMuted");
                     sb.append("\n&7Reason: &c").append(iPlayer.getMute().getReason());
@@ -199,6 +204,19 @@ public class IPlayerHandler implements Listener {
                 return;
             }
             BlitzSG.getInstance().getGameManager().getAvailableGame().addPlayer(p);
+
+        }
+        if(iPlayer.getGadget() != null){
+            if(e.getItem().getType() == iPlayer.getGadget().getItem().getType()){
+                if (iPlayer.getGadget().canUse(p)) {
+                    iPlayer.getGadget().onUse(p);
+                    iPlayer.getGadget().setLastUsed(System.currentTimeMillis());
+                } else {
+                    double time = iPlayer.getGadget().getCooldown() - (System.currentTimeMillis() - iPlayer.getGadget().getLastUsed());
+                    int seconds = (int) (time / 1000) % 60;
+                    p.sendMessage(ChatUtil.color("&cYou must wait " + seconds + "s before using this again!"));
+                }
+            }
         }
 
     }
@@ -239,8 +257,6 @@ public class IPlayerHandler implements Listener {
             }
         }.runTaskLater(BlitzSG.getInstance(), 20 * 20);
     }
-
-
 
 
 }

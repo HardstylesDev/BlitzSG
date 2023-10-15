@@ -3,6 +3,7 @@ package me.hardstyles.blitz.command.fireworks;
 
 import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.BlitzSG;
+import me.hardstyles.blitz.cosmetic.Gadget;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.command.Command;
 import me.hardstyles.blitz.command.SubCommand;
@@ -35,6 +36,15 @@ public class FireworkCommand extends Command {
     public void onExecute(CommandSender sender, String[] args) {
         Player p = (Player) sender;
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        if(args.length > 0) {
+            if(args[0].equalsIgnoreCase("admin")){
+                if(iPlayer.getRank().isManager()){
+                    for (Gadget gadget : BlitzSG.getInstance().getCosmeticsManager().getGadgets()) {
+                        p.getInventory().addItem(gadget.getItem());
+                    }
+                }
+            }
+        }
 
         if (iPlayer.isInGame() && iPlayer.getGame().getGameMode() != Game.GameMode.STARTING) {
             p.sendMessage(ChatUtil.color("&cYou can't do this after the game has started!"));

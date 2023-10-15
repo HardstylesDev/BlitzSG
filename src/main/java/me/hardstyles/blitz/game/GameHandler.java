@@ -14,6 +14,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -260,8 +261,17 @@ public class GameHandler implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(ignoreCancelled = true , priority = EventPriority.MONITOR)
+    public void onEntityDamage3(EntityDamageEvent e) {
+        System.out.println("From Monitor: " + e.getFinalDamage());
+    }
+    @EventHandler(ignoreCancelled = true , priority = EventPriority.LOWEST)
+    public void onEntityDamage2(EntityDamageEvent e) {
+        System.out.println("From Lowest: " + e.getFinalDamage());
+    }
+    @EventHandler(ignoreCancelled = true , priority = EventPriority.HIGHEST)
     public void onEntityDamage(EntityDamageEvent e) {
+        System.out.println("From Highest: " + e.getFinalDamage());
         if (e.getEntity().getWorld() == BlitzSG.lobbySpawn.getWorld()) {
             e.setCancelled(true);
             return;

@@ -1,29 +1,13 @@
 package me.hardstyles.blitz.cosmetic;
 
+import lombok.Getter;
 import me.hardstyles.blitz.rank.Rank;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class Taunt {
-    public String getId() {
-        return id;
-    }
+@Getter
+public abstract class Taunt {
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Rank getRequiredRank() {
-        return requiredRank;
-    }
-
-    public ItemStack getIcon() {
-        return icon;
-    }
     private final ItemStack icon;
     private final String id;
     private final String name;
@@ -39,8 +23,7 @@ public class Taunt {
 
     }
 
-    public void run(Player p) {
-    }
+    public abstract void run(Player p);
 
 
 }

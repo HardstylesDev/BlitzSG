@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import com.mysql.jdbc.ResultSetImpl;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.cosmetic.Aura;
+import me.hardstyles.blitz.cosmetic.Gadget;
 import me.hardstyles.blitz.cosmetic.Taunt;
 import me.hardstyles.blitz.cosmetic.wardrobe.WardrobeStorage;
 import me.hardstyles.blitz.database.IDatabase;
@@ -82,7 +83,7 @@ public class MySQLProvider implements IDatabase {
         dataSource = hikariDataSource;
 
         try (Connection connection = dataSource.getConnection()) {
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `stats` (`uuid` VARCHAR(255) PRIMARY KEY, `coins` INT NOT NULL, `kills` INT NOT NULL, `wins` INT NOT NULL, `deaths` INT NOT NULL, `rank` VARCHAR(255) NOT NULL, `nickname` VARCHAR(255) NULL, `stars` TEXT NULL, `aura` TEXT NULL, `taunt` TEXT NULL, `kits` TEXT NULL, `elo` INT NOT NULL, `taunt` VARCHAR(255) NULL, `selectedKit` VARCHAR(255) NULL, `wardrobe` VARCHAR(510) NULL) ENGINE = InnoDB;").executeUpdate();
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `stats` (`uuid` VARCHAR(255) PRIMARY KEY, `coins` INT NOT NULL, `kills` INT NOT NULL, `wins` INT NOT NULL, `deaths` INT NOT NULL, `rank` VARCHAR(255) NOT NULL, `nickname` VARCHAR(255) NULL, `stars` TEXT NULL, `aura` TEXT NULL, `taunt` TEXT NULL, `kits` TEXT NULL, `elo` INT NOT NULL, `taunt` VARCHAR(255) NULL, `selectedKit` VARCHAR(255) NULL, `wardrobe` VARCHAR(510) NULL, `gadget` VARCHAR(128) NULL) ENGINE = InnoDB;").executeUpdate();
             connection.prepareStatement("CREATE TABLE IF NOT EXISTS `bans` (`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, `reason` VARCHAR(255) NOT NULL, `startTime` BIGINT NOT NULL, `endTime` BIGINT NOT NULL, `active` TINYINT NOT NULL, `executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
             connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mutes` (`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, `reason` VARCHAR(255) NOT NULL, `startTime` BIGINT NOT NULL, `endTime` BIGINT NOT NULL, `active` TINYINT NOT NULL, `executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
             BlitzSG.getInstance().getServer().getLogger().info("Connected to MySQL database.");
@@ -106,7 +107,7 @@ public class MySQLProvider implements IDatabase {
 
     @Override
     public void savePlayer(IPlayer p) {
-        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement("REPLACE INTO `stats`(`uuid`, `coins`, `kills`, `deaths`, `wins`, `rank`, `nickname`, `stars`, `kits`, `elo`, `taunt`, `selectedKit`, `aura`, `wardrobe`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement("REPLACE INTO `stats`(`uuid`, `coins`, `kills`, `deaths`, `wins`, `rank`, `nickname`, `stars`, `kits`, `elo`, `taunt`, `selectedKit`, `aura`, `wardrobe`, `gadget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
             preparedStatement.setString(1, p.getUuid().toString());
             preparedStatement.setInt(2, p.getCoins());
             preparedStatement.setInt(3, p.getKills());
@@ -135,6 +136,13 @@ public class MySQLProvider implements IDatabase {
             } else {
                 preparedStatement.setNull(11, java.sql.Types.VARCHAR);
             }
+
+            if(p.getGadget() != null){
+                preparedStatement.setString(15, p.getGadget().getName());
+            } else {
+                preparedStatement.setNull(15, java.sql.Types.VARCHAR);
+            }
+
 
             if(p.getWardrobeStorage() != null){
                 preparedStatement.setString(14, p.getWardrobeStorage().serialize().toString());
@@ -188,6 +196,14 @@ public class MySQLProvider implements IDatabase {
                     Aura a = BlitzSG.getInstance().getCosmeticsManager().getAuraByName(aura);
                     if (a != null) {
                         player.setAura(a);
+                    }
+                }
+
+                String gadget = resultSet.getString("gadget");
+                if(gadget != null){
+                    Gadget g = BlitzSG.getInstance().getCosmeticsManager().getGadgetByName(gadget);
+                    if(g != null){
+                        player.setGadget(g);
                     }
                 }
 
