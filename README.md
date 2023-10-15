@@ -1,4 +1,3 @@
-   
 ![version](https://img.shields.io/badge/version-1.0.0-blue)
 <br><a href="https://github.com/badges/HardstylesDev/BlitzSG/contributors" alt="Contributors"><img src="https://img.shields.io/github/contributors/HardstylesDev/BlitzSG" /></a>
 
@@ -72,8 +71,6 @@ it and remember the good times I had playing it.
   have anywhere near the same feel as the original game mode.
   <br>
 
-### [Contact](https://github.com/HardstylesDev)
-
 ## Contributing
 
 Pull requests are always welcome. For all of you out there who aren't familiar with GitHub, you can also just message me
@@ -105,39 +102,22 @@ Fill in the database details in the database.txt file, and you should be good to
 
 ### Hierarchy
 
-The hierarchy of the project is as follows:
-
-- 📁root
--
-    - ☕spigot.jar
--
-    - 📁arenas
--
-    - 📁plugins
--
-    -
-        - ☕BlitzSG.jar
--
-    -
-        - 📁BlitzSG
--
-    -
-        -
-            - 📄database.txt
--
-    -
-        -
-            - 📁arenas
--
-    -
-        -
-            -
-                - 📄caelum.yml
--
-    -
-        -
-            -
-                - ...
+    .
+    ├── root                   
+    │   ├── ☕spigot.jar              # The server jar     
+    │   └── 📁arenas      
+    │       ├ 📁caelum                # Example map
+    │       └ 📁...                   # More maps (all included in the zip)
+    │   └── 📁worlds      
+    │       └ 📁world                 # This is the hub world     
+    │   └── 📁plugins      
+    │       ├ BlitzSG.jar             # Hey it's this project    
+    │       └ 📁BlitzSG               # Plugin folder
+    │           ├ 📄database.txt      # Database config
+    │           └ 📁arenas            # Arena configs
+    │               ├ 📁caelum.yml    # Example arena config
+    │               └ 📁...           # More arena configs (all included in the zip)
+    └── ...
 
 ## Building
 
