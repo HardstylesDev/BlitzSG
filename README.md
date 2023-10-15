@@ -71,26 +71,6 @@ it and remember the good times I had playing it.
   have anywhere near the same feel as the original game mode.
   <br>
 
-## Contributing
-
-Pull requests are always welcome. For all of you out there who aren't familiar with GitHub, you can also just message me
-on discord (arraylist) and I'll add you as a contributor.
-
-## Special Thanks
-
-- Oculysm: For helping me with some of the details of the game mode, such as economy and kits
-- Panimioul: For re-creating the original lobby, and helping me find some of the original maps through the archive
-  discord
-- ILost: For providing me with free hosting on numerous occasions, and helping me test the game
-- Pixelville: for the hours spent testing the game (i'd include your friends but i don't know their usernames)
-- Hypixel Map Archive discord: For having a detailed list of all the maps
-- kunet: For creating the worldclean tool, which I used to clean up each map (they fit on GitHub now!)
-- The original Hypixel team: For creating the original game mode, and giving us all the memories we have today
-- The OG community: For being a part of the game mode, and making it what it was back in the day. I'm glad I was able to
-  be a part of it. Miss you guys.
-- You: For reading this far, and for being a part of the community. I hope you've enjoyed the ride as much as I did.
-- Anyone else I forgot to mention: I'm sorry, I'm bad at remembering things. I'll add you if you remind me.
-
 ## Running
 
 If you want to run this project, you'll need to set up a MySQL or MongoDB server, and configure the database settings in
@@ -120,9 +100,35 @@ Fill in the database details in the database.txt file, and you should be good to
     └── ...
 
 ## Building
-
 This project uses maven, so building is as simple as running `mvn install` & `mvn package` in the root directory.
 <br>
 The output jar will be located in the `target` folder.
 <br>
 It's using the shade plugin, so all dependencies will be included in the output jar.
+
+## Contributing
+
+Pull requests are always welcome. For all of you out there who aren't familiar with GitHub, you can also just message me
+on discord (arraylist) and I'll add you as a contributor. I'm always happy to have more people contribute to this project.
+
+## Support
+
+If you need any help with this project, feel free to message me on discord (arraylist) or use any of my other contact information on my profile.
+I'm always happy to help, especially if you share my passion for this game mode.
+
+
+## Special Thanks
+
+- **Oculysm**: For helping me with some of the details of the game mode, such as economy and kits
+- **Panimioul**: For re-creating the original lobby, and helping me find some of the original maps through the archive
+  discord
+- **ILost**: For providing me with free hosting on numerous occasions, and helping me test the game
+- **Pixelville**: for the hours spent testing the game (i'd include your friends but i don't know their usernames)
+- **Hypixel Map Archive discord**: For having a detailed list of all the maps
+- **kunet**: For creating the worldclean tool, which I used to clean up each map (they fit on GitHub now!)
+- **The original Hypixel team**: For creating the original game mode, and giving us all the memories we have today
+- **The OG community**: For being a part of the game mode, and making it what it was back in the day. I'm glad I was
+  able to
+  be a part of it. Miss you guys.
+- **You**: For reading this far, and for being a part of the community. I hope you've enjoyed the ride as much as I did.
+- **Anyone else I forgot to mention**: I'm sorry, I'm bad at remembering things. I'll add you if you remind me.
