@@ -3,6 +3,7 @@ package me.hardstyles.blitz.player;
 import lombok.Getter;
 import lombok.Setter;
 import me.hardstyles.blitz.cosmetic.Taunt;
+import me.hardstyles.blitz.cosmetic.wardrobe.WardrobeStorage;
 import me.hardstyles.blitz.kit.Kit;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.cosmetic.Aura;
@@ -48,6 +49,7 @@ public class IPlayer {
     private Aura aura;
     private Taunt taunt;
     private Nametag nametag;
+    private WardrobeStorage wardrobeStorage;
 
     private HashMap<Kit, Integer> kitLevels;
     private float lastDamage;

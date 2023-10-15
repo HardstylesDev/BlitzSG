@@ -54,6 +54,14 @@ public class MenuContainer {
         }
     }
 
+    public void border(MenuItem menuItem) {
+        for (int i = 0; i < this.inv.getSize(); i++) {
+            if (i < 9 || i > this.inv.getSize() - 9 || i % 9 == 0 || i % 9 == 8) {
+                setItem(i, menuItem);
+            }
+        }
+    }
+
 
     public MenuItem getItem(int slot) {
         return this.items.get(slot);

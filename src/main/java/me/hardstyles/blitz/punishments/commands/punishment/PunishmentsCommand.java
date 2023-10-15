@@ -125,7 +125,6 @@ public class PunishmentsCommand extends Command {
             lore.add("&7" + punishment.getPastTense() + " by &a" + punishment.getExecutor());
             System.out.println("index: " + index + " punishment: " + punishment.getReason() + " lore: " + lore);
             ItemStack item = new ItemBuilder(Material.GOLD_AXE).name("&c" + punishment.getReason()).lores(lore).make();
-
             MenuItem menuItem = new MenuItem(item, event2 -> {
                 BlitzSG.getInstance().getDb().remove(uuid, punishment);
                 sender.sendMessage(ChatUtil.color("&aSuccessfully removed punishment!"));

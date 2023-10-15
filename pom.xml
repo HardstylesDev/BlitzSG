@@ -31,12 +31,11 @@
                         </goals>
                     </execution>
                 </executions>
-<!--                <configuration>-->
-<!--                    <shadedArtifactAttached>true</shadedArtifactAttached>-->
-<!--                    <shadedClassifierName>SNAPSHOT</shadedClassifierName>-->
-<!--                    <outputDirectory>I:\Blitz-SG\plugins</outputDirectory>-->
-<!--                </configuration>-->
-
+                <configuration>
+                    <shadedArtifactAttached>true</shadedArtifactAttached>
+                    <shadedClassifierName>SNAPSHOT</shadedClassifierName>
+                    <outputDirectory>C:\Users\tombi\Desktop\test server\plugins</outputDirectory>
+                </configuration>
             </plugin>
         </plugins>
     </build>

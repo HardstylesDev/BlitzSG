@@ -12,6 +12,7 @@ import me.hardstyles.blitz.command.party.PartyChatCommand;
 import me.hardstyles.blitz.command.party.PartyCommand;
 import me.hardstyles.blitz.command.taunt.TauntCommand;
 import me.hardstyles.blitz.command.vote.VoteCommand;
+import me.hardstyles.blitz.cosmetic.wardrobe.WardrobeCommand;
 import me.hardstyles.blitz.database.DatabaseProvider;
 import me.hardstyles.blitz.database.IDatabase;
 import me.hardstyles.blitz.database.impl.MySQLProvider;
@@ -179,6 +180,7 @@ public class BlitzSG extends JavaPlugin {
         new BanCommand();
         new UnbanCommand();
         new MuteCommand();
+        new WardrobeCommand();
         new UnmuteCommand();
         new SetCoinsCommand();
         new BroadcastCommand();
@@ -209,6 +211,7 @@ public class BlitzSG extends JavaPlugin {
         }
 
         this.generateNewWorld();
+        this.db.disconnect();
         //this.clearWorldData();
     }
 
