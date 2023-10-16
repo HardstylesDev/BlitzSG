@@ -14,7 +14,7 @@ gotten around to adding yet.
 These currently include:
 
 - [ ] Deathmatch Arena's not shrinking
-- [ ] Lobby gadgets (Teleport stick, etc) Might not add these.
+- [x] Lobby gadgets (Teleport stick, etc) Might not add these.
 - [x] Lobby cosmetics (Just added Aura's in the lobby for now?)
 - [x] The Wardrobe
 
