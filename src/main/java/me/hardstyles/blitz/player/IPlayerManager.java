@@ -136,10 +136,7 @@ public class IPlayerManager {
         p.setExp(0);
         p.setLevel(0);
         p.setFallDistance(0);
-
         p.getActivePotionEffects().forEach(e -> p.removePotionEffect(e.getType()));
-
-
         ((CraftPlayer) p).getHandle().getDataWatcher().watch(9, (byte) 0);
     }
 

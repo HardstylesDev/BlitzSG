@@ -84,7 +84,6 @@ public class BookUtility {
         } catch (Exception e) {
             p.sendMessage("§cAn error occurred while trying to open the book. Please contact an administrator.");
         }
-
     }
 
     public static String getVersion() {
