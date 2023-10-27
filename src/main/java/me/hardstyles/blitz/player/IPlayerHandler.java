@@ -8,7 +8,11 @@ import me.hardstyles.blitz.util.BookUtility;
 import me.hardstyles.blitz.util.ChatUtil;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.nickname.Nickname;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.bukkit.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -155,7 +159,7 @@ public class IPlayerHandler implements Listener {
         e.setCancelled(true);
 
         if (e.getItem().getType() == Material.EMERALD) ShopGUI.openGUI(p);
-        if(e.getItem().getType() == Material.SKULL_ITEM) {
+        if (e.getItem().getType() == Material.SKULL_ITEM) {
             GadgetGUI.open(p);
         }
         if (e.getItem().getType() == Material.PAINTING) {
@@ -206,8 +210,8 @@ public class IPlayerHandler implements Listener {
             BlitzSG.getInstance().getGameManager().getAvailableGame().addPlayer(p);
 
         }
-        if(iPlayer.getGadget() != null){
-            if(e.getItem().getType() == iPlayer.getGadget().getItem().getType()){
+        if (iPlayer.getGadget() != null) {
+            if (e.getItem().getType() == iPlayer.getGadget().getItem().getType()) {
                 if (iPlayer.getGadget().canUse(p)) {
                     iPlayer.getGadget().onUse(p);
                     iPlayer.getGadget().setLastUsed(System.currentTimeMillis());
