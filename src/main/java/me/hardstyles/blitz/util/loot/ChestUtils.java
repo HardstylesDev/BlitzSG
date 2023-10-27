@@ -66,7 +66,7 @@ public class ChestUtils {
         lootTable.put(new ItemStack(Material.STONE_AXE, 1), 20);
         lootTable.put(new ItemStack(Material.GOLD_SWORD, 1), 18);
         lootTable.put(new ItemStack(Material.WOOD_SWORD, 1), 17);
-        lootTable.put(new ItemStack(Material.STONE_SWORD, 1), 10);
+        lootTable.put(new ItemStack(Material.STONE_SWORD, 1), 7);
 
         lootTable.put(new ItemStack(Material.BOW, 1), 10);
         lootTable.put(new ItemStack(Material.ARROW, 12), 7);
@@ -85,7 +85,7 @@ public class ChestUtils {
 
         lootTable.put(new ItemStack(Material.GOLD_BOOTS, 1), 15);
         lootTable.put(new ItemStack(Material.GOLD_LEGGINGS, 1), 10);
-        lootTable.put(new ItemStack(Material.GOLD_CHESTPLATE, 1), 7);
+        lootTable.put(new ItemStack(Material.GOLD_CHESTPLATE, 1), 3);
         lootTable.put(new ItemStack(Material.GOLD_HELMET, 1), 13);
 
         lootTable.put(new ItemStack(Material.CHAINMAIL_BOOTS, 1), 18);
@@ -93,7 +93,7 @@ public class ChestUtils {
         lootTable.put(new ItemStack(Material.CHAINMAIL_HELMET, 1), 13);
 
         lootTable.put(new ItemStack(Material.IRON_BOOTS, 1), 9);
-        lootTable.put(new ItemStack(Material.IRON_CHESTPLATE, 1), 3);
+        lootTable.put(new ItemStack(Material.IRON_CHESTPLATE, 1), 1);
         lootTable.put(new ItemStack(Material.IRON_HELMET, 1), 10);
 
         //FOOD

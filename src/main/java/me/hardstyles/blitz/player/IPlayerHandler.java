@@ -2,6 +2,7 @@ package me.hardstyles.blitz.player;
 
 import me.hardstyles.blitz.cosmetic.Gadget;
 import me.hardstyles.blitz.menu.impl.cosmetics.GadgetGUI;
+import me.hardstyles.blitz.menu.impl.cosmetics.PlayerGUI;
 import me.hardstyles.blitz.menu.impl.shop.ShopGUI;
 import me.hardstyles.blitz.party.Party;
 import me.hardstyles.blitz.util.BookUtility;
@@ -160,7 +161,7 @@ public class IPlayerHandler implements Listener {
 
         if (e.getItem().getType() == Material.EMERALD) ShopGUI.openGUI(p);
         if (e.getItem().getType() == Material.SKULL_ITEM) {
-            GadgetGUI.open(p);
+            PlayerGUI.open(p);
         }
         if (e.getItem().getType() == Material.PAINTING) {
             BookUtility bookUtility = new BookUtility();

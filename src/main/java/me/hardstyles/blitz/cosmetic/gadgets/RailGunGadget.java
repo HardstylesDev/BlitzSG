@@ -16,6 +16,7 @@ public class RailGunGadget extends Gadget {
     public RailGunGadget() {
         super("Railgun", new ItemBuilder(Material.WOOD_HOE).name("&aRailgun &7(Right Click)").make(), "&7Right click to shoot!");
         setCooldown(500);
+        setRank(BlitzSG.getInstance().getRankManager().getRankByName("MVP"));
     }
 
     @Override

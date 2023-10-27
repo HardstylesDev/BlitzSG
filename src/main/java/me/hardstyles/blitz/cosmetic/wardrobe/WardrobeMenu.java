@@ -36,7 +36,7 @@ public class WardrobeMenu {
 
     public void open(Player p) {
         IPlayer iPlayer = blitz.getIPlayerManager().getPlayer(p.getUniqueId());
-        MenuContainer gui = new MenuContainer(ChatUtil.color("&aWardrobe Menu"), 6);
+        MenuContainer gui = new MenuContainer(ChatUtil.color("&7Wardrobe"), 6);
         gui.border(new MenuItem(new ItemBuilder(Material.STAINED_GLASS_PANE).name(" ").make(), e -> {
             e.setCancelled(true);
         }));
