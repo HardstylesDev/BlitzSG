@@ -23,7 +23,7 @@ public class CosmeticsManager {
     public static final Class<? extends Taunt>[] TAUNTS = new Class[]{DefaultTaunt.class, RichJamesTaunt.class, CookieTaunt.class, VillagerDanceTaunt.class, FireworkTaunt.class, IRefuseTaunt.class, PigDanceTaunt.class, SheepDanceTaunt.class, BatDudeTaunt.class, WolfPackTaunt.class};
     private final ArrayList<Taunt> taunts = new ArrayList<>();
 
-    public static final Class<? extends Gadget>[] GADGETS = new Class[]{TeleportStickGadget.class, MobGunGadget.class, WhenPigsFlyGadget.class, PaintballGunGadget.class, CatapultGadget.class};
+    public static final Class<? extends Gadget>[] GADGETS = new Class[]{RailGunGadget.class, TeleportStickGadget.class, MobGunGadget.class, WhenPigsFlyGadget.class, PaintballGunGadget.class, CatapultGadget.class, CowBoyGadget.class};
     private final ArrayList<Gadget> gadgets = new ArrayList<>();
 
 
