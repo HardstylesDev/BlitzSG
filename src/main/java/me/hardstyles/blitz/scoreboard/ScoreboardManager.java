@@ -42,7 +42,7 @@ public class ScoreboardManager extends BukkitRunnable {
                 board.add("Unlocks: &cN/A");
 
                 board.add(separator);
-                board.add("&ewww.blitzsg.lol");
+                board.add("&eblitz.rip");
             } else if (iPlayer.isInGame()) {
                 if (iPlayer.getGame().getGameMode() == Game.GameMode.WAITING) {
                     board.clear();

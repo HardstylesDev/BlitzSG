@@ -1,9 +1,8 @@
 package me.hardstyles.blitz.scoreboard;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.WeakHashMap;
+import java.util.*;
 
+import me.hardstyles.blitz.BlitzSG;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,6 +10,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
@@ -100,14 +100,45 @@ public class ScoreboardHandler implements Listener
         this.helper.remove(event.getPlayer());
         event.setQuitMessage("");
     }
-    
+
     private void handleScoreboard(Player player) {
         Scoreboard board = Bukkit.getScoreboardManager().getNewScoreboard();
         player.setScoreboard(board);
-        ScoreboardHelper helper = new ScoreboardHelper(board, "&e&lBLITZ SG");
+
+        // Animated title: Rotate through colors for the first few characters
+        List<String> animatedTitle = Arrays.asList(
+                "&e&lBLITZ SG", "&6&lB&e&lLITZ SG", "&f&lB&6&lL&e&lITZ SG", "&f&lBL&6&lI&e&lTZ SG", "&f&lBLI&6&lT&e&lZ SG",
+                "&f&lBLIT&6&lZ&e&l SG", "&f&lBLITZ&6&l S&e&lG", "&f&lBLITZ S&6&lG", "&f&lBLITZ SG",
+                "&f&lBLITZ SG","&f&lBLITZ SG","&f&lBLITZ SG", "&f&lBLITZ SG","&f&lBLITZ SG","&f&lBLITZ SG","&e&lBLITZ SG","&e&lBLITZ SG","&e&lBLITZ SG","&e&lBLITZ SG","&e&lBLITZ SG","&e&lBLITZ SG","&f&lBLITZ SG","&f&lBLITZ SG","&f&lBLITZ SG","&f&lBLITZ SG","&f&lBLITZ SG","&f&lBLITZ SG","&e&lBLITZ SG","&e&lBLITZ SG","&e&lBLITZ SG","&e&lBLITZ SG"
+        );
+
+        int animationDelay = 2; // Change this to adjust the animation speed
+        ScoreboardHelper helper = new ScoreboardHelper(board, animatedTitle.get(0), animationDelay);
+        helper.setAnimatedTitle(animatedTitle);
         this.boardHelper.put(player, helper);
+
+        new BukkitRunnable() {
+            int frame = 0;
+            int pauseTicks = 3 * 10; // 3-second pause (20 ticks per second)
+
+            @Override
+            public void run() {
+                if (pauseTicks > 0) {
+                    pauseTicks--;
+                    return; // Don't update the title during the pause
+                }
+
+                helper.updateTitle(animatedTitle.get(frame));
+                frame = (frame + 1) % animatedTitle.size();
+
+                // Reset the pause counter when we reach the end of the animation
+                if (frame == 0) {
+                    pauseTicks = 3 * 10; // Reset the pause counter to 3 seconds
+                }
+            }
+        }.runTaskTimer(BlitzSG.getInstance(), 0, animationDelay);
     }
-    
+
     public ScoreboardHelper getScoreboard(final Player player) {
         return this.boardHelper.get(player);
     }

@@ -176,13 +176,8 @@ public class GameHandler implements Listener {
         if (iPlayer.getRank().isManager() && player.getGameMode() == org.bukkit.GameMode.CREATIVE) {
             return;
         }
-        if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            if (player.getTargetBlock((Set<Material>) null, 5).getType() == Material.FIRE) {
-                event.setCancelled(true);
-            }
-            if ((event.getClickedBlock().getType().equals(Material.FIRE)) && (event.getAction() == Action.LEFT_CLICK_AIR)) {
-                event.setCancelled(true);
-            }
+        if (event.getAction() == Action.LEFT_CLICK_BLOCK || event.getAction() == Action.LEFT_CLICK_AIR) {
+            event.setCancelled(true);
         }
     }
 
@@ -261,17 +256,8 @@ public class GameHandler implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true , priority = EventPriority.MONITOR)
-    public void onEntityDamage3(EntityDamageEvent e) {
-        System.out.println("From Monitor: " + e.getFinalDamage());
-    }
-    @EventHandler(ignoreCancelled = true , priority = EventPriority.LOWEST)
-    public void onEntityDamage2(EntityDamageEvent e) {
-        System.out.println("From Lowest: " + e.getFinalDamage());
-    }
     @EventHandler(ignoreCancelled = true , priority = EventPriority.HIGHEST)
     public void onEntityDamage(EntityDamageEvent e) {
-        System.out.println("From Highest: " + e.getFinalDamage());
         if (e.getEntity().getWorld() == BlitzSG.lobbySpawn.getWorld()) {
             e.setCancelled(true);
             return;

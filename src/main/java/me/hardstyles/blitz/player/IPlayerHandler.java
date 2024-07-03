@@ -32,7 +32,6 @@ public class IPlayerHandler implements Listener {
 
     @EventHandler
     public void banCheck(AsyncPlayerPreLoginEvent e) {
-
         BlitzSG.getInstance().getPunishmentManager().handlePreLogin(e);
     }
 
@@ -105,13 +104,6 @@ public class IPlayerHandler implements Listener {
             }
         }
     }
-
-//    @EventHandler
-//    public void chunk(ChunkLoadEvent e){
-//        if(e.isNewChunk()){
-//            e.getChunk().unload(false);
-//        }
-//    }
 
     @EventHandler
     public void onAsyncChat(AsyncPlayerChatEvent e) {
