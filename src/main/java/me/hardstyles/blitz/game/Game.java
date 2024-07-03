@@ -547,14 +547,15 @@ public class Game {
     }
 
     public void endGame(boolean draw) {
-        if (gameMode == GameMode.RESETTING)
+        if (gameMode == GameMode.RESETTING) {
             return;
+        }
         gameMode = GameMode.RESETTING;
         message("&6#&7------------------&6#");
         if (draw) {
             message("    &aDRAW! ");
         } else {
-            if (alivePlayers.size() > 0) {
+            if (!alivePlayers.isEmpty()) {
                 winner = alivePlayers.get(0);
                 IPlayer iWinner = BlitzSG.getInstance().getIPlayerManager().getPlayer(winner.getUniqueId());
                 winnerRank = iWinner.getRank(true);
@@ -562,6 +563,7 @@ public class Game {
                 message("    " + iWinner.getRank(true).getChatColor() + winner.getName() + " &ahas won the Blitz Survival Games!");
             } else {
                 message("    &aDRAW! ");
+                draw = true;
             }
         }
         message("&6#&7------------------&6#");
