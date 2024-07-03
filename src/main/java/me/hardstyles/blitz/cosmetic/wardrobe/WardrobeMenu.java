@@ -119,6 +119,13 @@ public class WardrobeMenu {
             e.setCancelled(true);
             p.closeInventory();
         }));
+
+        gui.setItem(8, 5, new MenuItem(new ItemBuilder(Material.WOOL).durability(14).name("&cClear").make(), e -> {
+            e.setCancelled(true);
+            iPlayer.getWardrobeStorage().clear();
+            iPlayer.getWardrobeStorage().apply(p);
+        }));
+
         gui.show(p);
     }
 }

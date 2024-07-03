@@ -53,8 +53,7 @@ public class StarGUI {
             gui.setItem(index, 0, menuItem);
             index++;
         }
-        MenuItem back = new MenuItem(new ItemBuilder(new ItemStack(Material.ARROW)).name("&aBack").make(), e -> ShopGUI.openGUI(p));
-        gui.setItem(gui.getBottomLeft(), back);
+
         gui.show(p);
 
     }
