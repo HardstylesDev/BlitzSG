@@ -17,7 +17,9 @@ import me.hardstyles.blitz.cosmetic.wardrobe.WardrobeCommand;
 import me.hardstyles.blitz.database.DatabaseProvider;
 import me.hardstyles.blitz.database.IDatabase;
 import me.hardstyles.blitz.database.impl.MySQLProvider;
+import me.hardstyles.blitz.nickname.NickManager;
 import me.hardstyles.blitz.nickname.NicknameCommand;
+import me.hardstyles.blitz.nickname.SkinManager;
 import me.hardstyles.blitz.party.PartyManager;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.player.IPlayerHandler;
@@ -87,6 +89,8 @@ public class BlitzSG extends JavaPlugin {
     private IDatabase db;
     private CosmeticsManager cosmeticsManager;
     private PartyManager partyManager;
+    private SkinManager skinManager;
+    private NickManager nickManager;
     private long startTime;
 
     public BlitzSG() {
@@ -127,12 +131,13 @@ public class BlitzSG extends JavaPlugin {
         cosmeticsManager.init();
         leaderboardManager = new LeaderboardManager();
         partyManager = new PartyManager(iPlayerManager);
+        skinManager = new SkinManager();
+        nickManager = new NickManager();
 
 
         //Register Commands::
         registerCommands();
 
-//        getCommand("nick").setExecutor(new NicknameCommand());
 
         //Register Handlers:
         getServer().getPluginManager().registerEvents(this.gameHandler = new GameHandler(), this);
@@ -191,7 +196,7 @@ public class BlitzSG extends JavaPlugin {
         new PunishmentsCommand();
         new TauntCommand();
         new WTFMapCommand();
-        //new NicknameCommand();
+        new NicknameCommand();
         new FlyCommand();
         new VoteCommand();
         new PartyCommand();

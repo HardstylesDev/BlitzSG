@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.mysql.jdbc.ResultSetImpl;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.cosmetic.Aura;
 import me.hardstyles.blitz.cosmetic.Gadget;
@@ -18,10 +17,7 @@ import me.hardstyles.blitz.punishments.punishtype.PlayerBan;
 import me.hardstyles.blitz.punishments.punishtype.PlayerMute;
 import me.hardstyles.blitz.punishments.punishtype.PunishType;
 import me.hardstyles.blitz.rank.Rank;
-import org.bukkit.Bukkit;
 // import InvocationTargetException
-
-import org.bukkit.ChatColor;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +28,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Consumer;
 import javax.sql.DataSource;
 
 import com.zaxxer.hikari.HikariConfig;
@@ -122,7 +117,7 @@ public class MySQLProvider implements IDatabase {
             }
 
             String nickName = p.getNickName();
-            if (nickName != null) {
+            if (nickName != null && !nickName.isEmpty()) {
                 preparedStatement.setString(7, nickName);
             } else {
                 preparedStatement.setNull(7, java.sql.Types.VARCHAR);
@@ -206,6 +201,11 @@ public class MySQLProvider implements IDatabase {
                         player.setGadget(g);
                     }
                 }
+
+               String nickName = resultSet.getString("nickname");
+               if (nickName != null && !nickName.isEmpty()) {
+                   player.setNickName(nickName);
+               }
 
 
                 player.getStars().clear();

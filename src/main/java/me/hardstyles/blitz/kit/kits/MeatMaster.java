@@ -84,6 +84,7 @@ public class MeatMaster extends Kit {
                 new ItemBuilder(Material.DIAMOND_HELMET).name("&rMeatMaster's Diamond Helmet §7(X)").enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).make(),
                 // new ItemBuilder(Material.LEATHER_CHESTPLATE).name("&rMeatMaster's Leather Chestplate §7(X)").make(),
                 //  new ItemBuilder(Material.LEATHER_LEGGINGS).name("&rMeatMaster's Leather Leggings §7(X)").make(),
+                new ItemBuilder(Material.MONSTER_EGG).durability(120).name("&rPig Spawn Egg").amount(1).make(),
                 new ItemBuilder(Material.IRON_BOOTS).name("&rMeatMaster's Iron Boots §7(X)").enchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 2).make(),
                 new ItemBuilder(Material.IRON_SWORD).name("&rMeatMaster's Iron Sword §7(X)").enchantment(Enchantment.DURABILITY,1).make(),
                 new ItemStack(Material.COOKED_BEEF, 28));

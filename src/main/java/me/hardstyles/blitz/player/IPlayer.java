@@ -14,7 +14,6 @@ import me.hardstyles.blitz.party.Party;
 import me.hardstyles.blitz.punishments.punishtype.PlayerMute;
 import me.hardstyles.blitz.rank.Rank;
 import me.hardstyles.blitz.nametag.Nametag;
-import me.hardstyles.blitz.nickname.Nick;
 import me.hardstyles.blitz.rank.ranks.Default;
 import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.Bukkit;
@@ -38,10 +37,9 @@ public class IPlayer {
     private Party party;
     private Party partyInvite;
     private long lastFirework = System.currentTimeMillis(), lastGameRequested = System.currentTimeMillis(), usedTauntAt = System.currentTimeMillis();
-
+    private String username;
     private boolean robinhood, punched, wobbuffet;
     private int gameKills;
-    private Nick nick;
     private HashSet<Entity> gameEntities;
     private HashSet<Star> stars;
     private Location gameSpawn;
@@ -52,10 +50,10 @@ public class IPlayer {
     private Nametag nametag;
     private WardrobeStorage wardrobeStorage;
     private Gadget gadget;
-
     private HashMap<Kit, Integer> kitLevels;
     private float lastDamage;
     private Player lastDamager;
+    private String nickName;
 
     public Player getLastAttacker() {
         if (lastDamager != null && lastDamager.isOnline()) {
@@ -68,7 +66,6 @@ public class IPlayer {
 
 
     public IPlayer(UUID uuid) {
-        this.nick = null;
         this.uuid = uuid;
         this.elo = 0;
         this.wins = 0;
@@ -91,6 +88,14 @@ public class IPlayer {
         this.aura = null;
         this.nametag = new Nametag();
         BlitzSG.getInstance().getIPlayerManager().addPlayer(this.uuid, this);
+    }
+
+
+    public String getUsername() {
+        if(this.username == null){
+            this.username = Bukkit.getOfflinePlayer(getUuid()).getName();
+        }
+        return this.username;
     }
 
     public String getName() {
@@ -143,25 +148,16 @@ public class IPlayer {
     }
 
 
-    public void setStars(HashSet<Star> stars) {
-        this.stars = stars;
-    }
-
-    public HashSet<Star> getStars() {
-        return stars;
-    }
-
     public Rank getRank(boolean checkNick) {
-        if (nick != null && nick.isNicked())
+        if (this.isNicked()) {
             return BlitzSG.getInstance().getRankManager().getRankByName("Default");
-        if (nick == null)
-            this.nick = new Nick("", null, null, false);
+        }
         return rank;
     }
 
 
     public boolean isNicked() {
-        return (nick.isNicked());
+        return getNickName() != null;
     }
 
 
@@ -175,12 +171,6 @@ public class IPlayer {
         this.nametag.apply(Bukkit.getPlayer(getUuid()));
     }
 
-
-    public String getNickName() {
-        if (this.nick != null)
-            return this.nick.getNickName();
-        return null;
-    }
 
     public void removeElo(int elo) {
         if (this.elo - elo <= 0) {
@@ -263,6 +253,6 @@ public class IPlayer {
     }
 
     public void setNickName(String s) {
-        this.nick.setNickName(s);
+        this.nickName = s;
     }
 }

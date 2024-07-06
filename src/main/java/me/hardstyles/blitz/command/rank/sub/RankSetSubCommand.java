@@ -3,6 +3,7 @@ package me.hardstyles.blitz.command.rank.sub;
 import com.google.common.collect.ImmutableList;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.command.SubCommand;
+import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.rank.Rank;
 import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.Bukkit;
@@ -47,11 +48,20 @@ public class RankSetSubCommand extends SubCommand {
         }
 
         BlitzSG.getInstance().getRankManager().setRank(target, rank);
-        s.sendMessage(ChatUtil.color("&7&m-------------------------------"));
-        s.sendMessage(ChatUtil.color("&aYou have set " + target.getName() + "'s rank to " + rank.getRank()));
-        s.sendMessage(ChatUtil.color("&7&m-------------------------------"));
+
+        if(s != target) {
+            s.sendMessage(ChatUtil.color("&7&m-------------------------------"));
+            s.sendMessage(ChatUtil.color("&aYou have set " + target.getName() + "'s rank to " + rank.getRank()));
+            s.sendMessage(ChatUtil.color("&7&m-------------------------------"));
+        }
+
         target.sendMessage(ChatUtil.color("&7&m-------------------------------"));
         target.sendMessage(ChatUtil.color("&aYour rank has been set to " + rank.getRank()));
         target.sendMessage(ChatUtil.color("&7&m-------------------------------"));
+
+        IPlayer iTarget = BlitzSG.getInstance().getIPlayerManager().getPlayer(target.getUniqueId());
+        if(iTarget.getGame() == null){
+            target.performCommand("lobby");
+        }
     }
 }

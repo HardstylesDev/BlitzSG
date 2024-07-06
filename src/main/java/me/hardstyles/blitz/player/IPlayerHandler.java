@@ -1,27 +1,23 @@
 package me.hardstyles.blitz.player;
 
-import me.hardstyles.blitz.cosmetic.Gadget;
-import me.hardstyles.blitz.menu.impl.cosmetics.GadgetGUI;
+import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.menu.impl.cosmetics.PlayerGUI;
 import me.hardstyles.blitz.menu.impl.shop.ShopGUI;
+import me.hardstyles.blitz.nickname.NickManager;
 import me.hardstyles.blitz.party.Party;
 import me.hardstyles.blitz.util.BookUtility;
 import me.hardstyles.blitz.util.ChatUtil;
-import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.nickname.Nickname;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.bukkit.*;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.*;
-import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -48,6 +44,7 @@ public class IPlayerHandler implements Listener {
         p.getInventory().setLeggings(new ItemStack(Material.AIR, 1));
         p.getInventory().setBoots(new ItemStack(Material.AIR, 1));
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        iPlayer.setUsername(p.getName());
 
         p.setGameMode(GameMode.SURVIVAL);
         p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100.5, 0.5, 90, 0)); //todo change back
@@ -55,23 +52,10 @@ public class IPlayerHandler implements Listener {
             p.setAllowFlight(true);
             p.setFlying(true);
         }
-        if (iPlayer.getNick() != null && iPlayer.getNick().isNicked()) {
-            Nickname nickname = new Nickname();
-            if (iPlayer.getNick().getSkinSignature() == null) {
-                if (iPlayer.getRank().getPosition() > 4) {
-                    for (Player member : Bukkit.getWorld("world").getPlayers()) {
-                        member.sendMessage(ChatUtil.color("&e" + iPlayer.getRank().getPrefix() + p.getName() + "&6 joined the lobby!"));
-                    }
-                }
-
-                iPlayer.getNick().setNicked(true);
-                p.kickPlayer(ChatColor.GREEN + "Re-applied nick, please rejoin");
-                String[] skin = nickname.prepareSkinTextures(p, iPlayer.getNick().getNickName());
-                iPlayer.getNick().setNicked(true);
-                iPlayer.getNick().setSkinValue(skin[0]);
-                iPlayer.getNick().setSkinSignature(skin[1]);
-            } else {
-                nickname.setNick(p, iPlayer.getNick().getNickName(), true);
+        if (iPlayer.getNickName() != null) {
+            if (iPlayer.getRank().isStaff()) {
+                NickManager nickManager = BlitzSG.getInstance().getNickManager();
+                nickManager.setNick(p, iPlayer.getNickName(), iPlayer.getNickName());
             }
         } else {
             Bukkit.getScheduler().runTaskLater(BlitzSG.getInstance(), () -> {
@@ -195,13 +179,6 @@ public class IPlayerHandler implements Listener {
             }
             p.sendMessage(ChatUtil.color("&eYou have toggled player visibility. If you want to change your view level, right click the watch again."));
 
-        } else if (e.getItem().getType() == Material.IRON_SWORD) {
-            if (BlitzSG.getInstance().getGameManager().getAvailableGame() == null) {
-                p.sendMessage("§cCouldn't find any available games (0x1)");
-                return;
-            }
-            BlitzSG.getInstance().getGameManager().getAvailableGame().addPlayer(p);
-
         }
         if (iPlayer.getGadget() != null) {
             if (e.getItem().getType() == iPlayer.getGadget().getItem().getType()) {
@@ -231,6 +208,10 @@ public class IPlayerHandler implements Listener {
         IPlayer victim = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getEntity().getUniqueId());
         if (victim.getGame() != null) return;
         if (!(e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK)) return;
+
+        if (victim.isNicked()) {
+            return;
+        }
 
         if (!(victim.getRank().isStaff())) {
             return;

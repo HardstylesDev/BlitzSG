@@ -67,7 +67,7 @@ public class ShopKitGUI {
                 iPlayer.setKitLevel(kit, iPlayer.getKitLevel(kit) + 1);
                 if (iPlayer.getKitLevel(kit) == 10) {
                     Bukkit.getServer().getOnlinePlayers().stream().filter(player -> player.getWorld() == p.getWorld()).forEach(player -> {
-                        player.sendMessage(ChatUtil.color(iPlayer.getRank().getPrefix() + p.getName() + " &6has unlocked &a" + kit.getName() + " X&6!"));
+                        player.sendMessage(ChatUtil.color(iPlayer.getRank(true).getPrefix() + p.getName() + " &6has unlocked &a" + kit.getName() + " X&6!"));
                         player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 2, 1);
                     });
                 }

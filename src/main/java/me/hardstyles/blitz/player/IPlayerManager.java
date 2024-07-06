@@ -87,8 +87,8 @@ public class IPlayerManager {
             }
         }
 
-        iPlayer.setPrefix(iPlayer.getRank().getPrefix());
-        p.setPlayerListName(iPlayer.getRank().getPrefix() + p.getName());
+        iPlayer.setPrefix(iPlayer.getRank(true).getPrefix());
+        p.setPlayerListName(iPlayer.getRank(true).getPrefix() + p.getName());
 
         iPlayer.setTauntUsed(false);
 
