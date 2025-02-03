@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.cosmetic.Aura;
 import me.hardstyles.blitz.cosmetic.Gadget;
@@ -17,21 +19,14 @@ import me.hardstyles.blitz.punishments.punishtype.PlayerBan;
 import me.hardstyles.blitz.punishments.punishtype.PlayerMute;
 import me.hardstyles.blitz.punishments.punishtype.PunishType;
 import me.hardstyles.blitz.rank.Rank;
-// import InvocationTargetException
 
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-import javax.sql.DataSource;
-
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+import java.util.*;
 
 public class MySQLProvider implements IDatabase {
 
@@ -50,7 +45,6 @@ public class MySQLProvider implements IDatabase {
     @Override
     public void connect() {
         createDataSource();
-
     }
 
     public Connection getConnection() throws SQLException {
@@ -67,23 +61,60 @@ public class MySQLProvider implements IDatabase {
     private void createDataSource() {
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(connectUrl);
-        hikariConfig.setUsername(config.get("username"));
-        hikariConfig.setPassword(config.get("password"));
-        hikariConfig.setDriverClassName("com.mysql.jdbc.Driver");
+        hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver"); // Use the updated driver class
         hikariConfig.setPoolName("MysqlPool-1");
         hikariConfig.setMaximumPoolSize(15);
         hikariConfig.setConnectionTimeout(Duration.ofSeconds(30).toMillis());
         hikariConfig.setIdleTimeout(Duration.ofMinutes(10).toMillis());
-        HikariDataSource hikariDataSource = new HikariDataSource(hikariConfig);
-        dataSource = hikariDataSource;
+
+        // **Optional Username & Password Handling**
+        if (config.containsKey("username") && config.get("username") != null && !config.get("username").isEmpty()) {
+            hikariConfig.setUsername(config.get("username"));
+        }
+        if (config.containsKey("password") && config.get("password") != null && !config.get("password").isEmpty()) {
+            hikariConfig.setPassword(config.get("password"));
+        }
+
+        // Initialize HikariDataSource
+        dataSource = new HikariDataSource(hikariConfig);
 
         try (Connection connection = dataSource.getConnection()) {
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `stats` (`uuid` VARCHAR(255) PRIMARY KEY, `coins` INT NOT NULL, `kills` INT NOT NULL, `wins` INT NOT NULL, `deaths` INT NOT NULL, `rank` VARCHAR(255) NOT NULL, `nickname` VARCHAR(255) NULL, `stars` TEXT NULL, `aura` TEXT NULL, `taunt` TEXT NULL, `kits` TEXT NULL, `elo` INT NOT NULL, `taunt` VARCHAR(255) NULL, `selectedKit` VARCHAR(255) NULL, `wardrobe` VARCHAR(510) NULL, `gadget` VARCHAR(128) NULL) ENGINE = InnoDB;").executeUpdate();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `bans` (`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, `reason` VARCHAR(255) NOT NULL, `startTime` BIGINT NOT NULL, `endTime` BIGINT NOT NULL, `active` TINYINT NOT NULL, `executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
-            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mutes` (`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, `reason` VARCHAR(255) NOT NULL, `startTime` BIGINT NOT NULL, `endTime` BIGINT NOT NULL, `active` TINYINT NOT NULL, `executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
-            BlitzSG.getInstance().getServer().getLogger().info("Connected to MySQL database.");
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `stats` ("
+                    + "`uuid` VARCHAR(255) PRIMARY KEY, `coins` INT NOT NULL, "
+                    + "`kills` INT NOT NULL, `wins` INT NOT NULL, `deaths` INT NOT NULL, "
+                    + "`rank` VARCHAR(255) NOT NULL, `nickname` VARCHAR(255) NULL, "
+                    + "`stars` TEXT NULL, `aura` TEXT NULL, `taunt` TEXT NULL, "
+                    + "`kits` TEXT NULL, `elo` INT NOT NULL, `selectedKit` VARCHAR(255) NULL, "
+                    + "`wardrobe` VARCHAR(510) NULL, `gadget` VARCHAR(128) NULL) ENGINE = InnoDB;").executeUpdate();
+
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `bans` ("
+                    + "`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, "
+                    + "`reason` VARCHAR(255) NOT NULL, `startTime` BIGINT NOT NULL, "
+                    + "`endTime` BIGINT NOT NULL, `active` TINYINT NOT NULL, "
+                    + "`executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) "
+                    + "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
+
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mutes` ("
+                    + "`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, "
+                    + "`reason` VARCHAR(255) NOT NULL, `startTime` BIGINT NOT NULL, "
+                    + "`endTime` BIGINT NOT NULL, `active` TINYINT NOT NULL, "
+                    + "`executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) "
+                    + "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
+
+            connection.prepareStatement("CREATE TABLE IF NOT EXISTS `friends` ("
+                    + "`id` INT NOT NULL AUTO_INCREMENT, "
+                    + "`player_uuid` VARCHAR(255) NOT NULL, "
+                    + "`friend_uuid` VARCHAR(255) NOT NULL, "
+                    + "`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
+                    + "PRIMARY KEY (`id`), "
+                    + "UNIQUE KEY (`player_uuid`, `friend_uuid`)) "
+                    + "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
+
+
+            System.out.println("Connected to MySQL database.");
         } catch (SQLException e) {
-            BlitzSG.getInstance().getServer().getLogger().severe("Could not connect to MySQL database.");
+            System.err.println("Could not connect to MySQL database.");
+            e.printStackTrace();
         }
     }
 
@@ -132,14 +163,14 @@ public class MySQLProvider implements IDatabase {
                 preparedStatement.setNull(11, java.sql.Types.VARCHAR);
             }
 
-            if(p.getGadget() != null){
+            if (p.getGadget() != null) {
                 preparedStatement.setString(15, p.getGadget().getName());
             } else {
                 preparedStatement.setNull(15, java.sql.Types.VARCHAR);
             }
 
 
-            if(p.getWardrobeStorage() != null){
+            if (p.getWardrobeStorage() != null) {
                 preparedStatement.setString(14, p.getWardrobeStorage().serialize().toString());
             } else {
                 preparedStatement.setNull(14, java.sql.Types.VARCHAR);
@@ -195,17 +226,17 @@ public class MySQLProvider implements IDatabase {
                 }
 
                 String gadget = resultSet.getString("gadget");
-                if(gadget != null){
+                if (gadget != null) {
                     Gadget g = BlitzSG.getInstance().getCosmeticsManager().getGadgetByName(gadget);
-                    if(g != null){
+                    if (g != null) {
                         player.setGadget(g);
                     }
                 }
 
-               String nickName = resultSet.getString("nickname");
-               if (nickName != null && !nickName.isEmpty()) {
-                   player.setNickName(nickName);
-               }
+                String nickName = resultSet.getString("nickname");
+                if (nickName != null && !nickName.isEmpty()) {
+                    player.setNickName(nickName);
+                }
 
 
                 player.getStars().clear();
@@ -232,7 +263,7 @@ public class MySQLProvider implements IDatabase {
                 }
 
                 String wardrobeJson = resultSet.getString("wardrobe");
-                if(wardrobeJson != null){
+                if (wardrobeJson != null) {
                     player.setWardrobeStorage(WardrobeStorage.deserialize(new Gson().fromJson(wardrobeJson, JsonObject.class)));
                 }
 
@@ -256,7 +287,6 @@ public class MySQLProvider implements IDatabase {
 
                 BlitzSG.getInstance().getIPlayerManager().addPlayer(uuid, player);
 
-
                 PlayerMute mute = BlitzSG.getInstance().getDb().getMute(uuid);
                 if (mute != null) {
                     if (mute.isActive()) {
@@ -264,27 +294,84 @@ public class MySQLProvider implements IDatabase {
                     }
                 }
 
+                List<UUID> friends = getFriends(uuid);
+                for (UUID friend : friends) {
+                    player.getFriends().add(friend);
+                }
 
                 return player;
-
             } else {
-
                 BlitzSG.getInstance().getIPlayerManager().addPlayer(uuid, new IPlayer(uuid));
                 return new IPlayer(uuid);
             }
-
-            //muteCheck(uuid);
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
+
+    @Override
+    public void addFriend(UUID playerUuid, UUID friendUuid) {
+        String query = "INSERT INTO friends (player_uuid, friend_uuid) VALUES (?, ?)";
+
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, playerUuid.toString());
+            stmt.setString(2, friendUuid.toString());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void removeFriend(UUID playerUuid, UUID friendUuid) {
+        // Bi-directional delete
+        String query = "DELETE FROM friends WHERE (player_uuid = ? AND friend_uuid = ?) OR (player_uuid = ? AND friend_uuid = ?)";
+
+        try (Connection connection = getConnection();
+             PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            stmt.setString(1, playerUuid.toString());
+            stmt.setString(2, friendUuid.toString());
+            stmt.setString(3, friendUuid.toString());
+            stmt.setString(4, playerUuid.toString());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public List<UUID> getFriends(UUID playerUuid) {
+        List<UUID> friends = new ArrayList<>();
+        // Bi-directional check
+        String query = "SELECT friend_uuid FROM friends WHERE player_uuid = ? " +
+                "UNION " +
+                "SELECT player_uuid FROM friends WHERE friend_uuid = ?";
+
+        try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, playerUuid.toString());
+            stmt.setString(2, playerUuid.toString()); // second parameter is for the reverse check
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                friends.add(UUID.fromString(rs.getString("friend_uuid")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return friends;
+    }
+
+
     @Override
     public Map<String, Integer> getLeaderboard() {
-
         Map<String, Integer> players = new HashMap<>();
         try (Connection connection = getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM `stats` ORDER BY `wins` DESC LIMIT 3")) {
@@ -300,6 +387,7 @@ public class MySQLProvider implements IDatabase {
         }
         return players;
     }
+
 
     @Override
     public PlayerMute getMute(UUID uuid) {
