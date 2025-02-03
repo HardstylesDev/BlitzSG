@@ -23,6 +23,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -54,6 +55,10 @@ public class IPlayer {
     private float lastDamage;
     private Player lastDamager;
     private String nickName;
+    private Set<UUID> friends = new HashSet<UUID>();
+
+    private Set<UUID> friendRequests = new HashSet<UUID>();
+
 
     public Player getLastAttacker() {
         if (lastDamager != null && lastDamager.isOnline()) {
@@ -252,7 +257,20 @@ public class IPlayer {
         this.elo += eloChange;
     }
 
+    public void addFriendRequest(UUID uuid) {
+        friendRequests.add(uuid);
+    }
+
+    public void removeFriendRequest(UUID uuid) {
+        friendRequests.remove(uuid);
+    }
+
     public void setNickName(String s) {
         this.nickName = s;
     }
+
+    public boolean isFriend(UUID uuid) {
+        return friends.contains(uuid);
+    }
+
 }

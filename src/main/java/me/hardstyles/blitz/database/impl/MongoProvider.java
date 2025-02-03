@@ -95,6 +95,23 @@ public class MongoProvider implements IDatabase {
     }
 
     @Override
+    public void addFriend(UUID playerUuid, UUID friendUuid) {
+
+    }
+
+    @Override
+    public void removeFriend(UUID player, UUID friend) {
+
+    }
+
+    @Override
+    public List<UUID> getFriends(UUID player) {
+        return null;
+    }
+
+
+
+    @Override
     public Map<String, Integer> getLeaderboard() {
 
 

@@ -5,6 +5,7 @@ import lombok.Getter;
 import me.hardstyles.blitz.command.broadcast.BroadcastCommand;
 import me.hardstyles.blitz.command.coins.SetCoinsCommand;
 import me.hardstyles.blitz.command.fly.FlyCommand;
+import me.hardstyles.blitz.command.friend.FriendCommand;
 import me.hardstyles.blitz.command.game.WTFMapCommand;
 import me.hardstyles.blitz.command.join.JoinCommand;
 import me.hardstyles.blitz.command.list.ListCommand;
@@ -201,6 +202,7 @@ public class BlitzSG extends JavaPlugin {
         new VoteCommand();
         new PartyCommand();
         new PartyChatCommand();
+        new FriendCommand();
         Bukkit.getConsoleSender().sendMessage(ChatUtil.color("&d&lFinished Loading Commands!"));
 
     }
