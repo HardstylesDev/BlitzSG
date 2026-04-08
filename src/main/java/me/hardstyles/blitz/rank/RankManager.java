@@ -34,7 +34,6 @@ public class RankManager {
     public void setRank(Player p, Rank rank) {
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
         iPlayer.setRank(rank);
-        BlitzSG.getInstance().getDb().savePlayerProfile(iPlayer);
     }
 
     public RankManager() {

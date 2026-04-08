@@ -45,18 +45,18 @@ public class KitUtils {
 		String roman = KitUtils.getKitTag(iPlayer.getKitLevel(kit));
 		switch (kitPrice) {
 			case -1:
-				return "§c" + kit.getName() + roman;
+				return ChatColor.RED + kit.getName() + roman;
 			case 0:
 				if (playerRank.getPosition() >= kit.getRequiredRank().getPosition()) {
-					return "§a" + kit.getName() + roman;
+					return ChatColor.GREEN + kit.getName() + roman;
 				} else {
-					return "§c" + kit.getName() + roman;
+					return ChatColor.RED + kit.getName() + roman;
 				}
 			default:
 				if (kitPrice <= iPlayer.getCoins()) {
-					return "§a" + kit.getName() + KitUtils.getKitTag(iPlayer.getKitLevel(kit) + 1);
+					return ChatColor.GREEN + kit.getName() + KitUtils.getKitTag(iPlayer.getKitLevel(kit) + 1);
 				} else {
-					return "§c" + kit.getName() + KitUtils.getKitTag(iPlayer.getKitLevel(kit) + 1);
+					return ChatColor.RED + kit.getName() + KitUtils.getKitTag(iPlayer.getKitLevel(kit) + 1);
 				}
 		}
 	}
@@ -74,18 +74,18 @@ public class KitUtils {
 		desc.add("");
 		if(kitLevel == 0 && kitPrice > 10000) {
 			if (requiredRank.getPosition() <= playerRank.getPosition()) {
-				desc.add("§eClick to unlock!");
+				desc.add(ChatColor.YELLOW + "Click to unlock!");
 				desc.add("");
-				desc.add("§7This is free because you are a " + playerRank.getRankFormatted());
+				desc.add(ChatColor.GRAY + "This is free because you are a " + playerRank.getRankFormatted());
 			} else {
-				desc.add("§7Requires " + requiredRank.getRankFormatted() + " §7or unlock it for §6" + NumberFormat.getNumberInstance(Locale.US).format(kitPrice) + " §7coins.");
+				desc.add(ChatColor.GRAY + "Requires " + requiredRank.getRankFormatted() + ChatColor.GRAY + " or unlock it for " + ChatColor.GOLD + NumberFormat.getNumberInstance(Locale.US).format(kitPrice) + ChatColor.GRAY + " coins.");
 			}
 			return desc;
 		}
 		if (kitPrice == -1) {
-			desc.add("§7Cost: §61,000,000");
+			desc.add(ChatColor.GRAY + "Cost: " + ChatColor.GOLD + "1,000,000");
 		} else {
-			desc.add("§7Cost: §6" + NumberFormat.getNumberInstance(Locale.US).format(kitPrice));
+			desc.add(ChatColor.GRAY + "Cost: " + ChatColor.GOLD + NumberFormat.getNumberInstance(Locale.US).format(kitPrice));
 //			desc.add("");
 //			if (kitPrice <= player.getCoins()) {
 //				desc.add("§eClick to unlock!");

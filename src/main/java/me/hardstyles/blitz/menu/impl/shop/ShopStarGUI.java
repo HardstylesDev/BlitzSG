@@ -23,7 +23,7 @@ public class ShopStarGUI {
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
 
         // Create GUI
-        MenuContainer gui = new MenuContainer("§8Blitz Star Shop", 5);
+        MenuContainer gui = new MenuContainer(ChatColor.DARK_GRAY + "Blitz Star Shop", 5);
 
         // Add Items
         int firstItem = 10;
@@ -53,6 +53,9 @@ public class ShopStarGUI {
                 iPlayer.removeCoins(star.getPrice());
                 iPlayer.addStar(star);
                 p.closeInventory();
+
+                BlitzSG.getInstance().getDb().saveShop(iPlayer);
+
             });
             gui.setItem(firstItem, menuItem);
             if ((firstItem + 2) % 9 == 0) {

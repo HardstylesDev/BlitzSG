@@ -49,6 +49,8 @@ public class TauntGUI {
                 }
                 p.sendMessage(ChatColor.GREEN + "You selected the " + ChatColor.GOLD + aura.getName() + " Taunt" + ChatColor.GREEN + "!");
                 p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
+                BlitzSG.getInstance().getDb().saveCosmetics(iPlayer);
+
 
                 iPlayer.setTaunt(aura);
                 p.closeInventory();

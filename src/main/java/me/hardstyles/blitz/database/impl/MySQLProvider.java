@@ -80,35 +80,44 @@ public class MySQLProvider implements IDatabase {
 
         try (Connection connection = dataSource.getConnection()) {
             connection.prepareStatement("CREATE TABLE IF NOT EXISTS `stats` ("
-                    + "`uuid` VARCHAR(255) PRIMARY KEY, `coins` INT NOT NULL, "
-                    + "`kills` INT NOT NULL, `wins` INT NOT NULL, `deaths` INT NOT NULL, "
-                    + "`rank` VARCHAR(255) NOT NULL, `nickname` VARCHAR(255) NULL, "
+                    + "`uuid` VARCHAR(255) PRIMARY KEY, `coins` INT DEFAULT 0, "
+                    + "`kills` INT DEFAULT 0, `wins` INT DEFAULT 0, `deaths` INT DEFAULT 0, "
+                    + "`rank` VARCHAR(255) DEFAULT 'Default', `nickname` VARCHAR(255) NULL, "
                     + "`stars` TEXT NULL, `aura` TEXT NULL, `taunt` TEXT NULL, "
-                    + "`kits` TEXT NULL, `elo` INT NOT NULL, `selectedKit` VARCHAR(255) NULL, "
+                    + "`kits` TEXT NULL, `elo` INT DEFAULT 0, `selectedKit` VARCHAR(255) NULL, "
                     + "`wardrobe` VARCHAR(510) NULL, `gadget` VARCHAR(128) NULL) ENGINE = InnoDB;").executeUpdate();
 
             connection.prepareStatement("CREATE TABLE IF NOT EXISTS `bans` ("
-                    + "`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, "
-                    + "`reason` VARCHAR(255) NOT NULL, `startTime` BIGINT NOT NULL, "
-                    + "`endTime` BIGINT NOT NULL, `active` TINYINT NOT NULL, "
-                    + "`executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) "
+                    + "`id` INT AUTO_INCREMENT, `uuid` VARCHAR(255), "
+                    + "`reason` VARCHAR(255), `startTime` BIGINT, "
+                    + "`endTime` BIGINT, `active` TINYINT, "
+                    + "`executor` VARCHAR(255), PRIMARY KEY (`id`)) "
                     + "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
 
             connection.prepareStatement("CREATE TABLE IF NOT EXISTS `mutes` ("
-                    + "`id` INT NOT NULL AUTO_INCREMENT, `uuid` VARCHAR(255) NOT NULL, "
-                    + "`reason` VARCHAR(255) NOT NULL, `startTime` BIGINT NOT NULL, "
-                    + "`endTime` BIGINT NOT NULL, `active` TINYINT NOT NULL, "
-                    + "`executor` VARCHAR(255) NOT NULL, PRIMARY KEY (`id`)) "
+                    + "`id` INT AUTO_INCREMENT, `uuid` VARCHAR(255), "
+                    + "`reason` VARCHAR(255), `startTime` BIGINT, "
+                    + "`endTime` BIGINT, `active` TINYINT, "
+                    + "`executor` VARCHAR(255), PRIMARY KEY (`id`)) "
                     + "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
 
             connection.prepareStatement("CREATE TABLE IF NOT EXISTS `friends` ("
-                    + "`id` INT NOT NULL AUTO_INCREMENT, "
-                    + "`player_uuid` VARCHAR(255) NOT NULL, "
-                    + "`friend_uuid` VARCHAR(255) NOT NULL, "
+                    + "`id` INT AUTO_INCREMENT, "
+                    + "`player_uuid` VARCHAR(255), "
+                    + "`friend_uuid` VARCHAR(255), "
                     + "`created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, "
                     + "PRIMARY KEY (`id`), "
                     + "UNIQUE KEY (`player_uuid`, `friend_uuid`)) "
                     + "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;").executeUpdate();
+
+            // Migrate existing table if it was created with NOT NULL
+            connection.prepareStatement("ALTER TABLE `stats` MODIFY `coins` INT DEFAULT 0").executeUpdate();
+            connection.prepareStatement("ALTER TABLE `stats` MODIFY `kills` INT DEFAULT 0").executeUpdate();
+            connection.prepareStatement("ALTER TABLE `stats` MODIFY `wins` INT DEFAULT 0").executeUpdate();
+            connection.prepareStatement("ALTER TABLE `stats` MODIFY `deaths` INT DEFAULT 0").executeUpdate();
+            connection.prepareStatement("ALTER TABLE `stats` MODIFY `elo` INT DEFAULT 0").executeUpdate();
+            connection.prepareStatement("ALTER TABLE `stats` MODIFY `rank` VARCHAR(255) DEFAULT 'Default'").executeUpdate();
+
 
 
             System.out.println("Connected to MySQL database.");
@@ -165,20 +174,134 @@ public class MySQLProvider implements IDatabase {
         }
     }
 
+
+    @Override
+    public void saveRank(IPlayer p){
+        String sql = "INSERT INTO `rank`(`uuid`, `rank`) "
+                + "VALUES (?,?) "
+                + "ON DUPLICATE KEY UPDATE "
+                + "`rank`=VALUES(`rank`)";
+
+        Rank rank = p.getRank();
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, p.getUuid().toString());
+            preparedStatement.setString(2, rank == null ? "Default" : rank.getRank());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void saveCosmetics(IPlayer p) {
+        String sql = "INSERT INTO `stats`(`uuid`, `aura`, `wardrobe`, `gadget`) "
+                + "VALUES (?,?,?,?) "
+                + "ON DUPLICATE KEY UPDATE "
+                + "`aura`=VALUES(`aura`), "
+                + "`wardrobe`=VALUES(`wardrobe`), "
+                + "`gadget`=VALUES(`gadget`)";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, p.getUuid().toString());
+
+            if (p.getAura() != null) {
+                preparedStatement.setString(2, p.getAura().getName());
+            } else {
+                preparedStatement.setNull(2, java.sql.Types.VARCHAR);
+            }
+
+            if (p.getWardrobeStorage() != null) {
+                preparedStatement.setString(3, p.getWardrobeStorage().serialize().toString());
+            } else {
+                preparedStatement.setNull(3, java.sql.Types.VARCHAR);
+            }
+
+            if (p.getGadget() != null) {
+                preparedStatement.setString(4, p.getGadget().getName());
+            } else {
+                preparedStatement.setNull(4, java.sql.Types.VARCHAR);
+            }
+
+            preparedStatement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void saveShop(IPlayer p) {
+        String sql = "INSERT INTO `stats`(`uuid`, `coins`, `kits`, `stars`, `selectedKit`) "
+                + "VALUES (?,?,?,?,?) "
+                + "ON DUPLICATE KEY UPDATE "
+                + "coins=VALUES(coins), "
+                + "kits=VALUES(kits), "
+                + "stars=VALUES(stars), "
+                + "selectedKit=VALUES(selectedKit)";
+
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, p.getUuid().toString());
+
+            preparedStatement.setInt(2, p.getCoins());
+            preparedStatement.setString(3, kitsToJson(p));
+            preparedStatement.setString(4, starsToString(p));
+
+            // Selected kit
+            Kit selectedKit = p.getSelectedKit();
+            if (selectedKit != null) {
+                preparedStatement.setString(5, selectedKit.getName());
+            } else {
+                preparedStatement.setNull(5, java.sql.Types.VARCHAR);
+            }
+
+            preparedStatement.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void saveNick(IPlayer p) {
+        String sql = "INSERT INTO `stats`(`uuid`, `nickname`) "
+                + "VALUES (?,?) "
+                + "ON DUPLICATE KEY UPDATE "
+                + "`nickname`=VALUES(`nickname`)";
+
+        String nickName = p.getNickName();
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, p.getUuid().toString());
+            if (nickName != null && !nickName.isEmpty()) {
+                preparedStatement.setString(2, nickName);
+            } else {
+                preparedStatement.setNull(2, java.sql.Types.VARCHAR);
+            }
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     @Override
     public void savePlayerProfile(IPlayer p) {
         String sql = "INSERT INTO `stats`(`uuid`, `coins`, `kills`, `deaths`, `wins`, `rank`, `nickname`, `stars`, `kits`, `elo`, `taunt`, `selectedKit`, `aura`, `wardrobe`, `gadget`) "
                 + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) "
                 + "ON DUPLICATE KEY UPDATE "
-                + "rank=VALUES(rank), "
-                + "nickname=VALUES(nickname), "
-                + "stars=VALUES(stars), "
-                + "kits=VALUES(kits), "
-                + "taunt=VALUES(taunt), "
-                + "selectedKit=VALUES(selectedKit), "
-                + "aura=VALUES(aura), "
-                + "wardrobe=VALUES(wardrobe), "
-                + "gadget=VALUES(gadget)";
+                + "`rank`=VALUES(`rank`), "
+                + "`nickname`=VALUES(`nickname`), "
+                + "`stars`=VALUES(`stars`), "
+                + "`kits`=VALUES(`kits`), "
+                + "`taunt`=VALUES(`taunt`), "
+                + "`selectedKit`=VALUES(`selectedKit`), "
+                + "`aura`=VALUES(`aura`), "
+                + "`wardrobe`=VALUES(`wardrobe`), "
+                + "`gadget`=VALUES(`gadget`)";
+
 
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, p.getUuid().toString());
@@ -277,6 +400,7 @@ public class MySQLProvider implements IDatabase {
                 String nickName = resultSet.getString("nickname");
                 if (nickName != null && !nickName.isEmpty()) {
                     player.setNickName(nickName);
+                    BlitzSG.getInstance().getNickManager().setNick(BlitzSG.getInstance().getServer().getPlayer(uuid), nickName, null);
                 }
 
 

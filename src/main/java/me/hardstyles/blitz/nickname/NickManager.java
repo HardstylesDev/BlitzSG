@@ -24,7 +24,7 @@ public class NickManager {
 
     public void setNick(Player player, String name, String skinName) {
         setNameTag(player, name);
-        if(skinName == null){
+        if (skinName == null) {
             skinName = name;
         }
 
@@ -35,9 +35,11 @@ public class NickManager {
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
         iPlayer.setNickName(name);
 
-        BlitzSG.getInstance().getServer().getScheduler().runTaskLater(BlitzSG.getInstance(), () -> {
-            player.performCommand("lobby");
-        }, 15);
+        if (BlitzSG.isHubServer()) {
+            BlitzSG.getInstance().getServer().getScheduler().runTaskLater(BlitzSG.getInstance(), () -> {
+                player.performCommand("lobby");
+            }, 15);
+        }
 
     }
 
@@ -47,7 +49,6 @@ public class NickManager {
         setNick(player, iPlayer.getUsername(), iPlayer.getUsername());
         iPlayer.setNickName(null);
     }
-
 
 
     private void setNameTag(Player player, String name) {

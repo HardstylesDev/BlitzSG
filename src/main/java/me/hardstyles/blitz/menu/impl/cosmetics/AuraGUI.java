@@ -41,7 +41,7 @@ public class AuraGUI {
             ItemStack icon = new ItemBuilder(aura.getIcon()).name(ChatColor.GREEN + aura.getName()).lores(getFullDescription(iPlayer, aura)).make();
             MenuItem item = new MenuItem(icon, e -> {
                 if (iPlayer.getRank().getPosition() < aura.getRequiredRank().getPosition()) {
-                    p.sendMessage("§cYou must be " + aura.getRequiredRank().getRankFormatted() + " §cor higher to purchase that!");
+                    p.sendMessage(ChatColor.RED +"You must be " + aura.getRequiredRank().getRankFormatted() + " " + ChatColor.RED + "or higher to purchase that!");
                     return;
                 }
                 p.sendMessage(ChatColor.GREEN + "You selected " + ChatColor.GOLD + aura.getName());
@@ -69,10 +69,10 @@ public class AuraGUI {
         desc.add(ChatColor.GRAY + p.getDescription());
         desc.add("");
         if (iPlayer.getAura() == p) {
-            desc.add("§aSELECTED!");
+            desc.add(ChatColor.GREEN + "SELECTED!");
             return desc;
         }
-        desc.add(p.getRequiredRank().getRankFormatted() + " §7Exclusive");
+        desc.add(p.getRequiredRank().getRankFormatted() + " " + ChatColor.GRAY + "Exclusive");
 
         return desc;
     }

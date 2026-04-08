@@ -72,6 +72,26 @@ public class MongoProvider implements IDatabase {
     }
 
     @Override
+    public void saveRank(IPlayer p) {
+
+    }
+
+    @Override
+    public void saveCosmetics(IPlayer p) {
+
+    }
+
+    @Override
+    public void saveShop(IPlayer p) {
+
+    }
+
+    @Override
+    public void saveNick(IPlayer p) {
+
+    }
+
+    @Override
     public IPlayer loadPlayer(UUID uuid) {
         Document document = getDatabase().getCollection("players").find(Filters.eq("uuid", uuid.toString())).first();
         if (document != null) {

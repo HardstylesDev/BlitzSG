@@ -20,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.*;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -278,6 +279,12 @@ public class Game {
                         setPregameInventory(alivePlayer);
                         teleportSpawn(alivePlayer);
                     }
+
+
+
+
+
+
                     startCountDown();
                     this.cancel();
                     return;
@@ -330,6 +337,7 @@ public class Game {
     public void startGame() {
         nextEvent = NextEvent.STAR;
         gameMode = GameMode.INGAME;
+
         map.getWorld().setTime(0);
         for (Player p : alivePlayers) {
             p.closeInventory();

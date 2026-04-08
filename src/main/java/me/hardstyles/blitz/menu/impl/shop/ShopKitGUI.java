@@ -41,7 +41,8 @@ public class ShopKitGUI {
 
                     iPlayer.removeCoins(kit.getPrice(iPlayer.getKitLevel(kit) + 1));
                     iPlayer.setKitLevel(kit, iPlayer.getKitLevel(kit) + 2);
-                    p.closeInventory();
+
+                    BlitzSG.getInstance().getDb().saveShop(iPlayer);
                     return;
                 }
                 if (iPlayer.getKitLevel(kit) == 0 && kit.getRequiredRank().getPosition() <= iPlayer.getRank().getPosition()) {
@@ -72,6 +73,8 @@ public class ShopKitGUI {
                     });
                 }
                 p.closeInventory();
+
+                BlitzSG.getInstance().getDb().saveShop(iPlayer);
             });
 
 

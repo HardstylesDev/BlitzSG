@@ -24,7 +24,7 @@ public final class LobbySelectorGUI {
 
         List<String> hubs = BlitzSG.getConfiguredHubServers();
         int rows = hubs.size() > 9 ? 2 : 1;
-        MenuContainer menu = new MenuContainer("§8Lobby Selector", rows);
+        MenuContainer menu = new MenuContainer(ChatColor.DARK_GRAY + "Lobby Selector", rows);
 
         String current = plugin.getRuntimeServerName() == null
                 ? ""

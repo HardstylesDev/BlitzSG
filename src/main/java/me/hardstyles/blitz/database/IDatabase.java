@@ -17,6 +17,17 @@ public interface IDatabase {
     default void savePlayerStats(IPlayer player) {
         savePlayer(player);
     }
+
+    void saveRank(IPlayer p);
+
+    void saveCosmetics(IPlayer p);
+
+    void saveShop(IPlayer p);
+
+    void saveNick(IPlayer p);
+
+
+
     default void savePlayerProfile(IPlayer player) {
         savePlayer(player);
     }

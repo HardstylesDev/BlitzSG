@@ -49,6 +49,11 @@ public class RankSetSubCommand extends SubCommand {
 
         BlitzSG.getInstance().getRankManager().setRank(target, rank);
 
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(s.getUniqueId());
+        BlitzSG.getInstance().getDb().saveRank(iPlayer);
+
+
+
         if(s != target) {
             s.sendMessage(ChatUtil.color("&7&m-------------------------------"));
             s.sendMessage(ChatUtil.color("&aYou have set " + target.getName() + "'s rank to " + rank.getRank()));

@@ -70,7 +70,7 @@ public class WardrobeMenu {
                 iPlayer.getWardrobeStorage().add(new WardrobeItem(item, false, null));
                 p.playSound(p.getLocation(), "gui.button.press", 0.4f, 1);
                 iPlayer.getWardrobeStorage().apply(p);
-                blitz.getDb().savePlayerProfile(iPlayer);
+                blitz.getDb().saveCosmetics(iPlayer);
             }));
             index++;
         }
@@ -85,7 +85,7 @@ public class WardrobeMenu {
                     System.out.println("Enchanted: " + item.isEnchanted());
                     p.playSound(p.getLocation(), "gui.button.press", 0.4f, 1);
                     iPlayer.getWardrobeStorage().apply(p);
-                    blitz.getDb().savePlayerProfile(iPlayer);
+                    blitz.getDb().saveCosmetics(iPlayer);
                 }
             }));
             gui.setItem(7, index + 1, new MenuItem(new ItemBuilder(Material.INK_SACK).durability(15).name("&aDye Armor").make(), e -> {
@@ -109,7 +109,7 @@ public class WardrobeMenu {
                         iPlayer.getWardrobeStorage().add(item);
                         p.playSound(p.getLocation(), "gui.button.press", 0.4f, 1);
                         iPlayer.getWardrobeStorage().apply(p);
-                        blitz.getDb().savePlayerProfile(iPlayer);
+                        blitz.getDb().saveCosmetics(iPlayer);
                         gui.show(p);
                     }));
                     i++;

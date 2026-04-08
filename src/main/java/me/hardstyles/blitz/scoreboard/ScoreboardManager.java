@@ -3,9 +3,13 @@ package me.hardstyles.blitz.scoreboard;
 import me.hardstyles.blitz.BlitzSG;
 import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.game.Game;
+import org.bukkit.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.text.NumberFormat;
 import java.util.Date;
@@ -26,9 +30,15 @@ public class ScoreboardManager extends BukkitRunnable {
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             ScoreboardHelper board = this.scoreboardHandler.getScoreboard(p);
             IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
-            if (iPlayer == null) {
+            if (iPlayer == null || board == null) {
                 continue;
             }
+
+            boolean shouldShowHealth = iPlayer.isInGame()
+                    && iPlayer.getGame() != null
+                    && iPlayer.getGame().getGameMode() == Game.GameMode.INGAME;
+            updateHealthDisplay(board.getScoreBoard(), shouldShowHealth);
+
             board.clear();
             Date now = new Date();
             if (!iPlayer.isInGame()) {
@@ -107,6 +117,27 @@ public class ScoreboardManager extends BukkitRunnable {
             }
             board.update(p);
         }
+    }
+
+    private void updateHealthDisplay(Scoreboard scoreboard, boolean enabled) {
+        Objective belowName = scoreboard.getObjective(DisplaySlot.BELOW_NAME);
+        if (!enabled) {
+            if (belowName != null) {
+                belowName.unregister();
+            }
+            return;
+        }
+
+        if (belowName == null) {
+            belowName = scoreboard.getObjective("showHealth");
+        }
+
+        if (belowName == null) {
+            belowName = scoreboard.registerNewObjective("showHealth", "health");
+        }
+
+        belowName.setDisplaySlot(DisplaySlot.BELOW_NAME);
+        belowName.setDisplayName(ChatColor.RED + "\u2764");  
     }
 
     public static String convert(final int seconds) {

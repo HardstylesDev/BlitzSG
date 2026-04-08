@@ -37,6 +37,7 @@ public class NicknameCommand extends Command {
         if (args.length >= 1) {
             if (args[0].equalsIgnoreCase("unnick") || args[0].equalsIgnoreCase("reset")) {
                 BlitzSG.getInstance().getNickManager().resetNick(p);
+                BlitzSG.getInstance().getDb().saveNick(iPlayer);
                 return;
             }
 
@@ -46,6 +47,7 @@ public class NicknameCommand extends Command {
             }
 
             BlitzSG.getInstance().getNickManager().setNick(p, args[0], skinName);
+            BlitzSG.getInstance().getDb().saveNick(iPlayer);
 
             return;
         }

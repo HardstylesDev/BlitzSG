@@ -69,7 +69,7 @@ public class GameHandler implements Listener {
         String deathMessage = BlitzSG.CORE_NAME + iPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed and everyone got a speed buff!";
         if (killer != null) {
             IPlayer killerPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(killer.getUniqueId());
-            deathMessage = BlitzSG.CORE_NAME + iPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed by " + killerPlayer.getRank().getChatColor() + killer.getName() + " &eand everyone got a speed buff!";
+            deathMessage = BlitzSG.CORE_NAME + iPlayer.getRank(true).getChatColor() + victim.getName() + " &ewas killed by " + killerPlayer.getRank(true).getChatColor() + killer.getName() + " &eand everyone got a speed buff!";
             killerPlayer.addGameKill();
             BlitzSG.getInstance().getIPlayerManager().handleKillElo(victim, killer);
             handleCoinReward(killerPlayer, killer);
