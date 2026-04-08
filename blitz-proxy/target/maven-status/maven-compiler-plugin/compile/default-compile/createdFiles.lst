@@ -1,0 +1,12 @@
+me\hardstyles\blitz\shared\ServerType.class
+me\hardstyles\blitz\proxy\BlitzProxyPlugin.class
+me\hardstyles\blitz\proxy\BlitzProxyPlugin$1.class
+me\hardstyles\blitz\proxy\BlitzProxyPlugin$PlayCommand.class
+me\hardstyles\blitz\shared\ServerHeartbeat.class
+velocity-plugin.json
+me\hardstyles\blitz\shared\ServerState.class
+me\hardstyles\blitz\shared\RedisChannels.class
+me\hardstyles\blitz\shared\JoinRequest.class
+me\hardstyles\blitz\shared\JsonCodec.class
+me\hardstyles\blitz\proxy\BlitzProxyPlugin$BlitzProxyReloadCommand.class
+me\hardstyles\blitz\shared\SpawnRequest.class

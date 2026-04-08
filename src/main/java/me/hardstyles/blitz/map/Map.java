@@ -3,19 +3,14 @@ package me.hardstyles.blitz.map;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.SneakyThrows;
 import me.hardstyles.blitz.BlitzSG;
-import me.hardstyles.blitz.util.EmptyWorldGenerator;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.UUID;
 import java.util.logging.Level;
 
 @Getter
@@ -29,20 +24,17 @@ public class Map {
     private World world;
 
     public Map(String mapName) {
-        this.mapId = mapName + "_" + generateId();
+        // Runtime game instances are already staged with a single active world folder.
+        this.mapId = "world";
         this.mapName = mapName;
         this.spawns = new ArrayList<>();
 
     }
 
-    private String generateId(){
-        return UUID.randomUUID().toString().substring(0, 8) + "_hardstyles";
-    }
-
     public void destroy() {
-        World world = Bukkit.getWorld(mapId);
+        World world = Bukkit.getWorld(this.mapId);
         if (world == null) {
-            Bukkit.getLogger().log(Level.WARNING, "World " + mapId + "'s Map#destroy() method was called, but the world does not exist!");
+            Bukkit.getLogger().log(Level.WARNING, "World " + this.mapId + "'s Map#destroy() method was called, but the world does not exist!");
             return;
         }
         world.getEntities().forEach(entity -> {
@@ -53,50 +45,40 @@ public class Map {
                 BlitzSG.getInstance().getIPlayerManager().toLobby(player);
             }
         });
-        File worldFolder = world.getWorldFolder();
-        if (worldFolder == null || !worldFolder.exists()) {
-            Bukkit.getLogger().log(Level.WARNING, "World folder for world " + mapId + " does not exist!");
-            return;
-        }
-        Bukkit.getScheduler().runTaskLater(BlitzSG.getInstance(), () -> Bukkit.unloadWorld(mapId, false), 20L);
-        Bukkit.getScheduler().runTaskLater(BlitzSG.getInstance(), () -> {
-            try {
-                FileUtils.deleteDirectory(worldFolder);
-                if (worldFolder.exists()) {
-                    FileUtils.forceDelete(worldFolder);
-                    if (worldFolder.exists()) {
-                        worldFolder.delete();
-                    }
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        // The core orchestrator owns world lifecycle for runtime instances.
+        // Do not unload/delete "world" from inside the plugin.
+        if (!"world".equalsIgnoreCase(this.mapId)) {
+            File worldFolder = world.getWorldFolder();
+            if (worldFolder == null || !worldFolder.exists()) {
+                Bukkit.getLogger().log(Level.WARNING, "World folder for world " + this.mapId + " does not exist!");
+                return;
             }
-        }, 40L);
+            Bukkit.getScheduler().runTaskLater(BlitzSG.getInstance(), () -> Bukkit.unloadWorld(this.mapId, false), 20L);
+            Bukkit.getScheduler().runTaskLater(BlitzSG.getInstance(), () -> {
+                try {
+                    FileUtils.deleteDirectory(worldFolder);
+                    if (worldFolder.exists()) {
+                        FileUtils.forceDelete(worldFolder);
+                        if (worldFolder.exists()) {
+                            worldFolder.delete();
+                        }
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }, 40L);
+        }
     }
 
-
-    @SneakyThrows
     public void copy() {
-        File source = new File("arenas/" + mapName);
-        File destination = new File("worlds/" + mapId);
-
-        Path sourceLevelDat = source.toPath().resolve("level.dat");
-        Path sourceRegion = source.toPath().resolve("region");
-
-        if (!destination.exists()) {
-            destination.mkdirs();
-        }
-
-        Path levelFile = destination.toPath().resolve("level.dat");
-        if(Files.exists(levelFile)) {
-            Files.copy(sourceLevelDat, destination.toPath().resolve("level.dat"));
-        }
-
-        FileUtils.copyDirectory(sourceRegion.toFile(), destination.toPath().resolve("region").toFile(), file -> !file.getName().equals("playerdata") && !file.getName().equals("data") && !file.getName().equals("session.lock") && !file.getName().equals("uid.dat"));
+        // No-op in runtime mode: world content is already staged by blitz-core.
     }
 
     public void load() {
-        this.world = new WorldCreator(mapId).generator(new EmptyWorldGenerator()).type(WorldType.FLAT).createWorld();
+        this.world = Bukkit.getWorld(this.mapId);
+        if (this.world == null) {
+            this.world = new WorldCreator(this.mapId).type(WorldType.NORMAL).createWorld();
+        }
         this.world.setKeepSpawnInMemory(false);
     }
 }

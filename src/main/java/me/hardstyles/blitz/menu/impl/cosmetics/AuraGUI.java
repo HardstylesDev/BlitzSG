@@ -47,6 +47,7 @@ public class AuraGUI {
                 p.sendMessage(ChatColor.GREEN + "You selected " + ChatColor.GOLD + aura.getName());
                 p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 1, 1);
                 iPlayer.setAura(aura);
+                BlitzSG.getInstance().getDb().savePlayerProfile(iPlayer);
                 p.closeInventory();
             });
             gui.setItem(index, item);

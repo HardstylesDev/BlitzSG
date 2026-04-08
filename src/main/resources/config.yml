@@ -1,0 +1,13 @@
+runtime:
+  defaultHubServer: hub-1
+  hubServers:
+    - hub-1
+    - hub-2
+    - hub-3
+  redisOverride:
+    enabled: true
+    # Optional full URL, e.g. redis://:password@127.0.0.1:6379
+    url: ""
+    host: 127.0.0.1
+    port: 6379
+    password: ""

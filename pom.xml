@@ -34,7 +34,7 @@
                 <configuration>
                     <shadedArtifactAttached>true</shadedArtifactAttached>
                     <shadedClassifierName>SNAPSHOT</shadedClassifierName>
-                    <outputDirectory>C:\Users\tombi\Desktop\test server\plugins</outputDirectory>
+                    <outputDirectory>${project.basedir}/runtime/backend-plugins</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>
@@ -92,7 +92,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
+            <version>1.18.38</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

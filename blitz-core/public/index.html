@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blitz Core Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <header class="hero">
+      <div class="hero-text">
+        <h1>Blitz Core Dashboard</h1>
+        <p>Network status · Proxy state · Live instances</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <span class="status-tag"><span class="pulse-dot"></span>System online</span>
+        <button class="btn-refresh" id="refresh">↻ Refresh</button>
+      </div>
+    </header>
+ 
+    <section class="grid">
+      <article class="card wide accent-top">
+        <div class="card-label">Controls</div>
+        <div class="controls">
+          <button class="btn-success" id="networkStart">▶ Start Network</button>
+          <button class="btn-danger"  id="networkStop">■ Stop Network</button>
+          <button class="btn-success" id="proxyStart">▶ Start Proxy</button>
+          <button class="btn-danger"  id="proxyStop">■ Stop Proxy</button>
+        </div>
+        <form id="startServerForm" class="start-form">
+          <input id="serverId" placeholder="server id (e.g. hub-2)" required>
+          <select id="serverType">
+            <option value="hub">hub</option>
+            <option value="game">game</option>
+          </select>
+          <input id="mapName" placeholder="map name (for game servers)">
+          <button class="btn-primary" type="submit">+ Start Server</button>
+        </form>
+      </article>
+ 
+      <article class="card accent-green">
+        <div class="card-label">Proxy</div>
+        <pre id="proxy">Loading...</pre>
+      </article>
+ 
+      <article class="card">
+        <div class="card-label">Port Range</div>
+        <pre id="ports">Loading...</pre>
+      </article>
+ 
+      <article class="card wide">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div class="card-label" style="margin:0">Instances</div>
+        </div>
+        <table id="servers">
+          <thead>
+            <tr><th>ID</th><th>Type</th><th>Status</th><th>Port</th><th>PID</th><th>Actions</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </article>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
+ 

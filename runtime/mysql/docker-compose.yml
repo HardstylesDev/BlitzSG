@@ -1,0 +1,15 @@
+services:
+  blitz-mysql:
+    image: mysql:8.0.39
+    container_name: blitz-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: BlitzSG
+    ports:
+      - "27017:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

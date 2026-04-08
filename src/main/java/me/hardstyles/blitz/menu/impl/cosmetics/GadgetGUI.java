@@ -34,6 +34,7 @@ public class GadgetGUI {
                     return;
                 }
                 iPlayer.setGadget(gadget);
+                BlitzSG.getInstance().getDb().savePlayerProfile(iPlayer);
                 p.sendMessage(ChatUtil.color("&aYou have selected the " + gadget.getName() + " gadget!"));
                 p.getInventory().setItem(6, iPlayer.getGadget().getItem());
             });

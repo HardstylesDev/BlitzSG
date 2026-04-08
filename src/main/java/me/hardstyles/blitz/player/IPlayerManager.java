@@ -71,6 +71,9 @@ public class IPlayerManager {
         if(iPlayer.getGadget() != null){
             p.getInventory().setItem(6, iPlayer.getGadget().getItem());
         }
+        if (iPlayer.getAura() != null && !BlitzSG.getInstance().getCosmeticsManager().getPlayers().contains(p)) {
+            BlitzSG.getInstance().getCosmeticsManager().add(p);
+        }
         iPlayer.setGame(null);
         iPlayer.resetGameKills();
         p.teleport(BlitzSG.lobbySpawn);

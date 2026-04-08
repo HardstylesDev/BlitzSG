@@ -63,13 +63,14 @@ public class ScoreboardHelper {
         else {
             String str1 = paramString.substring(0, 16);
             String str2 = paramString.substring(16, paramString.length());
-            if (str1.endsWith(String.valueOf("§"))) {
+            if (str1.endsWith(Character.toString(ChatColor.COLOR_CHAR))) {
                 str1 = str1.substring(0, str1.length() - 1);
-                str2 = String.valueOf(String.valueOf("§")) + str2;
+                str2 = Character.toString(ChatColor.COLOR_CHAR) + str2;
             }
             final String str3 = ChatColor.getLastColors(str1);
             str2 = String.valueOf(String.valueOf(str3)) + str2;
-            localScoreboardInput = new ScoreboardText(str1.replace("&", "§"), StringUtils.left(str2, 16).replace("&", "§"));
+            String colorChar = Character.toString(ChatColor.COLOR_CHAR);
+            localScoreboardInput = new ScoreboardText(str1.replace("&", colorChar), StringUtils.left(str2, 16).replace("&", colorChar));
         }
         this.list.add(localScoreboardInput);
     }
@@ -117,7 +118,7 @@ public class ScoreboardHelper {
                 lines.add(text);
                 break;
             } else {
-                int lastIndex = text.substring(0, 16).lastIndexOf('§');
+                int lastIndex = text.substring(0, 16).lastIndexOf(ChatColor.COLOR_CHAR);
                 if (lastIndex == -1 || lastIndex == 15) {
                     lines.add(text.substring(0, 16));
                     text = text.substring(16);

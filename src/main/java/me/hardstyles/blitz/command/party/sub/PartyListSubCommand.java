@@ -37,18 +37,18 @@ public class PartyListSubCommand extends SubCommand {
         OfflinePlayer owner = Bukkit.getOfflinePlayer(party.getOwner());
         if(owner.isOnline()){
             IPlayer iOwner = BlitzSG.getInstance().getIPlayerManager().getPlayer(owner.getUniqueId());
-            player.sendMessage(ChatUtil.color("&7 - " + iOwner.getRank().getPrefix() + owner.getName() + " &a●"));
+            player.sendMessage(ChatUtil.color("&7 - " + iOwner.getRank().getPrefix() + owner.getName() + " &a[ONLINE]"));
         } else {
-            player.sendMessage(ChatUtil.color("&7 - " + owner.getName() + " &c●"));
+            player.sendMessage(ChatUtil.color("&7 - " + owner.getName() + " &c[OFFLINE]"));
         }
         player.sendMessage(ChatUtil.color("&aParty Members:"));
         for (UUID member : party.getMembers()) {
             OfflinePlayer partyMember = Bukkit.getOfflinePlayer(member);
             if(partyMember.isOnline()){
                 IPlayer iPartyMember = BlitzSG.getInstance().getIPlayerManager().getPlayer(partyMember.getUniqueId());
-                player.sendMessage(ChatUtil.color("&7- " + iPartyMember.getRank().getPrefix() + partyMember.getName() + " &a●"));
+                player.sendMessage(ChatUtil.color("&7- " + iPartyMember.getRank().getPrefix() + partyMember.getName() + " &a[ONLINE]"));
             } else {
-                player.sendMessage(ChatUtil.color("&7- " + partyMember.getName() + " &c●"));
+                player.sendMessage(ChatUtil.color("&7- " + partyMember.getName() + " &c[OFFLINE]"));
             }
         }
     }

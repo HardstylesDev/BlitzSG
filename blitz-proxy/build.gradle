@@ -1,0 +1,18 @@
+dependencies {
+    implementation project(':blitz-shared')
+    implementation 'redis.clients:jedis:5.1.3'
+    compileOnly 'net.md-5:bungeecord-api:1.8-SNAPSHOT'
+
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+}
+
+tasks.register('fatJar', Jar) {
+    archiveClassifier = 'all'
+    duplicatesStrategy = 'exclude'
+    from sourceSets.main.output
+    dependsOn configurations.runtimeClasspath
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

@@ -14,6 +14,12 @@ public interface IDatabase {
     void connect();
     void disconnect();
     void savePlayer(IPlayer player);
+    default void savePlayerStats(IPlayer player) {
+        savePlayer(player);
+    }
+    default void savePlayerProfile(IPlayer player) {
+        savePlayer(player);
+    }
     IPlayer loadPlayer(UUID uuid);
     void addFriend(UUID playerUuid, UUID friendUuid);
     void removeFriend(UUID player, UUID friend);

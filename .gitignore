@@ -1,2 +1,8 @@
 /.idea/
 /target/
+/.gradle/
+**/build/
+blitz-core/node_modules/
+blitz-core/instances/
+.env
+

@@ -133,7 +133,22 @@ public class MySQLProvider implements IDatabase {
 
     @Override
     public void savePlayer(IPlayer p) {
-        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement("REPLACE INTO `stats`(`uuid`, `coins`, `kills`, `deaths`, `wins`, `rank`, `nickname`, `stars`, `kits`, `elo`, `taunt`, `selectedKit`, `aura`, `wardrobe`, `gadget`) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")) {
+        savePlayerStats(p);
+        savePlayerProfile(p);
+    }
+
+    @Override
+    public void savePlayerStats(IPlayer p) {
+        String sql = "INSERT INTO `stats`(`uuid`, `coins`, `kills`, `deaths`, `wins`, `rank`, `elo`) "
+                + "VALUES (?,?,?,?,?,?,?) "
+                + "ON DUPLICATE KEY UPDATE "
+                + "coins=GREATEST(coins, VALUES(coins)), "
+                + "kills=GREATEST(kills, VALUES(kills)), "
+                + "deaths=GREATEST(deaths, VALUES(deaths)), "
+                + "wins=GREATEST(wins, VALUES(wins)), "
+                + "elo=GREATEST(elo, VALUES(elo))";
+
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, p.getUuid().toString());
             preparedStatement.setInt(2, p.getCoins());
             preparedStatement.setInt(3, p.getKills());
@@ -141,11 +156,39 @@ public class MySQLProvider implements IDatabase {
             preparedStatement.setInt(5, p.getWins());
 
             Rank rank = p.getRank();
-            if (rank != null) {
-                preparedStatement.setString(6, rank.getRank());
-            } else {
-                preparedStatement.setNull(6, java.sql.Types.VARCHAR);
-            }
+            preparedStatement.setString(6, rank == null ? "Default" : rank.getRank());
+            preparedStatement.setInt(7, p.getElo());
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void savePlayerProfile(IPlayer p) {
+        String sql = "INSERT INTO `stats`(`uuid`, `coins`, `kills`, `deaths`, `wins`, `rank`, `nickname`, `stars`, `kits`, `elo`, `taunt`, `selectedKit`, `aura`, `wardrobe`, `gadget`) "
+                + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) "
+                + "ON DUPLICATE KEY UPDATE "
+                + "rank=VALUES(rank), "
+                + "nickname=VALUES(nickname), "
+                + "stars=VALUES(stars), "
+                + "kits=VALUES(kits), "
+                + "taunt=VALUES(taunt), "
+                + "selectedKit=VALUES(selectedKit), "
+                + "aura=VALUES(aura), "
+                + "wardrobe=VALUES(wardrobe), "
+                + "gadget=VALUES(gadget)";
+
+        try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, p.getUuid().toString());
+            preparedStatement.setInt(2, p.getCoins());
+            preparedStatement.setInt(3, p.getKills());
+            preparedStatement.setInt(4, p.getDeaths());
+            preparedStatement.setInt(5, p.getWins());
+
+            Rank rank = p.getRank();
+            preparedStatement.setString(6, rank == null ? "Default" : rank.getRank());
 
             String nickName = p.getNickName();
             if (nickName != null && !nickName.isEmpty()) {
@@ -163,19 +206,6 @@ public class MySQLProvider implements IDatabase {
                 preparedStatement.setNull(11, java.sql.Types.VARCHAR);
             }
 
-            if (p.getGadget() != null) {
-                preparedStatement.setString(15, p.getGadget().getName());
-            } else {
-                preparedStatement.setNull(15, java.sql.Types.VARCHAR);
-            }
-
-
-            if (p.getWardrobeStorage() != null) {
-                preparedStatement.setString(14, p.getWardrobeStorage().serialize().toString());
-            } else {
-                preparedStatement.setNull(14, java.sql.Types.VARCHAR);
-            }
-
             Kit selectedKit = p.getSelectedKit();
             if (selectedKit != null) {
                 preparedStatement.setString(12, selectedKit.getName());
@@ -183,12 +213,23 @@ public class MySQLProvider implements IDatabase {
                 preparedStatement.setNull(12, java.sql.Types.VARCHAR);
             }
 
-
             Aura aura = p.getAura();
             if (aura != null) {
                 preparedStatement.setString(13, aura.getName());
             } else {
                 preparedStatement.setNull(13, java.sql.Types.VARCHAR);
+            }
+
+            if (p.getWardrobeStorage() != null) {
+                preparedStatement.setString(14, p.getWardrobeStorage().serialize().toString());
+            } else {
+                preparedStatement.setNull(14, java.sql.Types.VARCHAR);
+            }
+
+            if (p.getGadget() != null) {
+                preparedStatement.setString(15, p.getGadget().getName());
+            } else {
+                preparedStatement.setNull(15, java.sql.Types.VARCHAR);
             }
 
             preparedStatement.execute();

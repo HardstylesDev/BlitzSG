@@ -53,7 +53,7 @@ public class GameHandler implements Listener {
                 iPlayer.getGame().removePlayer(p);
             }
         }
-        BlitzSG.getInstance().getDb().savePlayer(iPlayer);
+        BlitzSG.getInstance().getDb().savePlayerStats(iPlayer);
         BlitzSG.getInstance().getIPlayerManager().removePlayer(p.getUniqueId());
     }
 
@@ -258,7 +258,7 @@ public class GameHandler implements Listener {
 
     @EventHandler(ignoreCancelled = true , priority = EventPriority.HIGHEST)
     public void onEntityDamage(EntityDamageEvent e) {
-        if (e.getEntity().getWorld() == BlitzSG.lobbySpawn.getWorld()) {
+        if (e.getEntity().getWorld() == BlitzSG.lobbySpawn.getWorld() && BlitzSG.isHubServer()) {
             e.setCancelled(true);
             return;
         }

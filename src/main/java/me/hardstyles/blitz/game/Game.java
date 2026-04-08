@@ -6,6 +6,7 @@ import me.hardstyles.blitz.player.IPlayer;
 import me.hardstyles.blitz.player.IPlayerManager;
 import me.hardstyles.blitz.map.Map;
 import me.hardstyles.blitz.rank.Rank;
+import me.hardstyles.blitz.runtime.InstanceLifecycleController;
 import me.hardstyles.blitz.util.ChatUtil;
 import me.hardstyles.blitz.util.ItemBuilder;
 import me.hardstyles.blitz.util.ItemUtils;
@@ -572,6 +573,7 @@ public class Game {
             IPlayer blitzSGWinner = BlitzSG.getInstance().getIPlayerManager().getPlayer(winner.getUniqueId());
             int coins = 75 * blitzSGWinner.getRank().getMultiplier();
             blitzSGWinner.addCoins(coins);
+            BlitzSG.getInstance().getDb().savePlayerStats(blitzSGWinner);
             if (winner.isOnline()) {
                 winner.getPlayer().sendMessage(ChatColor.GOLD + "+" + coins + " Coins (Win)");
             }
@@ -580,6 +582,9 @@ public class Game {
         new BukkitRunnable() {
             public void run() {
                 resetGame();
+                if (BlitzSG.isGameServer()) {
+                    InstanceLifecycleController.requestSelfStop(BlitzSG.getInstance(), "game-finished");
+                }
             }
         }.runTaskLater(BlitzSG.getInstance(), 200);
     }
@@ -591,7 +596,11 @@ public class Game {
             IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
             if (iPlayer == null) continue;
             iPlayer.setGame(null);
-            BlitzSG.getInstance().getIPlayerManager().toLobby(p);
+            if (BlitzSG.isGameServer()) {
+                BlitzSG.sendPlayerToHub(p);
+            } else {
+                BlitzSG.getInstance().getIPlayerManager().toLobby(p);
+            }
         }
         allPlayers.clear();
         alivePlayers.clear();

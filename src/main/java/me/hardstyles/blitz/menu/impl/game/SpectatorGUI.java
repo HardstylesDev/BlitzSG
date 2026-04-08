@@ -35,7 +35,7 @@ public class SpectatorGUI {
             SkullMeta meta = (SkullMeta) skull.getItemMeta();
             meta.setDisplayName(iAlive.getRank().getPrefix() + alivePlayer.getName());
             ArrayList<String> lore = new ArrayList<>();
-            lore.add(ChatUtil.color("&fHealth: &a" + alivePlayer.getHealth() + "&4❤"));
+            lore.add(ChatUtil.color("&fHealth: &a" + alivePlayer.getHealth() + " HP"));
             lore.add(ChatUtil.color("&fKills: &a" + iAlive.getGameKills()));
             meta.setLore(lore);
             meta.setOwner(alivePlayer.getName());

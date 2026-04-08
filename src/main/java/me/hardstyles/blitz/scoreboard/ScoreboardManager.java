@@ -26,6 +26,9 @@ public class ScoreboardManager extends BukkitRunnable {
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             ScoreboardHelper board = this.scoreboardHandler.getScoreboard(p);
             IPlayer iPlayer = BlitzSG.getInstance().getIPlayerManager().getPlayer(p.getUniqueId());
+            if (iPlayer == null) {
+                continue;
+            }
             board.clear();
             Date now = new Date();
             if (!iPlayer.isInGame()) {

@@ -43,6 +43,11 @@ public class HubCommand extends Command {
             }
         }
 
+        if (BlitzSG.isGameServer()) {
+            BlitzSG.sendPlayerToHub(player);
+            return;
+        }
+
         BlitzSG.getInstance().getIPlayerManager().toLobby(player);
     }
 

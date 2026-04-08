@@ -9,12 +9,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.ChatColor;
 
 public class ItemUtils {
 
 	public static ItemStack buildItem(ItemStack i, String name, List<String> lore) {
 		ItemMeta im = i.getItemMeta();
-		im.setDisplayName(name.replace("&", "§"));
+		im.setDisplayName(name.replace("&", ChatColor.COLOR_CHAR+""));
 		im.setLore(lore);
 		i.setItemMeta(im);
 		return i;
@@ -47,6 +48,4 @@ public class ItemUtils {
 		p.setDurability(durability);
 		return p;
 	}
-
-
 }
